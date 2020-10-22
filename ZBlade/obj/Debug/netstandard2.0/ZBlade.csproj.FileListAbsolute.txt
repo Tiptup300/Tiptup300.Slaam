@@ -1,0 +1,23 @@
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\obj\Debug\netstandard2.0\ZBlade.csprojAssemblyReference.cache
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\obj\Debug\netstandard2.0\ZBlade.AssemblyInfoInputs.cache
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\obj\Debug\netstandard2.0\ZBlade.AssemblyInfo.cs
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\obj\Debug\netstandard2.0\ZBlade.csproj.CoreCompileInputs.cache
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\ZBlade.deps.json
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\ZBlade.dll
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\ZBlade.pdb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\obj\Debug\netstandard2.0\ZBlade.dll
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\obj\Debug\netstandard2.0\ZBlade.pdb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\bgBottom.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\bladeBorder.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\bladeGloss.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\key1.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\key2.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\key6.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\menuArrow.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\menuchoice.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\menuhighlight.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\progressbarOverlay.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\Segoe UI-10.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\Segoe UI-12.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\Segoe UI-14.xnb
+C:\Users\TIptup300\source\repos\SlaamMono\ZBlade\bin\Debug\netstandard2.0\Content\bin\DesktopGL\textbox.xnb

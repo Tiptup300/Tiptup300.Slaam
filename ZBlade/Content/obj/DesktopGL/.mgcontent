@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/bgBottom.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/bladeBorder.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/bladeGloss.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/key1.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/key2.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/key6.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/menuArrow.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/menuchoice.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/menuhighlight.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/progressbarOverlay.png</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/Segoe UI-10.spritefont</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/Segoe UI-12.spritefont</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/Segoe UI-14.spritefont</File>
+    <File>C:/Users/TIptup300/source/repos/SlaamMono/ZBlade/Content/textbox.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

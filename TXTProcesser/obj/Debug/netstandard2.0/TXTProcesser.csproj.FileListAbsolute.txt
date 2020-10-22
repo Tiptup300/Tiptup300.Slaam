@@ -1,0 +1,9 @@
+C:\Users\TIptup300\source\repos\SlaamMono\TXTProcesser\bin\Debug\netstandard2.0\TXTProcesser.deps.json
+C:\Users\TIptup300\source\repos\SlaamMono\TXTProcesser\bin\Debug\netstandard2.0\TXTProcesser.dll
+C:\Users\TIptup300\source\repos\SlaamMono\TXTProcesser\bin\Debug\netstandard2.0\TXTProcesser.pdb
+C:\Users\TIptup300\source\repos\SlaamMono\TXTProcesser\obj\Debug\netstandard2.0\TXTProcesser.csprojAssemblyReference.cache
+C:\Users\TIptup300\source\repos\SlaamMono\TXTProcesser\obj\Debug\netstandard2.0\TXTProcesser.AssemblyInfoInputs.cache
+C:\Users\TIptup300\source\repos\SlaamMono\TXTProcesser\obj\Debug\netstandard2.0\TXTProcesser.AssemblyInfo.cs
+C:\Users\TIptup300\source\repos\SlaamMono\TXTProcesser\obj\Debug\netstandard2.0\TXTProcesser.csproj.CoreCompileInputs.cache
+C:\Users\TIptup300\source\repos\SlaamMono\TXTProcesser\obj\Debug\netstandard2.0\TXTProcesser.dll
+C:\Users\TIptup300\source\repos\SlaamMono\TXTProcesser\obj\Debug\netstandard2.0\TXTProcesser.pdb
