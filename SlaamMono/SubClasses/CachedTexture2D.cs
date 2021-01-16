@@ -39,6 +39,7 @@ namespace Slaam
 
         public void Dispose()
         {
+            return;
             if (texture == null)
                 return;
 

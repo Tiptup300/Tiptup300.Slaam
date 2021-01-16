@@ -13,7 +13,10 @@ using ZBlade;
 #endif 
 #endregion
 
-// 
+// todo: alpha transparency not working
+// todo: board size not rendering correctly
+// todo: zune blade should detect size of screen and change correctly.
+
 
 namespace Slaam
 {
@@ -52,6 +55,7 @@ namespace Slaam
             LogHelper.Write("Content Manager Created;");
             this.Exiting += Game1_Exiting;
 
+            graphics.IsFullScreen = false;
             graphics.PreferredBackBufferWidth = GameGlobals.DRAWING_GAME_WIDTH;
             graphics.PreferredBackBufferHeight = GameGlobals.DRAWING_GAME_HEIGHT;
             this.IsFixedTimeStep = false;

@@ -12,7 +12,8 @@ namespace Slaam
 
         GameScreen ParentGameScreen;
         InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
-        Timer RefreshTime = new Timer(new TimeSpan(0, 0, 0,0,500));
+        Timer DiagonalMovementSwitch = new Timer(new TimeSpan(0, 0, 0,0,500));
+        Timer LogicUpdateThreshold = new Timer(new TimeSpan(0, 0, 0,0,500));
         Random rand = new Random();
         Direction CurrentDirection = Direction.None;
         Timer TargetTime = new Timer(new TimeSpan(0, 0, 5));
@@ -50,13 +51,33 @@ namespace Slaam
         {
             AIInput.PressedAction2 = false;
 
-            RefreshTime.Update(FPSManager.MovementFactorTimeSpan);
-            if (RefreshTime.Active)
+            DiagonalMovementSwitch.Update(FPSManager.MovementFactorTimeSpan);
+            if (DiagonalMovementSwitch.Active)
+            {
                 SwitchMovements = rand.Next(0, 2) == 1;
+            }
 
+            LogicUpdateThreshold.Update(FPSManager.MovementFactorTimeSpan);
+            if (LogicUpdateThreshold.Active)
+            {
+                LogicUpdate(tiles, CurrentCoordinates, TilePos);
+                LogicUpdateThreshold.Reset();
+            }
+            
+
+
+            CreateInput();
+
+            base.Update(tiles, CurrentCoordinates, TilePos);
+
+            ClearInput();
+        }
+
+        private void LogicUpdate(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
+        {
             Tile CurrentTile = tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
-
             bool Moving = true, Attacking = false, InDanger = (CurrentTile.CurrentTileCondition != Tile.TileCondition.Normal && CurrentTile.CurrentTileCondition != Tile.TileCondition.RespawnPoint);
+
 
             if (base.CurrentState == CharacterState.Dead || base.CurrentState == CharacterState.Dieing)
             {
@@ -75,8 +96,8 @@ namespace Slaam
                     if (CurrentTarget == null || CurrentCoordinates == CurrentTarget.Position)
                         GoingTowardsSafety = false;
                 }
-                
-                if(!GoingTowardsSafety)
+
+                if (!GoingTowardsSafety)
                 {
                     GoingTowardsSafety = true;
 
@@ -103,7 +124,7 @@ namespace Slaam
 
                 for (int x = 0; x < ParentGameScreen.Characters.Count; x++)
                 {
-                    if (x != base.PlayerIndex && 
+                    if (x != base.PlayerIndex &&
                          ParentGameScreen.Characters[x] != null &&
                          ParentGameScreen.Characters[x].CurrentState != CharacterState.Dead &&
                          ParentGameScreen.Characters[x].CurrentState != CharacterState.Dieing &&
@@ -155,23 +176,19 @@ namespace Slaam
                 }
             }
 
-            Attacking = (CurrentTarget != null && 
-                CurrentTarget.ThisTargetType == Target.TargetType.Character && 
-                ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
-                ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dieing);
+            Attacking = (CurrentTarget != null &&
+    CurrentTarget.ThisTargetType == Target.TargetType.Character &&
+    ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
+    ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dieing);
 
             if (Moving)
+            {
                 MakeMovements(CurrentCoordinates, Attacking);
+            }
             else
             {
                 CurrentDirection = Direction.None;
             }
-
-            CreateInput();
-
-            base.Update(tiles, CurrentCoordinates, TilePos);
-
-            ClearInput();
         }
 
         private void ClearInput()

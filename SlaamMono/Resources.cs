@@ -160,7 +160,7 @@ namespace Slaam
             CPU = new CachedTexture2D("cpu");
             CreditsBG = new CachedTexture2D("CreditsBG");
             DeadChar = new CachedTexture2D("deadchar");
-            DefaultBoard = LoadImage("defaultboard");
+            //DefaultBoard = LoadImage("defaultboard");
             //DefaultChar = LoadImage("defaultchar");
             Feedbar = new CachedTexture2D("feedbar");
             GameScreenScoreBoard = new CachedTexture2D("scoreboard");
@@ -275,11 +275,22 @@ namespace Slaam
 #if ZUNE
             loc = System.IO.Path.Combine("content\\textures\\MOBILE\\", baseName);
 #else
-            loc = System.IO.Path.Combine("content\\textures\\HD\\", baseName);
+            loc = System.IO.Path.Combine($"content\\textures{GameGlobals.TEXTURE_FILE_PATH}", baseName);
 #endif
-            Texture2D temp = Game1.Content.Load<Texture2D>(loc);
-            LogHelper.Write(" - "+baseName+" Texture Loaded.");
-            return temp;
+
+            Texture2D output;
+
+            try
+            {
+                output = Game1.Content.Load<Texture2D>(loc);
+                LogHelper.Write(" - " + baseName + " Texture Loaded.");
+            }
+            catch(Exception ex)
+            {
+                LogHelper.Write("Texture at {loc} failed to load.");
+                output = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1);
+            }
+            return output; 
         }
 
         private static List<String> LoadStringList(string baseName)
