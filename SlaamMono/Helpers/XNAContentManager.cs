@@ -13,7 +13,7 @@
             NeedsDevice = false;
 
             ProfileManager.Initialize();
-            LogHelper.Write("Profile Manager Created;");
+            LogHelper.Instance.Write("Profile Manager Created;");
 
         }
     }

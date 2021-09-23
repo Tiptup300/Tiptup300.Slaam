@@ -16,8 +16,8 @@ namespace SlaamMono
         {
             LogHelper.Instance.Begin();
 
-            LogHelper.Write("Program executed;");
-            LogHelper.Write("XNA Starting...");
+            LogHelper.Instance.Write("Program executed;");
+            LogHelper.Instance.Write("XNA Starting...");
 
             try
             {
@@ -29,17 +29,18 @@ namespace SlaamMono
             }
             catch (Exception e)
             {
-                LogHelper.Write("Game Failed With Exit Message: ");
-                LogHelper.Write(e.Message);
+                LogHelper.Instance.Write("Game Failed With Exit Message: ");
+                LogHelper.Instance.Write(e.Message);
                 if (e.InnerException != null)
                 {
-                    LogHelper.Write(" --- INNER Exception --- ");
-                    LogHelper.Write(e.InnerException.ToString());
+                    LogHelper.Instance.Write(" --- INNER Exception --- ");
+                    LogHelper.Instance.Write(e.InnerException.ToString());
                 }
-                LogHelper.Write(" --- STACK TRACE --- ");
-                LogHelper.Write(e.StackTrace);
-                LogHelper.End();
+                LogHelper.Instance.Write(" --- STACK TRACE --- ");
+                LogHelper.Instance.Write(e.StackTrace);
             }
+
+            LogHelper.Instance.End();
         }
     }
 }

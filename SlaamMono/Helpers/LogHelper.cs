@@ -10,7 +10,7 @@ namespace SlaamMono
     {
         public static LogHelper Instance = new LogHelper();
 
-        private static TextWriter _textWriter;
+        private TextWriter _textWriter;
 
         /// <summary>
         /// Prepares the log for writing.
@@ -32,7 +32,7 @@ namespace SlaamMono
         /// Writes to log with formatting lines
         /// </summary>
         /// <param name="str">String to be written.</param>
-        public static void Write(string str)
+        public void Write(string str)
         {
             _textWriter.WriteLine(str);
         }
@@ -40,7 +40,7 @@ namespace SlaamMono
         /// <summary>
         /// Closes the log.
         /// </summary>
-        public static void End()
+        public void End()
         {
             Write("Game Closed");
 

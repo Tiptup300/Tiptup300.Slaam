@@ -49,11 +49,11 @@ namespace SlaamMono
 
         public SlaamGame()
         {
-            LogHelper.Write("XNA Started;");
+            LogHelper.Instance.Write("XNA Started;");
             graphics = new GraphicsDeviceManager(this);
-            LogHelper.Write("Graphics Device Manager Created;");
+            LogHelper.Instance.Write("Graphics Device Manager Created;");
             Content = new ContentManager(Services);
-            LogHelper.Write("Content Manager Created;");
+            LogHelper.Instance.Write("Content Manager Created;");
             this.Exiting += Game1_Exiting;
 
             graphics.IsFullScreen = false;
@@ -81,12 +81,12 @@ namespace SlaamMono
             SetupZuneBlade();
 #endif
             // TODO: Add your initialization logic here
-            LogHelper.Write("Creating SpriteBatch...");
+            LogHelper.Instance.Write("Creating SpriteBatch...");
             gamebatch = new SpriteBatch(graphics.GraphicsDevice);
-            LogHelper.Write("Created SpriteBatch;");
+            LogHelper.Instance.Write("Created SpriteBatch;");
             base.Initialize();
             
-            LogHelper.Write("Set Graphics Settings (1280x1024 No MultiSampling);");
+            LogHelper.Instance.Write("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
             Resources.LoadAll();
             Qwerty.CurrentPlayer = InputComponent.Players[0];
@@ -151,7 +151,7 @@ namespace SlaamMono
                 if ((Input.GetGamepad().PressingLeftShoulder && Input.GetGamepad().PressingRightShoulder && Input.GetGamepad().PressingPadDown && Input.GetGamepad().PressedY) || Input.GetKeyboard().PressedKey(Keys.F))
                 {
                     graphics.ToggleFullScreen();
-                    LogHelper.Write("Fullscreen Toggled");
+                    LogHelper.Instance.Write("Fullscreen Toggled");
                 }
 
                 if (Input.GetKeyboard().PressingKey(Keys.S) && Input.GetKeyboard().PressedKey(Keys.P))

@@ -56,7 +56,7 @@ namespace SlaamMono
                     dstTexture.Save(GetNextScreenShotName(),ImageFileFormat.Png);
                 }
 
-                LogHelper.Write("Screenshot Taken");
+                LogHelper.Instance.Write("Screenshot Taken");
             }
              * */
             base.Update(gameTime);
