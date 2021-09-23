@@ -1,28 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
+﻿using System.IO;
 
 namespace SlaamMono
 {
-    public static class XNAContentManager
-    {
-        public static bool NeedsDevice = true;
-
-        public static void Initialize()
-        {
-        }
-
-        public static void Update()
-        {
-            NeedsDevice = false;
-
-            ProfileManager.Initialize();
-            LogHelper.Write("Profile Manager Created;");
-
-        }
-    }
-
     public class XNAContentReader
     {
         public bool WasNotFound = false;
@@ -81,45 +60,5 @@ namespace SlaamMono
             }
             return false;
         }
-    }
-
-    public class XNAContentWriter
-    {
-        BinaryWriter writer;
-
-        public XNAContentWriter(string filename)
-        {
-
-            filename = Path.Combine(Directory.GetCurrentDirectory(), filename);
-
-            writer = new BinaryWriter(File.Create(filename));
-
-            writer.Write(Program.Version);
-        }
-
-        public void Write(string str)
-        {
-            writer.Write(str);
-        }
-
-        public void Write(Int32 val)
-        {
-            writer.Write(val);
-        }
-
-        public void Write(bool val)
-        {
-            writer.Write(val);
-        }
-
-        public void Close()
-        {
-            writer.Close();
-        }
-    }
-
-    public class FileMisMatchException : Exception
-    {
-
     }
 }
