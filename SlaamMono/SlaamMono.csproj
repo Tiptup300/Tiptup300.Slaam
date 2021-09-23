@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -16,20 +16,14 @@
     <Compile Remove="Powerups\MuhLazza.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Content\Credits.txt" />
-    <None Remove="Icon.ico" />
-    <None Remove="Icon.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
     <EmbeddedResource Include="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
-    <MonoGameContentReference Include="Content\Credits.txt" />
+    <None Include="Powerups\MuhLazza.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Powerups\MuhLazza.cs" />
+    <Resource Include="Content\Credits.txt" />
   </ItemGroup>
   <ItemGroup>
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
@@ -40,5 +34,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZBlade\ZBlade.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\Credits.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\SegoeUI-14pt.spritefont">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
