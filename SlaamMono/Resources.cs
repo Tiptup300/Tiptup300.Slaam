@@ -143,13 +143,13 @@ namespace SlaamMono
         /// </summary>
         public static void LoadAll()
         {
-            LogHelper.Instance.Write("Resources Loading...");
+            TextLogger.Instance.Log("Resources Loading...");
 
             Dot = new Texture2D(SlaamGame.Graphics.GraphicsDevice, 1, 1);
 
             //Dot = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1, 1, TextureUsage.None, SurfaceFormat.Color);
             Dot.SetData<Color>(new Color[] {Color.White});
-            LogHelper.Instance.Write(" - Dot Image Created.");
+            TextLogger.Instance.Log(" - Dot Image Created.");
 
 
 #if !ZUNE
@@ -254,7 +254,7 @@ namespace SlaamMono
             LoadPowerup(PU_Inversion, "Inversion");
             LoadPowerup(PU_Slaam, "Slaam");
 
-            LogHelper.Instance.Write("All Resources Finished Loading;");
+            TextLogger.Instance.Log("All Resources Finished Loading;");
             textmanager = new TextManager(SlaamGame.Instance);
             SlaamGame.Instance.Components.Add(textmanager);
         }
@@ -283,11 +283,11 @@ namespace SlaamMono
             try
             {
                 output = SlaamGame.Content.Load<Texture2D>(loc);
-                LogHelper.Instance.Write(" - " + baseName + " Texture Loaded.");
+                TextLogger.Instance.Log(" - " + baseName + " Texture Loaded.");
             }
             catch(Exception ex)
             {
-                LogHelper.Instance.Write($"Texture at {loc} failed to load. Error: {ex.Message}");
+                TextLogger.Instance.Log($"Texture at {loc} failed to load. Error: {ex.Message}");
                 output = new Texture2D(SlaamGame.Graphics.GraphicsDevice, 1, 1);
             }
             return output; 
@@ -320,7 +320,7 @@ namespace SlaamMono
         private static SpriteFont LoadFont(string baseName)
         {
             SpriteFont temp = SlaamGame.Content.Load<SpriteFont>(string.Format("content\\{0}", baseName));
-            LogHelper.Instance.Write(" - " + baseName + " Font Loaded.");
+            TextLogger.Instance.Log(" - " + baseName + " Font Loaded.");
             return temp;
         }
 

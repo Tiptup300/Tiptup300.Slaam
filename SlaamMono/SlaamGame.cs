@@ -49,11 +49,11 @@ namespace SlaamMono
 
         public SlaamGame()
         {
-            LogHelper.Instance.Write("XNA Started;");
+            TextLogger.Instance.Log("XNA Started;");
             graphics = new GraphicsDeviceManager(this);
-            LogHelper.Instance.Write("Graphics Device Manager Created;");
+            TextLogger.Instance.Log("Graphics Device Manager Created;");
             Content = new ContentManager(Services);
-            LogHelper.Instance.Write("Content Manager Created;");
+            TextLogger.Instance.Log("Content Manager Created;");
             this.Exiting += Game1_Exiting;
 
             graphics.IsFullScreen = false;
@@ -81,12 +81,12 @@ namespace SlaamMono
             SetupZuneBlade();
 #endif
             // TODO: Add your initialization logic here
-            LogHelper.Instance.Write("Creating SpriteBatch...");
+            TextLogger.Instance.Log("Creating SpriteBatch...");
             gamebatch = new SpriteBatch(graphics.GraphicsDevice);
-            LogHelper.Instance.Write("Created SpriteBatch;");
+            TextLogger.Instance.Log("Created SpriteBatch;");
             base.Initialize();
             
-            LogHelper.Instance.Write("Set Graphics Settings (1280x1024 No MultiSampling);");
+            TextLogger.Instance.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
             Resources.LoadAll();
             Qwerty.CurrentPlayer = InputComponent.Players[0];

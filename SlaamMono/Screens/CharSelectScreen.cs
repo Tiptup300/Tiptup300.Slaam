@@ -33,15 +33,15 @@ namespace SlaamMono
 
         public CharSelectScreen()
         {
-            LogHelper.Instance.Write("----------------------------------");
-            LogHelper.Instance.Write("     Character Select Screen      ");
-            LogHelper.Instance.Write("----------------------------------");
-            LogHelper.Instance.Write("Attemping to load in all skins...");
+            TextLogger.Instance.Log("----------------------------------");
+            TextLogger.Instance.Log("     Character Select Screen      ");
+            TextLogger.Instance.Log("----------------------------------");
+            TextLogger.Instance.Log("Attemping to load in all skins...");
             LoadAllSkins();
-            LogHelper.Instance.Write("Listing of skins complete;");
+            TextLogger.Instance.Log("Listing of skins complete;");
             if (Skins.Count < 1)
             {
-                LogHelper.Instance.Write("0 Skins were found, Program Abort");
+                TextLogger.Instance.Log("0 Skins were found, Program Abort");
                 SlaamGame.Instance.Exit();
             }
             else
@@ -154,7 +154,7 @@ namespace SlaamMono
                 for (int x = 0; x < skins.Count; x++)
                 {
                     Skins.Add(skins[x]);
-                    LogHelper.Instance.Write(" - \"" + skins[x] + "\" was added to listing.");
+                    TextLogger.Instance.Log(" - \"" + skins[x] + "\" was added to listing.");
                 }
                 SkinTexture = new Texture2D[Skins.Count];
                 for (int y = 0; y < Skins.Count; y++)

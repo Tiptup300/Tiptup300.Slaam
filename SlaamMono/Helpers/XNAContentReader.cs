@@ -55,7 +55,7 @@ namespace SlaamMono
             if (wrongversion)
             {
                 reader.Close();
-                LogHelper.Instance.Write("\"" + "" + "\" is incorrect version.");
+                TextLogger.Instance.Log("\"" + "" + "\" is incorrect version.");
                 return true;
             }
             return false;

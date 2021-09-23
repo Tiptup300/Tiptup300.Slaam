@@ -4,8 +4,12 @@
     {
         public static bool NeedsDevice = true;
 
+        // todo
+        public readonly static ILogger _logger = TextLogger.Instance;
+
         public static void Initialize()
         {
+
         }
 
         public static void Update()
@@ -13,7 +17,7 @@
             NeedsDevice = false;
 
             ProfileManager.Initialize();
-            LogHelper.Instance.Write("Profile Manager Created;");
+            _logger.Log("Profile Manager Created;");
 
         }
     }

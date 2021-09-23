@@ -6,9 +6,9 @@ namespace SlaamMono
     /// <summary>
     /// Class to help with logging events and important information for bugs.
     /// </summary>
-    public class LogHelper
+    public class TextLogger : ILogger
     {
-        public static LogHelper Instance = new LogHelper();
+        public static TextLogger Instance = new TextLogger();
 
         private TextWriter _textWriter;
 
@@ -20,11 +20,11 @@ namespace SlaamMono
             _textWriter = File.CreateText("log.log");
 
 
-            Write("=======================================");
-            Write("Slaam! - Logfile (for errors)");
-            Write(" Created by Tiptup300");
-            Write("=======================================");
-            Write("");
+            Log("=======================================");
+            Log("Slaam! - Logfile (for errors)");
+            Log(" Created by Tiptup300");
+            Log("=======================================");
+            Log("");
         }
 
 
@@ -32,7 +32,7 @@ namespace SlaamMono
         /// Writes to log with formatting lines
         /// </summary>
         /// <param name="str">String to be written.</param>
-        public void Write(string str)
+        public void Log(string str)
         {
             _textWriter.WriteLine(str);
         }
@@ -42,7 +42,7 @@ namespace SlaamMono
         /// </summary>
         public void End()
         {
-            Write("Game Closed");
+            Log("Game Closed");
 
             _textWriter.Close();
         }
