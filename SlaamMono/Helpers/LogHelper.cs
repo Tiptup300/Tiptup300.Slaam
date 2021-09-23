@@ -1,8 +1,4 @@
-using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
 
 namespace SlaamMono
 {
@@ -10,27 +6,27 @@ namespace SlaamMono
     /// <summary>
     /// Class to help with logging events and important information for bugs.
     /// </summary>
-    static class LogHelper
+    public class LogHelper
     {
-        #region Variables
+        public static LogHelper Instance = new LogHelper();
 
-      //  private static StreamWriter LogWriter;
-
-        #endregion
-
-        #region Begin Log
+        private static TextWriter _textWriter;
 
         /// <summary>
         /// Prepares the log for writing.
         /// </summary>
-        public static void Begin()
+        public void Begin()
         {
-            //LogWriter = File.CreateText("log.log");
+            _textWriter = File.CreateText("log.log");
+
+
+            Write("=======================================");
+            Write("Slaam! - Logfile (for errors)");
+            Write(" Created by Tiptup300");
+            Write("=======================================");
+            Write("");
         }
 
-        #endregion
-
-        #region Write To Log
 
         /// <summary>
         /// Writes to log with formatting lines
@@ -38,36 +34,18 @@ namespace SlaamMono
         /// <param name="str">String to be written.</param>
         public static void Write(string str)
         {
-            //Write(str, true);
+            _textWriter.WriteLine(str);
         }
-
-        /// <summary>
-        /// Writes to log
-        /// </summary>
-        /// <param name="str">String to be written.</param>
-        /// <param name="lines">Draw Formatting Lines?</param>
-        public static void Write(string str, bool lines)
-        {
-            /*if (!lines)
-                LogWriter.WriteLine(str);
-            else
-                LogWriter.WriteLine("  |  " + str.PadRight(100) + "|");*/
-        }
-
-        #endregion
-
-        #region End Log
 
         /// <summary>
         /// Closes the log.
         /// </summary>
         public static void End()
         {
-            //Write("Game Closed");
-            //LogWriter.Close();
-        }
+            Write("Game Closed");
 
-        #endregion
+            _textWriter.Close();
+        }
     }
 
 }
