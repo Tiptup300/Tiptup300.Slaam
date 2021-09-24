@@ -40,7 +40,7 @@ namespace SlaamMono
         {
             if (Moving)
             {
-                Position.X += FPSManager.MovementFactor * MovementSpeed;
+                Position.X += FrameRateDirector.MovementFactor * MovementSpeed;
                 if (Position.X >= 0)
                 {
                     Position.X = 0;
@@ -50,7 +50,7 @@ namespace SlaamMono
             }
             if (Character.CurrentPowerup != null && Character.CurrentPowerup.Active)
             {
-                Alpha += (AlphaUp ? 1 : -1) * FPSManager.MovementFactor;
+                Alpha += (AlphaUp ? 1 : -1) * FrameRateDirector.MovementFactor;
 
                 if (AlphaUp && Alpha >= 255f)
                 {
@@ -130,7 +130,7 @@ namespace SlaamMono
         {
             if (Moving)
             {
-                Position.X -= FPSManager.MovementFactor * MovementSpeed;
+                Position.X -= FrameRateDirector.MovementFactor * MovementSpeed;
                 if (Position.X <= 0)
                 {
                     Position.X = 0;
@@ -142,8 +142,8 @@ namespace SlaamMono
             {
                 if (TimeRemaining > TimeSpan.Zero || ParentGameScreen.ThisGameType == GameType.Spree || ParentGameScreen.ThisGameType == GameType.Classic || ParentGameScreen.ThisGameType == GameType.Survival)
                 {
-                    CurrentGameTime += FPSManager.MovementFactorTimeSpan;
-                    TimeRemaining -= FPSManager.MovementFactorTimeSpan;
+                    CurrentGameTime += FrameRateDirector.MovementFactorTimeSpan;
+                    TimeRemaining -= FrameRateDirector.MovementFactorTimeSpan;
                 }
 
                 if (TimeRemaining < TimeSpan.Zero)
@@ -151,7 +151,7 @@ namespace SlaamMono
 
                 if (ParentGameScreen.ThisGameType == GameType.TimedSpree)
                 {
-                    CurrentStep += FPSManager.MovementFactor;
+                    CurrentStep += FrameRateDirector.MovementFactor;
 
                     if (CurrentStep >= StepSize)
                     {

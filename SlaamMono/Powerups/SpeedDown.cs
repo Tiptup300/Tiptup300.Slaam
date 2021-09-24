@@ -41,7 +41,7 @@ namespace SlaamMono
                     ParentGameScreen.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
             }
 
-            CurrentTime -= FPSManager.MovementFactorTimeSpan;
+            CurrentTime -= FrameRateDirector.MovementFactorTimeSpan;
 
             if (CurrentTime <= TimeSpan.Zero)
                 EndAttack();

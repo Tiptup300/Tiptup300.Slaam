@@ -64,7 +64,7 @@ namespace SlaamMono
 
             if (Active)
             {
-                TextCoords.Y -= MovementSpeed * FPSManager.MovementFactor;
+                TextCoords.Y -= MovementSpeed * FrameRateDirector.MovementFactor;
             }
 
             if (TextCoords.Y < -TextHeight - 50)

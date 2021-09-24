@@ -29,7 +29,7 @@ namespace SlaamMono
 
         public override void UpdateAttack()
         {
-            CurrentTime -= FPSManager.MovementFactorTimeSpan;
+            CurrentTime -= FrameRateDirector.MovementFactorTimeSpan;
 
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
 

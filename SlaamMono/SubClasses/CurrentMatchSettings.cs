@@ -161,7 +161,7 @@ namespace SlaamMono
 
             BoardLocation = boardloc;
 
-            XNAContentWriter writer = new XNAContentWriter(DialogStrings.MatchSettingsFilename);
+            XnaContentWriter writer = new XnaContentWriter(DialogStrings.MatchSettingsFilename);
 
             for (int x = 0; x < 6; x++)
             {
@@ -173,14 +173,14 @@ namespace SlaamMono
             writer.Close();
         }
 
-        private static XNAContentReader reader;
+        private static XnaContentReader reader;
 
         public static void ReadValues(LobbyScreen parent)
         {
             try
             {
 
-                reader = new XNAContentReader(TextLogger.Instance, DialogStrings.MatchSettingsFilename);
+                reader = new XnaContentReader(TextLogger.Instance, DialogStrings.MatchSettingsFilename);
 
                 if (reader.IsWrongVersion())
                 {

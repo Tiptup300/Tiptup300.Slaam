@@ -2,7 +2,7 @@
 
 namespace SlaamMono
 {
-    public class XNAContentReader
+    public class XnaContentReader
     {
         public bool WasNotFound = false;
 
@@ -10,7 +10,7 @@ namespace SlaamMono
 
         private readonly ILogger _logger;
 
-        public XNAContentReader(
+        public XnaContentReader(
             ILogger logger,
             string filename
             )

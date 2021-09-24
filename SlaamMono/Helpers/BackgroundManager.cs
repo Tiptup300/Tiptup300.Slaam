@@ -28,13 +28,13 @@ namespace SlaamMono
         {
             if (CurrentType == BackgroundType.BattleScreen)
             {
-                BGOffset += FPSManager.MovementFactor * (10f / 100f);
+                BGOffset += FrameRateDirector.MovementFactor * (10f / 100f);
                 if (BGOffset >= GameGlobals.DRAWING_GAME_HEIGHT)
                     BGOffset = 0;
             }
             else if (CurrentType == BackgroundType.Menu)
             {
-                Rotation += FPSManager.MovementFactor * RotationSpeed * Multiplier;
+                Rotation += FrameRateDirector.MovementFactor * RotationSpeed * Multiplier;
             }
         }
 

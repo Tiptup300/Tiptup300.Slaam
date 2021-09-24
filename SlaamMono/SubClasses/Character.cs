@@ -83,7 +83,7 @@ namespace SlaamMono
                 GameScreen.Instance.PauseGame(this.PlayerIndex);
 
             if (Lives > 0)
-                TimeAlive += FPSManager.MovementFactorTimeSpan;
+                TimeAlive += FrameRateDirector.MovementFactorTimeSpan;
 
             if (CurrentCoordinates.X >= GameGlobals.BOARD_WIDTH || CurrentCoordinates.Y >= GameGlobals.BOARD_HEIGHT || CurrentCoordinates.X < 0 || CurrentCoordinates.Y < 0)
                 throw new Exception("Character Exited Bounds, Error Currently being worked on.");
@@ -101,12 +101,12 @@ namespace SlaamMono
 
             if (CurrentState == CharacterState.Normal)
             {
-                float Movement = FPSManager.MovementFactor * SpeedOfMovement;
+                float Movement = FrameRateDirector.MovementFactor * SpeedOfMovement;
 
                 for (int x = 0; x < SpeedMultiplyer.Length; x++)
                     Movement *= SpeedMultiplyer[x];
 
-                WalkingAnimationChange.Update(FPSManager.MovementFactorTimeSpan);
+                WalkingAnimationChange.Update(FrameRateDirector.MovementFactorTimeSpan);
 
                 if (Movement < 50f)
                 {
@@ -178,7 +178,7 @@ namespace SlaamMono
                 {
                     CurrentState = CharacterState.Attacking;
                     currAni = new IntRange(3, 3, 4);
-                    AttackingAnimationChange.Update(FPSManager.MovementFactorTimeSpan);
+                    AttackingAnimationChange.Update(FrameRateDirector.MovementFactorTimeSpan);
                 }
 
                 
@@ -186,7 +186,7 @@ namespace SlaamMono
             }
             else if (CurrentState == CharacterState.Attacking)
             {
-                AttackingAnimationChange.Update(FPSManager.MovementFactorTimeSpan);
+                AttackingAnimationChange.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (AttackingAnimationChange.Active)
                 {
                     currAni.Add(1);
@@ -245,7 +245,7 @@ namespace SlaamMono
             {
                 currAni.Value = 3;
                 Row = 0;
-                FadeThrottle.Update(FPSManager.MovementFactorTimeSpan);
+                FadeThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (FadeThrottle.Active)
                     Alpha -= 10.625f;
                 if (Alpha <= 0)
@@ -258,7 +258,7 @@ namespace SlaamMono
             }
             else if (CurrentState == CharacterState.Dead && Lives > 0)
             {
-                ReappearTime.Update(FPSManager.MovementFactorTimeSpan);
+                ReappearTime.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (ReappearTime.Active)
                 {
                     CurrentState = CharacterState.Respawning;
@@ -425,7 +425,7 @@ namespace SlaamMono
                     )
             {
                 CurrentState = CharacterState.Dieing;
-                FadeThrottle.Update(FPSManager.MovementFactorTimeSpan);
+                FadeThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             }
         }
 
@@ -444,7 +444,7 @@ namespace SlaamMono
             GameScreen.Instance.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex);
 
             CurrentState = CharacterState.Dead;
-            ReappearTime.Update(FPSManager.MovementFactorTimeSpan);
+            ReappearTime.Update(FrameRateDirector.MovementFactorTimeSpan);
         }
         
         /// <summary>

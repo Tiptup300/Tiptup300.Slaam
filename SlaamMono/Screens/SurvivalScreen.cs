@@ -39,7 +39,7 @@ namespace SlaamMono
         {
             if (CurrentGameStatus == GameStatus.Playing)
             {
-                TimeToAddBot.Update(FPSManager.MovementFactorTimeSpan);
+                TimeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (TimeToAddBot.Active)
                 {
                     for (int x = 0; x < BotsToAdd+1; x++)
@@ -83,7 +83,7 @@ namespace SlaamMono
             {
                 CurrentGameStatus = GameStatus.Over;
                 ReadySetGoPart = 3;
-                ReadySetGoThrottle.Update(FPSManager.MovementFactorTimeSpan);
+                ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             }
 
             //base.ReportKilling(Killer, Killee);

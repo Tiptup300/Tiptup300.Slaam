@@ -37,7 +37,7 @@ namespace SlaamMono
         {
             if (!hasShown)
             {
-                LogoColor.Update(FPSManager.MovementFactorTimeSpan);
+                LogoColor.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (LogoColor.IsFinished())
                 {
                     hasShown = true;
@@ -46,8 +46,8 @@ namespace SlaamMono
             }
             else
             {
-                displaytime.Update(FPSManager.MovementFactorTimeSpan);
-                LogoColor.Update(FPSManager.MovementFactorTimeSpan);
+                displaytime.Update(FrameRateDirector.MovementFactorTimeSpan);
+                LogoColor.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (displaytime.Active)
                 {
                     LogoColor.Reverse(null);

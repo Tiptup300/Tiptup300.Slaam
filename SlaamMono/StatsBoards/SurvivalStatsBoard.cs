@@ -138,7 +138,7 @@ namespace SlaamMono
 
         public void XNALoadHighScores()
         {
-            XNAContentReader reader = new XNAContentReader(TextLogger.Instance, DialogStrings.SurvivalScoresFilename);
+            XnaContentReader reader = new XnaContentReader(TextLogger.Instance, DialogStrings.SurvivalScoresFilename);
 
             reader.IsWrongVersion();
 
@@ -174,7 +174,7 @@ namespace SlaamMono
 
         public void XNASaveHighScores()
         {
-            XNAContentWriter writer = new XNAContentWriter(DialogStrings.SurvivalScoresFilename);
+            XnaContentWriter writer = new XnaContentWriter(DialogStrings.SurvivalScoresFilename);
 
             
             writer.Write(PeopleToCompare.Length);

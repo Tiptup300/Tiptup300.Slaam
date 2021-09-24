@@ -3,11 +3,11 @@ using System.IO;
 
 namespace SlaamMono
 {
-    public class XNAContentWriter
+    public class XnaContentWriter
     {
         BinaryWriter writer;
 
-        public XNAContentWriter(string filename)
+        public XnaContentWriter(string filename)
         {
 
             filename = Path.Combine(Directory.GetCurrentDirectory(), filename);

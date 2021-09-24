@@ -155,9 +155,9 @@ namespace SlaamMono
                         if (CurrentStatus != Status.Stationary)
                         {
                                 if (CurrentStatus == Status.Lowering)
-                                    Offset -= FPSManager.MovementFactor * ScrollSpeed;
+                                    Offset -= FrameRateDirector.MovementFactor * ScrollSpeed;
                                 else
-                                    Offset += FPSManager.MovementFactor * ScrollSpeed;
+                                    Offset += FrameRateDirector.MovementFactor * ScrollSpeed;
 
                                 Positions[1] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset - 70);
                                 Positions[2] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset);

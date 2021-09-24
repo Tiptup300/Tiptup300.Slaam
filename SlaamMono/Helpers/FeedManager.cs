@@ -46,13 +46,13 @@ namespace SlaamMono
             {
                 if (FeedRect.Width >= 1280)
                 {
-                    TextX -= (FPSManager.MovementFactor * TextMovement);
+                    TextX -= (FrameRateDirector.MovementFactor * TextMovement);
                     if (TextX <= FeedText.Length * -8)
                         TextX = 1350;
                 }
                 else
                 {
-                    FeedRect.Width += (int)(FPSManager.MovementFactor * BarMovement);
+                    FeedRect.Width += (int)(FrameRateDirector.MovementFactor * BarMovement);
                 }
             }
         }

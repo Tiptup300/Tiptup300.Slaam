@@ -30,7 +30,7 @@ namespace SlaamMono
 
         public static void LoadProfiles()
         {
-            XNAContentReader reader = new XNAContentReader(TextLogger.Instance, DialogStrings.ProfileFilename);
+            XnaContentReader reader = new XnaContentReader(TextLogger.Instance, DialogStrings.ProfileFilename);
 
             filefound = !reader.WasNotFound;
 
@@ -94,7 +94,7 @@ namespace SlaamMono
 
         public static void SaveProfiles()
         {
-            XNAContentWriter writer = new XNAContentWriter(DialogStrings.ProfileFilename);
+            XnaContentWriter writer = new XnaContentWriter(DialogStrings.ProfileFilename);
 
             writer.Write(AllProfiles.Count-1);
 

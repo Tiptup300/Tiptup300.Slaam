@@ -69,19 +69,19 @@ namespace SlaamMono
                         }
                     }
                 }
-                FallSpeed.Update(FPSManager.MovementFactorTimeSpan);
+                FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (FallSpeed.Active)
                     CurrentTileCondition = TileCondition.Normal;
             }
             if (CurrentTileCondition == TileCondition.Marked)
             {
-                FallSpeed.Update(FPSManager.MovementFactorTimeSpan);
+                FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (FallSpeed.Active)
                     CurrentTileCondition = TileCondition.Clearing;
             }
             if (CurrentTileCondition == TileCondition.Clearing)
             {
-                FadeThrottle.Update(FPSManager.MovementFactorTimeSpan);
+                FadeThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (FadeThrottle.Active)
                     Alpha -= 12.75f;
 
@@ -90,14 +90,14 @@ namespace SlaamMono
             }
             if (CurrentTileCondition == TileCondition.Clear && !Dead)
             {
-                ReappearSpeed.Update(FPSManager.MovementFactorTimeSpan);
+                ReappearSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (ReappearSpeed.Active)
                     ResetTile();
             }
             if (Alpha <= 0 && CurrentTileCondition == TileCondition.Clearing)
             {
                 CurrentTileCondition = TileCondition.Clear;
-                ReappearSpeed.Update(FPSManager.MovementFactorTimeSpan);
+                ReappearSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
             }
         }
 
@@ -145,7 +145,7 @@ namespace SlaamMono
             MarkedColor = markingcolor;
             CurrentTileCondition = TileCondition.RespawnPoint;
             FallSpeed.Threshold = Delay;
-            FallSpeed.Update(FPSManager.MovementFactorTimeSpan);
+            FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
             TileColor = Color.White;
         }
 
@@ -170,7 +170,7 @@ namespace SlaamMono
                 TileOverlayColor = new Color((byte)markingcolor.R, (byte)markingcolor.G, (byte)markingcolor.B, (byte)127);
                 CurrentTileCondition = TileCondition.Marked;
                 FallSpeed.Threshold = FallDelay;
-                FallSpeed.Update(FPSManager.MovementFactorTimeSpan);
+                FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
                 TileColor = Color.White;
                 Dead = cominback;
             }

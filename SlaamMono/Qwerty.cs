@@ -91,14 +91,14 @@ namespace SlaamMono
         {
             if (Status == QwertyStatus.GoingUp)
             {
-                BoardPosition.Y -= FPSManager.MovementFactor * MovementSpeed;
+                BoardPosition.Y -= FrameRateDirector.MovementFactor * MovementSpeed;
                 
                 if (BoardPosition.Y <= TargetPosition.Y)
                     Status = QwertyStatus.Normal;
             }
             else if (Status == QwertyStatus.GoingDown)
             {
-                BoardPosition.Y += FPSManager.MovementFactor * MovementSpeed;
+                BoardPosition.Y += FrameRateDirector.MovementFactor * MovementSpeed;
 
                 if (BoardPosition.Y >= 1024)
                     Active = false;

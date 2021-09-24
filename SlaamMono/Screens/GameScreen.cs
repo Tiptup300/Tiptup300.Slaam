@@ -100,7 +100,7 @@ namespace SlaamMono
                 }
             }
             ScoreKeeper = new MatchScoreCollection(this);
-            ReadySetGoThrottle.Update(FPSManager.MovementFactorTimeSpan);
+            ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.BattleScreen);
             AudioManager.Play(AudioManager.SFX.GameScreenMusic);
 
@@ -227,7 +227,7 @@ namespace SlaamMono
 
                 if (CurrentGameStatus == GameStatus.MovingBoard)
                 {
-                    Boardpos.Y += FPSManager.MovementFactor * (10f / 100f);
+                    Boardpos.Y += FrameRateDirector.MovementFactor * (10f / 100f);
 
                     if (Boardpos.Y >= FinalBoardPosition.Y)
                     {
@@ -244,7 +244,7 @@ namespace SlaamMono
                 }
                 else if (CurrentGameStatus == GameStatus.Respawning)
                 {
-                    ReadySetGoThrottle.Update(FPSManager.MovementFactorTimeSpan);
+                    ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
                     if (ReadySetGoThrottle.Active)
                     {
                         Scoreboards[ReadySetGoPart].Moving = true;
@@ -254,7 +254,7 @@ namespace SlaamMono
                             CurrentGameStatus = GameStatus.Waiting;
                             ReadySetGoThrottle.Threshold = new TimeSpan(0, 0, 0, 1, 300);
                             ReadySetGoThrottle.Reset();
-                            ReadySetGoThrottle.Update(FPSManager.MovementFactorTimeSpan);
+                            ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
                             ReadySetGoPart = 0;
                             Timer.Moving = true;
                         }
@@ -262,7 +262,7 @@ namespace SlaamMono
                 }
                 else if (CurrentGameStatus == GameStatus.Waiting)
                 {
-                    ReadySetGoThrottle.Update(FPSManager.MovementFactorTimeSpan);
+                    ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
                     if (ReadySetGoThrottle.Active)
                     {
                         ReadySetGoPart++;
@@ -299,7 +299,7 @@ namespace SlaamMono
                             tiles[x, y].Update();
                         }
                     }
-                    PowerupTime.Update(FPSManager.MovementFactorTimeSpan);
+                    PowerupTime.Update(FrameRateDirector.MovementFactorTimeSpan);
                     if (PowerupTime.Active)
                     {
                         bool found = true;
@@ -327,7 +327,7 @@ namespace SlaamMono
                 else if (CurrentGameStatus == GameStatus.Over)
                 {
                     Timing = false;
-                    ReadySetGoThrottle.Update(FPSManager.MovementFactorTimeSpan);
+                    ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
                     if (ReadySetGoThrottle.Active)
                         EndGame();
                 }
@@ -551,7 +551,7 @@ namespace SlaamMono
             {
                 CurrentGameStatus = GameStatus.Over;
                 ReadySetGoPart = 3;
-                ReadySetGoThrottle.Update(FPSManager.MovementFactorTimeSpan);
+                ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             }
         }
 

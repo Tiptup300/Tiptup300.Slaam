@@ -70,7 +70,7 @@ namespace SlaamMono
             }
             else
             {
-                Alpha += (AlphaUp ? 1 : -1) * FPSManager.MovementFactor * MovementSpeed;
+                Alpha += (AlphaUp ? 1 : -1) * FrameRateDirector.MovementFactor * MovementSpeed;
 
                 if (AlphaUp && Alpha >= 255f)
                 {
@@ -85,7 +85,7 @@ namespace SlaamMono
 
                 if (Chosen)
                 {
-                    SizeIncrease += FPSManager.MovementFactor * .01f;
+                    SizeIncrease += FrameRateDirector.MovementFactor * .01f;
 
                     if (SizeIncrease >= 1.50f)
                     {
@@ -106,7 +106,7 @@ namespace SlaamMono
                 }
                 else
                 {
-                    SizeIncrease -= FPSManager.MovementFactor * .01f;
+                    SizeIncrease -= FrameRateDirector.MovementFactor * .01f;
 
                     if (SizeIncrease <= 1.00f)
                     {
@@ -133,7 +133,7 @@ namespace SlaamMono
 
                     if (Vertical == Direction.Down)
                     {
-                        VOffset -= FPSManager.MovementFactor * MovementSpeed;
+                        VOffset -= FrameRateDirector.MovementFactor * MovementSpeed;
 
                         if (VOffset <= -DrawSizeHeight)
                         {
@@ -144,7 +144,7 @@ namespace SlaamMono
                     }
                     else if (Vertical == Direction.Up)
                     {
-                        VOffset += FPSManager.MovementFactor * MovementSpeed;
+                        VOffset += FrameRateDirector.MovementFactor * MovementSpeed;
 
                         if (VOffset >= DrawSizeHeight)
                         {
@@ -156,7 +156,7 @@ namespace SlaamMono
 
                     if (Horizontal == Direction.Left)
                     {
-                        HOffset += FPSManager.MovementFactor * MovementSpeed;
+                        HOffset += FrameRateDirector.MovementFactor * MovementSpeed;
 
                         if (HOffset >= DrawSizeWidth)
                         {
@@ -167,7 +167,7 @@ namespace SlaamMono
                     }
                     else if (Horizontal == Direction.Right)
                     {
-                        HOffset -= FPSManager.MovementFactor * MovementSpeed;
+                        HOffset -= FrameRateDirector.MovementFactor * MovementSpeed;
 
                         if (HOffset <= -DrawSizeWidth)
                         {

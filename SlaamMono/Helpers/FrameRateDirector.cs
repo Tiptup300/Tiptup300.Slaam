@@ -1,15 +1,13 @@
-#region Using Statements
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-#endregion
+using System;
+
 
 namespace SlaamMono
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class FPSManager : Microsoft.Xna.Framework.DrawableGameComponent
+    public class FrameRateDirector : Microsoft.Xna.Framework.DrawableGameComponent
     {
         public static float MovementFactor { private set; get; }
         public static TimeSpan MovementFactorTimeSpan { get { return new TimeSpan(0, 0, 0, 0, (int)MovementFactor); } }
@@ -21,7 +19,7 @@ namespace SlaamMono
 
         public static int FUPS { private set; get; }
 
-        public FPSManager(Game game)
+        public FrameRateDirector(Game game)
             : base(game)
         {
             // TODO: Construct any child components here

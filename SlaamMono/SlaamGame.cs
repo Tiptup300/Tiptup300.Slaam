@@ -70,7 +70,7 @@ namespace SlaamMono
         /// </summary>
         protected override void Initialize()
         {
-            Components.Insert(0, new FPSManager(this));
+            Components.Insert(0, new FrameRateDirector(this));
             Components.Add(new AudioManager(this));
             Components.Add(new InputComponent(this));
 
@@ -197,7 +197,7 @@ namespace SlaamMono
 
             if (ShowFPS)
             {
-                string temp = ""+FPSManager.FUPS;
+                string temp = ""+FrameRateDirector.FUPS;
                 Vector2 fpsBack = Resources.SegoeUIx32pt.MeasureString(temp);
                 gamebatch.Draw(Resources.Dot, new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
                 Resources.DrawString(temp, new Vector2(5, fpsBack.Y / 2f), Resources.SegoeUIx32pt, FontAlignment.Left, Color.White, true);
