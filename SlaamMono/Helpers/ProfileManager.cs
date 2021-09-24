@@ -30,7 +30,7 @@ namespace SlaamMono
 
         public static void LoadProfiles()
         {
-            XNAContentReader reader = new XNAContentReader(DialogStrings.ProfileFilename);
+            XNAContentReader reader = new XNAContentReader(TextLogger.Instance, DialogStrings.ProfileFilename);
 
             filefound = !reader.WasNotFound;
 

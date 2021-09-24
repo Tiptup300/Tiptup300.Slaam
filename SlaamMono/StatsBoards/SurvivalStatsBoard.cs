@@ -138,7 +138,7 @@ namespace SlaamMono
 
         public void XNALoadHighScores()
         {
-            XNAContentReader reader = new XNAContentReader(DialogStrings.SurvivalScoresFilename);
+            XNAContentReader reader = new XNAContentReader(TextLogger.Instance, DialogStrings.SurvivalScoresFilename);
 
             reader.IsWrongVersion();
 

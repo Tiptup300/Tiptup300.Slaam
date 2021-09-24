@@ -180,7 +180,7 @@ namespace SlaamMono
             try
             {
 
-                reader = new XNAContentReader(DialogStrings.MatchSettingsFilename);
+                reader = new XNAContentReader(TextLogger.Instance, DialogStrings.MatchSettingsFilename);
 
                 if (reader.IsWrongVersion())
                 {

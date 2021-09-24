@@ -1,20 +1,20 @@
 ﻿namespace SlaamMono
 {
-    public static class XNAContentManager
+    public class XnaContentManager
     {
-        public static bool NeedsDevice = true;
+        public bool NeedsDevice => _needsDevice;
+        private bool _needsDevice = true;
 
-        // todo
-        public readonly static ILogger _logger = TextLogger.Instance;
+        public ILogger _logger;
 
-        public static void Initialize()
+        public XnaContentManager(ILogger logger)
         {
-
+            _logger = logger;
         }
 
-        public static void Update()
+        public void Update()
         {
-            NeedsDevice = false;
+            _needsDevice = false;
 
             ProfileManager.Initialize();
             _logger.Log("Profile Manager Created;");

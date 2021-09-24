@@ -26,15 +26,12 @@ namespace SlaamMono
     /// </summary>
     public class SlaamGame : Microsoft.Xna.Framework.Game
     {
-        #region Variables
 
         private GraphicsDeviceManager graphics;
         new public static ContentManager Content;
         private SpriteBatch gamebatch;
 
-#if ZUNE
         public static ZuneBlade mainBlade;
-#endif
         public static SlaamGame Instance { get { return instance; } }
 
         public static GraphicsDeviceManager Graphics { get { return instance.graphics; } }
@@ -43,7 +40,7 @@ namespace SlaamMono
 
         public static bool ShowFPS = false;
 
-        #endregion
+        private XnaContentManager _contentManager;
 
         #region Constructor
 
@@ -90,7 +87,7 @@ namespace SlaamMono
             instance = this;
             Resources.LoadAll();
             Qwerty.CurrentPlayer = InputComponent.Players[0];
-            XNAContentManager.Initialize();
+            _contentManager = new XnaContentManager(TextLogger.Instance);
 
             GameGlobals.SetupGame();
         }
@@ -135,11 +132,12 @@ namespace SlaamMono
             }
 #endif
 
-            if (XNAContentManager.NeedsDevice)
-                XNAContentManager.Update();
+            if (_contentManager.NeedsDevice)
+            {
+                _contentManager.Update();
+            }
             else
             {
-
                 BackgroundManager.Update();
                 FeedManager.Update();
                 
