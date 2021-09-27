@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace SlaamMono.Input
+namespace SlaamMono.Library.Input
 {
     public class InputDevice
     {
@@ -162,15 +162,15 @@ namespace SlaamMono.Input
             {
                 PressedAction = GamePad.PressedA;
 
-                PressedUp = (GamePad.PressedPadUp);
-                PressedDown = (GamePad.PressedPadDown);
-                PressedLeft = (GamePad.PressedPadLeft);
-                PressedRight = (GamePad.PressedPadRight);
+                PressedUp = GamePad.PressedPadUp;
+                PressedDown = GamePad.PressedPadDown;
+                PressedLeft = GamePad.PressedPadLeft;
+                PressedRight = GamePad.PressedPadRight;
 
-                PressingLeft = (GamePad.PressingPadLeft);
-                PressingRight = (GamePad.PressingPadRight);
-                PressingUp = (GamePad.PressingPadUp);
-                PressingDown = (GamePad.PressingPadDown);
+                PressingLeft = GamePad.PressingPadLeft;
+                PressingRight = GamePad.PressingPadRight;
+                PressingUp = GamePad.PressingPadUp;
+                PressingDown = GamePad.PressingPadDown;
             }
 
 #endif

@@ -1,4 +1,4 @@
-﻿namespace SlaamMono.Input
+﻿namespace SlaamMono.Library.Input
 {
     public enum InputDeviceType
     {

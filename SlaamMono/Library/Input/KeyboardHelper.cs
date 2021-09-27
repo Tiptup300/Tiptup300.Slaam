@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace SlaamMono.Input
+namespace SlaamMono.Library.Input
 {
     public class KeyboardHelper
     {
@@ -20,12 +20,12 @@ namespace SlaamMono.Input
 
         public bool PressedKey(Keys key)
         {
-            return (CurrentState.IsKeyDown(key) && !LastState.IsKeyDown(key));
+            return CurrentState.IsKeyDown(key) && !LastState.IsKeyDown(key);
         }
 
         public bool PressingKey(Keys key)
         {
-            return (CurrentState.IsKeyDown(key) && LastState.IsKeyDown(key));
+            return CurrentState.IsKeyDown(key) && LastState.IsKeyDown(key);
         }
 
     }

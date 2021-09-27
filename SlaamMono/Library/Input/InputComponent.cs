@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace SlaamMono.Input
+namespace SlaamMono.Library.Input
 {
     class InputComponent : GameComponent
     {

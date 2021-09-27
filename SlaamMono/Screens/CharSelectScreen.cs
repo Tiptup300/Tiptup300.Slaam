@@ -5,9 +5,9 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Linq;
-using SlaamMono.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Audio;
+using SlaamMono.Library.Input;
 
 namespace SlaamMono
 {

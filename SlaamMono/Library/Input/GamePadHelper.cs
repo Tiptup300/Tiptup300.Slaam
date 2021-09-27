@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace SlaamMono.Input
+namespace SlaamMono.Library.Input
 {
     public class GamePadHelper
     {
@@ -51,25 +51,25 @@ namespace SlaamMono.Input
         public bool PressingLeftShoulder { get { return Pressed(CurrentState.Buttons.LeftShoulder, LastState.Buttons.RightShoulder); } }
         public bool PressingRightShoulder { get { return Pressed(CurrentState.DPad.Up, LastState.DPad.Up); } }
 
-        public bool PressedLeftStickUp { get { return (CurrentState.ThumbSticks.Left.Y >= 0.5f && LastState.ThumbSticks.Left.Y <= 0.5f); } }
-        public bool PressedLeftStickDown { get { return (CurrentState.ThumbSticks.Left.Y <= -0.5f && LastState.ThumbSticks.Left.Y >= -0.5f); } }
-        public bool PressedLeftStickRight { get { return (CurrentState.ThumbSticks.Left.X >= 0.5f && LastState.ThumbSticks.Left.X <= 0.5f); } }
-        public bool PressedLeftStickLeft { get { return (CurrentState.ThumbSticks.Left.X <= -0.5f && LastState.ThumbSticks.Left.X >= -0.5f); } }
+        public bool PressedLeftStickUp { get { return CurrentState.ThumbSticks.Left.Y >= 0.5f && LastState.ThumbSticks.Left.Y <= 0.5f; } }
+        public bool PressedLeftStickDown { get { return CurrentState.ThumbSticks.Left.Y <= -0.5f && LastState.ThumbSticks.Left.Y >= -0.5f; } }
+        public bool PressedLeftStickRight { get { return CurrentState.ThumbSticks.Left.X >= 0.5f && LastState.ThumbSticks.Left.X <= 0.5f; } }
+        public bool PressedLeftStickLeft { get { return CurrentState.ThumbSticks.Left.X <= -0.5f && LastState.ThumbSticks.Left.X >= -0.5f; } }
 
-        public bool PressingLeftStickUp { get { return (CurrentState.ThumbSticks.Left.Y >= 0.5f); } }
-        public bool PressingLeftStickDown { get { return (CurrentState.ThumbSticks.Left.Y <= -0.5f); } }
-        public bool PressingLeftStickRight { get { return (CurrentState.ThumbSticks.Left.X >= 0.5f); } }
-        public bool PressingLeftStickLeft { get { return (CurrentState.ThumbSticks.Left.X <= -0.5f); } }
+        public bool PressingLeftStickUp { get { return CurrentState.ThumbSticks.Left.Y >= 0.5f; } }
+        public bool PressingLeftStickDown { get { return CurrentState.ThumbSticks.Left.Y <= -0.5f; } }
+        public bool PressingLeftStickRight { get { return CurrentState.ThumbSticks.Left.X >= 0.5f; } }
+        public bool PressingLeftStickLeft { get { return CurrentState.ThumbSticks.Left.X <= -0.5f; } }
 
 
         private bool Pressed(ButtonState last, ButtonState curr)
         {
-            return (last == ButtonState.Released) && (curr == ButtonState.Pressed);
+            return last == ButtonState.Released && curr == ButtonState.Pressed;
         }
 
         private bool Pressing(ButtonState last, ButtonState curr)
         {
-            return (last == ButtonState.Pressed) && (curr == ButtonState.Pressed);
+            return last == ButtonState.Pressed && curr == ButtonState.Pressed;
         }
     }
 }

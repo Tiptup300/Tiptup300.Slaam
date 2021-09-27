@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SlaamMono.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Audio;
+using SlaamMono.Library.Input;
 #if ZUNE
 using ZBlade;
 #endif 

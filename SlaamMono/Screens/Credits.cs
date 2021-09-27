@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using SlaamMono.Input;
 using SlaamMono.Library.Audio;
+using SlaamMono.Library.Input;
 
 namespace SlaamMono
 {
