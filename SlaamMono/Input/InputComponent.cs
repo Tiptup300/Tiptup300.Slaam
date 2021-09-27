@@ -1,26 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
 namespace SlaamMono.Input
 {
-    /// <summary>
-    /// Helper class to handle input from keyboards and gamepads.
-    /// </summary>
     class InputComponent : GameComponent
     {
-
-        #region Variables
-
         public static InputDevice[] Players;
 
         private static GamePadHelper playerOneGamePad = new GamePadHelper(PlayerIndex.One);
         private static KeyboardHelper keyboard = new KeyboardHelper();
-        #endregion
-
-        #region Constructor
 
         public InputComponent(Game game)
             : base(game)
@@ -38,10 +25,6 @@ namespace SlaamMono.Input
             base.Initialize();
         }
 
-        #endregion
-
-        #region Update
-
         public override void Update(GameTime gameTime)
         {
             playerOneGamePad.Update();
@@ -55,10 +38,6 @@ namespace SlaamMono.Input
 
             base.Update(gameTime);
         }
-
-        #endregion
-
-        #region Quick Device Get Methods
 
         /// <summary>
         /// Gets Input Index from the inputted ExtendedPlayerIndex
@@ -95,8 +74,6 @@ namespace SlaamMono.Input
         {
             return keyboard;
         }
-
-        #endregion
 
     }
 
