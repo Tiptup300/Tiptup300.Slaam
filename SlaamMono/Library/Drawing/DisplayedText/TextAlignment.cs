@@ -1,4 +1,4 @@
-﻿namespace SlaamMono
+﻿namespace SlaamMono.Library.Drawing.Text
 {
     public enum TextAlignment
     {

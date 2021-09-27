@@ -3,12 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.Library.Drawing.Text
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public partial class TextManager : DrawableGameComponent
+    public class TextManager : DrawableGameComponent
     {
         private SpriteBatch _batch;
         private List<TextEntry> _textToDraw = new List<TextEntry>();
@@ -22,28 +22,34 @@ namespace SlaamMono
         protected override void LoadContent()
         {
             _batch = new SpriteBatch(Game.GraphicsDevice);
+
             base.LoadContent();
         }
 
-        public void DrawString(SpriteFont fnt, Vector2 pos, String str, TextAlignment alignment, Color col)
+        public void DrawString(SpriteFont fnt, Vector2 pos, string str, TextAlignment alignment, Color col)
         {
             _textToDraw.Add(new TextEntry(fnt, pos, str, alignment, col));
         }
 
         public override void Draw(GameTime gameTime)
-        { 
-            _batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, Matrix.Identity);
+        {
+            _batch.Begin(
+                sortMode:SpriteSortMode.Immediate, 
+                blendState:BlendState.AlphaBlend, 
+                transformMatrix:Matrix.Identity);
 
-            for (int x = 0; x < _textToDraw.Count; x++)
-            {
-                _batch.DrawString(_textToDraw[x].Fnt, _textToDraw[x].Str, _textToDraw[x].Pos, _textToDraw[x].Col);
-            }
+            _textToDraw.ForEach(textLine => drawTextLine(textLine));
 
             _batch.End();
 
             _textToDraw.Clear();
 
             base.Draw(gameTime);
+        }
+
+        private void drawTextLine(TextEntry textLine)
+        {
+            _batch.DrawString(textLine.Fnt, textLine.Str, textLine.Pos, textLine.Col);
         }
     }
 }

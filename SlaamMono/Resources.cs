@@ -1,13 +1,11 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Library.Drawing.Text;
+using SlaamMono.Library.Logging;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
 using System.IO;
 using System.Linq;
-using SlaamMono.Library.Logging;
 
 namespace SlaamMono
 {
@@ -128,7 +126,7 @@ namespace SlaamMono
 
         private static ILogger _logger;
 
-#endregion
+        #endregion
 
         #region Constructor
 
@@ -151,7 +149,7 @@ namespace SlaamMono
             Dot = new Texture2D(SlaamGame.Graphics.GraphicsDevice, 1, 1);
 
             //Dot = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1, 1, TextureUsage.None, SurfaceFormat.Color);
-            Dot.SetData<Color>(new Color[] {Color.White});
+            Dot.SetData<Color>(new Color[] { Color.White });
             _logger.Log(" - Dot Image Created.");
 
 
@@ -244,7 +242,7 @@ namespace SlaamMono
             SlaamGame.mainBlade.CurrentGameInfo.GameIcon = LoadImage("Misc//ZBladeIcon");
 #endif
 
-            
+
 
             SegoeUIx32pt = LoadFont("SegoeUI-32pt");
             SegoeUIx14pt = LoadFont("SegoeUI-14pt");
@@ -288,12 +286,12 @@ namespace SlaamMono
                 output = SlaamGame.Content.Load<Texture2D>(loc);
                 _logger.Log(" - " + baseName + " Texture Loaded.");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.Log($"Texture at {loc} failed to load. Error: {ex.Message}");
                 output = new Texture2D(SlaamGame.Graphics.GraphicsDevice, 1, 1);
             }
-            return output; 
+            return output;
         }
 
         private static List<String> LoadStringList(string baseName)
@@ -373,7 +371,7 @@ namespace SlaamMono
             textmanager.DrawString(fnt, pos, str, alignment, col);
         }
 
-        
+
 
         #endregion
     }
