@@ -11,13 +11,16 @@ namespace SlaamMono
     class SurvivalScreen : GameScreen
     {
 
-        Timer TimeToAddBot = new Timer(new TimeSpan(0, 0, 10));
-        int BotsToAdd = 1;
-        int BotsAdded = 0;
+        private Timer _timeToAddBot = new Timer(new TimeSpan(0, 0, 10));
+        private int _botsToAdd = 1;
+        private int _botsAdded = 0;
 
-        public SurvivalScreen(List<CharacterShell> shell)
+        private readonly ILogger _logger; 
+
+        public SurvivalScreen(List<CharacterShell> shell, ILogger logger)
             : base(shell)
         {
+            _logger = logger;
         }
 
         public override void SetupTheBoard(string BoardLoc)
@@ -39,17 +42,17 @@ namespace SlaamMono
         {
             if (CurrentGameStatus == GameStatus.Playing)
             {
-                TimeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (TimeToAddBot.Active)
+                _timeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
+                if (_timeToAddBot.Active)
                 {
-                    for (int x = 0; x < BotsToAdd+1; x++)
+                    for (int x = 0; x < _botsToAdd+1; x++)
                     {
                         AddNewBot();
-                        BotsAdded++;
+                        _botsAdded++;
 
-                        if (rand.Next(0, BotsAdded-1) == BotsAdded)
+                        if (rand.Next(0, _botsAdded-1) == _botsAdded)
                         {
-                            BotsToAdd++;
+                            _botsToAdd++;
                         }
                     }
                 }
@@ -92,7 +95,7 @@ namespace SlaamMono
         private void AddNewBot()
         {
             Characters.Add(new BotPlayer(
-                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + CharSelectScreen.ReturnRandSkin())//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, CharSelectScreen.Instance.ReturnRandSkin())
+                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + CharSelectScreen.ReturnRandSkin(_logger))//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, CharSelectScreen.Instance.ReturnRandSkin())
                 , ProfileManager.GetBotProfile(), new Vector2(-200, -200), this, Color.Black, Characters.Count));
             ProfileManager.ResetAllBots();
             base.RespawnChar(Characters.Count - 1);
@@ -109,9 +112,12 @@ namespace SlaamMono
 
     public class SurvivalCharSelectScreen : CharSelectScreen
     {
-        public SurvivalCharSelectScreen()
-            : base()
+        private ILogger _logger;
+
+        public SurvivalCharSelectScreen(ILogger logger)
+            : base(logger)
         {
+            _logger = logger;
         }
 
         public override void ResetBoxes()
@@ -130,7 +136,7 @@ namespace SlaamMono
         {
             List<CharacterShell> list = new List<CharacterShell>();
             list.Add(SelectBoxes[0].GetShell());
-            GameScreen.Instance = new SurvivalScreen(list);
+            GameScreen.Instance = new SurvivalScreen(list, _logger);
             ScreenHelper.ChangeScreen(GameScreen.Instance);
         }
     }

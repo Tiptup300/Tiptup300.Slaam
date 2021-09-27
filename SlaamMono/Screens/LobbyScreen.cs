@@ -27,14 +27,17 @@ namespace SlaamMono
         private bool ViewingSettings = false;
         public Graph MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150));
         private IntRange MenuChoice;
+
+        private readonly ILogger _logger;
         #endregion
 
         #region Constructor
 
-        public LobbyScreen(List<CharacterShell> chars)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger)
         {
             SetupChars = chars;
             PlayerAmt = SetupChars.Count;
+            _logger = logger;
 
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Columns.Add("SETTING");
@@ -183,7 +186,7 @@ namespace SlaamMono
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    ScreenHelper.ChangeScreen(new CharSelectScreen());
+                    ScreenHelper.ChangeScreen(new CharSelectScreen(TextLogger.Instance));
                     ProfileManager.ResetAllBots();
 #if ZUNE
                     ResetZune();
@@ -365,7 +368,7 @@ namespace SlaamMono
         /// </summary>
         private void AddComputer()
         {
-            SetupChars.Add(new CharacterShell(CharSelectScreen.ReturnRandSkin(), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, Resources.PlayerColors[SetupChars.Count]));
+            SetupChars.Add(new CharacterShell(CharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, Resources.PlayerColors[SetupChars.Count]));
         }
 
         #endregion

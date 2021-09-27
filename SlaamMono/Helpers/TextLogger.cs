@@ -12,14 +12,15 @@ namespace SlaamMono
 
         private TextWriter _textWriter;
 
-        /// <summary>
-        /// Prepares the log for writing.
-        /// </summary>
-        public void Begin()
+        public TextLogger()
         {
             _textWriter = File.CreateText("log.log");
 
 
+        }
+
+        public void Begin()
+        {
             Log("=======================================");
             Log("Slaam! - Logfile (for errors)");
             Log(" Created by Tiptup300");

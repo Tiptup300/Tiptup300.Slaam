@@ -14,24 +14,23 @@ namespace SlaamMono
 {
     public class MenuScreen : IScreen
     {
-        #region Variables
-
         public MenuItemTree MainMenuList = new MenuItemTree("");
         public MenuItemTree CurrentTree;
 
-        public static MenuScreen Instance { get { return instance; } }
-        private static MenuScreen instance = new MenuScreen();
+        public static MenuScreen Instance { get { return _instance; } }
+        private static MenuScreen _instance;
 
-#if !ZUNE
-        private int SelectedIndex = 0;
-        private Transition MenuChoiceOffset = new Transition(null, new Vector2(0, 0), new Vector2(0, 0), TimeSpan.FromSeconds(.5));
-#endif
-        #endregion
-
-        #region Constructor
-
-        public MenuScreen()
+        public static void InitInstance(ILogger logger)
         {
+            _instance = new MenuScreen(logger);
+        }
+
+        private readonly ILogger _logger;
+
+
+        public MenuScreen(ILogger logger)
+        {
+            _logger = logger;
             AudioManager.Play(AudioManager.SFX.MenuMusic);
         }
 
@@ -40,10 +39,10 @@ namespace SlaamMono
             if (MainMenuList.Nodes.Count == 0)
             {
                 MenuTextItem competition = new MenuTextItem("Competition");
-                competition.Activated += delegate { ChangeScreen(new CharSelectScreen()); };
+                competition.Activated += delegate { ChangeScreen(new CharSelectScreen(TextLogger.Instance)); };
 
                 MenuTextItem survival = new MenuTextItem("Survival");
-                survival.Activated += delegate { ChangeScreen(new SurvivalCharSelectScreen()); };
+                survival.Activated += delegate { ChangeScreen(new SurvivalCharSelectScreen(_logger)); };
 
 
                 MenuItemTree options = new MenuItemTree("Options", MainMenuList);
@@ -106,12 +105,9 @@ namespace SlaamMono
 
         void competition_onSelected(object sender, EventArgs e)
         {
-            ScreenHelper.ChangeScreen(new CharSelectScreen());
+            ScreenHelper.ChangeScreen(new CharSelectScreen(TextLogger.Instance));
         }
 
-        #endregion
-
-        #region Update
 
         public void Update()
         {
@@ -159,9 +155,6 @@ namespace SlaamMono
 #endif
         }
 
-        #endregion
-
-        #region Draw
 
         public void Draw(SpriteBatch batch)
         {
@@ -199,19 +192,11 @@ namespace SlaamMono
             batch.DrawString(Resources.SegoeUIx48ptBold, text, position + new Vector2(0,Resources.MenuChoice.Height), Color.White, 0f, Resources.SegoeUIx48ptBold.MeasureString(text) / 2f, 1f, SpriteEffects.FlipVertically, 0);
         }
 
-        #endregion
-
-        #region Dispose
 
         public void Dispose()
         {
         }
 
-        #endregion
-
-        #region Structs & Enums
-
-        #endregion
 
     }
 

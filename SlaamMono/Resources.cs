@@ -125,13 +125,15 @@ namespace SlaamMono
         public static Texture2D[] PU_Inversion = new Texture2D[2];
         public static Texture2D[] PU_Slaam = new Texture2D[2];
 
+        private static ILogger _logger;
+
 #endregion
 
         #region Constructor
 
         static Resources()
         {
-
+            _logger = TextLogger.Instance;
         }
 
         #endregion
@@ -143,13 +145,13 @@ namespace SlaamMono
         /// </summary>
         public static void LoadAll()
         {
-            TextLogger.Instance.Log("Resources Loading...");
+            _logger.Log("Resources Loading...");
 
             Dot = new Texture2D(SlaamGame.Graphics.GraphicsDevice, 1, 1);
 
             //Dot = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1, 1, TextureUsage.None, SurfaceFormat.Color);
             Dot.SetData<Color>(new Color[] {Color.White});
-            TextLogger.Instance.Log(" - Dot Image Created.");
+            _logger.Log(" - Dot Image Created.");
 
 
 #if !ZUNE
@@ -254,7 +256,7 @@ namespace SlaamMono
             LoadPowerup(PU_Inversion, "Inversion");
             LoadPowerup(PU_Slaam, "Slaam");
 
-            TextLogger.Instance.Log("All Resources Finished Loading;");
+            _logger.Log("All Resources Finished Loading;");
             textmanager = new TextManager(SlaamGame.Instance);
             SlaamGame.Instance.Components.Add(textmanager);
         }
@@ -283,11 +285,11 @@ namespace SlaamMono
             try
             {
                 output = SlaamGame.Content.Load<Texture2D>(loc);
-                TextLogger.Instance.Log(" - " + baseName + " Texture Loaded.");
+                _logger.Log(" - " + baseName + " Texture Loaded.");
             }
             catch(Exception ex)
             {
-                TextLogger.Instance.Log($"Texture at {loc} failed to load. Error: {ex.Message}");
+                _logger.Log($"Texture at {loc} failed to load. Error: {ex.Message}");
                 output = new Texture2D(SlaamGame.Graphics.GraphicsDevice, 1, 1);
             }
             return output; 
@@ -320,7 +322,7 @@ namespace SlaamMono
         private static SpriteFont LoadFont(string baseName)
         {
             SpriteFont temp = SlaamGame.Content.Load<SpriteFont>(string.Format("content\\{0}", baseName));
-            TextLogger.Instance.Log(" - " + baseName + " Font Loaded.");
+            _logger.Log(" - " + baseName + " Font Loaded.");
             return temp;
         }
 

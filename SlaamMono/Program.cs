@@ -4,24 +4,24 @@ namespace SlaamMono
 {
     static class Program
     {
-        /// <summary>
-        /// Current version of Slaam! Running (for online purposes)
-        /// </summary>
         public static byte[] Version = new byte[] { 000, 000, 000, 002,};
+
+        private static ILogger _logger;
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main(string[] args)
         {
-            TextLogger.Instance.Begin();
+            _logger = new TextLogger();
 
-            TextLogger.Instance.Log("Program executed;");
-            TextLogger.Instance.Log("XNA Starting...");
+            _logger.Begin();
+            _logger.Log("Program executed;");
+            _logger.Log("XNA Starting...");
 
             try
             {
-            using (SlaamGame game = new SlaamGame())
+            using (SlaamGame game = new SlaamGame(_logger))
             {
                 game.Run();
             }
@@ -29,18 +29,18 @@ namespace SlaamMono
             }
             catch (Exception e)
             {
-                TextLogger.Instance.Log("Game Failed With Exit Message: ");
-                TextLogger.Instance.Log(e.Message);
+                _logger.Log("Game Failed With Exit Message: ");
+                _logger.Log(e.Message);
                 if (e.InnerException != null)
                 {
-                    TextLogger.Instance.Log(" --- INNER Exception --- ");
-                    TextLogger.Instance.Log(e.InnerException.ToString());
+                    _logger.Log(" --- INNER Exception --- ");
+                    _logger.Log(e.InnerException.ToString());
                 }
-                TextLogger.Instance.Log(" --- STACK TRACE --- ");
-                TextLogger.Instance.Log(e.StackTrace);
+                _logger.Log(" --- STACK TRACE --- ");
+                _logger.Log(e.StackTrace);
             }
 
-            TextLogger.Instance.End();
+            _logger.End();
         }
     }
 }

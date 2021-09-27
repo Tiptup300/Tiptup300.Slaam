@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SlaamMono
 {
-    static class ScreenHelper
+    public static class ScreenHelper
     {
         private static IScreen CurrentScreen = new LogoScreen();
         private static IScreen NextScreen;

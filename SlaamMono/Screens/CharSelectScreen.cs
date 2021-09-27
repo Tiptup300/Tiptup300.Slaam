@@ -13,8 +13,6 @@ namespace SlaamMono
     {
         #region Variables
 
-        public static List<String> Skins = new List<string>();
-        public static bool SkinsLoaded = false;
         public static Texture2D[] SkinTexture;
 
         private static Random rand = new Random();
@@ -27,21 +25,28 @@ namespace SlaamMono
         private const float VOffset = 195f;
         private const float HOffset = 40f;
 
+        private readonly ILogger _logger;
+
         #endregion
 
         #region Constructor
 
-        public CharSelectScreen()
+        public CharSelectScreen(ILogger logger)
         {
-            TextLogger.Instance.Log("----------------------------------");
-            TextLogger.Instance.Log("     Character Select Screen      ");
-            TextLogger.Instance.Log("----------------------------------");
-            TextLogger.Instance.Log("Attemping to load in all skins...");
-            LoadAllSkins();
-            TextLogger.Instance.Log("Listing of skins complete;");
+            _logger = logger;
+
+            _logger.Log("----------------------------------");
+            _logger.Log("     Character Select Screen      ");
+            _logger.Log("----------------------------------");
+            _logger.Log("Attemping to load in all skins...");
+
+            LoadAllSkins(_logger);
+
+            _logger.Log("Listing of skins complete;");
+
             if (Skins.Count < 1)
             {
-                TextLogger.Instance.Log("0 Skins were found, Program Abort");
+                _logger.Log("0 Skins were found, Program Abort");
                 SlaamGame.Instance.Exit();
             }
             else
@@ -58,7 +63,9 @@ namespace SlaamMono
                 if (SelectBoxes[x] != null)
                 {
                     if (SelectBoxes[x].CurrentState == CharSelectBoxState.Done)
+                    {
                         SelectBoxes[x].CurrentState = CharSelectBoxState.CharSelect;
+                    }
                     SelectBoxes[x].Reset();
                 }
             }
@@ -105,7 +112,7 @@ namespace SlaamMono
                 if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
                     templist.Add(SelectBoxes[idx].GetShell());
 
-            ScreenHelper.ChangeScreen(new LobbyScreen(templist));
+            ScreenHelper.ChangeScreen(new LobbyScreen(templist,_logger));
         }
 
         #endregion
@@ -132,21 +139,26 @@ namespace SlaamMono
 
         #region Extra Methods
 
+        public static List<String> Skins = new List<string>();
+        public static bool SkinsLoaded = false;
+
         /// <summary>
         /// Returns a random skin string.
         /// </summary>
         /// <returns></returns>
-        public static string ReturnRandSkin()
+        public static string ReturnRandSkin(ILogger logger)
         {
             if (!SkinsLoaded)
-                LoadAllSkins();
+            {
+                LoadAllSkins(logger);
+            }
             return Skins[rand.Next(0, Skins.Count)];
         }
 
         /// <summary>
         /// Loads all skins and checks them for the correct height/width
         /// </summary>
-        public static void LoadAllSkins()
+        private static void LoadAllSkins(ILogger logger)
         {
             if (!SkinsLoaded)
             {
@@ -154,7 +166,7 @@ namespace SlaamMono
                 for (int x = 0; x < skins.Count; x++)
                 {
                     Skins.Add(skins[x]);
-                    TextLogger.Instance.Log(" - \"" + skins[x] + "\" was added to listing.");
+                    logger.Log(" - \"" + skins[x] + "\" was added to listing.");
                 }
                 SkinTexture = new Texture2D[Skins.Count];
                 for (int y = 0; y < Skins.Count; y++)

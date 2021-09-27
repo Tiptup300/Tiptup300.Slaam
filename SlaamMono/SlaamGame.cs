@@ -42,15 +42,19 @@ namespace SlaamMono
 
         private XnaContentManager _contentManager;
 
+        private readonly ILogger _logger;
+
         #region Constructor
 
-        public SlaamGame()
+        public SlaamGame(ILogger logger)
         {
-            TextLogger.Instance.Log("XNA Started;");
+            _logger = logger;
+
+            _logger.Log("XNA Started;");
             graphics = new GraphicsDeviceManager(this);
-            TextLogger.Instance.Log("Graphics Device Manager Created;");
+            _logger.Log("Graphics Device Manager Created;");
             Content = new ContentManager(Services);
-            TextLogger.Instance.Log("Content Manager Created;");
+            _logger.Log("Content Manager Created;");
             this.Exiting += Game1_Exiting;
 
             graphics.IsFullScreen = false;
@@ -78,18 +82,20 @@ namespace SlaamMono
             SetupZuneBlade();
 #endif
             // TODO: Add your initialization logic here
-            TextLogger.Instance.Log("Creating SpriteBatch...");
+            _logger.Log("Creating SpriteBatch...");
             gamebatch = new SpriteBatch(graphics.GraphicsDevice);
-            TextLogger.Instance.Log("Created SpriteBatch;");
+            _logger.Log("Created SpriteBatch;");
             base.Initialize();
             
-            TextLogger.Instance.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
+            _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
             Resources.LoadAll();
             Qwerty.CurrentPlayer = InputComponent.Players[0];
             _contentManager = new XnaContentManager(TextLogger.Instance);
 
             GameGlobals.SetupGame();
+
+            MenuScreen.InitInstance(_logger);
         }
 #if ZUNE
         public void SetupZuneBlade()
