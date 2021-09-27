@@ -23,22 +23,15 @@ namespace SlaamMono
             Log("Log Started.");
         }
 
-
-        /// <summary>
-        /// Writes to log with formatting lines
-        /// </summary>
-        /// <param name="line">String to be written.</param>
         public void Log(string line)
         {
             _loggingDevice.Log(line);
             writeLineToConsle(line);
         }
 
-        private void writeLineToConsle(string line) => System.Console.WriteLine(line);
+        private void writeLineToConsle(string line) 
+            => System.Console.WriteLine(line);
 
-        /// <summary>
-        /// Closes the log.
-        /// </summary>
         public void End()
         {
             Log("Game Closed");
