@@ -39,7 +39,7 @@ namespace SlaamMono
             if (MainMenuList.Nodes.Count == 0)
             {
                 MenuTextItem competition = new MenuTextItem("Competition");
-                competition.Activated += delegate { ChangeScreen(new CharSelectScreen(TextLogger.Instance)); };
+                competition.Activated += delegate { ChangeScreen(new CharSelectScreen(_logger)); };
 
                 MenuTextItem survival = new MenuTextItem("Survival");
                 survival.Activated += delegate { ChangeScreen(new SurvivalCharSelectScreen(_logger)); };
@@ -52,7 +52,7 @@ namespace SlaamMono
                     manageProfiles.IsEnabled = false;
 
                     MenuTextItem highscores = new MenuTextItem("View Highscores");
-                    highscores.Activated += delegate { ChangeScreen(new HighScoreScreen()); };
+                    highscores.Activated += delegate { ChangeScreen(new HighScoreScreen(_logger)); };
 
                     MenuTextItem credits = new MenuTextItem("Credits");
                     credits.Activated += delegate { ChangeScreen(new Credits()); };
@@ -105,7 +105,7 @@ namespace SlaamMono
 
         void competition_onSelected(object sender, EventArgs e)
         {
-            ScreenHelper.ChangeScreen(new CharSelectScreen(TextLogger.Instance));
+            ScreenHelper.ChangeScreen(new CharSelectScreen(_logger));
         }
 
 

@@ -23,6 +23,7 @@ namespace SlaamMono
 
         public GameScreenTimer Timer;
         public List<CharacterShell> SetupChars = new List<CharacterShell>();
+        private readonly ILogger _logger;
         public List<Character> Characters = new List<Character>();
         public List<GameScreenScoreboard> Scoreboards = new List<GameScreenScoreboard>();
         public Tile[,] tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
@@ -71,9 +72,10 @@ namespace SlaamMono
 
         #region Constructor
 
-        public GameScreen(List<CharacterShell> chars)
+        public GameScreen(List<CharacterShell> chars, ILogger logger)
         {
             SetupChars = chars;
+            _logger = logger;
             ThisGameType = CurrentMatchSettings.GameType;
             SetupTheBoard(CurrentMatchSettings.BoardLocation);
             CurrentGameStatus = GameStatus.MovingBoard;
@@ -566,7 +568,7 @@ namespace SlaamMono
                 Characters[x].SaveProfileData();
             }
             ProfileManager.SaveProfiles();
-            ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper));
+            ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper, _logger));
         }
 
         #endregion

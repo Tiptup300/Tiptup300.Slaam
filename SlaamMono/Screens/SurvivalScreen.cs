@@ -18,7 +18,7 @@ namespace SlaamMono
         private readonly ILogger _logger; 
 
         public SurvivalScreen(List<CharacterShell> shell, ILogger logger)
-            : base(shell)
+            : base(shell, logger)
         {
             _logger = logger;
         }
@@ -106,7 +106,7 @@ namespace SlaamMono
             if (ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame < Timer.CurrentGameTime)
                 ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame = Timer.CurrentGameTime;
             ProfileManager.SaveProfiles();
-            ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper));
+            ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper, _logger));
         }
     }
 

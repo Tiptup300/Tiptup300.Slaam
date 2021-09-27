@@ -16,7 +16,7 @@
         {
             _needsDevice = false;
 
-            ProfileManager.Initialize();
+            ProfileManager.Initialize(_logger);
             _logger.Log("Profile Manager Created;");
 
         }

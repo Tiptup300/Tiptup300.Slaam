@@ -16,10 +16,14 @@ namespace SlaamMono
         private int NewScoreLoc;
         private int RowsToDraw;
 
+        private ILogger _logger;
 
-        public SurvivalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, int rowstodraw)
+
+        public SurvivalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, int rowstodraw, ILogger logger)
             : base(scorekeeper)
         {
+            _logger = logger;
+
             MainBoard = new Graph(rect, 2, col);
             RowsToDraw = rowstodraw;
         }
@@ -138,7 +142,7 @@ namespace SlaamMono
 
         public void XNALoadHighScores()
         {
-            XnaContentReader reader = new XnaContentReader(TextLogger.Instance, DialogStrings.SurvivalScoresFilename);
+            XnaContentReader reader = new XnaContentReader(_logger, DialogStrings.SurvivalScoresFilename);
 
             reader.IsWrongVersion();
 

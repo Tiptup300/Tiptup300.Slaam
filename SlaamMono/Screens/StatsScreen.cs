@@ -12,7 +12,7 @@ namespace SlaamMono
         #region Variables
 
         public MatchScoreCollection ScoreCollection;
-
+        private readonly ILogger _logger;
         private IntRange CurrentPage = new IntRange(0, 0, 2);
         private IntRange CurrentChar;
 
@@ -35,20 +35,27 @@ namespace SlaamMono
 
         #region Constructor
 
-        public StatsScreen(MatchScoreCollection scorecollection)
+        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger)
         {
             ScoreCollection = scorecollection;
+            _logger = logger;
         }
 
         public void Initialize()
         {
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
             if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Classic)
+            {
                 PlayerStats = new NormalStatsBoard(ScoreCollection, StatsRect, StatsCol);
+            }
             else if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Spree || ScoreCollection.ParentGameScreen.ThisGameType == GameType.TimedSpree)
-                PlayerStats = new SpreeStatsBoard(ScoreCollection, StatsRect, StatsCol);
+            { 
+                PlayerStats = new SpreeStatsBoard(ScoreCollection, StatsRect, StatsCol); 
+            }
             else if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival)
-                PlayerStats = new SurvivalStatsBoard(ScoreCollection, StatsRect, StatsCol,MAX_HIGHSCORES);
+            {
+                PlayerStats = new SurvivalStatsBoard(ScoreCollection, StatsRect, StatsCol, MAX_HIGHSCORES, _logger);
+            }
 
             PlayerStats.CalculateStats();
             PlayerStats.ConstructGraph(0);

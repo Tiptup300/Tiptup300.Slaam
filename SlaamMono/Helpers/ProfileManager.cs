@@ -18,19 +18,23 @@ namespace SlaamMono
         private static bool filefound = false;
         public static bool FirstTime = false;
 
+        private static ILogger _logger;
+
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting
         /// to run.  This is where it can query for any required services and load content.
         /// </summary>
-        public static void Initialize()
+        public static void Initialize(ILogger logger)
         {
+            _logger = logger;
+
             LoadProfiles();
             FirstTime = !filefound;
         }
 
         public static void LoadProfiles()
         {
-            XnaContentReader reader = new XnaContentReader(TextLogger.Instance, DialogStrings.ProfileFilename);
+            XnaContentReader reader = new XnaContentReader(_logger, DialogStrings.ProfileFilename);
 
             filefound = !reader.WasNotFound;
 

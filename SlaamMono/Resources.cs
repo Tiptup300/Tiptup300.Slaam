@@ -131,9 +131,9 @@ namespace SlaamMono
 
         #region Constructor
 
-        static Resources()
+        public static void Initiailze(ILogger logger)
         {
-            _logger = TextLogger.Instance;
+            _logger = logger;
         }
 
         #endregion

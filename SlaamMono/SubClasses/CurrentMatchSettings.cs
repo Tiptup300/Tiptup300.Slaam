@@ -5,7 +5,7 @@ using System.IO;
 
 namespace SlaamMono
 {
-    class CurrentMatchSettings
+    public class CurrentMatchSettings
     {
 
         public static int LivesAmt;
@@ -174,13 +174,19 @@ namespace SlaamMono
         }
 
         private static XnaContentReader reader;
+        private static ILogger _logger;
+
+        public static void Initialize(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public static void ReadValues(LobbyScreen parent)
         {
             try
             {
 
-                reader = new XnaContentReader(TextLogger.Instance, DialogStrings.MatchSettingsFilename);
+                reader = new XnaContentReader(_logger, DialogStrings.MatchSettingsFilename);
 
                 if (reader.IsWrongVersion())
                 {

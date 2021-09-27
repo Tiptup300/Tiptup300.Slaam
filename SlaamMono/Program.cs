@@ -1,3 +1,4 @@
+using SlaamMono.Helpers.Logging;
 using System;
 
 namespace SlaamMono
@@ -13,9 +14,15 @@ namespace SlaamMono
         /// </summary>
         static void Main(string[] args)
         {
-            _logger = new TextLogger();
+            _logger = new Logger(new TextFileLog());
 
             _logger.Begin();
+
+            _logger.Log("=======================================");
+            _logger.Log("Slaam! - Logfile (for errors)");
+            _logger.Log(" Created by Tiptup300");
+            _logger.Log("=======================================");
+            _logger.Log("");
             _logger.Log("Program executed;");
             _logger.Log("XNA Starting...");
 
@@ -38,6 +45,8 @@ namespace SlaamMono
                 }
                 _logger.Log(" --- STACK TRACE --- ");
                 _logger.Log(e.StackTrace);
+
+                throw e;
             }
 
             _logger.End();

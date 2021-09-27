@@ -89,9 +89,10 @@ namespace SlaamMono
             
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
+            Resources.Initiailze(_logger);
             Resources.LoadAll();
             Qwerty.CurrentPlayer = InputComponent.Players[0];
-            _contentManager = new XnaContentManager(TextLogger.Instance);
+            _contentManager = new XnaContentManager(_logger);
 
             GameGlobals.SetupGame();
 
