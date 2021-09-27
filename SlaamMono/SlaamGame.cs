@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SlaamMono.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Audio;
 #if ZUNE
 using ZBlade;
 #endif 
@@ -45,7 +46,8 @@ namespace SlaamMono
 
         private readonly ILogger _logger;
 
-        #region Constructor
+        private AudioManager _audioManager;
+
 
         public SlaamGame(ILogger logger)
         {
@@ -67,22 +69,15 @@ namespace SlaamMono
             graphics.ApplyChanges();
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
             Components.Insert(0, new FrameRateDirector(this));
-            Components.Add(new AudioManager(this));
+            _audioManager = new AudioManager(this, _logger);
+            Components.Add(_audioManager);
             Components.Add(new InputComponent(this));
 
-#if ZUNE
+
             SetupZuneBlade();
-#endif
-            // TODO: Add your initialization logic here
             _logger.Log("Creating SpriteBatch...");
             gamebatch = new SpriteBatch(graphics.GraphicsDevice);
             _logger.Log("Created SpriteBatch;");
@@ -97,9 +92,9 @@ namespace SlaamMono
 
             GameGlobals.SetupGame();
 
-            MenuScreen.InitInstance(_logger);
+            MenuScreen.InitInstance(_logger, _audioManager);
         }
-#if ZUNE
+
         public void SetupZuneBlade()
         {
             mainBlade = new ZuneBlade(this);
@@ -114,31 +109,13 @@ namespace SlaamMono
 
             Components.Add(mainBlade);
         }
-#endif
-        #endregion
 
-        #region Update
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
             Console.WriteLine("dog");
-
-#if WINDOWS
-            if (Keyboard.GetState().IsKeyDown(Keys.PrintScreen))
-            { 
-                ResolveTexture2D renderTarget = new ResolveTexture2D(GraphicsDevice,240,320,1,SurfaceFormat.Color);
-                GraphicsDevice.ResolveBackBuffer(renderTarget);
-
-                renderTarget.Save("save.bmp", ImageFileFormat.Bmp);
-            }
-#endif
 
             if (_contentManager.NeedsDevice)
             {
@@ -149,22 +126,6 @@ namespace SlaamMono
                 BackgroundManager.Update();
                 FeedManager.Update();
                 
-#if !ZUNE
-                // Allows the default game to exit on Xbox 360 and Windows
-                if (Input.GetGamepad().PressedBack || Input.GetKeyboard().PressedKey(Keys.Escape))
-                    this.Exit();
-
-                if ((Input.GetGamepad().PressingLeftShoulder && Input.GetGamepad().PressingRightShoulder && Input.GetGamepad().PressingPadDown && Input.GetGamepad().PressedY) || Input.GetKeyboard().PressedKey(Keys.F))
-                {
-                    graphics.ToggleFullScreen();
-                    LogHelper.Instance.Write("Fullscreen Toggled");
-                }
-
-                if (Input.GetKeyboard().PressingKey(Keys.S) && Input.GetKeyboard().PressedKey(Keys.P))
-                {
-                    ShowFPS = !ShowFPS;
-                }
-#endif
                 if (Qwerty.Active)
                 {
                     Qwerty.Update();
@@ -177,20 +138,11 @@ namespace SlaamMono
 
         }
 
-        #endregion
 
-        #region Draw
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
 
             GraphicsDevice.Clear(Color.Black);
-
-            //gamebatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.None, Matrix.Identity /* * Matrix.CreateScale(new Vector3(1f,720f/1024f,1f))*/);
 
             gamebatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, Matrix.Identity);
 
@@ -216,15 +168,12 @@ namespace SlaamMono
             base.Draw(gameTime);
         }
 
-        #endregion
 
-        #region Exiting
 
         void Game1_Exiting(object sender, EventArgs e)
         {
             GC.Collect();
         }
         
-#endregion
     }
 }

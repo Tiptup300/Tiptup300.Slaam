@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SlaamMono.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Audio;
 
 namespace SlaamMono
 {
@@ -30,16 +31,18 @@ namespace SlaamMono
         private IntRange MenuChoice;
 
         private readonly ILogger _logger;
+        private readonly IMusicPlayer _musicPlayer;
         #endregion
 
         #region Constructor
 
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IMusicPlayer musicPlayer)
         {
+            _logger = logger;
+            _musicPlayer = musicPlayer;
+
             SetupChars = chars;
             PlayerAmt = SetupChars.Count;
-            _logger = logger;
-
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Add(true,
@@ -58,7 +61,9 @@ namespace SlaamMono
             MainMenu.SetHighlight(MenuChoice.Value);
 
             if (CurrentMatchSettings.BoardLocation != null && CurrentMatchSettings.BoardLocation.Trim() != "" && File.Exists(CurrentMatchSettings.BoardLocation))
-                LoadBoard(CurrentMatchSettings.BoardLocation);
+            { 
+                LoadBoard(CurrentMatchSettings.BoardLocation); 
+            }
             else
             {
                 BoardThumbnailViewer viewer = new BoardThumbnailViewer(this);
@@ -70,28 +75,23 @@ namespace SlaamMono
                 LoadBoard(viewer.ValidBoard);
                 viewer.Dispose();
             }
-#if ZUNE
+
             SetupZune();
-#endif
         }
 
         public static void SetupZune()
         {
-#if ZUNE
             SlaamGame.mainBlade.Status = ZBlade.BladeStatus.In;
             SlaamGame.mainBlade.UserCanCloseMenu = false;
 
             ZBlade.InfoBlade.BladeHiddenSetup = ZBlade.InfoBlade.BladeInSetup;
             ZBlade.InfoBlade.BladeInSetup = new ZBlade.BladeSetup("Back", "Start", "Game Settings");
-#endif
         }
 
         public static void ResetZune()
         {
-#if ZUNE
             SlaamGame.mainBlade.Status = ZBlade.BladeStatus.Hidden;
             ZBlade.InfoBlade.BladeInSetup = ZBlade.InfoBlade.BladeHiddenSetup;
-#endif
         }
 
         public static Texture2D LoadQuickBoard()
@@ -163,17 +163,13 @@ namespace SlaamMono
                         {
                             CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
                             ViewingSettings = false;
-#if ZUNE
                             SetupZune();
-#endif
                         }
                         else if (MainMenu.Items[MenuChoice.Value].Details[1] == "Cancel")
                         {
                             CurrentMatchSettings.ReadValues(this);
                             ViewingSettings = false;
-#if ZUNE
                             SetupZune();
-#endif
                         }
                         else
                         {
@@ -187,11 +183,9 @@ namespace SlaamMono
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    ScreenHelper.ChangeScreen(new CharSelectScreen(_logger));
+                    ScreenHelper.ChangeScreen(new CharSelectScreen(_logger, _musicPlayer));
                     ProfileManager.ResetAllBots();
-#if ZUNE
                     ResetZune();
-#endif
                 }
 
                 if (InputComponent.Players[0].PressedUp && SetupChars.Count < MAX_PLAYERS)
@@ -206,11 +200,10 @@ namespace SlaamMono
                     SetupChars.RemoveAt(SetupChars.Count - 1);
                 }
 
-#if ZUNE
                 if (InputComponent.Players[0].PressedStart)
                 {
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
-                    GameScreen.Instance = new GameScreen(SetupChars,_logger);
+                    GameScreen.Instance = new GameScreen(SetupChars,_logger, _musicPlayer);
                     ScreenHelper.ChangeScreen(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();
@@ -223,27 +216,6 @@ namespace SlaamMono
                     
                     BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Normal);
                 }
-
-
-#else
-                if (InputComponent.Players[0].PressedLeft || InputComponent.Players[0].PressedRight)
-                    ButtonOnLeft = !ButtonOnLeft;
-
-                if (InputComponent.Players[0].PressedAction)
-                {
-                    if (ButtonOnLeft)
-                    {
-                        CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
-                        GameScreen.Instance = new GameScreen(SetupChars);
-                        ScreenHelper.ChangeScreen(GameScreen.Instance);
-                        ProfileManager.ResetAllBots();
-                    }
-                    else
-                    {
-                        ViewingSettings = true;
-                    }
-                }
-#endif
 
             }
         }

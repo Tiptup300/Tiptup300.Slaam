@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SlaamMono.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Audio;
 
 namespace SlaamMono
 {
@@ -18,8 +19,8 @@ namespace SlaamMono
 
         private readonly ILogger _logger; 
 
-        public SurvivalScreen(List<CharacterShell> shell, ILogger logger)
-            : base(shell, logger)
+        public SurvivalScreen(List<CharacterShell> shell, ILogger logger, IMusicPlayer musicPlayer)
+            : base(shell, logger, musicPlayer)
         {
             _logger = logger;
         }
@@ -114,11 +115,13 @@ namespace SlaamMono
     public class SurvivalCharSelectScreen : CharSelectScreen
     {
         private ILogger _logger;
+        private readonly IMusicPlayer _musicPlayer;
 
-        public SurvivalCharSelectScreen(ILogger logger)
-            : base(logger)
+        public SurvivalCharSelectScreen(ILogger logger, IMusicPlayer musicPlayer)
+            : base(logger, musicPlayer)
         {
             _logger = logger;
+            _musicPlayer = musicPlayer;
         }
 
         public override void ResetBoxes()
@@ -137,7 +140,7 @@ namespace SlaamMono
         {
             List<CharacterShell> list = new List<CharacterShell>();
             list.Add(SelectBoxes[0].GetShell());
-            GameScreen.Instance = new SurvivalScreen(list, _logger);
+            GameScreen.Instance = new SurvivalScreen(list, _logger, _musicPlayer);
             ScreenHelper.ChangeScreen(GameScreen.Instance);
         }
     }

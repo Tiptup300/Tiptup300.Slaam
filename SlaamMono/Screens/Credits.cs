@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SlaamMono.Input;
+using SlaamMono.Library.Audio;
 
 namespace SlaamMono
 {
@@ -13,6 +14,7 @@ namespace SlaamMono
         #region Variables
 
         private const float MovementSpeed = 3f / 120f;
+        private readonly IMusicPlayer _musicPlayer;
         private string[] credits;
         //private int CurrentCredit = 3;
         private List<CreditsListing> CreditsListings = new List<CreditsListing>();
@@ -27,9 +29,9 @@ namespace SlaamMono
 
         #region Constructor
 
-        public Credits()
+        public Credits(IMusicPlayer musicPlayer)
         {
-
+            _musicPlayer = musicPlayer;
         }
 
         public void Initialize()
@@ -48,7 +50,7 @@ namespace SlaamMono
                 CreditsListings.Add(new CreditsListing(credname, credcreds));
             }
             FeedManager.FeedsActive = false;
-            AudioManager.Play(AudioManager.SFX.CreditsMusic);
+            _musicPlayer.Play(MusicTrack.Credits);
         }
 
         #endregion

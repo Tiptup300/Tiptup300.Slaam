@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SlaamMono.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Audio;
 
 #if ZUNE
 using ZBlade;
@@ -25,6 +26,7 @@ namespace SlaamMono
         public GameScreenTimer Timer;
         public List<CharacterShell> SetupChars = new List<CharacterShell>();
         private readonly ILogger _logger;
+        private readonly IMusicPlayer _musicPlayer;
         public List<Character> Characters = new List<Character>();
         public List<GameScreenScoreboard> Scoreboards = new List<GameScreenScoreboard>();
         public Tile[,] tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
@@ -73,10 +75,12 @@ namespace SlaamMono
 
         #region Constructor
 
-        public GameScreen(List<CharacterShell> chars, ILogger logger)
+        public GameScreen(List<CharacterShell> chars, ILogger logger, IMusicPlayer musicPlayer)
         {
             SetupChars = chars;
             _logger = logger;
+            _musicPlayer = musicPlayer;
+
             ThisGameType = CurrentMatchSettings.GameType;
             SetupTheBoard(CurrentMatchSettings.BoardLocation);
             CurrentGameStatus = GameStatus.MovingBoard;
@@ -105,7 +109,7 @@ namespace SlaamMono
             ScoreKeeper = new MatchScoreCollection(this);
             ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.BattleScreen);
-            AudioManager.Play(AudioManager.SFX.GameScreenMusic);
+            _musicPlayer.Play(MusicTrack.Gameplay);
 
 
             if (ThisGameType == GameType.Classic)

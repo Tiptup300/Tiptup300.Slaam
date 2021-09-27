@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System.Linq;
 using SlaamMono.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Audio;
 
 namespace SlaamMono
 {
@@ -27,14 +28,16 @@ namespace SlaamMono
         private const float HOffset = 40f;
 
         private readonly ILogger _logger;
+        private readonly IMusicPlayer _musicPlayer;
 
         #endregion
 
         #region Constructor
 
-        public CharSelectScreen(ILogger logger)
+        public CharSelectScreen(ILogger logger, IMusicPlayer musicPlayer)
         {
             _logger = logger;
+            _musicPlayer = musicPlayer;
 
             _logger.Log("----------------------------------");
             _logger.Log("     Character Select Screen      ");
@@ -113,7 +116,7 @@ namespace SlaamMono
                 if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
                     templist.Add(SelectBoxes[idx].GetShell());
 
-            ScreenHelper.ChangeScreen(new LobbyScreen(templist,_logger));
+            ScreenHelper.ChangeScreen(new LobbyScreen(templist,_logger, _musicPlayer));
         }
 
         #endregion

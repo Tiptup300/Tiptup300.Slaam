@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ZBlade;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Audio;
 #endregion
 
 namespace SlaamMono
@@ -21,18 +22,19 @@ namespace SlaamMono
         public static MenuScreen Instance { get { return _instance; } }
         private static MenuScreen _instance;
 
-        public static void InitInstance(ILogger logger)
+        public static void InitInstance(ILogger logger, IMusicPlayer musicPlayer)
         {
-            _instance = new MenuScreen(logger);
+            _instance = new MenuScreen(logger, musicPlayer);
         }
 
         private readonly ILogger _logger;
+        private readonly IMusicPlayer _musicPlayer;
 
-
-        public MenuScreen(ILogger logger)
+        public MenuScreen(ILogger logger, IMusicPlayer musicPlayer)
         {
             _logger = logger;
-            AudioManager.Play(AudioManager.SFX.MenuMusic);
+            _musicPlayer = musicPlayer;
+            _musicPlayer.Play(MusicTrack.Menu);
         }
 
         public void Initialize()
@@ -40,10 +42,10 @@ namespace SlaamMono
             if (MainMenuList.Nodes.Count == 0)
             {
                 MenuTextItem competition = new MenuTextItem("Competition");
-                competition.Activated += delegate { ChangeScreen(new CharSelectScreen(_logger)); };
+                competition.Activated += delegate { ChangeScreen(new CharSelectScreen(_logger, _musicPlayer)); };
 
                 MenuTextItem survival = new MenuTextItem("Survival");
-                survival.Activated += delegate { ChangeScreen(new SurvivalCharSelectScreen(_logger)); };
+                survival.Activated += delegate { ChangeScreen(new SurvivalCharSelectScreen(_logger, _musicPlayer)); };
 
 
                 MenuItemTree options = new MenuItemTree("Options", MainMenuList);
@@ -56,7 +58,7 @@ namespace SlaamMono
                     highscores.Activated += delegate { ChangeScreen(new HighScoreScreen(_logger)); };
 
                     MenuTextItem credits = new MenuTextItem("Credits");
-                    credits.Activated += delegate { ChangeScreen(new Credits()); };
+                    credits.Activated += delegate { ChangeScreen(new Credits(_musicPlayer)); };
 
 #if ZUNE
                     //MenuSongLibraryItem library = new MenuSongLibraryItem("Custom Soundtrack", options);
@@ -106,7 +108,7 @@ namespace SlaamMono
 
         void competition_onSelected(object sender, EventArgs e)
         {
-            ScreenHelper.ChangeScreen(new CharSelectScreen(_logger));
+            ScreenHelper.ChangeScreen(new CharSelectScreen(_logger, _musicPlayer));
         }
 
 
