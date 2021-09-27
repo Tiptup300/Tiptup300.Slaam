@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using SlaamMono.Library.Logging;
 #endregion
 
 namespace SlaamMono

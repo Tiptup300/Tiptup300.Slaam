@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using System.IO;
 using System.Linq;
+using SlaamMono.Library.Logging;
 
 namespace SlaamMono
 {

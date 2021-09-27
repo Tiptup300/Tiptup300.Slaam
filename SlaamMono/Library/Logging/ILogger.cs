@@ -1,4 +1,4 @@
-﻿namespace SlaamMono
+﻿namespace SlaamMono.Library.Logging
 {
     public interface ILogger
     {

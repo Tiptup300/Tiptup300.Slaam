@@ -138,6 +138,7 @@ namespace SlaamMono
         public const string HostingScreenFeed = "Welcome to the hosting screen. Players may automatically connect to you now. If you need the ip of your computer refer to http://whatsmyip.com/ for retreiving it.";
         public const string CharacterSelectScreenFeed = "Welcome to character select. Where you get to choose your profile and character for use in game matches. If you would like to create a profile, please use the Profile Manager in the options menu.";
         public const string BoardSelectScreenFeed = "Welcome to the board design select screen. Where you get to choose the desired design of flooring for the gamematch.";
+        
         #endregion
 
 

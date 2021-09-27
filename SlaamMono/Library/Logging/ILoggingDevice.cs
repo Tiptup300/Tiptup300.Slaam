@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SlaamMono.Helpers.Logging
+﻿namespace SlaamMono.Library.Logging
 {
     public interface ILoggingDevice
     {

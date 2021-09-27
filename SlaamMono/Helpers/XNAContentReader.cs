@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SlaamMono.Library.Logging;
+using System.IO;
 
 namespace SlaamMono
 {

@@ -1,11 +1,11 @@
-using SlaamMono.Helpers.Logging;
+using SlaamMono.Library.Logging;
 using System;
 
 namespace SlaamMono
 {
     static class Program
     {
-        public static byte[] Version = new byte[] { 000, 000, 000, 002,};
+        public static byte[] Version = new byte[] { 000, 000, 000, 002, };
 
         private static ILogger _logger;
 
@@ -28,10 +28,10 @@ namespace SlaamMono
 
             try
             {
-            using (SlaamGame game = new SlaamGame(_logger))
-            {
-                game.Run();
-            }
+                using (SlaamGame game = new SlaamGame(_logger))
+                {
+                    game.Run();
+                }
 
             }
             catch (Exception e)

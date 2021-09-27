@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Linq;
 using SlaamMono.Input;
+using SlaamMono.Library.Logging;
 
 namespace SlaamMono
 {

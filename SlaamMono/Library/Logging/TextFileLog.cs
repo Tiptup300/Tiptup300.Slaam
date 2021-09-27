@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
-namespace SlaamMono.Helpers.Logging
+namespace SlaamMono.Library.Logging
 {
     public class TextFileLog : ILoggingDevice
     {

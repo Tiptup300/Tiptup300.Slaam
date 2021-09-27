@@ -1,8 +1,6 @@
-using SlaamMono.Helpers.Logging;
 using System;
-using System.IO;
 
-namespace SlaamMono
+namespace SlaamMono.Library.Logging
 {
 
     /// <summary>
@@ -29,8 +27,8 @@ namespace SlaamMono
             writeLineToConsle(line);
         }
 
-        private void writeLineToConsle(string line) 
-            => System.Console.WriteLine(line);
+        private void writeLineToConsle(string line)
+            => Console.WriteLine(line);
 
         public void End()
         {

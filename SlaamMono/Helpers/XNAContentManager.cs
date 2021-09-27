@@ -1,4 +1,6 @@
-﻿namespace SlaamMono
+﻿using SlaamMono.Library.Logging;
+
+namespace SlaamMono
 {
     public class XnaContentManager
     {
