@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace SlaamMono.Library.Drawing.Text
@@ -34,9 +33,9 @@ namespace SlaamMono.Library.Drawing.Text
         public override void Draw(GameTime gameTime)
         {
             _batch.Begin(
-                sortMode:SpriteSortMode.Immediate, 
-                blendState:BlendState.AlphaBlend, 
-                transformMatrix:Matrix.Identity);
+                sortMode: SpriteSortMode.Immediate,
+                blendState: BlendState.AlphaBlend,
+                transformMatrix: Matrix.Identity);
 
             _textToDraw.ForEach(textLine => drawTextLine(textLine));
 
