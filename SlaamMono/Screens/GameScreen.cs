@@ -1,17 +1,11 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Library.Input;
+using SlaamMono.Library.Logging;
+using SlaamMono.Screens;
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.Input;
-using SlaamMono.Screens;
-
-#if ZUNE
 using ZBlade;
-#endif
-
-// Xbox 360 - 18x12 45px
-// ZUNE     - 10x07 30px
 
 namespace SlaamMono
 {
@@ -87,9 +81,6 @@ namespace SlaamMono
 
         public void Initialize()
         {
-            //Characters.Add(new Character(Texture2D.FromFile(Game1.Graphics.GraphicsDevice, "skins\\Tiptup300_link.png"), ProfileManager.Profiles[0], new Vector2(800, 800), InputComponent.Players[0], Color.Red));
-            //Characters.Add(new Character(Texture2D.FromFile(Game1.Graphics.GraphicsDevice, "skins\\link901_Toadstool.png"), ProfileManager.Profiles[0], new Vector2(300, 300), InputComponent.Players[1], Color.Black));
-
             Boardpos = FinalBoardPosition;
             Boardpos.Y = -Tileset.Height;
 
@@ -415,19 +406,8 @@ namespace SlaamMono
 
         #region Dispose
 
-        public void Dispose()
+        public void Close()
         {
-            /*
-            SetupChars = null;
-            Characters = null;
-            tiles = null;
-            Tileset = null;
-            Boardpos = Vector2.Zero;
-            rand = null;
-            Boardsize = -1;
-            PlayersRemaining = -1;
-             */
-
             Resources.ReadySetGo.Dispose();
             Resources.BattleBG.Dispose();
         }

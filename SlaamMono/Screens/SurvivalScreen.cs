@@ -94,7 +94,7 @@ namespace SlaamMono
         private void AddNewBot()
         {
             Characters.Add(new BotPlayer(
-                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + CharSelectScreen.ReturnRandSkin(_logger))//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, CharSelectScreen.Instance.ReturnRandSkin())
+                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + ClassicCharSelectScreen.ReturnRandSkin(_logger))//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, CharSelectScreen.Instance.ReturnRandSkin())
                 , ProfileManager.GetBotProfile(), new Vector2(-200, -200), this, Color.Black, Characters.Count));
             ProfileManager.ResetAllBots();
             base.RespawnChar(Characters.Count - 1);

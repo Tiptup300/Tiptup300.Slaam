@@ -18,7 +18,7 @@ namespace SlaamMono
             if (ChangingScreens)
             {
                 ChangingScreens = false;
-                CurrentScreen.Dispose();
+                CurrentScreen.Close();
                 CurrentScreen = NextScreen;
                 NextScreen = null;
                 BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Normal);

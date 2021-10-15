@@ -74,7 +74,7 @@ namespace SlaamMono
 
         #region Dispose
 
-        public void Dispose()
+        public void Close()
         {
             Resources.ZibithLogo.Dispose();
             Resources.ZibithLogoBG.Dispose();

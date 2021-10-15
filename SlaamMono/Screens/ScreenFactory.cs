@@ -1,29 +1,32 @@
 ﻿using SlaamMono.Library.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace SlaamMono.Screens
 {
     public class ScreenFactory : IScreenFactory
     {
+        private Dictionary<string, Type> _screens;
+
         public ScreenFactory()
         {
-
+            _screens = getScreens();
         }
 
-        public IScreen Get(string name)
+        private Dictionary<string, Type> getScreens()
         {
-            switch(name)
-            {
-                case "credits": return new Credits(DI.Instance.Get<MainMenuScreen>());
-                case "profiles": return new ProfileEditScreen(DI.Instance.Get<MainMenuScreen>());
-                case "highscores": return new HighScoreScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>());
-                case "survival-mode": return new SurvivalCharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>());
-                case "classic-mode": return new CharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>());
-                default:
-                    throw new Exception("Screen Name Not Expected!");
-            }
+            return Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => t.GetInterfaces().Contains(typeof(IScreen)))
+                .ToDictionary(t => t.Name);
+        }
+
+        public IScreen Get(string screenName)
+        {
+            return (IScreen)DI.Instance.Get(_screens[screenName]);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace SlaamMono
 {
-    public class CharSelectScreen : IScreen
+    public class ClassicCharSelectScreen : IScreen
     {
         public static Texture2D[] SkinTexture;
 
@@ -30,7 +30,7 @@ namespace SlaamMono
 
         #region Constructor
 
-        public CharSelectScreen(ILogger logger, MainMenuScreen menuScreen)
+        public ClassicCharSelectScreen(ILogger logger, MainMenuScreen menuScreen)
         {
             _logger = logger;
             _menuScreen = menuScreen;
@@ -129,7 +129,7 @@ namespace SlaamMono
 
         #region Dispose
 
-        public void Dispose()
+        public void Close()
         {
             SelectBoxes = null;
         }

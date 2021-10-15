@@ -16,18 +16,18 @@ namespace SlaamMono.Screens
         public void Initialize()
         {
             SlaamGame.mainBlade.Status = BladeStatus.Out;
-            SlaamGame.mainBlade.TopMenu = buildMainMenuNodes();
+            SlaamGame.mainBlade.TopMenu = buildMainMenu();
             SlaamGame.mainBlade.UserCanNavigateMenu = true;
             SlaamGame.mainBlade.UserCanCloseMenu = false;
 
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
         }
 
-        private MenuItemTree buildMainMenuNodes()
+        private MenuItemTree buildMainMenu()
         {
             return new MenuItemTree(onInit: (mainMenu) =>
             {
-                mainMenu.Nodes.Add(new MenuTextItem("Competition", onActivated: selectedCompetitionMode));
+                mainMenu.Nodes.Add(new MenuTextItem("Classic", onActivated: selectedClassicMode));
                 mainMenu.Nodes.Add(new MenuTextItem("Survival", onActivated: selectedSurvival));
                 mainMenu.Nodes.Add(new MenuItemTree(text: "Options", parent: mainMenu, onInit: (options) =>
                 {
@@ -39,23 +39,26 @@ namespace SlaamMono.Screens
             });
         }
 
-        private void selectedCredits(object sender, EventArgs e) => changeScreen("credits");
-        private void selectedHighscores(object sender, EventArgs e) => changeScreen("highscores");
-        private void selectedManageProfiles(object sender, EventArgs e) => changeScreen("profiles");
-        private void selectedSurvival(object sender, EventArgs e) => changeScreen("survival-mode");
-        private void selectedCompetitionMode(object sender, EventArgs e) => changeScreen("classic-mode");
+        private void selectedCredits(object sender, EventArgs e) => changeScreen(nameof(CreditsScreen));
+        private void selectedHighscores(object sender, EventArgs e) => changeScreen(nameof(HighScoreScreen));
+        private void selectedManageProfiles(object sender, EventArgs e) => changeScreen(nameof(ProfileEditScreen));
+        private void selectedSurvival(object sender, EventArgs e) => changeScreen(nameof(SurvivalScreen));
+        private void selectedClassicMode(object sender, EventArgs e) => changeScreen(nameof(ClassicCharSelectScreen));
         private void exitGame(object sender, EventArgs e) => SlaamGame.Instance.Exit();
 
         private void changeScreen(string screenName)
         {
             ScreenHelper.ChangeScreen(_screenFactory.Get(screenName));
-            SlaamGame.mainBlade.Status = BladeStatus.Hidden;
         }
+
         public void Update() { }
         public void Draw(SpriteBatch batch) { }
-        public void Dispose() { }
 
-
+        public void Close() {
+            SlaamGame.mainBlade.Status = BladeStatus.Hidden;
+            SlaamGame.mainBlade.TopMenu = null;
+            SlaamGame.mainBlade.UserCanNavigateMenu = false;
+        }
     }
 
 }

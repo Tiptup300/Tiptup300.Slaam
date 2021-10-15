@@ -43,7 +43,7 @@ namespace SlaamMono
             _statsboard.MainBoard.Draw(batch);
         }
 
-        public void Dispose()
+        public void Close()
         {
 
         }

@@ -180,7 +180,7 @@ namespace SlaamMono
 
         #region Dispose
 
-        public void Dispose()
+        public void Close()
         {
 
         }

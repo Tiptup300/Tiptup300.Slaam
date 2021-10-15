@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SlaamMono
 {
-    public class Credits : IScreen
+    public class CreditsScreen : IScreen
     {
         private const float MovementSpeed = 3f / 120f;
         private readonly MainMenuScreen _menuScreen;
@@ -20,7 +20,7 @@ namespace SlaamMono
         private bool Active = false;
         private float TextHeight = 0f;
 
-        public Credits(MainMenuScreen menuScreen)
+        public CreditsScreen(MainMenuScreen menuScreen)
         {
             _menuScreen = menuScreen;
         }
@@ -105,7 +105,7 @@ namespace SlaamMono
 
         #region Dispose
 
-        public void Dispose()
+        public void Close()
         {
 
         }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SlaamMono
 {
-    public class SurvivalCharSelectScreen : CharSelectScreen
+    public class SurvivalCharSelectScreen : ClassicCharSelectScreen
     {
         private ILogger _logger;
 

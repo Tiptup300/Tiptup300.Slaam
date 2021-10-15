@@ -13,6 +13,6 @@ namespace SlaamMono
 
         void Draw(SpriteBatch batch);
 
-        void Dispose();
+        void Close();
     }
 }

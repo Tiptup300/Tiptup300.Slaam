@@ -65,7 +65,7 @@ namespace SlaamMono
                     viewer.Update();
                 }
                 LoadBoard(viewer.ValidBoard);
-                viewer.Dispose();
+                viewer.Close();
             }
 
             SetupZune();
@@ -97,7 +97,7 @@ namespace SlaamMono
                     viewer.Update();
                 }
                 Resources.DefaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.ValidBoard);
-                viewer.Dispose();
+                viewer.Close();
             }
 
             return Resources.DefaultBoard;
@@ -173,7 +173,7 @@ namespace SlaamMono
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    ScreenHelper.ChangeScreen(new CharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
+                    ScreenHelper.ChangeScreen(new ClassicCharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }
@@ -283,7 +283,7 @@ namespace SlaamMono
 
         #region Dispose
 
-        public void Dispose()
+        public void Close()
         {
             CurrentBoardTexture = null;
             Resources.LobbyUnderlay.Dispose();
@@ -331,7 +331,7 @@ namespace SlaamMono
         /// </summary>
         private void AddComputer()
         {
-            SetupChars.Add(new CharacterShell(CharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, Resources.PlayerColors[SetupChars.Count]));
+            SetupChars.Add(new CharacterShell(ClassicCharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, Resources.PlayerColors[SetupChars.Count]));
         }
 
         #endregion

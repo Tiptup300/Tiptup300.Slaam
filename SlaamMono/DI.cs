@@ -16,13 +16,15 @@ namespace SlaamMono
             _container = new Bootstrap().BuildContainer();
         }
 
-        public T Get<T>()
+        public T Get<T>() => (T)Get(typeof(T));
+
+        public object Get(Type type)
         {
-            if(_instances.ContainsKey(typeof(T)) == false)
+            if(_instances.ContainsKey(type) == false)
             {
-                _instances.Add(typeof(T), _container.GetInstance(typeof(T)));
+                _instances.Add(type, _container.GetInstance(type));
             }
-            return (T)_instances[typeof(T)];
+            return _instances[type];
         }
     }
 }

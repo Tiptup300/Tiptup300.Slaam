@@ -234,7 +234,7 @@ namespace SlaamMono
             }
         }
 
-        public void Dispose()
+        public void Close()
         {
             /*for (int x = 0; x < Boards.Count; x++)
             {

@@ -46,7 +46,7 @@ namespace SlaamMono
             controlsgraph.Draw(batch);
         }
 
-        public void Dispose()
+        public void Close()
         {
             firsttime.Dispose();
         }
