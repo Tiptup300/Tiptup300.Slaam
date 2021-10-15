@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Input;
+using SlaamMono.Screens;
 
 #if ZUNE
 using ZBlade;

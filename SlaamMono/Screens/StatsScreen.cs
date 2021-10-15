@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using SlaamMono.Library.Logging;
+using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.Logging;
+using SlaamMono.Screens;
 
 namespace SlaamMono
 {
@@ -52,8 +50,8 @@ namespace SlaamMono
                 PlayerStats = new NormalStatsBoard(ScoreCollection, StatsRect, StatsCol);
             }
             else if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Spree || ScoreCollection.ParentGameScreen.ThisGameType == GameType.TimedSpree)
-            { 
-                PlayerStats = new SpreeStatsBoard(ScoreCollection, StatsRect, StatsCol); 
+            {
+                PlayerStats = new SpreeStatsBoard(ScoreCollection, StatsRect, StatsCol);
             }
             else if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival)
             {
@@ -177,7 +175,7 @@ namespace SlaamMono
             Resources.DrawString("Kills", new Vector2(352+Statsboard.X, 255), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
             Resources.DrawString("Player Vs. Player", new Vector2(573+Statsboard.X, 255), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
 #endif
-            }
+        }
 
         #endregion
 

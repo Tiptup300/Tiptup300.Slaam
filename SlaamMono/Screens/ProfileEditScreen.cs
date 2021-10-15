@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Input;
+using SlaamMono.Screens;
+using System;
 
 namespace SlaamMono
 {
@@ -14,7 +13,7 @@ namespace SlaamMono
         public static ProfileEditScreen Instance = new ProfileEditScreen(InstanceManager.Instance.Get<MenuScreen>());
         private const float RotationSpeed = MathHelper.Pi / 3000f;
         private readonly MenuScreen _menuScreen;
-        private Graph MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2,new Color(0,0,0,150));
+        private Graph MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150));
         private Graph SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150));
         private IntRange CurrentMenu = new IntRange(0, 0, 1);
         private IntRange CurrentMenuChoice = new IntRange(0, 0, 0);
@@ -61,9 +60,9 @@ namespace SlaamMono
                 {
                     if (Qwerty.EditingString.Trim() != "")
                     {
-                        ProfileManager.AddNewProfile(new PlayerProfile(Qwerty.EditingString,false));
-                        
-                    } 
+                        ProfileManager.AddNewProfile(new PlayerProfile(Qwerty.EditingString, false));
+
+                    }
                     WaitingForQwerty = false;
                     Qwerty.EditingString = "";
                     SetupMainMenu();
@@ -205,7 +204,7 @@ namespace SlaamMono
             SubMenu.Items.Clear();
             SubMenu.Items.Columns.Clear();
             SubMenu.Items.Columns.Add("OPTIONS");
-            SubMenu.Items.Add(true, new GraphItem("Rename","ren"),new GraphItem("Delete","del"),new GraphItem("Clear Stats","clr"));
+            SubMenu.Items.Add(true, new GraphItem("Rename", "ren"), new GraphItem("Delete", "del"), new GraphItem("Clear Stats", "clr"));
             SubMenu.CalculateBlocks();
         }
     }

@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Screens;
+using System;
 
 namespace SlaamMono
 {
@@ -25,7 +24,7 @@ namespace SlaamMono
             _menuScreen = menuScreen;
         }
 
-        public void Initialize()        {       }
+        public void Initialize() { }
 
         #endregion
 
