@@ -125,7 +125,7 @@ namespace SlaamMono
 #endif
         }
 #if ZUNE
-        public MenuItemTree main = new MenuItemTree("");
+        public MenuItemTree main = new MenuItemTree();
         public void SetupPauseMenu()
         {
             SlaamGame.mainBlade.UserCanNavigateMenu = true;

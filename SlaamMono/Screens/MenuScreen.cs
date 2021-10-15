@@ -24,41 +24,17 @@ namespace SlaamMono.Screens
 
         private MenuItemTree buildMainMenuNodes()
         {
-            MenuItemTree output;
-
-            output = new MenuItemTree("");
-            MenuTextItem competition = new MenuTextItem("Competition");
-            competition.Activated += selectedCompetitionMode;
-
-            MenuTextItem survival = new MenuTextItem("Survival");
-            survival.Activated += selectedSurvival;
-
-            MenuItemTree options = new MenuItemTree("Options", output);
+            return new MenuItemTree(onInit: (mainMenu) =>
             {
-                MenuTextItem manageProfiles = new MenuTextItem("Profiles");
-                manageProfiles.Activated += selectedManageProfiles; 
-                manageProfiles.IsEnabled = false;
-
-                MenuTextItem highscores = new MenuTextItem("View Highscores");
-                highscores.Activated += selectedHighscores;
-
-                MenuTextItem credits = new MenuTextItem("Credits");
-                credits.Activated += selectedCredits;
-
-                options.Nodes.Add(manageProfiles);
-                options.Nodes.Add(highscores);
-                options.Nodes.Add(credits);
-            }
-
-            MenuTextItem exit = new MenuTextItem("Exit");
-            exit.Activated += delegate { SlaamGame.Instance.Exit(); };
-
-            output.Nodes.Add(competition);
-            output.Nodes.Add(survival);
-            output.Nodes.Add(options);
-            output.Nodes.Add(exit);
-
-            return output;
+                mainMenu.Nodes.Add(new MenuTextItem("Competition", onActivated: selectedCompetitionMode));
+                mainMenu.Nodes.Add(new MenuTextItem("Survival", onActivated: selectedSurvival));
+                mainMenu.Nodes.Add(new MenuItemTree(text: "Options", parent: mainMenu, onInit: (options) => {
+                    options.Nodes.Add(new MenuTextItem("Profiles", onActivated: selectedManageProfiles, isEnabled: false));
+                    options.Nodes.Add(new MenuTextItem("View Highscores", onActivated: selectedHighscores));
+                    options.Nodes.Add(new MenuTextItem("Credits", onActivated: selectedCredits));
+                }));
+                mainMenu.Nodes.Add(new MenuTextItem(text: "Exit", onActivated: exitGame));
+            });
         }
 
         private void selectedCredits(object sender, EventArgs e) => changeScreen(new Credits(InstanceManager.Instance.Get<MenuScreen>()));
@@ -66,27 +42,16 @@ namespace SlaamMono.Screens
         private void selectedManageProfiles(object sender, EventArgs e) => changeScreen(new ProfileEditScreen(InstanceManager.Instance.Get<MenuScreen>()));
         private void selectedSurvival(object sender, EventArgs e) => changeScreen(new SurvivalCharSelectScreen(InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>()));
         private void selectedCompetitionMode(object sender, EventArgs e) => changeScreen(new CharSelectScreen(InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>()));
+        private void exitGame(object sender, EventArgs e) => SlaamGame.Instance.Exit();
 
         private void changeScreen(IScreen screen)
         {
             ScreenHelper.ChangeScreen(screen);
             SlaamGame.mainBlade.Status = BladeStatus.Hidden;
         }
-
-
-        public void Update()
-        {
-
-        }
-
-        public void Draw(SpriteBatch batch)
-        {
-
-        }
-
-        public void Dispose()
-        {
-        }
+        public void Update() { }
+        public void Draw(SpriteBatch batch) { }
+        public void Dispose() { }
 
 
     }

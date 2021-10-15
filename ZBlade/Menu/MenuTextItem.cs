@@ -1,38 +1,25 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace ZBlade
 {
     public class MenuTextItem : MenuItem
-	{
-		#region Properties
+    {
 
-		public string Text { get; set; }
+        public string Text { get; set; }
 
-		#endregion
+        public event EventHandler Activated;
 
-		#region Events
 
-		public event EventHandler Activated;
+        public MenuTextItem(string text, EventHandler onActivated = null, bool isEnabled = true)
+        {
+            Text = text;
+            Activated = onActivated;
+            IsEnabled = isEnabled;
+        }
 
-		#endregion
-
-		#region Constructor
-
-		public MenuTextItem(string text)
-		{
-			Text = text;
-		}
-
-		#endregion
-
-		#region MenuItem Overrides
+        #region MenuItem Overrides
 
         public override void Draw(SpriteBatch batch, Vector2 position, bool isSelected)
         {
@@ -45,15 +32,15 @@ namespace ZBlade
                 drawColor = new Color((byte)drawColor.R, (byte)drawColor.G, (byte)drawColor.B, (byte)127);
 
             Helpers.DrawString(
-				batch, 
-				ZuneBlade.Font12, 
-				ToString(), 
-				position, 
-				ZuneBlade.Font12.MeasureString(ToString()) / 2f,
-				drawColor);
+                batch,
+                ZuneBlade.Font12,
+                ToString(),
+                position,
+                ZuneBlade.Font12.MeasureString(ToString()) / 2f,
+                drawColor);
         }
 
-		public override bool DetectInput(ZuneButtons type)
+        public override bool DetectInput(ZuneButtons type)
         {
             if (type == ZuneButtons.PadCenter && Activated != null)
             {
@@ -61,17 +48,10 @@ namespace ZBlade
                 return true;
             }
             return false;
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region Object Overrides
-
-		public override string ToString()
-        {
-            return Text;
-		}
-
-		#endregion
-	}
+        public override string ToString() => Text;
+    }
 }

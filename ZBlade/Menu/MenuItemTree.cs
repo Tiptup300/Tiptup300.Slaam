@@ -1,62 +1,43 @@
 using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 
 namespace ZBlade
 {
     public class MenuItemTree : MenuTextItem
-	{
-		#region Properties
+    {
+        public LoopingList<MenuItem> Nodes { get; set; }
+        public string Text { get; set; }
+        public MenuItemTree Parent { get; set; }
+        public int CurrentIndex { get; set; }
 
-		public LoopingList<MenuItem> Nodes { get; set; }
-		public string Name { get; set; }
-		public MenuItemTree Parent { get; set; }
-		public int CurrentIndex { get; set; }
-
-		#endregion
-
-		#region Constructors
-
-		public MenuItemTree(string name)
-			: this(name, null)
-		{
-		}
-
-        public MenuItemTree(string name, MenuItemTree parent)
-            : base(name)
+        public MenuItemTree(string text = null, MenuItemTree parent = null, Action<MenuItemTree> onInit = null)
+            : base(text)
         {
-			Nodes = new LoopingList<MenuItem>();
-            Name = name;
+            Nodes = new LoopingList<MenuItem>();
+            Text = text;
             Parent = parent;
-		}
+            onInit?.Invoke(this);
+        }
 
-		#endregion
-
-		#region MenuItem Overrides
+        #region MenuItem Overrides
 
 
-		public override bool DetectInput(ZuneButtons type)
+        public override bool DetectInput(ZuneButtons type)
         {
-			if (type == ZuneButtons.PadCenter)
+            if (type == ZuneButtons.PadCenter)
                 ZuneBlade.CurrentMenu = this;
 
             return false;
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region Object Overrides
+        #region Object Overrides
 
-		public override string ToString()
+        public override string ToString()
         {
-            return Name;
-		}
+            return Text;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
