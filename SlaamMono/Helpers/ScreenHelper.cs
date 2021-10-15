@@ -6,7 +6,7 @@ namespace SlaamMono
 {
     public static class ScreenHelper
     {
-        private static IScreen CurrentScreen = new LogoScreen(InstanceManager.Instance.Get<MenuScreen>());
+        private static IScreen CurrentScreen = new LogoScreen(DI.Instance.Get<MenuScreen>());
         private static IScreen NextScreen;
 
         private static bool ChangingScreens = false;

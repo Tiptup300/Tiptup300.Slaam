@@ -111,7 +111,7 @@ namespace SlaamMono
                 if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
                     templist.Add(SelectBoxes[idx].GetShell());
 
-            ScreenHelper.ChangeScreen(new LobbyScreen(templist, InstanceManager.Instance.Get<ILogger>()));
+            ScreenHelper.ChangeScreen(new LobbyScreen(templist, DI.Instance.Get<ILogger>()));
         }
 
         #endregion

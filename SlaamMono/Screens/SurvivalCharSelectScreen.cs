@@ -32,7 +32,7 @@ namespace SlaamMono
         {
             List<CharacterShell> list = new List<CharacterShell>();
             list.Add(SelectBoxes[0].GetShell());
-            GameScreen.Instance = new SurvivalScreen(list, InstanceManager.Instance.Get<ILogger>());
+            GameScreen.Instance = new SurvivalScreen(list, DI.Instance.Get<ILogger>());
             ScreenHelper.ChangeScreen(GameScreen.Instance);
         }
     }

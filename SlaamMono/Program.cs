@@ -15,12 +15,12 @@ namespace SlaamMono
         static void Main(string[] args)
         {
             _logger = new Logger(new TextFileLog());
-            InstanceManager.Instance.Set(_logger);
+            DI.Instance.Set(_logger);
             startLog();
 
             try
             {
-                using (SlaamGame game = new SlaamGame(InstanceManager.Instance.Get<ILogger>()))
+                using (SlaamGame game = new SlaamGame(DI.Instance.Get<ILogger>()))
                 {
                     game.Run();
                 }

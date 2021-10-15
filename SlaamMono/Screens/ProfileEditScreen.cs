@@ -10,7 +10,7 @@ namespace SlaamMono
     {
         #region Variables
 
-        public static ProfileEditScreen Instance = new ProfileEditScreen(InstanceManager.Instance.Get<MenuScreen>());
+        public static ProfileEditScreen Instance = new ProfileEditScreen(DI.Instance.Get<MenuScreen>());
         private const float RotationSpeed = MathHelper.Pi / 3000f;
         private readonly MenuScreen _menuScreen;
         private Graph MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150));

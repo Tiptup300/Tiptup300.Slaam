@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace SlaamMono
 {
-    public class InstanceManager : IResolver
+    public class DI : IResolver
     {
-        public static InstanceManager Instance = new InstanceManager();
+        public static DI Instance = new DI();
 
         private Dictionary<Type, object> _instances = new Dictionary<Type, object>();
 
 
-        public InstanceManager()
+        public DI()
         {
 
         }

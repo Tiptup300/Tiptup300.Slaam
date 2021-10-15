@@ -76,15 +76,15 @@ namespace SlaamMono
 
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
-            Resources.Initiailze(InstanceManager.Instance.Get<ILogger>());
+            Resources.Initiailze(DI.Instance.Get<ILogger>());
             Resources.LoadAll();
             Qwerty.CurrentPlayer = InputComponent.Players[0];
-            _contentManager = new XnaContentManager(InstanceManager.Instance.Get<ILogger>());
+            _contentManager = new XnaContentManager(DI.Instance.Get<ILogger>());
 
             GameGlobals.SetupGame();
 
-            InstanceManager.Instance.Set(new ScreenFactory());
-            InstanceManager.Instance.Set(new MenuScreen(InstanceManager.Instance.Get<ScreenFactory>()));
+            DI.Instance.Set(new ScreenFactory());
+            DI.Instance.Set(new MenuScreen(DI.Instance.Get<ScreenFactory>()));
         }
 
         public void SetupZuneBlade()

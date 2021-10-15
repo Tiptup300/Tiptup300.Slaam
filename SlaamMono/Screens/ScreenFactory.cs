@@ -16,11 +16,11 @@ namespace SlaamMono.Screens
         {
             switch(name)
             {
-                case "credits": return new Credits(InstanceManager.Instance.Get<MenuScreen>());
-                case "profiles": return new ProfileEditScreen(InstanceManager.Instance.Get<MenuScreen>());
-                case "highscores": return new HighScoreScreen(InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>());
-                case "survival-mode": return new SurvivalCharSelectScreen(InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>());
-                case "classic-mode": return new CharSelectScreen(InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>());
+                case "credits": return new Credits(DI.Instance.Get<MenuScreen>());
+                case "profiles": return new ProfileEditScreen(DI.Instance.Get<MenuScreen>());
+                case "highscores": return new HighScoreScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MenuScreen>());
+                case "survival-mode": return new SurvivalCharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MenuScreen>());
+                case "classic-mode": return new CharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MenuScreen>());
                 default:
                     throw new Exception("Screen Name Not Expected!");
             }

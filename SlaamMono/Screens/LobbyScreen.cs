@@ -173,7 +173,7 @@ namespace SlaamMono
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    ScreenHelper.ChangeScreen(new CharSelectScreen(InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>()));
+                    ScreenHelper.ChangeScreen(new CharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MenuScreen>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }
@@ -193,7 +193,7 @@ namespace SlaamMono
                 if (InputComponent.Players[0].PressedStart)
                 {
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
-                    GameScreen.Instance = new GameScreen(SetupChars, InstanceManager.Instance.Get<ILogger>());
+                    GameScreen.Instance = new GameScreen(SetupChars, DI.Instance.Get<ILogger>());
                     ScreenHelper.ChangeScreen(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();
