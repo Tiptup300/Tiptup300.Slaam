@@ -18,7 +18,7 @@ namespace SlaamMono.Library.Logging
         public void Begin()
         {
             _loggingDevice.Begin();
-            Log("Log Started.");
+            Log("* -- Log Started -- *");
         }
 
         public void Log(string line)
@@ -32,7 +32,7 @@ namespace SlaamMono.Library.Logging
 
         public void End()
         {
-            Log("Game Closed");
+            Log("* -- Log Ended -- *");
             _loggingDevice.End();
         }
     }

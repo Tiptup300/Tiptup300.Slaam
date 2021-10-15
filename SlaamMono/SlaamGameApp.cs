@@ -27,7 +27,6 @@ namespace SlaamMono
             catch (Exception e)
             {
                 logError(e);
-                throw e;
             }
             finally
             {
