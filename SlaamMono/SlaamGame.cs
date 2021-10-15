@@ -83,7 +83,8 @@ namespace SlaamMono
 
             GameGlobals.SetupGame();
 
-            InstanceManager.Instance.Set(new MenuScreen());
+            InstanceManager.Instance.Set(new ScreenFactory());
+            InstanceManager.Instance.Set(new MenuScreen(InstanceManager.Instance.Get<ScreenFactory>()));
         }
 
         public void SetupZuneBlade()

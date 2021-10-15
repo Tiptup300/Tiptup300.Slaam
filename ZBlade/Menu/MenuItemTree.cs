@@ -5,7 +5,6 @@ namespace ZBlade
     public class MenuItemTree : MenuTextItem
     {
         public LoopingList<MenuItem> Nodes { get; set; }
-        public string Text { get; set; }
         public MenuItemTree Parent { get; set; }
         public int CurrentIndex { get; set; }
 
@@ -13,7 +12,6 @@ namespace ZBlade
             : base(text)
         {
             Nodes = new LoopingList<MenuItem>();
-            Text = text;
             Parent = parent;
             onInit?.Invoke(this);
         }

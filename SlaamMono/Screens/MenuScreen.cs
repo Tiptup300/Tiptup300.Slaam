@@ -7,9 +7,11 @@ namespace SlaamMono.Screens
 {
     public class MenuScreen : IScreen
     {
+        private readonly IScreenFactory _screenFactory;
 
-        public MenuScreen()
+        public MenuScreen(IScreenFactory screenFactory)
         {
+            _screenFactory = screenFactory;
         }
 
         public void Initialize()
@@ -37,16 +39,16 @@ namespace SlaamMono.Screens
             });
         }
 
-        private void selectedCredits(object sender, EventArgs e) => changeScreen(new Credits(InstanceManager.Instance.Get<MenuScreen>()));
-        private void selectedHighscores(object sender, EventArgs e) => changeScreen(new HighScoreScreen(InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>()));
-        private void selectedManageProfiles(object sender, EventArgs e) => changeScreen(new ProfileEditScreen(InstanceManager.Instance.Get<MenuScreen>()));
-        private void selectedSurvival(object sender, EventArgs e) => changeScreen(new SurvivalCharSelectScreen(InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>()));
-        private void selectedCompetitionMode(object sender, EventArgs e) => changeScreen(new CharSelectScreen(InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>()));
+        private void selectedCredits(object sender, EventArgs e) => changeScreen("credits");
+        private void selectedHighscores(object sender, EventArgs e) => changeScreen("highscores");
+        private void selectedManageProfiles(object sender, EventArgs e) => changeScreen("profiles");
+        private void selectedSurvival(object sender, EventArgs e) => changeScreen("survival-mode");
+        private void selectedCompetitionMode(object sender, EventArgs e) => changeScreen("classic-mode");
         private void exitGame(object sender, EventArgs e) => SlaamGame.Instance.Exit();
 
-        private void changeScreen(IScreen screen)
+        private void changeScreen(string screenName)
         {
-            ScreenHelper.ChangeScreen(screen);
+            ScreenHelper.ChangeScreen(_screenFactory.Get(screenName));
             SlaamGame.mainBlade.Status = BladeStatus.Hidden;
         }
         public void Update() { }
