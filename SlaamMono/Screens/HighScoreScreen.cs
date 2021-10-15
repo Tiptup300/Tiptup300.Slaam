@@ -14,13 +14,15 @@ namespace SlaamMono
         public const int MAX_HIGHSCORES = 25;
 #else
         public const int MAX_HIGHSCORES = 7;
+        private readonly MenuScreen _menuScreen;
 #endif
         private SurvivalStatsBoard _statsboard;
 
-        public HighScoreScreen(ILogger logger)
+        public HighScoreScreen(ILogger logger, MenuScreen menuScreen)
         {
             _statsboard = new SurvivalStatsBoard(null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, logger);
             BackgroundManager.SetRotation(.5f);
+            _menuScreen = menuScreen;
         }
 
         public void Initialize()
@@ -34,7 +36,7 @@ namespace SlaamMono
         {
             if (InputComponent.Players[0].PressedAction2)
             {
-                ScreenHelper.ChangeScreen(MenuScreen.Instance);
+                ScreenHelper.ChangeScreen(_menuScreen);
             }
         }
 

@@ -8,6 +8,7 @@ namespace SlaamMono
     public class Credits : IScreen
     {
         private const float MovementSpeed = 3f / 120f;
+        private readonly MenuScreen _menuScreen;
         private string[] credits;
         //private int CurrentCredit = 3;
         private List<CreditsListing> CreditsListings = new List<CreditsListing>();
@@ -18,8 +19,9 @@ namespace SlaamMono
         private bool Active = false;
         private float TextHeight = 0f;
 
-        public Credits()
+        public Credits(MenuScreen menuScreen)
         {
+            _menuScreen = menuScreen;
         }
 
         public void Initialize()
@@ -62,7 +64,7 @@ namespace SlaamMono
 
             if (InputComponent.Players[0].PressedAction2)
             {
-                ScreenHelper.ChangeScreen(MenuScreen.Instance);
+                ScreenHelper.ChangeScreen(_menuScreen);
             }
         }
 

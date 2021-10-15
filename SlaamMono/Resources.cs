@@ -9,10 +9,8 @@ using System.Linq;
 
 namespace SlaamMono
 {
-    public static partial class Resources
+    public static class Resources
     {
-        #region Variables
-
         // General
         public static Texture2D Dot;
         public static CachedTexture2D Feedbar;
@@ -125,8 +123,6 @@ namespace SlaamMono
         public static Texture2D[] PU_Slaam = new Texture2D[2];
 
         private static ILogger _logger;
-
-        #endregion
 
         #region Constructor
 

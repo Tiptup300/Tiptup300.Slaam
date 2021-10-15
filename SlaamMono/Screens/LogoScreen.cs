@@ -14,20 +14,18 @@ namespace SlaamMono
 
         private Transition LogoColor = new Transition(null, new Vector2(0), new Vector2(255), TimeSpan.FromSeconds(1));
         private Boolean hasShown = false;
+        private readonly MenuScreen _menuScreen;
 
         #endregion
 
         #region Constructor
 
-        public LogoScreen()
+        public LogoScreen(MenuScreen menuScreen)
         {
-
+            _menuScreen = menuScreen;
         }
 
-        public void Initialize()
-        {
-
-        }
+        public void Initialize()        {       }
 
         #endregion
 
@@ -57,7 +55,7 @@ namespace SlaamMono
                     // if (ProfileManager.FirstTime)
                     //  ScreenHelper.ChangeScreen(new FirstTimeScreen());
                     // else
-                    ScreenHelper.ChangeScreen(MenuScreen.Instance);
+                    ScreenHelper.ChangeScreen(_menuScreen);
                 }
             }
         }

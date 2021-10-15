@@ -24,14 +24,15 @@ namespace SlaamMono
         private const float HOffset = 40f;
 
         private readonly ILogger _logger;
+        private readonly MenuScreen _menuScreen;
 
 
         #region Constructor
 
-        public CharSelectScreen(ILogger logger)
+        public CharSelectScreen(ILogger logger, MenuScreen menuScreen)
         {
             _logger = logger;
-
+            _menuScreen = menuScreen;
             _logger.Log("----------------------------------");
             _logger.Log("     Character Select Screen      ");
             _logger.Log("----------------------------------");
@@ -99,7 +100,7 @@ namespace SlaamMono
 
         public virtual void GoBack()
         {
-            ScreenHelper.ChangeScreen(MenuScreen.Instance);
+            ScreenHelper.ChangeScreen(_menuScreen);
         }
 
         public virtual void GoForward()

@@ -568,7 +568,7 @@ namespace SlaamMono
                 Characters[x].SaveProfileData();
             }
             ProfileManager.SaveProfiles();
-            ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper, _logger));
+            ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper, InstanceManager.Instance.Get<ILogger>(), InstanceManager.Instance.Get<MenuScreen>()));
         }
 
         #endregion

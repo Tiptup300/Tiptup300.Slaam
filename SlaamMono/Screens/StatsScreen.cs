@@ -14,6 +14,7 @@ namespace SlaamMono
 
         public MatchScoreCollection ScoreCollection;
         private readonly ILogger _logger;
+        private readonly MenuScreen _menuScreen;
         private IntRange CurrentPage = new IntRange(0, 0, 2);
         private IntRange CurrentChar;
 
@@ -36,10 +37,11 @@ namespace SlaamMono
 
         #region Constructor
 
-        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger)
+        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, MenuScreen menuScreen)
         {
             ScoreCollection = scorecollection;
             _logger = logger;
+            _menuScreen = menuScreen;
         }
 
         public void Initialize()
@@ -145,7 +147,7 @@ namespace SlaamMono
 
             if (InputComponent.Players[0].PressedAction)
             {
-                ScreenHelper.ChangeScreen(MenuScreen.Instance);
+                ScreenHelper.ChangeScreen(_menuScreen);
             }
         }
 

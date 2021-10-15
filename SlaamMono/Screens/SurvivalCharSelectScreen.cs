@@ -9,8 +9,8 @@ namespace SlaamMono
     {
         private ILogger _logger;
 
-        public SurvivalCharSelectScreen(ILogger logger)
-            : base(logger)
+        public SurvivalCharSelectScreen(ILogger logger, MenuScreen menuScreen)
+            : base(logger, menuScreen)
         {
             _logger = logger;
         }
