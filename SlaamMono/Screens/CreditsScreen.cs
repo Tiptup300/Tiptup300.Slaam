@@ -25,7 +25,7 @@ namespace SlaamMono
             _menuScreen = menuScreen;
         }
 
-        public void Initialize()
+        public void Open()
         {
             credits = Resources.Credits.ToArray();
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Credits);

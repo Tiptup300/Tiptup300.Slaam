@@ -55,7 +55,7 @@ namespace SlaamMono
             ParentScreen = parentscreen;
         }
 
-        public void Initialize()
+        public void Open()
         {
             LoadAllBoards();
             FeedManager.InitializeFeeds(DialogStrings.BoardSelectScreenFeed);

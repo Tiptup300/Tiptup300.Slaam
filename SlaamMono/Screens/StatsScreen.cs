@@ -42,7 +42,7 @@ namespace SlaamMono
             _menuScreen = menuScreen;
         }
 
-        public void Initialize()
+        public void Open()
         {
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
             if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Classic)

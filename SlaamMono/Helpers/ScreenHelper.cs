@@ -22,7 +22,7 @@ namespace SlaamMono
                 CurrentScreen = NextScreen;
                 NextScreen = null;
                 BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Normal);
-                CurrentScreen.Initialize();
+                CurrentScreen.Open();
                 GC.Collect();
             }
         }

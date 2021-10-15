@@ -13,7 +13,7 @@ namespace SlaamMono.Screens
             _screenFactory = screenFactory;
         }
 
-        public void Initialize()
+        public void Open()
         {
             SlaamGame.mainBlade.Status = BladeStatus.Out;
             SlaamGame.mainBlade.TopMenu = buildMainMenu();

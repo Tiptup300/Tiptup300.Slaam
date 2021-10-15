@@ -24,7 +24,7 @@ namespace SlaamMono
             _menuScreen = menuScreen;
         }
 
-        public void Initialize() { }
+        public void Open() { }
 
         #endregion
 

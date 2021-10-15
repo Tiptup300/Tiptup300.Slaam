@@ -7,7 +7,7 @@ namespace SlaamMono
 {
     public interface IScreen
     {
-        void Initialize();
+        void Open();
 
         void Update();
 

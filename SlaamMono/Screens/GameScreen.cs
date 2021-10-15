@@ -79,7 +79,7 @@ namespace SlaamMono
             Resources.BattleBG.Load();
         }
 
-        public void Initialize()
+        public void Open()
         {
             Boardpos = FinalBoardPosition;
             Boardpos.Y = -Tileset.Height;

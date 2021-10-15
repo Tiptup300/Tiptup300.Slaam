@@ -12,7 +12,7 @@ namespace SlaamMono
         Texture2D firsttime;
         Graph controlsgraph = new Graph(new Rectangle(50, 350, GameGlobals.DRAWING_GAME_WIDTH - 100, 500), 2, new Color(0, 0, 0, 150));
 
-        public void Initialize()
+        public void Open()
         {
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
             FeedManager.InitializeFeeds("");

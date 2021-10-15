@@ -36,7 +36,7 @@ namespace SlaamMono
             _menuScreen = menuScreen;
         }
 
-        public void Initialize()
+        public void Open()
         {
             _logger.Log("----------------------------------");
             _logger.Log("     Character Select Screen      ");

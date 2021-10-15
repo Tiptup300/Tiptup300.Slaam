@@ -59,7 +59,7 @@ namespace SlaamMono
             else
             {
                 BoardThumbnailViewer viewer = new BoardThumbnailViewer(this);
-                viewer.Initialize();
+                viewer.Open();
                 while (!viewer.FoundBoard)
                 {
                     viewer.Update();
@@ -91,7 +91,7 @@ namespace SlaamMono
             if (Resources.DefaultBoard == null)
             {
                 BoardThumbnailViewer viewer = new BoardThumbnailViewer(null);
-                viewer.Initialize();
+                viewer.Open();
                 while (!viewer.FoundBoard)
                 {
                     viewer.Update();
@@ -103,7 +103,7 @@ namespace SlaamMono
             return Resources.DefaultBoard;
         }
 
-        public void Initialize()
+        public void Open()
         {
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
             if (SetupChars.Count == 1)
