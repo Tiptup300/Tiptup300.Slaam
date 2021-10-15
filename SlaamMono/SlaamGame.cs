@@ -1,15 +1,9 @@
 #region Using Statements
 using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Audio;
 using SlaamMono.Library.Input;
 #if ZUNE
 using ZBlade;
@@ -46,8 +40,6 @@ namespace SlaamMono
 
         private readonly ILogger _logger;
 
-        private AudioManager _audioManager;
-
 
         public SlaamGame(ILogger logger)
         {
@@ -72,8 +64,6 @@ namespace SlaamMono
         protected override void Initialize()
         {
             Components.Insert(0, new FrameRateDirector(this));
-            _audioManager = new AudioManager(this, _logger);
-            Components.Add(_audioManager);
             Components.Add(new InputComponent(this));
 
 
@@ -82,7 +72,7 @@ namespace SlaamMono
             gamebatch = new SpriteBatch(graphics.GraphicsDevice);
             _logger.Log("Created SpriteBatch;");
             base.Initialize();
-            
+
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
             Resources.Initiailze(_logger);
@@ -92,7 +82,7 @@ namespace SlaamMono
 
             GameGlobals.SetupGame();
 
-            MenuScreen.InitInstance(_logger, _audioManager);
+            MenuScreen.InitInstance(_logger);
         }
 
         public void SetupZuneBlade()
@@ -125,7 +115,7 @@ namespace SlaamMono
             {
                 BackgroundManager.Update();
                 FeedManager.Update();
-                
+
                 if (Qwerty.Active)
                 {
                     Qwerty.Update();
@@ -157,7 +147,7 @@ namespace SlaamMono
 
             if (ShowFPS)
             {
-                string temp = ""+FrameRateDirector.FUPS;
+                string temp = "" + FrameRateDirector.FUPS;
                 Vector2 fpsBack = Resources.SegoeUIx32pt.MeasureString(temp);
                 gamebatch.Draw(Resources.Dot, new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
                 Resources.DrawString(temp, new Vector2(5, fpsBack.Y / 2f), Resources.SegoeUIx32pt, FontAlignment.Left, Color.White, true);
@@ -174,6 +164,6 @@ namespace SlaamMono
         {
             GC.Collect();
         }
-        
+
     }
 }

@@ -36,6 +36,138 @@
     <ProjectReference Include="..\ZBlade\ZBlade.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Content\bin\DesktopGL\Content\Boards\MOBILE\0_Classic.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Boards\MOBILE\0_Invert.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\SegoeUI-14pt.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\SegoeUI-32pt.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\SegoeUI-48pt.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\JJames19119_Kirby.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\Link901_Kirby64.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\Link901_TankMech-#9001.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\Link901_TankMech9X3.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\link901_Toadstool.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\Psychtaygar_Chao.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\Tiptup300_GhostToad.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\Tiptup300_link.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\Tiptup300_OutlineToad.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\Ultra Mario_TennisMario.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Skins\YoshiMonarch_Charmeleon.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\BattleScreen\battlebg.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\BattleScreen\readysetgo.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\BattleScreen\RespawnOverlay.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\BattleScreen\TileOverlay.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\LobbyScreen\LobbyBG.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\LobbyScreen\LobbyOverlay.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\LobbyScreen\PlayerBar.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\LobbyScreen\PlayerColorPreview.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\MenuScreen\CharacterSelectBox.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\MenuScreen\menutop.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\MenuScreen\StatsButton1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\MenuScreen\StatsButton2.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\MenuScreen\StatsButton3.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\MenuScreen\StatsScreen.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Misc\background.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Misc\BoardLoading.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Misc\boardselect.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Misc\Logo.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Misc\LogoBG.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Misc\ZBladeIcon.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Powerups\Inversion.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Powerups\Inversion0.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Powerups\Slaam.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Powerups\Slaam0.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Powerups\SpeedDown.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Powerups\SpeedDown0.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Powerups\SpeedUp.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Content\Textures\MOBILE\Powerups\SpeedUp0.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Content\Credits.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

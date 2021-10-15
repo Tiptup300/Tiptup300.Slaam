@@ -1,11 +1,8 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Audio;
 using SlaamMono.Library.Input;
 
 #if ZUNE
@@ -26,7 +23,6 @@ namespace SlaamMono
         public GameScreenTimer Timer;
         public List<CharacterShell> SetupChars = new List<CharacterShell>();
         private readonly ILogger _logger;
-        private readonly IMusicPlayer _musicPlayer;
         public List<Character> Characters = new List<Character>();
         public List<GameScreenScoreboard> Scoreboards = new List<GameScreenScoreboard>();
         public Tile[,] tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
@@ -39,7 +35,7 @@ namespace SlaamMono
         {
             get
             {
-                int width = (int)(SlaamGame.Graphics.PreferredBackBufferWidth/2f);
+                int width = (int)(SlaamGame.Graphics.PreferredBackBufferWidth / 2f);
                 int height = (int)(SlaamGame.Graphics.PreferredBackBufferHeight / 2f);
                 int boardWidth = GameGlobals.BOARD_WIDTH * GameGlobals.TILE_SIZE;
                 int boardHeight = GameGlobals.BOARD_HEIGHT * GameGlobals.TILE_SIZE;
@@ -53,7 +49,7 @@ namespace SlaamMono
         public int StepsRemaining;
         public GameStatus CurrentGameStatus = GameStatus.Waiting;
         public int ReadySetGoPart = 0;
-        public Timer ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0,0,325));
+        public Timer ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
         public MatchScoreCollection ScoreKeeper;
         private bool Timing = false;
         public GameType ThisGameType;
@@ -75,11 +71,10 @@ namespace SlaamMono
 
         #region Constructor
 
-        public GameScreen(List<CharacterShell> chars, ILogger logger, IMusicPlayer musicPlayer)
+        public GameScreen(List<CharacterShell> chars, ILogger logger)
         {
             SetupChars = chars;
             _logger = logger;
-            _musicPlayer = musicPlayer;
 
             ThisGameType = CurrentMatchSettings.GameType;
             SetupTheBoard(CurrentMatchSettings.BoardLocation);
@@ -97,7 +92,7 @@ namespace SlaamMono
             Boardpos = FinalBoardPosition;
             Boardpos.Y = -Tileset.Height;
 
-            Timer = new GameScreenTimer(new Vector2(1024, 0),this);
+            Timer = new GameScreenTimer(new Vector2(1024, 0), this);
             FeedManager.FeedsActive = false;
             for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
             {
@@ -109,7 +104,6 @@ namespace SlaamMono
             ScoreKeeper = new MatchScoreCollection(this);
             ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.BattleScreen);
-            _musicPlayer.Play(MusicTrack.Gameplay);
 
 
             if (ThisGameType == GameType.Classic)
@@ -136,7 +130,8 @@ namespace SlaamMono
             SlaamGame.mainBlade.UserCanNavigateMenu = true;
             SlaamGame.mainBlade.UserCanCloseMenu = false;
             MenuTextItem resume = new MenuTextItem("Resume Game");
-            resume.Activated += delegate {
+            resume.Activated += delegate
+            {
                 Paused = false;
                 BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.BattleScreen);
                 SlaamGame.mainBlade.Status = BladeStatus.Hidden;
@@ -159,12 +154,12 @@ namespace SlaamMono
 
         void quit_onSelected(object sender)
         {
-            
+
         }
 
         void resume_onSelected(object sender)
         {
-            
+
         }
 #endif
         public virtual void SetupTheBoard(string BoardLoc)
@@ -197,7 +192,7 @@ namespace SlaamMono
         public virtual void Update()
         {
             //if (Input.GetKeyboard().PressedKey(Microsoft.Xna.Framework.Input.Keys.E))
-              //  Characters[0].CurrentPowerup = new SlaamPowerup(this, Characters[0], 0);
+            //  Characters[0].CurrentPowerup = new SlaamPowerup(this, Characters[0], 0);
 
             if (Paused)
             {
@@ -314,7 +309,7 @@ namespace SlaamMono
                         int newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
                         int ct = 0;
 
-                        while (tiles[newx,newy].CurrentTileCondition != Tile.TileCondition.Normal)
+                        while (tiles[newx, newy].CurrentTileCondition != Tile.TileCondition.Normal)
                         {
                             newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
                             newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
@@ -358,7 +353,7 @@ namespace SlaamMono
 #else
 
 #endif
-                }
+            }
             else
             {
                 /*for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
@@ -399,11 +394,11 @@ namespace SlaamMono
                 }
 
                 for (int x = 0; x < Characters.Count; x++)
-                    if(Characters[x] != null)
+                    if (Characters[x] != null)
                         Characters[x].Drawn = false;
 
                 //for (int x = 0; x < Scoreboards.Count; x++)
-                    //Scoreboards[x].Draw(batch);
+                //Scoreboards[x].Draw(batch);
 
                 if (CurrentGameStatus == GameStatus.Waiting || CurrentGameStatus == GameStatus.Over)
                 {
@@ -412,7 +407,7 @@ namespace SlaamMono
 
                 //Timer.Draw(batch);
             }
-            
+
         }
 
         #endregion
@@ -452,7 +447,7 @@ namespace SlaamMono
             if (Characters[Killee].Lives == 0 && ThisGameType == GameType.Classic)
                 ShortenBoard();
 
-            
+
 
             if (Killer != -2 && Killer < Characters.Count)
             {
@@ -480,7 +475,7 @@ namespace SlaamMono
                             int TimesShortened = 100 - StepsRemaining;
                         }
                     }
-                    
+
                     if (Characters[Killer].Kills == KillsToWin)
                     {
                         StepsRemaining = 1;
@@ -499,7 +494,7 @@ namespace SlaamMono
             int newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
             int newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
 
-            while (tiles[newx, newy].Dead || tiles[newx,newy].CurrentTileCondition == Tile.TileCondition.RespawnPoint)
+            while (tiles[newx, newy].Dead || tiles[newx, newy].CurrentTileCondition == Tile.TileCondition.RespawnPoint)
             {
                 newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
                 newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
@@ -598,9 +593,9 @@ namespace SlaamMono
                 int X = (int)(((pos.X - Boardpos.X) - X1) / GameGlobals.TILE_SIZE);
                 int Y = (int)(((pos.Y - Boardpos.Y) - Y1) / GameGlobals.TILE_SIZE);
 
-                if(pos.X < Boardpos.X)
+                if (pos.X < Boardpos.X)
                     X = -1;
-                if(pos.Y < Boardpos.Y)
+                if (pos.Y < Boardpos.Y)
                     Y = -1;
 
                 return new Vector2(X, Y);

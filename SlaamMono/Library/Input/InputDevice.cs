@@ -4,14 +4,9 @@ namespace SlaamMono.Library.Input
 {
     public class InputDevice
     {
-        #region Variables
-
         public ExtendedPlayerIndex PlayerIndex;
         private InputDeviceType Type;
         private GamePadHelper GamePad;
-#if !ZUNE
-        private KeyboardHelper KeyBoard;
-#endif
         private int KeyboardIndex;
 
         public bool PressedUp;
@@ -29,10 +24,6 @@ namespace SlaamMono.Library.Input
         public bool PressedBack;
         public bool PressedStart;
 
-        #endregion
-
-        #region Constructor
-
         public InputDevice(InputDeviceType type, ExtendedPlayerIndex playerIndex, int keyboardIndex)
         {
             if (type == InputDeviceType.Controller)
@@ -49,11 +40,9 @@ namespace SlaamMono.Library.Input
                 PlayerIndex = playerIndex;
                 KeyboardIndex = keyboardIndex;
             }
+
+
         }
-
-        #endregion
-
-        #region Update
 
         public void Update()
         {
@@ -175,7 +164,5 @@ namespace SlaamMono.Library.Input
 
 #endif
         }
-
-        #endregion
     }
 }

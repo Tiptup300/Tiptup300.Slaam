@@ -1,26 +1,22 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.Logging;
+using System;
+using System.Collections.Generic;
 
 namespace SlaamMono
 {
     class SurvivalScreen : GameScreen
     {
-
         private Timer _timeToAddBot = new Timer(new TimeSpan(0, 0, 10));
         private int _botsToAdd = 1;
         private int _botsAdded = 0;
 
-        private readonly ILogger _logger; 
+        private readonly ILogger _logger;
 
-        public SurvivalScreen(List<CharacterShell> shell, ILogger logger, IMusicPlayer musicPlayer)
-            : base(shell, logger, musicPlayer)
+        public SurvivalScreen(List<CharacterShell> shell, ILogger logger)
+            : base(shell, logger)
         {
             _logger = logger;
         }
@@ -37,7 +33,7 @@ namespace SlaamMono
             Tileset = LobbyScreen.LoadQuickBoard();
 
             Characters.Add(new Character(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupChars[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0));
-            Scoreboards.Add(new GameScreenScoreboard(new Vector2(-250,10),Characters[0],ThisGameType));
+            Scoreboards.Add(new GameScreenScoreboard(new Vector2(-250, 10), Characters[0], ThisGameType));
         }
 
         public override void Update()
@@ -47,12 +43,12 @@ namespace SlaamMono
                 _timeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (_timeToAddBot.Active)
                 {
-                    for (int x = 0; x < _botsToAdd+1; x++)
+                    for (int x = 0; x < _botsToAdd + 1; x++)
                     {
                         AddNewBot();
                         _botsAdded++;
 
-                        if (rand.Next(0, _botsAdded-1) == _botsAdded)
+                        if (rand.Next(0, _botsAdded - 1) == _botsAdded)
                         {
                             _botsToAdd++;
                         }
@@ -71,7 +67,7 @@ namespace SlaamMono
 
             bool temp = CurrentGameStatus == GameStatus.Waiting;
 
-            
+
 
             base.Update();
 
@@ -81,7 +77,7 @@ namespace SlaamMono
 
         public override void ReportKilling(int Killer, int Killee)
         {
-            if(Killer == 0)
+            if (Killer == 0)
                 Characters[Killer].Kills++;
 
             if (Killee == 0)
@@ -109,39 +105,6 @@ namespace SlaamMono
                 ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame = Timer.CurrentGameTime;
             ProfileManager.SaveProfiles();
             ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper, _logger));
-        }
-    }
-
-    public class SurvivalCharSelectScreen : CharSelectScreen
-    {
-        private ILogger _logger;
-        private readonly IMusicPlayer _musicPlayer;
-
-        public SurvivalCharSelectScreen(ILogger logger, IMusicPlayer musicPlayer)
-            : base(logger, musicPlayer)
-        {
-            _logger = logger;
-            _musicPlayer = musicPlayer;
-        }
-
-        public override void ResetBoxes()
-        {
-            SelectBoxes = new CharSelectBox[1];
-            SelectBoxes[0] = new CharSelectBox(new Vector2(340, 427), SkinTexture, ExtendedPlayerIndex.One, Skins);
-            SelectBoxes[0].Survival = true;
-        }
-
-        public override void GoBack()
-        {
-            base.GoBack();
-        }
-
-        public override void GoForward()
-        {
-            List<CharacterShell> list = new List<CharacterShell>();
-            list.Add(SelectBoxes[0].GetShell());
-            GameScreen.Instance = new SurvivalScreen(list, _logger, _musicPlayer);
-            ScreenHelper.ChangeScreen(GameScreen.Instance);
         }
     }
 }

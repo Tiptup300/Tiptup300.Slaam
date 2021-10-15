@@ -1,15 +1,9 @@
 #region Using Statements
-using System;
-using System.Text;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using ZBlade;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Audio;
+using System;
+using ZBlade;
 #endregion
 
 namespace SlaamMono
@@ -22,19 +16,16 @@ namespace SlaamMono
         public static MenuScreen Instance { get { return _instance; } }
         private static MenuScreen _instance;
 
-        public static void InitInstance(ILogger logger, IMusicPlayer musicPlayer)
+        public static void InitInstance(ILogger logger)
         {
-            _instance = new MenuScreen(logger, musicPlayer);
+            _instance = new MenuScreen(logger);
         }
 
         private readonly ILogger _logger;
-        private readonly IMusicPlayer _musicPlayer;
 
-        public MenuScreen(ILogger logger, IMusicPlayer musicPlayer)
+        public MenuScreen(ILogger logger)
         {
             _logger = logger;
-            _musicPlayer = musicPlayer;
-            _musicPlayer.Play(MusicTrack.Menu);
         }
 
         public void Initialize()
@@ -42,10 +33,10 @@ namespace SlaamMono
             if (MainMenuList.Nodes.Count == 0)
             {
                 MenuTextItem competition = new MenuTextItem("Competition");
-                competition.Activated += delegate { ChangeScreen(new CharSelectScreen(_logger, _musicPlayer)); };
+                competition.Activated += delegate { ChangeScreen(new CharSelectScreen(InstanceManager.Instance.Get<ILogger>())); };
 
                 MenuTextItem survival = new MenuTextItem("Survival");
-                survival.Activated += delegate { ChangeScreen(new SurvivalCharSelectScreen(_logger, _musicPlayer)); };
+                survival.Activated += delegate { ChangeScreen(new SurvivalCharSelectScreen(InstanceManager.Instance.Get<ILogger>())); };
 
 
                 MenuItemTree options = new MenuItemTree("Options", MainMenuList);
@@ -55,10 +46,10 @@ namespace SlaamMono
                     manageProfiles.IsEnabled = false;
 
                     MenuTextItem highscores = new MenuTextItem("View Highscores");
-                    highscores.Activated += delegate { ChangeScreen(new HighScoreScreen(_logger)); };
+                    highscores.Activated += delegate { ChangeScreen(new HighScoreScreen(InstanceManager.Instance.Get<ILogger>())); };
 
                     MenuTextItem credits = new MenuTextItem("Credits");
-                    credits.Activated += delegate { ChangeScreen(new Credits(_musicPlayer)); };
+                    credits.Activated += delegate { ChangeScreen(new Credits()); };
 
 #if ZUNE
                     //MenuSongLibraryItem library = new MenuSongLibraryItem("Custom Soundtrack", options);
@@ -73,12 +64,12 @@ namespace SlaamMono
                 MainMenuList.Nodes.Add(survival);
                 MainMenuList.Nodes.Add(options);
 
-                
+
 
                 MenuTextItem exit = new MenuTextItem("Exit");
                 exit.Activated += delegate { SlaamGame.Instance.Exit(); };
 
-                
+
 
                 MainMenuList.Nodes.Add(exit);
 
@@ -108,7 +99,7 @@ namespace SlaamMono
 
         void competition_onSelected(object sender, EventArgs e)
         {
-            ScreenHelper.ChangeScreen(new CharSelectScreen(_logger, _musicPlayer));
+            ScreenHelper.ChangeScreen(new CharSelectScreen(InstanceManager.Instance.Get<ILogger>()));
         }
 
 
@@ -192,7 +183,7 @@ namespace SlaamMono
             batch.Draw(Resources.MenuChoice.Texture, position + new Vector2(0, Resources.MenuChoice.Height), null, Color.White, 0f, drawOrigin, 1f, SpriteEffects.FlipVertically, 0);
 
             batch.DrawString(Resources.SegoeUIx48ptBold, text, position, Color.White, 0f, Resources.SegoeUIx48ptBold.MeasureString(text) / 2f, 1f, SpriteEffects.None, 0);
-            batch.DrawString(Resources.SegoeUIx48ptBold, text, position + new Vector2(0,Resources.MenuChoice.Height), Color.White, 0f, Resources.SegoeUIx48ptBold.MeasureString(text) / 2f, 1f, SpriteEffects.FlipVertically, 0);
+            batch.DrawString(Resources.SegoeUIx48ptBold, text, position + new Vector2(0, Resources.MenuChoice.Height), Color.White, 0f, Resources.SegoeUIx48ptBold.MeasureString(text) / 2f, 1f, SpriteEffects.FlipVertically, 0);
         }
 
 

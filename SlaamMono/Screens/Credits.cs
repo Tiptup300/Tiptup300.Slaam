@@ -1,20 +1,13 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using SlaamMono.Library.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Input;
+using System.Collections.Generic;
 
 namespace SlaamMono
 {
     public class Credits : IScreen
     {
-        #region Variables
-
         private const float MovementSpeed = 3f / 120f;
-        private readonly IMusicPlayer _musicPlayer;
         private string[] credits;
         //private int CurrentCredit = 3;
         private List<CreditsListing> CreditsListings = new List<CreditsListing>();
@@ -25,13 +18,8 @@ namespace SlaamMono
         private bool Active = false;
         private float TextHeight = 0f;
 
-        #endregion
-
-        #region Constructor
-
-        public Credits(IMusicPlayer musicPlayer)
+        public Credits()
         {
-            _musicPlayer = musicPlayer;
         }
 
         public void Initialize()
@@ -40,7 +28,7 @@ namespace SlaamMono
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Credits);
             for (int x = 0; x < credits.Length; x++)
             {
-                string[] credinfo = credits[x].Replace("\r","").Split("|".ToCharArray());
+                string[] credinfo = credits[x].Replace("\r", "").Split("|".ToCharArray());
                 string credname = credinfo[0];
                 List<string> credcreds = new List<string>();
                 for (int y = 1; y < credinfo.Length; y++)
@@ -50,10 +38,8 @@ namespace SlaamMono
                 CreditsListings.Add(new CreditsListing(credname, credcreds));
             }
             FeedManager.FeedsActive = false;
-            _musicPlayer.Play(MusicTrack.Credits);
         }
 
-        #endregion
 
         #region Update
 
@@ -97,7 +83,7 @@ namespace SlaamMono
                 {
                     Resources.DrawString(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), Resources.SegoeUIx32pt, FontAlignment.Left, MainCreditColor, false);
                 }
-                Offset += Resources.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y /1.5f;
+                Offset += Resources.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
                 for (int x = 0; x < CreditsListings[CurrentCredit].Credits.Count; x++)
                 {
                     if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + Resources.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)

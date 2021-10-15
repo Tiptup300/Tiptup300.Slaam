@@ -1,20 +1,16 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System.Linq;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.Logging;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace SlaamMono
 {
     public class CharSelectScreen : IScreen
     {
-        #region Variables
-
         public static Texture2D[] SkinTexture;
 
         private static Random rand = new Random();
@@ -28,16 +24,13 @@ namespace SlaamMono
         private const float HOffset = 40f;
 
         private readonly ILogger _logger;
-        private readonly IMusicPlayer _musicPlayer;
 
-        #endregion
 
         #region Constructor
 
-        public CharSelectScreen(ILogger logger, IMusicPlayer musicPlayer)
+        public CharSelectScreen(ILogger logger)
         {
             _logger = logger;
-            _musicPlayer = musicPlayer;
 
             _logger.Log("----------------------------------");
             _logger.Log("     Character Select Screen      ");
@@ -73,7 +66,7 @@ namespace SlaamMono
                     SelectBoxes[x].Reset();
                 }
             }
-            
+
         }
 
         #endregion
@@ -116,7 +109,7 @@ namespace SlaamMono
                 if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
                     templist.Add(SelectBoxes[idx].GetShell());
 
-            ScreenHelper.ChangeScreen(new LobbyScreen(templist,_logger, _musicPlayer));
+            ScreenHelper.ChangeScreen(new LobbyScreen(templist, InstanceManager.Instance.Get<ILogger>()));
         }
 
         #endregion
@@ -126,7 +119,7 @@ namespace SlaamMono
         public void Draw(SpriteBatch batch)
         {
             for (int idx = 0; idx < SelectBoxes.Length; idx++)
-                if(SelectBoxes[idx] != null)
+                if (SelectBoxes[idx] != null)
                     SelectBoxes[idx].Draw(batch);
         }
 
@@ -191,7 +184,7 @@ namespace SlaamMono
         {
             SelectBoxes = new CharSelectBox[InputComponent.Players.Length];
 
-            for(int x = 0; x < InputComponent.Players.Length; x++)
+            for (int x = 0; x < InputComponent.Players.Length; x++)
             {
                 SelectBoxes[x] = new CharSelectBox(BoxPositions[x], SkinTexture, (ExtendedPlayerIndex)x, Skins);
             }

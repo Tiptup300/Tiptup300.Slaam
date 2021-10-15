@@ -153,70 +153,6 @@ namespace SlaamMono
             _logger.Log(" - Dot Image Created.");
 
 
-#if !ZUNE
-            Background = new CachedTexture2D("background");
-            BattleBG = new CachedTexture2D("battlebg");
-            BoardSelect = new CachedTexture2D("boardselect");
-            BoardSelectTextUnderlay = new CachedTexture2D("boardselectcaption");
-            CPU = new CachedTexture2D("cpu");
-            CreditsBG = new CachedTexture2D("CreditsBG");
-            DeadChar = new CachedTexture2D("deadchar");
-            //DefaultBoard = LoadImage("defaultboard");
-            //DefaultChar = LoadImage("defaultchar");
-            Feedbar = new CachedTexture2D("feedbar");
-            GameScreenScoreBoard = new CachedTexture2D("scoreboard");
-            Gear = new CachedTexture2D("gear");
-            HostingBG = new CachedTexture2D("HostingBG");
-            Key = new CachedTexture2D("key");
-            KeyboardBG = new CachedTexture2D("KeyboardBG");
-            KeyHT = new CachedTexture2D("KeyHT");
-            LButton = new CachedTexture2D("LButton");
-            LButtonHT = new CachedTexture2D("LButtonHT");
-            LobbyCharBar = new CachedTexture2D("LobbyCharBar");
-            LobbyColorPreview = new CachedTexture2D("LobbyColorSHow");
-            LobbyOverlay = new CachedTexture2D("LobbyOverlay");
-            LobbyUnderlay = new CachedTexture2D("LobbyUnderlay");
-            LobbyInfoOverlay = new CachedTexture2D("LobbyInfoOverlay");
-            Menu0 = new CachedTexture2D("menu0");
-            Menu1 = new CachedTexture2D("menu1");
-            Menu2 = new CachedTexture2D("menu2");
-            Menu3 = new CachedTexture2D("menu3");
-            Menu4 = new CachedTexture2D("menu4");
-            Menu5 = new CachedTexture2D("menu5");
-            Menu6 = new CachedTexture2D("menu6");
-            Menu7 = new CachedTexture2D("menu9");
-            MenuBlock = new CachedTexture2D("menuselection");
-            MenuBoard = new CachedTexture2D("menuchoice");
-            MenuTop = new CachedTexture2D("menutop");
-            MuhLazza1 = new CachedTexture2D("muhlazzabg");
-            MuhLazza2 = new CachedTexture2D("muhlazzabg2");
-            NowLoading = new CachedTexture2D("loading");
-            PauseScreen = new CachedTexture2D("pause");
-            ProfileShell = new CachedTexture2D("profileshell");
-            ProfileShello = new CachedTexture2D("profileshelloverlay");
-            ReadySetGo = new CachedTexture2D("readysetgo");
-            RespawnTileOverlay = new CachedTexture2D("respawnoverlay");
-            Spacebar = new CachedTexture2D("spacebar");
-            SpaceHT = new CachedTexture2D("SpaceHT");
-            Star = new CachedTexture2D("star");
-            StatsBoard = new CachedTexture2D("statboard");
-            StatsButtons[0] = LoadImage("statbutton1");
-            StatsButtons[1] = LoadImage("statbutton2");
-            StatsButtons[2] = LoadImage("statbutton3");
-            Textbox = new CachedTexture2D("Textbox");
-            TileOverlay = new CachedTexture2D("TileOverlay");
-            TopGameBoard = new CachedTexture2D("topboard");
-            Waiting = new CachedTexture2D("Waiting");
-            ZibithLogo = new CachedTexture2D("ZibithLogo");
-            ZibithLogoBG = new CachedTexture2D("LogoBG");
-
-            MenuChoice = new CachedTexture2D("menuTextures\\choice");
-            MenuChoiceGlow = new CachedTexture2D("menuTextures\\choiceGlow");
-            MenuOverlay = new CachedTexture2D("menuTextures\\overlay");
-#endif
-
-#if ZUNE
-
             BattleBG = new CachedTexture2D("BattleScreen//battlebg");
             ReadySetGo = new CachedTexture2D("BattleScreen//readysetgo");
             RespawnTileOverlay = new CachedTexture2D("BattleScreen//respawnOverlay");
@@ -240,9 +176,6 @@ namespace SlaamMono
             NowLoading = new CachedTexture2D("Misc//BoardLoading");
             Background = new CachedTexture2D("Misc//background");
             SlaamGame.mainBlade.CurrentGameInfo.GameIcon = LoadImage("Misc//ZBladeIcon");
-#endif
-
-
 
             SegoeUIx32pt = LoadFont("SegoeUI-32pt");
             SegoeUIx14pt = LoadFont("SegoeUI-14pt");

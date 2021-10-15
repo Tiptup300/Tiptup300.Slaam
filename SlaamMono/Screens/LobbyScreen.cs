@@ -1,18 +1,14 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.Logging;
+using System.Collections.Generic;
+using System.IO;
 
 namespace SlaamMono
 {
     public class LobbyScreen : IScreen
     {
-        #region Variables
 #if !ZUNE
         private const int MAX_PLAYERS = 8;
 #else
@@ -31,28 +27,23 @@ namespace SlaamMono
         private IntRange MenuChoice;
 
         private readonly ILogger _logger;
-        private readonly IMusicPlayer _musicPlayer;
-        #endregion
 
-        #region Constructor
-
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IMusicPlayer musicPlayer)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger)
         {
             _logger = logger;
-            _musicPlayer = musicPlayer;
 
             SetupChars = chars;
             PlayerAmt = SetupChars.Count;
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Add(true,
-                new GraphItemSetting(0,"GameType", "Classic","Spree","Timed Spree"),
-                new GraphItemSetting(1,"Lives (Classic Only)", "3", "5", "10", "20", "40", "50", "100"),
-                new GraphItemSetting(2,"Speed", "0.50x", "0.75x", "1.00x", "1.25x", "1.50x"), 
-                new GraphItemSetting(3,"Time of Match (Timed Spree Only)","1 Minute", "2 Minutes", "3 Minutes", "5 Minutes", "10 Minutes", "20 Minutes", "30 Minutes", "45 Minutes", "1 Hour"),
-                new GraphItemSetting(4,"Respawn Time","Instant", "2 Seconds", "4 Seconds", "6 Seconds", "8 Seconds", "10 Seconds"),
-                new GraphItemSetting(5,"Kills To Win (Spree Only)","5","10","15","20","25","30","40","50","100"),
-                new GraphItem("","Choose Board..."),
+                new GraphItemSetting(0, "GameType", "Classic", "Spree", "Timed Spree"),
+                new GraphItemSetting(1, "Lives (Classic Only)", "3", "5", "10", "20", "40", "50", "100"),
+                new GraphItemSetting(2, "Speed", "0.50x", "0.75x", "1.00x", "1.25x", "1.50x"),
+                new GraphItemSetting(3, "Time of Match (Timed Spree Only)", "1 Minute", "2 Minutes", "3 Minutes", "5 Minutes", "10 Minutes", "20 Minutes", "30 Minutes", "45 Minutes", "1 Hour"),
+                new GraphItemSetting(4, "Respawn Time", "Instant", "2 Seconds", "4 Seconds", "6 Seconds", "8 Seconds", "10 Seconds"),
+                new GraphItemSetting(5, "Kills To Win (Spree Only)", "5", "10", "15", "20", "25", "30", "40", "50", "100"),
+                new GraphItem("", "Choose Board..."),
                 new GraphItem("", "Save"),
                 new GraphItem("", "Cancel")
             );
@@ -61,14 +52,14 @@ namespace SlaamMono
             MainMenu.SetHighlight(MenuChoice.Value);
 
             if (CurrentMatchSettings.BoardLocation != null && CurrentMatchSettings.BoardLocation.Trim() != "" && File.Exists(CurrentMatchSettings.BoardLocation))
-            { 
-                LoadBoard(CurrentMatchSettings.BoardLocation); 
+            {
+                LoadBoard(CurrentMatchSettings.BoardLocation);
             }
             else
             {
                 BoardThumbnailViewer viewer = new BoardThumbnailViewer(this);
                 viewer.Initialize();
-                while(!viewer.FoundBoard)
+                while (!viewer.FoundBoard)
                 {
                     viewer.Update();
                 }
@@ -121,8 +112,6 @@ namespace SlaamMono
             }
             FeedManager.InitializeFeeds(DialogStrings.LobbyScreenFeed);
         }
-
-        #endregion
 
         #region Update
 
@@ -183,7 +172,7 @@ namespace SlaamMono
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    ScreenHelper.ChangeScreen(new CharSelectScreen(_logger, _musicPlayer));
+                    ScreenHelper.ChangeScreen(new CharSelectScreen(InstanceManager.Instance.Get<ILogger>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }
@@ -203,7 +192,7 @@ namespace SlaamMono
                 if (InputComponent.Players[0].PressedStart)
                 {
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
-                    GameScreen.Instance = new GameScreen(SetupChars,_logger, _musicPlayer);
+                    GameScreen.Instance = new GameScreen(SetupChars, InstanceManager.Instance.Get<ILogger>());
                     ScreenHelper.ChangeScreen(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();
@@ -213,7 +202,7 @@ namespace SlaamMono
                 {
                     ViewingSettings = true;
                     ResetZune();
-                    
+
                     BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Normal);
                 }
 
