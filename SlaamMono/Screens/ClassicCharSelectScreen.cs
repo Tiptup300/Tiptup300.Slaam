@@ -34,6 +34,10 @@ namespace SlaamMono
         {
             _logger = logger;
             _menuScreen = menuScreen;
+        }
+
+        public void Initialize()
+        {
             _logger.Log("----------------------------------");
             _logger.Log("     Character Select Screen      ");
             _logger.Log("----------------------------------");
@@ -49,11 +53,9 @@ namespace SlaamMono
                 SlaamGame.Instance.Exit();
             }
             else
+            {
                 ResetBoxes();
-        }
-
-        public void Initialize()
-        {
+            }
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
             FeedManager.InitializeFeeds(DialogStrings.CharacterSelectScreenFeed);
 
