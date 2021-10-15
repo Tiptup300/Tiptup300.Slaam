@@ -569,7 +569,7 @@ namespace SlaamMono
                 Characters[x].SaveProfileData();
             }
             ProfileManager.SaveProfiles();
-            ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper, DI.Instance.Get<ILogger>(), DI.Instance.Get<MenuScreen>()));
+            ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper, DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
         }
 
         #endregion

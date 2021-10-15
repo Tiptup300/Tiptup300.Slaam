@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace SlaamMono.Library.Input
 {
-    class InputComponent : GameComponent
+    public class InputComponent : GameComponent
     {
         public static InputDevice[] Players;
 

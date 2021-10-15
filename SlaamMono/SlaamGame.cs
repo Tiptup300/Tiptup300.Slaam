@@ -1,4 +1,3 @@
-#region Using Statements
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -6,14 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Input;
 using SlaamMono.Screens;
-#if ZUNE
 using ZBlade;
-#endif 
-#endregion
-
-// todo: alpha transparency not working
-// todo: board size not rendering correctly
-// todo: zune blade should detect size of screen and change correctly.
 
 
 namespace SlaamMono
@@ -21,9 +13,8 @@ namespace SlaamMono
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class SlaamGame : Microsoft.Xna.Framework.Game
+    public class SlaamGame : Game, ISlaamGame
     {
-
         private GraphicsDeviceManager graphics;
         new public static ContentManager Content;
         private SpriteBatch gamebatch;
@@ -82,9 +73,6 @@ namespace SlaamMono
             _contentManager = new XnaContentManager(DI.Instance.Get<ILogger>());
 
             GameGlobals.SetupGame();
-
-            DI.Instance.Set(new ScreenFactory());
-            DI.Instance.Set(new MenuScreen(DI.Instance.Get<ScreenFactory>()));
         }
 
         public void SetupZuneBlade()

@@ -1,15 +1,14 @@
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Logging;
 using System;
 using ZBlade;
 
 namespace SlaamMono.Screens
 {
-    public class MenuScreen : IScreen
+    public class MainMenuScreen : IScreen
     {
         private readonly IScreenFactory _screenFactory;
 
-        public MenuScreen(IScreenFactory screenFactory)
+        public MainMenuScreen(IScreenFactory screenFactory)
         {
             _screenFactory = screenFactory;
         }
@@ -30,7 +29,8 @@ namespace SlaamMono.Screens
             {
                 mainMenu.Nodes.Add(new MenuTextItem("Competition", onActivated: selectedCompetitionMode));
                 mainMenu.Nodes.Add(new MenuTextItem("Survival", onActivated: selectedSurvival));
-                mainMenu.Nodes.Add(new MenuItemTree(text: "Options", parent: mainMenu, onInit: (options) => {
+                mainMenu.Nodes.Add(new MenuItemTree(text: "Options", parent: mainMenu, onInit: (options) =>
+                {
                     options.Nodes.Add(new MenuTextItem("Profiles", onActivated: selectedManageProfiles, isEnabled: false));
                     options.Nodes.Add(new MenuTextItem("View Highscores", onActivated: selectedHighscores));
                     options.Nodes.Add(new MenuTextItem("Credits", onActivated: selectedCredits));

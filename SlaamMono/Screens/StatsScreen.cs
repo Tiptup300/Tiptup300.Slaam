@@ -12,7 +12,7 @@ namespace SlaamMono
 
         public MatchScoreCollection ScoreCollection;
         private readonly ILogger _logger;
-        private readonly MenuScreen _menuScreen;
+        private readonly MainMenuScreen _menuScreen;
         private IntRange CurrentPage = new IntRange(0, 0, 2);
         private IntRange CurrentChar;
 
@@ -35,7 +35,7 @@ namespace SlaamMono
 
         #region Constructor
 
-        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, MenuScreen menuScreen)
+        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, MainMenuScreen menuScreen)
         {
             ScoreCollection = scorecollection;
             _logger = logger;

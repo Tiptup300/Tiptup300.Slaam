@@ -173,7 +173,7 @@ namespace SlaamMono
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    ScreenHelper.ChangeScreen(new CharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MenuScreen>()));
+                    ScreenHelper.ChangeScreen(new CharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }

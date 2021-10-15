@@ -2,7 +2,7 @@
 
 namespace SlaamMono.Library.Logging
 {
-    public class TextFileLog : ILoggingDevice
+    public class TextFileLoggingDevice : ILoggingDevice
     {
         private const string DefaultFileName = "log.log";
 

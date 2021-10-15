@@ -25,12 +25,12 @@ namespace SlaamMono
         private const float HOffset = 40f;
 
         private readonly ILogger _logger;
-        private readonly MenuScreen _menuScreen;
+        private readonly MainMenuScreen _menuScreen;
 
 
         #region Constructor
 
-        public CharSelectScreen(ILogger logger, MenuScreen menuScreen)
+        public CharSelectScreen(ILogger logger, MainMenuScreen menuScreen)
         {
             _logger = logger;
             _menuScreen = menuScreen;
