@@ -14,11 +14,11 @@ namespace SlaamMono
 
             output = new Container();
 
-            output.Register<IApp, SlaamGameApp>();
-            output.Register<ISlaamGame, SlaamGame>();
+            output.Register<IApp, SlaamGameApp>(Lifestyle.Singleton);
+            output.Register<ISlaamGame, SlaamGame>(Lifestyle.Singleton);
+            output.Register<ILoggingDevice, TextFileLoggingDevice>(Lifestyle.Singleton);
+            output.Register<ILogger, Logger>(Lifestyle.Singleton);
             output.Register<MainMenuScreen>();
-            output.Register<ILoggingDevice, TextFileLoggingDevice>();
-            output.Register<ILogger, Logger>();
 
             output.Register<IScreenFactory, ScreenFactory>();
 

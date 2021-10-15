@@ -37,11 +37,8 @@ namespace SlaamMono
         {
             _logger = logger;
 
-            _logger.Log("XNA Started;");
             graphics = new GraphicsDeviceManager(this);
-            _logger.Log("Graphics Device Manager Created;");
             Content = new ContentManager(Services);
-            _logger.Log("Content Manager Created;");
             this.Exiting += Game1_Exiting;
 
             graphics.IsFullScreen = false;
