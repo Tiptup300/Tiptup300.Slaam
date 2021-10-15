@@ -19,6 +19,11 @@ namespace SlaamMono
             output.Register<ILoggingDevice, TextFileLoggingDevice>(Lifestyle.Singleton);
             output.Register<ILogger, Logger>(Lifestyle.Singleton);
             output.Register<MainMenuScreen>();
+            output.Register<CreditsScreen>();
+            output.Register<HighScoreScreen>();
+            output.Register<ProfileEditScreen>();
+            output.Register<SurvivalCharSelectScreen>();
+            output.Register<ClassicCharSelectScreen>();
 
             output.Register<IScreenFactory, ScreenFactory>();
 
