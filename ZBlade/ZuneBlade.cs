@@ -294,51 +294,73 @@ namespace ZBlade
 		#region LoadContent
 
 		protected override void LoadContent()
-		{
+        {
 #if ZUNE
-			// todo
-			//content = new ResourceContentManager(Game.Services, Properties.Resources__Zune_.ResourceManager);
+            // todo
+            //content = new ResourceContentManager(Game.Services, Properties.Resources__Zune_.ResourceManager);
 #else
 				// TODO 
 			//content = new ResourceContentManager(Game.Services, Properties.Resources__Windows_.ResourceManager);
 #endif
-			content = Game.Content;
+            content = Game.Content;
 
-			font_10 = content.Load<SpriteFont>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\Segoe UI-10");
-			font_12 = content.Load<SpriteFont>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\Segoe UI-12");
-			font_14 = content.Load<SpriteFont>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\Segoe UI-14");
+			try
+			{
+				loadResources();
+			}
+			catch
+            {
+				// do nothing for now
+            }
+
+            batch = new SpriteBatch(GraphicsDevice);
+            CalcMatrix();
+
+            base.LoadContent();
+        }
+
+        private void loadResources()
+        {
+            whitePixel = buildWhitePixel();
+
+            font_10 = content.Load<SpriteFont>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\Segoe UI-10");
+            font_12 = content.Load<SpriteFont>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\Segoe UI-12");
+            font_14 = content.Load<SpriteFont>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\Segoe UI-14");
 
             bgGlossTex = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\bgBottom");
             bladeGloss = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\bladeGloss");
             bladeBorder = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\bladeBorder");
-			menuChoiceTex = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\menuchoice");
-			menuHighlightTex = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\menuhighlight");
-			menuArrowTex = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\menuArrow");
-			progressbarOverlay = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\progressbarOverlay");
+            menuChoiceTex = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\menuchoice");
+            menuHighlightTex = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\menuhighlight");
+            menuArrowTex = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\menuArrow");
+            progressbarOverlay = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\progressbarOverlay");
 
-            whitePixel = new Texture2D(GraphicsDevice, 1, 1);
-            whitePixel.SetData<uint>(new uint[] {0xffffffff });
 
             Key1 = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\key1");
             Key2 = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\key2");
             Key6 = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\key6");
             TextBox = content.Load<Texture2D>(Directory.GetCurrentDirectory() + "\\Content\\bin\\DesktopGL\\textbox");
+        }
 
-			batch = new SpriteBatch(GraphicsDevice);
-			CalcMatrix();
+        private Texture2D buildWhitePixel()
+        {
+			Texture2D output;
 
-			base.LoadContent();
-		}
+			output = new Texture2D(GraphicsDevice, 1, 1);
+			output.SetData<uint>(new uint[] { 0xffffffff });
 
-		#endregion
+			return output;
+        }
 
-		#region Update
+        #endregion
 
-		/// <summary>
-		/// Allows the game component to update itself.
-		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>
-		public override void Update(GameTime gameTime)
+        #region Update
+
+        /// <summary>
+        /// Allows the game component to update itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        public override void Update(GameTime gameTime)
 		{
 			input.Update(gameTime);
 
