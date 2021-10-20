@@ -109,7 +109,7 @@ namespace SlaamMono
                 }
                 else
                 {
-                    ScreenHelper.Update();
+                    ScreenDirector.Update();
                 }
             }
 
@@ -125,7 +125,7 @@ namespace SlaamMono
 
             BackgroundManager.Draw(gamebatch);
 
-            ScreenHelper.Draw(gamebatch);
+            ScreenDirector.Draw(gamebatch);
 
             FeedManager.Draw(gamebatch);
 

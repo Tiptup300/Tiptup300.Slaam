@@ -96,7 +96,7 @@ namespace SlaamMono
                     }
                     if (InputComponent.Players[0].PressedAction2)
                     {
-                        ScreenHelper.ChangeScreen(_menuScreen);
+                        ScreenDirector.ChangeScreen(_menuScreen);
                     }
                 }
             }

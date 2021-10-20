@@ -48,7 +48,7 @@ namespace SlaamMono.Screens
 
         private void changeScreen(string screenName)
         {
-            ScreenHelper.ChangeScreen(_screenFactory.Get(screenName));
+            ScreenDirector.ChangeScreen(_screenFactory.Get(screenName));
         }
 
         public void Update() { }

@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SlaamMono.Library.Input;
+using SlaamMono.Screens;
 
 namespace SlaamMono
 {
@@ -36,7 +37,7 @@ namespace SlaamMono
             if (InputComponent.Players[0].PressedAction)
             {
                 ProfileEditScreen.Instance.SetupNewProfile = true;
-                ScreenHelper.ChangeScreen(ProfileEditScreen.Instance);
+                ScreenDirector.ChangeScreen(ProfileEditScreen.Instance);
             }
         }
 

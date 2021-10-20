@@ -103,7 +103,7 @@ namespace SlaamMono
 
         public virtual void GoBack()
         {
-            ScreenHelper.ChangeScreen(_menuScreen);
+            ScreenDirector.ChangeScreen(_menuScreen);
         }
 
         public virtual void GoForward()
@@ -113,7 +113,7 @@ namespace SlaamMono
                 if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
                     templist.Add(SelectBoxes[idx].GetShell());
 
-            ScreenHelper.ChangeScreen(new LobbyScreen(templist, DI.Instance.Get<ILogger>()));
+            ScreenDirector.ChangeScreen(new LobbyScreen(templist, DI.Instance.Get<ILogger>()));
         }
 
         #endregion

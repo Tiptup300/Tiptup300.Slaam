@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Screens;
 using System;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
-    public static class ScreenHelper
+    public static class ScreenDirector
     {
         private static IScreen CurrentScreen = new LogoScreen(DI.Instance.Get<MainMenuScreen>());
         private static IScreen NextScreen;

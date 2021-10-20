@@ -549,7 +549,7 @@ namespace SlaamMono
                 Characters[x].SaveProfileData();
             }
             ProfileManager.SaveProfiles();
-            ScreenHelper.ChangeScreen(new StatsScreen(ScoreKeeper, DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
+            ScreenDirector.ChangeScreen(new StatsScreen(ScoreKeeper, DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
         }
 
         #endregion
