@@ -203,28 +203,6 @@ namespace SlaamMono.SubClasses
 
         public void Draw(SpriteBatch batch) // 387
         {
-#if !ZUNE
-            batch.Draw(Resources.ProfileShell.Texture, Positions[0], Color.White);
-
-            if (CurrentState == CharSelectBoxState.CharSelect)
-            {
-                if (Offset > -8)
-                    batch.Draw(DispResources[0], Positions[1], new Rectangle(0, 0, 50, 60), Color.White);
-                batch.Draw(DispResources[1], Positions[2], new Rectangle(0, 0, 50, 60), Color.White);
-                if (Offset < 8)
-                    batch.Draw(DispResources[2], Positions[3], new Rectangle(0, 0, 50, 60), Color.White);
-            }
-            batch.Draw(Resources.ProfileShello.Texture, Positions[0], Color.White);
-
-            Resources.DrawString(MsgStrings[1], Positions[4], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
-            Resources.DrawString(MsgStrings[0], Positions[5], Resources.SegoeUIx32pt, TextAlignment.Default, Color.Black, false);
-            
-            // Stats
-            Resources.DrawString(MsgStrings[2], Positions[6], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
-            Resources.DrawString(MsgStrings[3], Positions[7], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
-            Resources.DrawString(MsgStrings[4], Positions[8], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
-            Resources.DrawString(MsgStrings[5], Positions[9], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
-#else
             batch.Draw(ResourceManager.ProfileShell.Texture, new Vector2(13, 96), Color.White);
 
             var temp = MsgStrings[1];
@@ -235,10 +213,8 @@ namespace SlaamMono.SubClasses
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
-
             ResourceManager.DrawText(temp, new Vector2(31, 141), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
             ResourceManager.DrawText(MsgStrings[0], new Vector2(20, 70), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
-#endif
         }
 
         #endregion
@@ -269,17 +245,10 @@ namespace SlaamMono.SubClasses
             }
             else
             {
-#if !ZUNE
-                MsgStrings[2] = DialogStrings.Played + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalGames + DialogStrings.Games;
-                MsgStrings[3] = DialogStrings.Died + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalDeaths + DialogStrings.Times;
-                MsgStrings[4] = DialogStrings.Used + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalPowerups + DialogStrings.Powerups;
-                MsgStrings[5] = ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalKills + DialogStrings.Kills;
-#else
                 MsgStrings[2] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalGames;
                 MsgStrings[3] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalDeaths;
                 MsgStrings[4] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalPowerups;
                 MsgStrings[5] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalKills;
-#endif
             }
         }
 

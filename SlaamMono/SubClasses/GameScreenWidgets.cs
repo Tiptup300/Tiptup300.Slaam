@@ -79,9 +79,13 @@ namespace SlaamMono.SubClasses
             ResourceManager.DrawText(Character.GetProfile().Name, new Vector2(8 + Position.X, 18 + Position.Y), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.White, true);
             ResourceManager.DrawText(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
             if (CurrentGametype == GameType.Classic || CurrentGametype == GameType.Survival)
+            {
                 ResourceManager.DrawText(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
+            }
             else if (CurrentGametype == GameType.Spree || CurrentGametype == GameType.TimedSpree)
+            {
                 ResourceManager.DrawText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
+            }
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
             batch.Draw(ResourceManager.Dot, new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);
             if (Character.CurrentPowerup != null && !Character.CurrentPowerup.Used)
