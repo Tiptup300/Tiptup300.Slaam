@@ -345,8 +345,8 @@ namespace SlaamMono.Screens
 #if !ZUNE
                 batch.Draw(Resources.Dot, new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 100));
                 batch.Draw(Resources.PauseScreen.Texture, new Vector2(640 - Resources.PauseScreen.Width / 2, 512 - Resources.PauseScreen.Height / 2), Color.White);
-                Resources.DrawString(PauseStrings[0], new Vector2(640, 512 + 20), Resources.SegoeUIx32pt, FontAlignment.CompletelyCentered, Color.Black, false);
-                Resources.DrawString(PauseStrings[1], new Vector2(640, 512 + 60), Resources.SegoeUIx32pt, FontAlignment.CompletelyCentered, Color.Black, false);
+                Resources.DrawString(PauseStrings[0], new Vector2(640, 512 + 20), Resources.SegoeUIx32pt, TextAlignment.CompletelyCentered, Color.Black, false);
+                Resources.DrawString(PauseStrings[1], new Vector2(640, 512 + 60), Resources.SegoeUIx32pt, TextAlignment.CompletelyCentered, Color.Black, false);
 #else
 
 #endif

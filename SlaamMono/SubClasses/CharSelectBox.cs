@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Resources;
 using SlaamMono.StatsBoards;
@@ -215,14 +216,14 @@ namespace SlaamMono.SubClasses
             }
             batch.Draw(Resources.ProfileShello.Texture, Positions[0], Color.White);
 
-            Resources.DrawString(MsgStrings[1], Positions[4], Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
-            Resources.DrawString(MsgStrings[0], Positions[5], Resources.SegoeUIx32pt, FontAlignment.Left, Color.Black, false);
+            Resources.DrawString(MsgStrings[1], Positions[4], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
+            Resources.DrawString(MsgStrings[0], Positions[5], Resources.SegoeUIx32pt, TextAlignment.Default, Color.Black, false);
             
             // Stats
-            Resources.DrawString(MsgStrings[2], Positions[6], Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
-            Resources.DrawString(MsgStrings[3], Positions[7], Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
-            Resources.DrawString(MsgStrings[4], Positions[8], Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
-            Resources.DrawString(MsgStrings[5], Positions[9], Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+            Resources.DrawString(MsgStrings[2], Positions[6], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
+            Resources.DrawString(MsgStrings[3], Positions[7], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
+            Resources.DrawString(MsgStrings[4], Positions[8], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
+            Resources.DrawString(MsgStrings[5], Positions[9], Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
 #else
             batch.Draw(ResourceManager.ProfileShell.Texture, new Vector2(13, 96), Color.White);
 
@@ -235,8 +236,8 @@ namespace SlaamMono.SubClasses
             }
 
 
-            ResourceManager.DrawText(temp, new Vector2(31, 141), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
-            ResourceManager.DrawText(MsgStrings[0], new Vector2(20, 70), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+            ResourceManager.DrawText(temp, new Vector2(31, 141), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
+            ResourceManager.DrawText(MsgStrings[0], new Vector2(20, 70), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
 #endif
         }
 

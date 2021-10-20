@@ -168,9 +168,9 @@ namespace SlaamMono.Screens
                 PvP.MainBoard.Draw(batch);
 
 #if !ZUNE
-            Resources.DrawString(ScoreCollection.ParentGameScreen.ThisGameType != GameType.Survival ? "Player Stats" : "Survival High Scores", new Vector2(131+Statsboard.X, 255), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
-            Resources.DrawString("Kills", new Vector2(352+Statsboard.X, 255), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
-            Resources.DrawString("Player Vs. Player", new Vector2(573+Statsboard.X, 255), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
+            Resources.DrawString(ScoreCollection.ParentGameScreen.ThisGameType != GameType.Survival ? "Player Stats" : "Survival High Scores", new Vector2(131+Statsboard.X, 255), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
+            Resources.DrawString("Kills", new Vector2(352+Statsboard.X, 255), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
+            Resources.DrawString("Player Vs. Player", new Vector2(573+Statsboard.X, 255), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
 #endif
         }
 

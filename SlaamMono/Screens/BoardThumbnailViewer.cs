@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Resources;
 using SlaamMono.SubClasses;
@@ -235,7 +236,7 @@ namespace SlaamMono.Screens
 #if !ZUNE
                 batch.Draw(Resources.BoardSelectTextUnderlay.Texture, new Vector2(0, 175), new Color(255, 255, 255, 100));
 #endif
-                ResourceManager.DrawText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), ResourceManager.SegoeUIx32pt, FontAlignment.Left, Color.White, true);
+                ResourceManager.DrawText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), ResourceManager.SegoeUIx32pt, TextAlignment.Default, Color.White, true);
             }
         }
 

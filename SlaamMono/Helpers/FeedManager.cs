@@ -64,7 +64,7 @@ namespace SlaamMono.Helpers
             if (FeedsActive)
             {
                 batch.Draw(Resources.Feedbar.Texture, FeedRect, Color.White);
-                Resources.DrawString(FeedText, new Vector2(TextX, FeedRect.Y + 32), Resources.SegoeUIx14pt, FontAlignment.Left, Color.White,true);
+                Resources.DrawString(FeedText, new Vector2(TextX, FeedRect.Y + 32), Resources.SegoeUIx14pt, TextAlignment.Default, Color.White,true);
             }
 #endif
         }

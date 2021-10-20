@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources;
@@ -148,7 +149,7 @@ namespace SlaamMono
                 string temp = "" + FrameRateDirector.FUPS;
                 Vector2 fpsBack = ResourceManager.SegoeUIx32pt.MeasureString(temp);
                 gamebatch.Draw(ResourceManager.Dot, new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
-                ResourceManager.DrawText(temp, new Vector2(5, fpsBack.Y / 2f), ResourceManager.SegoeUIx32pt, FontAlignment.Left, Color.White, true);
+                ResourceManager.DrawText(temp, new Vector2(5, fpsBack.Y / 2f), ResourceManager.SegoeUIx32pt, TextAlignment.Default, Color.White, true);
             }
 
             gamebatch.End();

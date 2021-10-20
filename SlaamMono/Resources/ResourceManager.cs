@@ -247,31 +247,8 @@ namespace SlaamMono.Resources
         /// <param name="alnt">Alignment to draw</param>
         /// <param name="col">Color of font</param>
         /// <param name="Shadow">Draw shadow?</param>
-        public static void DrawText(/*SpriteBatch batch,*/ string str, Vector2 pos, SpriteFont fnt, FontAlignment alnt, Color col, bool Shadow)
+        public static void DrawText(/*SpriteBatch batch,*/ string str, Vector2 pos, SpriteFont fnt, TextAlignment alignment, Color col, bool Shadow)
         {
-            TextAlignment alignment = TextAlignment.Default;
-
-            if (alnt == FontAlignment.Middle)
-            {
-                alignment = TextAlignment.VerticallyCentered;
-            }
-            else if (alnt == FontAlignment.Top)
-            {
-                alignment = TextAlignment.Top;
-            }
-            else if (alnt == FontAlignment.Right)
-            {
-                alignment = TextAlignment.Right;
-            }
-            else if (alnt == FontAlignment.Center)
-            {
-                alignment = TextAlignment.Centered;
-            }
-            else if (alnt == FontAlignment.CompletelyCentered)
-            {
-                alignment = TextAlignment.Centered;
-            }
-
             if (Shadow)
             {
                 textmanager.DrawText(fnt, new Vector2(pos.X + 1, pos.Y + 2), str, alignment, new Color(0, 0, 0, 127));

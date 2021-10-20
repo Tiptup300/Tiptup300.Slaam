@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Resources;
 using System.Collections.Generic;
@@ -87,14 +88,14 @@ namespace SlaamMono.Screens
             {
                 if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y)
                 {
-                    ResourceManager.DrawText(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), ResourceManager.SegoeUIx32pt, FontAlignment.Left, MainCreditColor, false);
+                    ResourceManager.DrawText(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), ResourceManager.SegoeUIx32pt, TextAlignment.Default, MainCreditColor, false);
                 }
                 Offset += ResourceManager.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
                 for (int x = 0; x < CreditsListings[CurrentCredit].Credits.Count; x++)
                 {
                     if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
                     {
-                        ResourceManager.DrawText(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), ResourceManager.SegoeUIx14pt, FontAlignment.Left, SubCreditColor, false);
+                        ResourceManager.DrawText(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), ResourceManager.SegoeUIx14pt, TextAlignment.Default, SubCreditColor, false);
                     }
                     Offset += (int)ResourceManager.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
                 }

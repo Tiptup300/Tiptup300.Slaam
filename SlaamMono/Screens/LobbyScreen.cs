@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources;
@@ -237,7 +238,7 @@ namespace SlaamMono.Screens
                     batch.Draw(CurrentBoardTexture, new Rectangle((int)(640 - Resources.LobbyUnderlay.Width / 2) + 17, (int)(512 - Resources.LobbyUnderlay.Height / 2) + 21, 400, 400), Color.White);
                 batch.Draw(Resources.LobbyInfoOverlay.Texture, new Vector2((int)(640 - Resources.LobbyUnderlay.Width / 2) + 17, (int)(512 - Resources.LobbyUnderlay.Height / 2) + 21 + 400 - Resources.LobbyInfoOverlay.Height), Color.White);
                
-                Resources.DrawString(DialogStrings.GetDescMsg(), new Vector2((int)(640 - Resources.LobbyUnderlay.Width / 2) + 17 + 9, (int)(512 - Resources.LobbyUnderlay.Height / 2) + 21 + 400 - Resources.LobbyInfoOverlay.Height + 22), Resources.SegoeUIx14pt, FontAlignment.Left, Color.White, true);
+                Resources.DrawString(DialogStrings.GetDescMsg(), new Vector2((int)(640 - Resources.LobbyUnderlay.Width / 2) + 17 + 9, (int)(512 - Resources.LobbyUnderlay.Height / 2) + 21 + 400 - Resources.LobbyInfoOverlay.Height + 22), Resources.SegoeUIx14pt, TextAlignment.Default, Color.White, true);
 
                 batch.Draw(Resources.LobbyUnderlay.Texture, new Vector2(640 - Resources.LobbyUnderlay.Width / 2, 512 - Resources.LobbyUnderlay.Height / 2), Color.White);
 
@@ -248,9 +249,9 @@ namespace SlaamMono.Screens
                     batch.Draw(Resources.LobbyCharBar.Texture, new Vector2(689, YOffset + 30 * x), Color.White);
                     batch.Draw(Resources.LobbyColorPreview.Texture, new Vector2(689, YOffset + 30 * x), SetupChars[x].PlayerColor);
                     if (SetupChars[x].Type == PlayerType.Player)
-                        Resources.DrawString(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(725, YOffset + 18 + 30 * x), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+                        Resources.DrawString(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(725, YOffset + 18 + 30 * x), Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
                     else
-                        Resources.DrawString(DialogStrings.Player + (x + 1) + ": BOT [ " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + " ]", new Vector2(725, YOffset + 18 + 30 * x), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Red, false);
+                        Resources.DrawString(DialogStrings.Player + (x + 1) + ": BOT [ " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + " ]", new Vector2(725, YOffset + 18 + 30 * x), Resources.SegoeUIx14pt, TextAlignment.Default, Color.Red, false);
                 }
 
                 batch.Draw(Resources.LobbyOverlay.Texture, new Vector2(640 - Resources.LobbyUnderlay.Width / 2, 512 - Resources.LobbyUnderlay.Height / 2), Color.White);
@@ -258,11 +259,11 @@ namespace SlaamMono.Screens
 
                 batch.Draw(Resources.LButton.Texture, new Vector2(700, 673), Color.White);
                 batch.Draw(Resources.LButton.Texture, new Vector2(845, 673), Color.White);
-                Resources.DrawString("Start", new Vector2(700 + 145 / 2, 673 + 18), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
-                Resources.DrawString("Settings", new Vector2(845 + 145 / 2, 673 + 18), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
+                Resources.DrawString("Start", new Vector2(700 + 145 / 2, 673 + 18), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
+                Resources.DrawString("Settings", new Vector2(845 + 145 / 2, 673 + 18), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
                 batch.Draw(Resources.LButtonHT.Texture, new Vector2((ButtonOnLeft ? 700 : 845), 673), Color.White);
-                //Resources.DrawString(Dialogs[0], new Vector2(700, 336), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black,false);
-                //Resources.DrawString(Dialogs[1], new Vector2(700, 698), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black,false);
+                //Resources.DrawString(Dialogs[0], new Vector2(700, 336), Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black,false);
+                //Resources.DrawString(Dialogs[1], new Vector2(700, 698), Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black,false);
             }
         }
 #else
@@ -282,9 +283,9 @@ namespace SlaamMono.Screens
                     batch.Draw(ResourceManager.LobbyCharBar.Texture, new Vector2(0, YOffset + 30 * x), Color.White);
                     batch.Draw(ResourceManager.LobbyColorPreview.Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
                     if (SetupChars[x].Type == PlayerType.Player)
-                        ResourceManager.DrawText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+                        ResourceManager.DrawText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
                     else
-                        ResourceManager.DrawText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Red, false);
+                        ResourceManager.DrawText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.Red, false);
                 }
                 batch.Draw(ResourceManager.LobbyOverlay.Texture, Vector2.Zero, Color.White);
             }
