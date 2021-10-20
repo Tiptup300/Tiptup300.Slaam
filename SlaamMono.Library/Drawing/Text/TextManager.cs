@@ -25,7 +25,7 @@ namespace SlaamMono.Library.Drawing.Text
             base.LoadContent();
         }
 
-        public void DrawString(SpriteFont fnt, Vector2 pos, string str, TextAlignment alignment, Color col)
+        public void DrawText(SpriteFont fnt, Vector2 pos, string str, TextAlignment alignment, Color col)
         {
             _textToDraw.Add(new TextEntry(fnt, pos, str, alignment, col));
         }

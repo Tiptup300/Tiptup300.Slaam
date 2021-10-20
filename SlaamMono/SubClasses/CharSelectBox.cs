@@ -235,8 +235,8 @@ namespace SlaamMono.SubClasses
             }
 
 
-            ResourceManager.DrawString(temp, new Vector2(31, 141), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
-            ResourceManager.DrawString(MsgStrings[0], new Vector2(20, 70), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+            ResourceManager.DrawText(temp, new Vector2(31, 141), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+            ResourceManager.DrawText(MsgStrings[0], new Vector2(20, 70), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
 #endif
         }
 

@@ -282,9 +282,9 @@ namespace SlaamMono.Screens
                     batch.Draw(ResourceManager.LobbyCharBar.Texture, new Vector2(0, YOffset + 30 * x), Color.White);
                     batch.Draw(ResourceManager.LobbyColorPreview.Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
                     if (SetupChars[x].Type == PlayerType.Player)
-                        ResourceManager.DrawString(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+                        ResourceManager.DrawText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
                     else
-                        ResourceManager.DrawString(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Red, false);
+                        ResourceManager.DrawText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Red, false);
                 }
                 batch.Draw(ResourceManager.LobbyOverlay.Texture, Vector2.Zero, Color.White);
             }

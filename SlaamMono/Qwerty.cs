@@ -194,12 +194,12 @@ namespace SlaamMono
                 for (int x = 0; x < 10; x++)
                 {
                     if (Keys[x, y].Type == KeyType.Normal)
-                        ResourceManager.DrawString(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), ResourceManager.SegoeUIx32pt, FontAlignment.Center, Color.White, true);
+                        ResourceManager.DrawText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), ResourceManager.SegoeUIx32pt, FontAlignment.Center, Color.White, true);
                     else
-                        ResourceManager.DrawString(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), ResourceManager.SegoeUIx14pt, FontAlignment.Center, Color.White, false);
+                        ResourceManager.DrawText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), ResourceManager.SegoeUIx14pt, FontAlignment.Center, Color.White, false);
                 }
             }
-            ResourceManager.DrawString(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+            ResourceManager.DrawText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), ResourceManager.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
 
             if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != KeyType.Space)
                 batch.Draw(ResourceManager.KeyHT.Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
