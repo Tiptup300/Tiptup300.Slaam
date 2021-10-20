@@ -33,7 +33,7 @@ namespace SlaamMono.Screens
         {
             if (InputComponent.Players[0].PressedAction2)
             {
-                ScreenDirector.ChangeScreen(_menuScreen);
+                ScreenDirector.Instance.ChangeScreen(_menuScreen);
             }
         }
 

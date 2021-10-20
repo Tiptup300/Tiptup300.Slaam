@@ -96,7 +96,7 @@ namespace SlaamMono.Screens
                     if (InputComponent.Players[0].PressedAction)
                     {
                         ParentScreen.LoadBoard(ValidBoards[save]);
-                        ScreenDirector.ChangeScreen(ParentScreen);
+                        ScreenDirector.Instance.ChangeScreen(ParentScreen);
                     }
 
                     if (InputComponent.Players[0].PressedAction2)

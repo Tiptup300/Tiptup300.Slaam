@@ -4,36 +4,42 @@ using System;
 
 namespace SlaamMono.Screens
 {
-    public static class ScreenDirector
+    public class ScreenDirector
     {
-        private static IScreen CurrentScreen = new LogoScreen(DI.Instance.Get<MainMenuScreen>());
-        private static IScreen NextScreen;
+        public static ScreenDirector Instance = new ScreenDirector();
 
-        private static bool ChangingScreens = false;
+        private IScreen CurrentScreen = new LogoScreen(DI.Instance.Get<MainMenuScreen>());
+        private IScreen NextScreen;
 
-        public static void Update()
+        private bool ChangingScreens = false;
+
+        public void Update()
         {
             CurrentScreen.Update();
 
             if (ChangingScreens)
             {
-                ChangingScreens = false;
-                CurrentScreen.Close();
-                CurrentScreen = NextScreen;
-                NextScreen = null;
-                BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Normal);
-                CurrentScreen.Open();
-                GC.Collect();
+                changeScreen();
             }
         }
-
-        public static void Draw(SpriteBatch batch)
+        
+        private void changeScreen()
         {
-            CurrentScreen.Draw(batch);
-
+            ChangingScreens = false;
+            CurrentScreen.Close();
+            CurrentScreen = NextScreen;
+            NextScreen = null;
+            BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Normal);
+            CurrentScreen.Open();
+            GC.Collect();
         }
 
-        public static void ChangeScreen(IScreen scrn)
+        public void Draw(SpriteBatch batch)
+        {
+            CurrentScreen.Draw(batch);
+        }
+
+        public void ChangeScreen(IScreen scrn)
         {
             ChangingScreens = true;
             NextScreen = scrn;

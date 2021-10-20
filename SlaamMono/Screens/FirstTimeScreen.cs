@@ -35,7 +35,7 @@ namespace SlaamMono.Screens
             if (InputComponent.Players[0].PressedAction)
             {
                 ProfileEditScreen.Instance.SetupNewProfile = true;
-                ScreenDirector.ChangeScreen(ProfileEditScreen.Instance);
+                ScreenDirector.Instance.ChangeScreen(ProfileEditScreen.Instance);
             }
         }
 

@@ -56,7 +56,7 @@ namespace SlaamMono.Screens
                     // if (ProfileManager.FirstTime)
                     //  ScreenHelper.ChangeScreen(new FirstTimeScreen());
                     // else
-                    ScreenDirector.ChangeScreen(_menuScreen);
+                    ScreenDirector.Instance.ChangeScreen(_menuScreen);
                 }
             }
         }

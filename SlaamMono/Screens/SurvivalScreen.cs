@@ -106,7 +106,7 @@ namespace SlaamMono.Screens
             if (ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame < Timer.CurrentGameTime)
                 ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame = Timer.CurrentGameTime;
             ProfileManager.SaveProfiles();
-            ScreenDirector.ChangeScreen(new StatsScreen(ScoreKeeper, DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
+            ScreenDirector.Instance.ChangeScreen(new StatsScreen(ScoreKeeper, DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
         }
     }
 }

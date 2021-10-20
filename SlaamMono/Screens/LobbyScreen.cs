@@ -164,7 +164,7 @@ namespace SlaamMono.Screens
                         }
                         else
                         {
-                            ScreenDirector.ChangeScreen(new BoardThumbnailViewer(this));
+                            ScreenDirector.Instance.ChangeScreen(new BoardThumbnailViewer(this));
                         }
                         BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
                     }
@@ -174,7 +174,7 @@ namespace SlaamMono.Screens
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    ScreenDirector.ChangeScreen(new ClassicCharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
+                    ScreenDirector.Instance.ChangeScreen(new ClassicCharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }
@@ -195,7 +195,7 @@ namespace SlaamMono.Screens
                 {
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
                     GameScreen.Instance = new GameScreen(SetupChars, DI.Instance.Get<ILogger>());
-                    ScreenDirector.ChangeScreen(GameScreen.Instance);
+                    ScreenDirector.Instance.ChangeScreen(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }

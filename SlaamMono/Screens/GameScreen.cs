@@ -551,7 +551,7 @@ namespace SlaamMono.Screens
                 Characters[x].SaveProfileData();
             }
             ProfileManager.SaveProfiles();
-            ScreenDirector.ChangeScreen(new StatsScreen(ScoreKeeper, DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
+            ScreenDirector.Instance.ChangeScreen(new StatsScreen(ScoreKeeper, DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
         }
 
         #endregion
