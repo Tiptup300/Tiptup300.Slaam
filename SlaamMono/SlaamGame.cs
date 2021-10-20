@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Library;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
@@ -73,7 +74,8 @@ namespace SlaamMono
             ResourceManager.Initiailze(
                 DiImplementer.Instance.Get<ILogger>(), 
                 DiImplementer.Instance.Get<IPixelFactory>(),
-                DiImplementer.Instance.Get<IResourceLoader>());
+                DiImplementer.Instance.Get<IResourceLoader>(),
+                DiImplementer.Instance.Get<ITextRenderer>());
             ResourceManager.LoadAll();
             SlaamGame.mainBlade.CurrentGameInfo.GameIcon = ResourceManager.ZBladeGameIcon.Texture;
             Qwerty.CurrentPlayer = InputComponent.Players[0];

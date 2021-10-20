@@ -16,10 +16,12 @@ namespace SlaamMono.Library.Drawing.Text
         private readonly Vector2 _shadowOffset1 = new Vector2(1, 2);
         private readonly Vector2 _shadowOffset2 = new Vector2(2, 1);
 
-        public TextManager(Game game)
-            : base(game)
+        public TextManager(ISlaamGame slaamGame)
+            : base(slaamGame.Game)
         {
             LoadContent();
+
+            slaamGame.Game.Components.Add(this);
         }
 
         protected override void LoadContent()

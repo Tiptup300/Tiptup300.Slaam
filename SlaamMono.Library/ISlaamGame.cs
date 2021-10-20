@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace SlaamMono
+namespace SlaamMono.Library
 {
     public interface ISlaamGame
     {

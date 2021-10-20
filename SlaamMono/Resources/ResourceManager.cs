@@ -12,14 +12,14 @@ namespace SlaamMono.Resources
     {
         // General
         public static Texture2D WhitePixel;
+        public static Texture2D DefaultBoard;
         public static CachedTexture Feedbar;
         public static CachedTexture FirstTime;
-
+        public static CachedTexture ZBladeGameIcon;
         // BG
         public static CachedTexture Background;
         public static CachedTexture BattleBG;
         public static CachedTexture CreditsBG;
-
         // Qwerty
         public static CachedTexture Textbox;
         public static CachedTexture KeyboardBG;
@@ -27,11 +27,9 @@ namespace SlaamMono.Resources
         public static CachedTexture Spacebar;
         public static CachedTexture KeyHT;
         public static CachedTexture SpaceHT;
-
         // Char Select
         public static CachedTexture ProfileShell;
         public static CachedTexture ProfileShello;
-
         // Lobby
         public static CachedTexture LobbyUnderlay;
         public static CachedTexture LobbyOverlay;
@@ -45,14 +43,12 @@ namespace SlaamMono.Resources
         public static CachedTexture BoardSelect;
         public static CachedTexture NowLoading;
         public static CachedTexture BoardSelectTextUnderlay;
-
         // Menu
         public static CachedTexture Gear;
         public static CachedTexture MenuTop;
         public static CachedTexture MenuBoard;
         public static CachedTexture MenuBlock;
         public static CachedTexture MenuOverlay;
-
         // Menu BG's
         public static CachedTexture Menu0;
         public static CachedTexture Menu1;
@@ -62,7 +58,6 @@ namespace SlaamMono.Resources
         public static CachedTexture Menu5;
         public static CachedTexture Menu6;
         public static CachedTexture Menu7;
-
         // Game Board
         public static CachedTexture TileOverlay;
         public static CachedTexture RespawnTileOverlay;
@@ -72,29 +67,28 @@ namespace SlaamMono.Resources
         public static CachedTexture Waiting;
         public static CachedTexture GameScreenScoreBoard;
         public static CachedTexture PauseScreen;
-
-        public static CachedTexture ZBladeGameIcon;
-
-        public static Texture2D DefaultBoard;
-
         // Stats
         public static CachedTexture StatsBoard;
         public static CachedTexture Star;
         public static CachedTexture[] StatsButtons = new CachedTexture[3];
-
         // Fonts
-        public static TextManager textManager;
         public static SpriteFont SegoeUIx32pt;
         public static SpriteFont SegoeUIx14pt;
         public static SpriteFont SegoeUIx48ptBold;
-
         // Logos
         public static CachedTexture ZibithLogo;
         public static CachedTexture ZibithLogoBG;
-
         // Text Files
         public static List<string> BotNames;
         public static List<string> Credits;
+        // Menu
+        public static CachedTexture MenuChoice;
+        public static CachedTexture MenuChoiceGlow;
+        // PowerUps 
+        public static CachedTexture[] PU_SpeedUp = new CachedTexture[2];
+        public static CachedTexture[] PU_SpeedDown = new CachedTexture[2];
+        public static CachedTexture[] PU_Inversion = new CachedTexture[2];
+        public static CachedTexture[] PU_Slaam = new CachedTexture[2];
 
         // Player Colors
         public static Color[] PlayerColors = new Color[] {
@@ -108,27 +102,21 @@ namespace SlaamMono.Resources
             Color.Pink
         };
 
-        public static CachedTexture MenuChoice;
-        public static CachedTexture MenuChoiceGlow;
-
-        // PowerUps 
-        public static CachedTexture[] PU_SpeedUp = new CachedTexture[2];
-        public static CachedTexture[] PU_SpeedDown = new CachedTexture[2];
-        public static CachedTexture[] PU_Inversion = new CachedTexture[2];
-        public static CachedTexture[] PU_Slaam = new CachedTexture[2];
-
         private static ILogger _logger;
         private static IPixelFactory _pixelFactory;
         private static IResourceLoader _resourceLoader;
+        private static ITextRenderer _textRenderer;
 
         public static void Initiailze(
             ILogger logger,
             IPixelFactory pixelFactory,
-            IResourceLoader resourceLoader)
+            IResourceLoader resourceLoader,
+            ITextRenderer textRenderer)
         {
             _logger = logger;
             _pixelFactory = pixelFactory;
             _resourceLoader = resourceLoader;
+            _textRenderer = textRenderer;
         }
 
         public static void LoadAll()
@@ -174,8 +162,6 @@ namespace SlaamMono.Resources
             loadPowerup(PU_Slaam, "Slaam");
 
             _logger.Log("All Resources Finished Loading;");
-            textManager = new TextManager(SlaamGame.Instance);
-            SlaamGame.Instance.Components.Add(textManager);
         }
 
         private static void loadPowerup(CachedTexture[] Texs, string powerupname)
@@ -186,7 +172,7 @@ namespace SlaamMono.Resources
 
         public static void DrawText(string text, Vector2 position, SpriteFont font, Color color, TextAlignment alignment, bool drawShadow)
         {
-            textManager.AddTextToRender(text, position, font, color, alignment, drawShadow);
+            _textRenderer.AddTextToRender(text, position, font, color, alignment, drawShadow);
         }
     }
 }

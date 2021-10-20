@@ -22,14 +22,9 @@ namespace SlaamMono.Helpers
         public FrameRateDirector(Game game)
             : base(game)
         {
-            // TODO: Construct any child components here
+
         }
 
-
-        /// <summary>
-        /// Allows the game component to update itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
             framesUpdated++;
@@ -49,7 +44,7 @@ namespace SlaamMono.Helpers
 
             FDPS = framesDrawnLast;
             FUPS = framesUpdatedLast;
-            // TODO: Add your update code here
+
             base.Update(gameTime);
         }
 

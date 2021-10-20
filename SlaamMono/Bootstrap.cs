@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SimpleInjector;
+using SlaamMono.Library;
+using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources;
 using SlaamMono.Resources.Loading;
@@ -21,10 +23,16 @@ namespace SlaamMono
             output.Register<ILoggingDevice, TextFileLoggingDevice>(Lifestyle.Singleton);
             output.Register<ILogger, Logger>(Lifestyle.Singleton);
 
+            registerComponents(output);
             registerScreens(output);
             registerResources(output);
 
             return output;
+        }
+
+        public void registerComponents(Container output)
+        {
+            output.Register<ITextRenderer, TextManager>(Lifestyle.Singleton);
         }
 
         private void registerScreens(Container output)
