@@ -5,7 +5,7 @@ namespace SlaamMono.Resources.Loading
     public class TextureLoader : ITextureLoader
     {
 
-        public Texture2D LoadImage(string filePath)
+        public Texture2D Load(string filePath)
         {
             Texture2D output;
 

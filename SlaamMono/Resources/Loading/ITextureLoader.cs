@@ -4,6 +4,6 @@ namespace SlaamMono.Resources.Loading
 {
     public interface ITextureLoader
     {
-        Texture2D LoadImage(string filePath);
+        Texture2D Load(string filePath);
     }
 }

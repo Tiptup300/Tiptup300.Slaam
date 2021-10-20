@@ -18,4 +18,8 @@
     <ProjectReference Include="..\ZBlade\ZBlade.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Loading\" />
+  </ItemGroup>
+
 </Project>

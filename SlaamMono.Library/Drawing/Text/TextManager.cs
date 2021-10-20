@@ -31,12 +31,11 @@ namespace SlaamMono.Library.Drawing.Text
 
         public void AddTextToRender(string text, Vector2 position, SpriteFont font, Color color, TextAlignment alignment = TextAlignment.Default, bool addShadow = false)
         {
-            _textToDraw.Add(new TextEntry(font, position, text, alignment, color));
-
             if (addShadow)
             {
                 drawShadow(text, position, font, alignment);
             }
+            _textToDraw.Add(new TextEntry(font, position, text, alignment, color));
         }
 
         private void drawShadow(string text, Vector2 position, SpriteFont font, TextAlignment alignment)

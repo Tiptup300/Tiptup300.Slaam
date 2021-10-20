@@ -7,43 +7,40 @@ namespace SlaamMono.Resources.Loading
 {
     public class ResourceLoader : IResourceLoader
     {
-        private readonly IFontLoader _fontLoader;
-        private readonly ITextLineLoader _textLineLoader;
-        private readonly ICachedTextureFactory _cachedTextureFactory;
-
         private readonly string _directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "content");
 
-        public ResourceLoader(IFontLoader fontLoader, ITextLineLoader textLineLoader, ICachedTextureFactory cachedTextureFactory)
+        private readonly Dictionary<Type, IFileLoader> _fileLoaders;
+
+        public ResourceLoader(
+            IFileLoader<SpriteFont> fontLoader, 
+            IFileLoader<IEnumerable<string>> textLineLoader, 
+            IFileLoader<CachedTexture> cachedTextureFactory)
         {
-            _fontLoader = fontLoader;
-            _textLineLoader = textLineLoader;
-            _cachedTextureFactory = cachedTextureFactory;
+            _fileLoaders = buildFileLoaders(fontLoader, textLineLoader, cachedTextureFactory);
         }
 
-        public T LoadResource<T>(string resourceName) where T : class
+        public Dictionary<Type, IFileLoader> buildFileLoaders(
+            IFileLoader<SpriteFont> fontLoader, 
+            IFileLoader<IEnumerable<string>> textLineLoader, 
+            IFileLoader<CachedTexture> cachedTextureFactory)
+        {
+            Dictionary<Type, IFileLoader> output;
+
+            output = new Dictionary<Type, IFileLoader>();
+            output.Add(typeof(SpriteFont), fontLoader);
+            output.Add(typeof(IEnumerable<string>), textLineLoader);
+            output.Add(typeof(CachedTexture), cachedTextureFactory);
+
+            return output;
+        }
+
+        public T Load<T>(string resourceName) where T : class
         {
             object output;
             string filePath;
 
-            if (typeof(T) == typeof(CachedTexture))
-            {
-                filePath = Path.Combine(_directoryPath, "textures", "MOBILE", resourceName);
-                output = _cachedTextureFactory.BuildCachedTexture(filePath);
-            }
-            else if (typeof(T) == typeof(IEnumerable<string>))
-            {
-                filePath = Path.Combine(_directoryPath, resourceName);
-                output = _textLineLoader.LoadTextLines(filePath);
-            }
-            else if (typeof(T) == typeof(SpriteFont))
-            {
-                filePath = Path.Combine(_directoryPath, resourceName);
-                output = _fontLoader.LoadFont(filePath);
-            }
-            else
-            {
-                throw new Exception("Resource Type not recognized!");
-            }
+            filePath = Path.Combine(_directoryPath, resourceName);
+            output = _fileLoaders[typeof(T)].Load(filePath);
 
             return (T)output;
         }

@@ -1,8 +1,10 @@
-﻿using SimpleInjector;
+﻿using Microsoft.Xna.Framework.Graphics;
+using SimpleInjector;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources;
 using SlaamMono.Resources.Loading;
 using SlaamMono.Screens;
+using System.Collections.Generic;
 
 namespace SlaamMono
 {
@@ -43,9 +45,9 @@ namespace SlaamMono
         {
             output.Register<ITextureLoader, TextureLoader>();
             output.Register<IPixelFactory, PixelFactory>();
-            output.Register<ITextLineLoader, CommentedTextLineLoader>();
-            output.Register<IFontLoader, FontLoader>();
-            output.Register<ICachedTextureFactory, CachedTextureFactory>();
+            output.Register<IFileLoader<IEnumerable<string>>, CommentedTextLineLoader>();
+            output.Register<IFileLoader<SpriteFont>, FontLoader>();
+            output.Register<IFileLoader<CachedTexture>, CachedTextureLoader>();
             output.Register<IResourceLoader, ResourceLoader>();
         }
     }

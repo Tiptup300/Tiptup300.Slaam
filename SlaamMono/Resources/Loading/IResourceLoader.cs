@@ -2,6 +2,6 @@
 {
     public interface IResourceLoader
     {
-        T LoadResource<T>(string resourceName) where T : class;
+        T Load<T>(string resourceName) where T : class;
     }
 }

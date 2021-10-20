@@ -3,12 +3,15 @@ using System.IO;
 
 namespace SlaamMono.Resources.Loading
 {
-    public class FontLoader : IFontLoader
+    public class FontLoader : IFileLoader<SpriteFont>
     {
-        public SpriteFont LoadFont(string filePath)
+        public object Load(string filePath)
         {
-            SpriteFont temp = SlaamGame.Content.Load<SpriteFont>(filePath);
-            return temp;
+            SpriteFont output;
+            
+            output = SlaamGame.Content.Load<SpriteFont>(filePath);
+
+            return output;
         }
     }
 }

@@ -142,34 +142,34 @@ namespace SlaamMono.Resources
             WhitePixel = _pixelFactory.BuildPixel();
             _logger.Log(" - Dot Image Created.");
 
-            BattleBG = _resourceLoader.LoadResource<CachedTexture>("BattleScreen/battlebg");
-            ReadySetGo = _resourceLoader.LoadResource<CachedTexture>("BattleScreen/readysetgo");
-            RespawnTileOverlay = _resourceLoader.LoadResource<CachedTexture>("BattleScreen/respawnOverlay");
-            TileOverlay = _resourceLoader.LoadResource<CachedTexture>("BattleScreen/tileOverlay");
-            MenuTop = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/menutop");
-            ProfileShell = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/CharacterSelectBox");
-            StatsBoard = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/StatsScreen");
-            LobbyCharBar = _resourceLoader.LoadResource<CachedTexture>("LobbyScreen/PlayerBar");
-            LobbyUnderlay = _resourceLoader.LoadResource<CachedTexture>("LobbyScreen/LobbyBG");
-            LobbyOverlay = _resourceLoader.LoadResource<CachedTexture>("LobbyScreen/LobbyOverlay");
-            LobbyColorPreview = _resourceLoader.LoadResource<CachedTexture>("LobbyScreen/PlayerColorPreview");
-            BoardSelect = _resourceLoader.LoadResource<CachedTexture>("Misc/boardSelect");
-            ZibithLogoBG = _resourceLoader.LoadResource<CachedTexture>("Misc/LogoBG");
-            ZibithLogo = _resourceLoader.LoadResource<CachedTexture>("Misc/Logo");
-            NowLoading = _resourceLoader.LoadResource<CachedTexture>("Misc/BoardLoading");
-            Background = _resourceLoader.LoadResource<CachedTexture>("Misc/background");
-            ZBladeGameIcon = _resourceLoader.LoadResource<CachedTexture>("Misc/ZBladeIcon");
+            BattleBG = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/battlebg");
+            ReadySetGo = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/readysetgo");
+            RespawnTileOverlay = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/respawnOverlay");
+            TileOverlay = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/tileOverlay");
+            MenuTop = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/menutop");
+            ProfileShell = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/CharacterSelectBox");
+            StatsBoard = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/StatsScreen");
+            LobbyCharBar = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/PlayerBar");
+            LobbyUnderlay = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/LobbyBG");
+            LobbyOverlay = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/LobbyOverlay");
+            LobbyColorPreview = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/PlayerColorPreview");
+            BoardSelect = _resourceLoader.Load<CachedTexture>("textures/Misc/boardSelect");
+            ZibithLogoBG = _resourceLoader.Load<CachedTexture>("textures/Misc/LogoBG");
+            ZibithLogo = _resourceLoader.Load<CachedTexture>("textures/Misc/Logo");
+            NowLoading = _resourceLoader.Load<CachedTexture>("textures/Misc/BoardLoading");
+            Background = _resourceLoader.Load<CachedTexture>("textures/Misc/background");
+            ZBladeGameIcon = _resourceLoader.Load<CachedTexture>("textures/Misc/ZBladeIcon");
 
-            SegoeUIx32pt = _resourceLoader.LoadResource<SpriteFont>("SegoeUI-32pt");
-            SegoeUIx14pt = _resourceLoader.LoadResource<SpriteFont>("SegoeUI-14pt");
-            SegoeUIx48ptBold = _resourceLoader.LoadResource<SpriteFont>("SegoeUI-48pt");
+            SegoeUIx32pt = _resourceLoader.Load<SpriteFont>("SegoeUI-32pt");
+            SegoeUIx14pt = _resourceLoader.Load<SpriteFont>("SegoeUI-14pt");
+            SegoeUIx48ptBold = _resourceLoader.Load<SpriteFont>("SegoeUI-48pt");
 
-            BotNames = _resourceLoader.LoadResource<IEnumerable<string>>("BotNames.txt").ToList();
-            Credits = _resourceLoader.LoadResource<IEnumerable<string>>("Credits.txt").ToList();
+            BotNames = _resourceLoader.Load<IEnumerable<string>>("BotNames.txt").ToList();
+            Credits = _resourceLoader.Load<IEnumerable<string>>("Credits.txt").ToList();
 
-            StatsButtons[0] = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/StatsButton1");
-            StatsButtons[1] = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/StatsButton2");
-            StatsButtons[2] = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/StatsButton3");
+            StatsButtons[0] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton1");
+            StatsButtons[1] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton2");
+            StatsButtons[2] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton3");
 
             loadPowerup(PU_SpeedUp, "SpeedUp");
             loadPowerup(PU_SpeedDown, "SpeedDown");
@@ -183,8 +183,8 @@ namespace SlaamMono.Resources
 
         private static void loadPowerup(CachedTexture[] Texs, string powerupname)
         {
-            Texs[0] = _resourceLoader.LoadResource<CachedTexture>("powerups\\" + powerupname);
-            Texs[1] = _resourceLoader.LoadResource<CachedTexture>("powerups\\" + powerupname + "0");
+            Texs[0] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname);
+            Texs[1] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname + "0");
         }
 
 
@@ -197,7 +197,7 @@ namespace SlaamMono.Resources
                 string filePath;
 
                 filePath = Path.Combine(Directory.GetCurrentDirectory(), "content\\textures\\MOBILE\\", textureName);
-                output = _imageLoader.LoadImage(filePath);
+                output = _imageLoader.Load(filePath);
                 _logger.Log($" - {textureName} Texture Loaded.");
             }
             catch (Exception ex)

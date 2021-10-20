@@ -2,17 +2,17 @@
 
 namespace SlaamMono.Resources
 {
-    public class CachedTextureFactory : ICachedTextureFactory
+    public class CachedTextureLoader : IFileLoader<CachedTexture>
     {
         private readonly ITextureLoader _textureLoader;
 
-        public CachedTextureFactory(ITextureLoader textureLoader)
+        public CachedTextureLoader(ITextureLoader textureLoader)
         {
             _textureLoader = textureLoader;
         }
 
 
-        public CachedTexture BuildCachedTexture(string textureFilePath)
+        public object Load(string textureFilePath)
         {
             CachedTexture output;
 

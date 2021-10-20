@@ -22,7 +22,7 @@ namespace SlaamMono.Resources
             {
                 if (_texture == null || _texture.IsDisposed)
                 {
-                    _texture = _textureLoader.LoadImage(_filePath);
+                    _texture = _textureLoader.Load(_filePath);
                 }
                 return _texture;
             }

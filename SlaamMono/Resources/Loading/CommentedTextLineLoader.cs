@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace SlaamMono.Resources.Loading
 {
-    public class CommentedTextLineLoader : ITextLineLoader
+    public class CommentedTextLineLoader : IFileLoader<IEnumerable<string>>
     {
-        public IEnumerable<string> LoadTextLines(string baseName)
+        public object Load(string baseName)
         {
             return File.ReadAllLines(baseName)
                 .Where(line => line.StartsWith("//") == false);
