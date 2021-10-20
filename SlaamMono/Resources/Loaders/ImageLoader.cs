@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Logging;
-using System;
 using System.IO;
 
-namespace SlaamMono.Resources
+namespace SlaamMono.Resources.Loaders
 {
     public class ImageLoader : IImageLoader
     {

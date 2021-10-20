@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace SlaamMono.Resources
+namespace SlaamMono.Resources.Loaders
 {
     public interface IImageLoader
     {

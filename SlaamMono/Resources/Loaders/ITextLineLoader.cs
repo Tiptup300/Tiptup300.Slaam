@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SlaamMono.Resources
+namespace SlaamMono.Resources.Loaders
 {
     public interface ITextLineLoader
     {

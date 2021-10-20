@@ -63,7 +63,7 @@ namespace SlaamMono.SubClasses
         public void Draw(SpriteBatch batch, Vector2 Offset)
         {
 
-            batch.Draw(x_Resources.Dot, new Rectangle(DrawingRectangle.X + (int)Offset.X, DrawingRectangle.Y + (int)Offset.Y, DrawingRectangle.Width, DrawingRectangle.Height), DrawingColor);
+            batch.Draw(ResourceManager.Dot, new Rectangle(DrawingRectangle.X + (int)Offset.X, DrawingRectangle.Y + (int)Offset.Y, DrawingRectangle.Width, DrawingRectangle.Height), DrawingColor);
         }
 
         #endregion

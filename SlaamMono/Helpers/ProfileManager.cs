@@ -75,7 +75,7 @@ namespace SlaamMono.Helpers
             reader.Close();
 
 
-            if (BotProfiles.Count != x_Resources.BotNames.Count)
+            if (BotProfiles.Count != ResourceManager.BotNames.Count)
             {
                 for (int x = 0; x < AllProfiles.Count; x++)
                 {
@@ -86,9 +86,9 @@ namespace SlaamMono.Helpers
                     }
                 }
                 BotProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
-                for (int x = 0; x < x_Resources.BotNames.Count; x++)
+                for (int x = 0; x < ResourceManager.BotNames.Count; x++)
                 {
-                    AllProfiles.Add(new PlayerProfile(x_Resources.BotNames[x].Replace("\r", ""), true));
+                    AllProfiles.Add(new PlayerProfile(ResourceManager.BotNames[x].Replace("\r", ""), true));
                     BotProfiles.Add(AllProfiles.Count - 1);
                 }
             }

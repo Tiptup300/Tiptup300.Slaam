@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SlaamMono.Resources
+namespace SlaamMono.Resources.Loaders
 {
     public class CommentedTextLineLoader : ITextLineLoader
     {

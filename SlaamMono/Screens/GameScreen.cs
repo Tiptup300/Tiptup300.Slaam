@@ -80,8 +80,8 @@ namespace SlaamMono.Screens
             SetupTheBoard(CurrentMatchSettings.BoardLocation);
             CurrentGameStatus = GameStatus.MovingBoard;
 
-            x_Resources.ReadySetGo.Load();
-            x_Resources.BattleBG.Load();
+            ResourceManager.ReadySetGo.Load();
+            ResourceManager.BattleBG.Load();
         }
 
         public void Open()
@@ -399,7 +399,7 @@ namespace SlaamMono.Screens
 
                 if (CurrentGameStatus == GameStatus.Waiting || CurrentGameStatus == GameStatus.Over)
                 {
-                    batch.Draw(x_Resources.ReadySetGo.Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - x_Resources.ReadySetGo.Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - x_Resources.ReadySetGo.Width / 8), new Rectangle(0, ReadySetGoPart * (x_Resources.ReadySetGo.Height / 4), x_Resources.ReadySetGo.Width, x_Resources.ReadySetGo.Height / 4), Color.White);
+                    batch.Draw(ResourceManager.ReadySetGo.Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.ReadySetGo.Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.ReadySetGo.Width / 8), new Rectangle(0, ReadySetGoPart * (ResourceManager.ReadySetGo.Height / 4), ResourceManager.ReadySetGo.Width, ResourceManager.ReadySetGo.Height / 4), Color.White);
                 }
 
                 //Timer.Draw(batch);
@@ -413,8 +413,8 @@ namespace SlaamMono.Screens
 
         public void Close()
         {
-            x_Resources.ReadySetGo.Dispose();
-            x_Resources.BattleBG.Dispose();
+            ResourceManager.ReadySetGo.Dispose();
+            ResourceManager.BattleBG.Dispose();
         }
 
         #endregion

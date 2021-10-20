@@ -81,7 +81,7 @@ namespace SlaamMono.SubClasses
         {
             Drawings.Draw(batch);
             for (int x = 0; x < StringsToWrite.Count; x++)
-                x_Resources.DrawString(StringsToWrite[x].Str, StringsToWrite[x].Pos, x_Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
+                ResourceManager.DrawString(StringsToWrite[x].Str, StringsToWrite[x].Pos, ResourceManager.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
         }
     }
 

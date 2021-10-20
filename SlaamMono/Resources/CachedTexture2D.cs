@@ -29,6 +29,8 @@ namespace SlaamMono.Resources
             }
         }
 
+
+
         public void Dispose()
         {
             if (_texture == null)

@@ -59,8 +59,8 @@ namespace SlaamMono.Screens
         public void Draw(SpriteBatch batch)
         {
             byte alpha = (byte)LogoColor.Position.X;
-            batch.Draw(x_Resources.ZibithLogoBG.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(x_Resources.ZibithLogo.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - x_Resources.ZibithLogo.Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - x_Resources.ZibithLogo.Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
+            batch.Draw(ResourceManager.ZibithLogoBG.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+            batch.Draw(ResourceManager.ZibithLogo.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.ZibithLogo.Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.ZibithLogo.Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
         #endregion
@@ -69,8 +69,8 @@ namespace SlaamMono.Screens
 
         public void Close()
         {
-            x_Resources.ZibithLogo.Dispose();
-            x_Resources.ZibithLogoBG.Dispose();
+            ResourceManager.ZibithLogo.Dispose();
+            ResourceManager.ZibithLogoBG.Dispose();
         }
 
         #endregion

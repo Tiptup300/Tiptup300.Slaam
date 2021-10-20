@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
+using SlaamMono.Resources.Loaders;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Linq;
 
 namespace SlaamMono.Resources
 {
-    public static class x_Resources
+    public static class ResourceManager
     {
         // General
         public static Texture2D Dot;
@@ -74,9 +75,7 @@ namespace SlaamMono.Resources
         public static CachedTexture2D GameScreenScoreBoard;
         public static CachedTexture2D PauseScreen;
 
-
         public static Texture2D DefaultBoard;
-        //public static Texture2D DefaultChar;
 
         // Stats
         public static CachedTexture2D StatsBoard;

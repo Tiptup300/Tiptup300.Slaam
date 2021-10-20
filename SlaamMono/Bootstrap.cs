@@ -1,6 +1,7 @@
 ﻿using SimpleInjector;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources;
+using SlaamMono.Resources.Loaders;
 using SlaamMono.Screens;
 
 namespace SlaamMono

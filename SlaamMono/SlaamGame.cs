@@ -5,6 +5,7 @@ using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources;
+using SlaamMono.Resources.Loaders;
 using SlaamMono.Screens;
 using System;
 using ZBlade;
@@ -68,13 +69,13 @@ namespace SlaamMono
 
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
-            x_Resources.Initiailze(
+            ResourceManager.Initiailze(
                 DiImplementer.Instance.Get<ILogger>(), 
                 DiImplementer.Instance.Get<IImageLoader>(),
                 DiImplementer.Instance.Get<IPixelFactory>(),
                 DiImplementer.Instance.Get<ITextLineLoader>(),
                 DiImplementer.Instance.Get<IFontLoader>());
-            x_Resources.LoadAll();
+            ResourceManager.LoadAll();
             Qwerty.CurrentPlayer = InputComponent.Players[0];
             _contentManager = new XnaContentManager(DiImplementer.Instance.Get<ILogger>());
 
@@ -145,9 +146,9 @@ namespace SlaamMono
             if (ShowFPS)
             {
                 string temp = "" + FrameRateDirector.FUPS;
-                Vector2 fpsBack = x_Resources.SegoeUIx32pt.MeasureString(temp);
-                gamebatch.Draw(x_Resources.Dot, new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
-                x_Resources.DrawString(temp, new Vector2(5, fpsBack.Y / 2f), x_Resources.SegoeUIx32pt, FontAlignment.Left, Color.White, true);
+                Vector2 fpsBack = ResourceManager.SegoeUIx32pt.MeasureString(temp);
+                gamebatch.Draw(ResourceManager.Dot, new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
+                ResourceManager.DrawString(temp, new Vector2(5, fpsBack.Y / 2f), ResourceManager.SegoeUIx32pt, FontAlignment.Left, Color.White, true);
             }
 
             gamebatch.End();

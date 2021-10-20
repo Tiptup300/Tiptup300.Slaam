@@ -30,7 +30,7 @@ namespace SlaamMono.Screens
 
         public void Open()
         {
-            credits = x_Resources.Credits.ToArray();
+            credits = ResourceManager.Credits.ToArray();
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Credits);
             for (int x = 0; x < credits.Length; x++)
             {
@@ -85,18 +85,18 @@ namespace SlaamMono.Screens
 
             for (int CurrentCredit = 0; CurrentCredit < CreditsListings.Count; CurrentCredit++)
             {
-                if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + x_Resources.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y)
+                if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y)
                 {
-                    x_Resources.DrawString(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), x_Resources.SegoeUIx32pt, FontAlignment.Left, MainCreditColor, false);
+                    ResourceManager.DrawString(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), ResourceManager.SegoeUIx32pt, FontAlignment.Left, MainCreditColor, false);
                 }
-                Offset += x_Resources.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
+                Offset += ResourceManager.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
                 for (int x = 0; x < CreditsListings[CurrentCredit].Credits.Count; x++)
                 {
-                    if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + x_Resources.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
+                    if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
                     {
-                        x_Resources.DrawString(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), x_Resources.SegoeUIx14pt, FontAlignment.Left, SubCreditColor, false);
+                        ResourceManager.DrawString(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), ResourceManager.SegoeUIx14pt, FontAlignment.Left, SubCreditColor, false);
                     }
-                    Offset += (int)x_Resources.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
+                    Offset += (int)ResourceManager.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
                 }
                 Offset += 20;
             }

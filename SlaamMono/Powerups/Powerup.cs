@@ -63,16 +63,16 @@ namespace SlaamMono.Powerups
             switch (type)
             {
                 case PowerupType.SpeedUp:
-                    return x_Resources.PU_SpeedUp[1];
+                    return ResourceManager.PU_SpeedUp[1];
 
                 case PowerupType.SpeedDown:
-                    return x_Resources.PU_SpeedDown[1];
+                    return ResourceManager.PU_SpeedDown[1];
 
                 case PowerupType.Inversion:
-                    return x_Resources.PU_Inversion[1];
+                    return ResourceManager.PU_Inversion[1];
 
                 case PowerupType.Slaam:
-                    return x_Resources.PU_Slaam[1];
+                    return ResourceManager.PU_Slaam[1];
 
                 default:
                     throw new Exception();

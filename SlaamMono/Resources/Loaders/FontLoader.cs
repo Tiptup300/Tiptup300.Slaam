@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
-namespace SlaamMono.Resources
+namespace SlaamMono.Resources.Loaders
 {
     public class FontLoader : IFontLoader
     {
