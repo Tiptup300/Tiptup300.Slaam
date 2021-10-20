@@ -87,7 +87,7 @@ namespace SlaamMono.SubClasses
                 ResourceManager.DrawText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
             }
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
-            batch.Draw(ResourceManager.Dot, new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);
+            batch.Draw(ResourceManager.WhitePixel, new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);
             if (Character.CurrentPowerup != null && !Character.CurrentPowerup.Used)
                 batch.Draw(Character.CurrentPowerup.SmallTex, new Vector2(125 + Position.X - Character.CurrentPowerup.SmallTex.Width / 2, 42 + Position.Y - Character.CurrentPowerup.SmallTex.Height / 2), new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));
         }

@@ -156,7 +156,7 @@ namespace SlaamMono.Screens
             //MainBG.Draw(batch);
             for (int x = 0; x < 3; x++)
             {
-                batch.Draw(ResourceManager.StatsButtons[x], Statsboard, x == CurrentPage.Value ? Color.LightSkyBlue : ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
+                batch.Draw(ResourceManager.StatsButtons[x].Texture, Statsboard, x == CurrentPage.Value ? Color.LightSkyBlue : ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
             }
             batch.Draw(ResourceManager.StatsBoard.Texture, Statsboard, Color.White);
             //DrawingButton.Draw(batch);

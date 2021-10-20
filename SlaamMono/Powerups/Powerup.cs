@@ -19,11 +19,11 @@ namespace SlaamMono.Powerups
         public int AttackingRange;
         public bool AttackingInLine;
 
-        public Powerup(string name, Texture2D[] Textures, PowerupUse powuse)
+        public Powerup(string name, CachedTexture[] Textures, PowerupUse powuse)
         {
             Name = name;
-            SmallTex = Textures[1];
-            BigTex = Textures[0];
+            SmallTex = Textures[1].Texture;
+            BigTex = Textures[0].Texture;
             ThisPowerupsUse = powuse;
         }
 
@@ -63,16 +63,16 @@ namespace SlaamMono.Powerups
             switch (type)
             {
                 case PowerupType.SpeedUp:
-                    return ResourceManager.PU_SpeedUp[1];
+                    return ResourceManager.PU_SpeedUp[1].Texture;
 
                 case PowerupType.SpeedDown:
-                    return ResourceManager.PU_SpeedDown[1];
+                    return ResourceManager.PU_SpeedDown[1].Texture;
 
                 case PowerupType.Inversion:
-                    return ResourceManager.PU_Inversion[1];
+                    return ResourceManager.PU_Inversion[1].Texture;
 
                 case PowerupType.Slaam:
-                    return ResourceManager.PU_Slaam[1];
+                    return ResourceManager.PU_Slaam[1].Texture;
 
                 default:
                     throw new Exception();

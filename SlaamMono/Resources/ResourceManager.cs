@@ -13,7 +13,7 @@ namespace SlaamMono.Resources
     public static class ResourceManager
     {
         // General
-        public static Texture2D Dot;
+        public static Texture2D WhitePixel;
         public static CachedTexture Feedbar;
 
         // BG
@@ -81,7 +81,7 @@ namespace SlaamMono.Resources
         // Stats
         public static CachedTexture StatsBoard;
         public static CachedTexture Star;
-        public static Texture2D[] StatsButtons = new Texture2D[3];
+        public static CachedTexture[] StatsButtons = new CachedTexture[3];
 
         // Fonts
         public static TextManager textManager;
@@ -113,10 +113,10 @@ namespace SlaamMono.Resources
         public static CachedTexture MenuChoiceGlow;
 
         // PowerUps 
-        public static Texture2D[] PU_SpeedUp = new Texture2D[2];
-        public static Texture2D[] PU_SpeedDown = new Texture2D[2];
-        public static Texture2D[] PU_Inversion = new Texture2D[2];
-        public static Texture2D[] PU_Slaam = new Texture2D[2];
+        public static CachedTexture[] PU_SpeedUp = new CachedTexture[2];
+        public static CachedTexture[] PU_SpeedDown = new CachedTexture[2];
+        public static CachedTexture[] PU_Inversion = new CachedTexture[2];
+        public static CachedTexture[] PU_Slaam = new CachedTexture[2];
 
         private static ILogger _logger;
         private static ITextureLoader _imageLoader;
@@ -139,7 +139,7 @@ namespace SlaamMono.Resources
         {
             _logger.Log("Resources Loading...");
 
-            Dot = _pixelFactory.BuildPixel();
+            WhitePixel = _pixelFactory.BuildPixel();
             _logger.Log(" - Dot Image Created.");
 
             BattleBG = _resourceLoader.LoadResource<CachedTexture>("BattleScreen/battlebg");
@@ -160,15 +160,16 @@ namespace SlaamMono.Resources
             Background = _resourceLoader.LoadResource<CachedTexture>("Misc/background");
             ZBladeGameIcon = _resourceLoader.LoadResource<CachedTexture>("Misc/ZBladeIcon");
 
-            StatsButtons[0] = LoadTexture("MenuScreen/StatsButton1");
-            StatsButtons[1] = LoadTexture("MenuScreen/StatsButton2");
-            StatsButtons[2] = LoadTexture("MenuScreen/StatsButton3");
-
             SegoeUIx32pt = _resourceLoader.LoadResource<SpriteFont>("SegoeUI-32pt");
             SegoeUIx14pt = _resourceLoader.LoadResource<SpriteFont>("SegoeUI-14pt");
             SegoeUIx48ptBold = _resourceLoader.LoadResource<SpriteFont>("SegoeUI-48pt");
-            BotNames = _resourceLoader.LoadResource<IEnumerable<String>>("BotNames.txt").ToList();
-            Credits = _resourceLoader.LoadResource<IEnumerable<String>>("Credits.txt").ToList();
+
+            BotNames = _resourceLoader.LoadResource<IEnumerable<string>>("BotNames.txt").ToList();
+            Credits = _resourceLoader.LoadResource<IEnumerable<string>>("Credits.txt").ToList();
+
+            StatsButtons[0] = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/StatsButton1");
+            StatsButtons[1] = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/StatsButton2");
+            StatsButtons[2] = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/StatsButton3");
 
             loadPowerup(PU_SpeedUp, "SpeedUp");
             loadPowerup(PU_SpeedDown, "SpeedDown");
@@ -180,10 +181,10 @@ namespace SlaamMono.Resources
             SlaamGame.Instance.Components.Add(textManager);
         }
 
-        private static void loadPowerup(Texture2D[] Texs, string powerupname)
+        private static void loadPowerup(CachedTexture[] Texs, string powerupname)
         {
-            Texs[0] = LoadTexture("powerups\\" + powerupname);
-            Texs[1] = LoadTexture("powerups\\" + powerupname + "0");
+            Texs[0] = _resourceLoader.LoadResource<CachedTexture>("powerups\\" + powerupname);
+            Texs[1] = _resourceLoader.LoadResource<CachedTexture>("powerups\\" + powerupname + "0");
         }
 
 

@@ -148,7 +148,7 @@ namespace SlaamMono
             {
                 string temp = "" + FrameRateDirector.FUPS;
                 Vector2 fpsBack = ResourceManager.SegoeUIx32pt.MeasureString(temp);
-                gamebatch.Draw(ResourceManager.Dot, new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
+                gamebatch.Draw(ResourceManager.WhitePixel, new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
                 ResourceManager.DrawText(temp, new Vector2(5, fpsBack.Y / 2f), ResourceManager.SegoeUIx32pt, Color.White, TextAlignment.Default, true);
             }
 

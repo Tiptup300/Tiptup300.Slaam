@@ -128,7 +128,7 @@ namespace SlaamMono.SubClasses
         public void DrawShadow(SpriteBatch batch)
         {
             if (CurrentTileCondition != TileCondition.Clear)
-                batch.Draw(ResourceManager.Dot, new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
+                batch.Draw(ResourceManager.WhitePixel, new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
         }
 
         #endregion

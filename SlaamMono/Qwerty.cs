@@ -175,7 +175,7 @@ namespace SlaamMono
 
         public static void Draw(SpriteBatch batch)
         {
-            batch.Draw(ResourceManager.Dot, new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 200));
+            batch.Draw(ResourceManager.WhitePixel, new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 200));
             batch.Draw(ResourceManager.KeyboardBG.Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);
             for (int y = 0; y < 4; y++)
             {
