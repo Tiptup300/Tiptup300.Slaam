@@ -2,13 +2,13 @@
 using System.IO;
 using System.Linq;
 
-namespace SlaamMono.Resources.Loaders
+namespace SlaamMono.Resources.Loading
 {
     public class CommentedTextLineLoader : ITextLineLoader
     {
-        public IEnumerable<string> LoadTextLines(string directoryPath, string baseName)
+        public IEnumerable<string> LoadTextLines(string baseName)
         {
-            return File.ReadAllLines(Path.Combine(directoryPath, $"{baseName}.txt"))
+            return File.ReadAllLines(baseName)
                 .Where(line => line.StartsWith("//") == false);
         }
     }

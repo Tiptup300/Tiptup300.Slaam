@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
-using SlaamMono.Resources.Loaders;
+using SlaamMono.Resources.Loading;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,72 +14,73 @@ namespace SlaamMono.Resources
     {
         // General
         public static Texture2D Dot;
-        public static CachedTexture2D Feedbar;
+        public static CachedTexture Feedbar;
 
         // BG
-        public static CachedTexture2D Background;
-        public static CachedTexture2D BattleBG;
-        public static CachedTexture2D CreditsBG;
-
+        public static CachedTexture Background;
+        public static CachedTexture BattleBG;
+        public static CachedTexture CreditsBG;
 
         // Qwerty
-        public static CachedTexture2D Textbox;
-        public static CachedTexture2D KeyboardBG;
-        public static CachedTexture2D Key;
-        public static CachedTexture2D Spacebar;
-        public static CachedTexture2D KeyHT;
-        public static CachedTexture2D SpaceHT;
+        public static CachedTexture Textbox;
+        public static CachedTexture KeyboardBG;
+        public static CachedTexture Key;
+        public static CachedTexture Spacebar;
+        public static CachedTexture KeyHT;
+        public static CachedTexture SpaceHT;
 
         // Char Select
-        public static CachedTexture2D ProfileShell;
-        public static CachedTexture2D ProfileShello;
+        public static CachedTexture ProfileShell;
+        public static CachedTexture ProfileShello;
 
         // Lobby
-        public static CachedTexture2D LobbyUnderlay;
-        public static CachedTexture2D LobbyOverlay;
-        public static CachedTexture2D LobbyColorPreview;
-        public static CachedTexture2D LobbyCharBar;
-        public static CachedTexture2D HostingBG;
-        public static CachedTexture2D CPU;
-        public static CachedTexture2D LButton;
-        public static CachedTexture2D LButtonHT;
-        public static CachedTexture2D LobbyInfoOverlay;
-        public static CachedTexture2D BoardSelect;
-        public static CachedTexture2D NowLoading;
-        public static CachedTexture2D BoardSelectTextUnderlay;
+        public static CachedTexture LobbyUnderlay;
+        public static CachedTexture LobbyOverlay;
+        public static CachedTexture LobbyColorPreview;
+        public static CachedTexture LobbyCharBar;
+        public static CachedTexture HostingBG;
+        public static CachedTexture CPU;
+        public static CachedTexture LButton;
+        public static CachedTexture LButtonHT;
+        public static CachedTexture LobbyInfoOverlay;
+        public static CachedTexture BoardSelect;
+        public static CachedTexture NowLoading;
+        public static CachedTexture BoardSelectTextUnderlay;
 
         // Menu
-        public static CachedTexture2D Gear;
-        public static CachedTexture2D MenuTop;
-        public static CachedTexture2D MenuBoard;
-        public static CachedTexture2D MenuBlock;
-        public static CachedTexture2D MenuOverlay;
+        public static CachedTexture Gear;
+        public static CachedTexture MenuTop;
+        public static CachedTexture MenuBoard;
+        public static CachedTexture MenuBlock;
+        public static CachedTexture MenuOverlay;
 
         // Menu BG's
-        public static CachedTexture2D Menu0;
-        public static CachedTexture2D Menu1;
-        public static CachedTexture2D Menu2;
-        public static CachedTexture2D Menu3;
-        public static CachedTexture2D Menu4;
-        public static CachedTexture2D Menu5;
-        public static CachedTexture2D Menu6;
-        public static CachedTexture2D Menu7;
+        public static CachedTexture Menu0;
+        public static CachedTexture Menu1;
+        public static CachedTexture Menu2;
+        public static CachedTexture Menu3;
+        public static CachedTexture Menu4;
+        public static CachedTexture Menu5;
+        public static CachedTexture Menu6;
+        public static CachedTexture Menu7;
 
         // Game Board
-        public static CachedTexture2D TileOverlay;
-        public static CachedTexture2D RespawnTileOverlay;
-        public static CachedTexture2D DeadChar;
-        public static CachedTexture2D ReadySetGo;
-        public static CachedTexture2D TopGameBoard;
-        public static CachedTexture2D Waiting;
-        public static CachedTexture2D GameScreenScoreBoard;
-        public static CachedTexture2D PauseScreen;
+        public static CachedTexture TileOverlay;
+        public static CachedTexture RespawnTileOverlay;
+        public static CachedTexture DeadChar;
+        public static CachedTexture ReadySetGo;
+        public static CachedTexture TopGameBoard;
+        public static CachedTexture Waiting;
+        public static CachedTexture GameScreenScoreBoard;
+        public static CachedTexture PauseScreen;
+
+        public static CachedTexture ZBladeGameIcon;
 
         public static Texture2D DefaultBoard;
 
         // Stats
-        public static CachedTexture2D StatsBoard;
-        public static CachedTexture2D Star;
+        public static CachedTexture StatsBoard;
+        public static CachedTexture Star;
         public static Texture2D[] StatsButtons = new Texture2D[3];
 
         // Fonts
@@ -89,8 +90,8 @@ namespace SlaamMono.Resources
         public static SpriteFont SegoeUIx48ptBold;
 
         // Logos
-        public static CachedTexture2D ZibithLogo;
-        public static CachedTexture2D ZibithLogoBG;
+        public static CachedTexture ZibithLogo;
+        public static CachedTexture ZibithLogoBG;
 
         // Text Files
         public static List<string> BotNames;
@@ -108,8 +109,8 @@ namespace SlaamMono.Resources
             Color.Pink
         };
 
-        public static CachedTexture2D MenuChoice;
-        public static CachedTexture2D MenuChoiceGlow;
+        public static CachedTexture MenuChoice;
+        public static CachedTexture MenuChoiceGlow;
 
         // PowerUps 
         public static Texture2D[] PU_SpeedUp = new Texture2D[2];
@@ -118,23 +119,20 @@ namespace SlaamMono.Resources
         public static Texture2D[] PU_Slaam = new Texture2D[2];
 
         private static ILogger _logger;
-        private static IImageLoader _imageLoader;
+        private static ITextureLoader _imageLoader;
         private static IPixelFactory _pixelFactory;
-        private static ITextLineLoader _textLineLoader;
-        private static IFontLoader _fontLoader;
+        private static IResourceLoader _resourceLoader;
 
         public static void Initiailze(
             ILogger logger, 
-            IImageLoader imageLoader,
+            ITextureLoader textureLoader,
             IPixelFactory pixelFactory,
-            ITextLineLoader textLineLoader,
-            IFontLoader fontLoader)
+            IResourceLoader resourceLoader)
         {
             _logger = logger;
-            _imageLoader = imageLoader;
+            _imageLoader = textureLoader;
             _pixelFactory = pixelFactory;
-            _textLineLoader = textLineLoader;
-            _fontLoader = fontLoader;
+            _resourceLoader = resourceLoader;
         }
 
         public static void LoadAll()
@@ -144,36 +142,33 @@ namespace SlaamMono.Resources
             Dot = _pixelFactory.BuildPixel();
             _logger.Log(" - Dot Image Created.");
 
+            BattleBG = _resourceLoader.LoadResource<CachedTexture>("BattleScreen/battlebg");
+            ReadySetGo = _resourceLoader.LoadResource<CachedTexture>("BattleScreen/readysetgo");
+            RespawnTileOverlay = _resourceLoader.LoadResource<CachedTexture>("BattleScreen/respawnOverlay");
+            TileOverlay = _resourceLoader.LoadResource<CachedTexture>("BattleScreen/tileOverlay");
+            MenuTop = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/menutop");
+            ProfileShell = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/CharacterSelectBox");
+            StatsBoard = _resourceLoader.LoadResource<CachedTexture>("MenuScreen/StatsScreen");
+            LobbyCharBar = _resourceLoader.LoadResource<CachedTexture>("LobbyScreen/PlayerBar");
+            LobbyUnderlay = _resourceLoader.LoadResource<CachedTexture>("LobbyScreen/LobbyBG");
+            LobbyOverlay = _resourceLoader.LoadResource<CachedTexture>("LobbyScreen/LobbyOverlay");
+            LobbyColorPreview = _resourceLoader.LoadResource<CachedTexture>("LobbyScreen/PlayerColorPreview");
+            BoardSelect = _resourceLoader.LoadResource<CachedTexture>("Misc/boardSelect");
+            ZibithLogoBG = _resourceLoader.LoadResource<CachedTexture>("Misc/LogoBG");
+            ZibithLogo = _resourceLoader.LoadResource<CachedTexture>("Misc/Logo");
+            NowLoading = _resourceLoader.LoadResource<CachedTexture>("Misc/BoardLoading");
+            Background = _resourceLoader.LoadResource<CachedTexture>("Misc/background");
+            ZBladeGameIcon = _resourceLoader.LoadResource<CachedTexture>("Misc/ZBladeIcon");
 
-            BattleBG = new CachedTexture2D("BattleScreen//battlebg");
-            ReadySetGo = new CachedTexture2D("BattleScreen//readysetgo");
-            RespawnTileOverlay = new CachedTexture2D("BattleScreen//respawnOverlay");
-            TileOverlay = new CachedTexture2D("BattleScreen//tileOverlay");
-
-            MenuTop = new CachedTexture2D("MenuScreen//menutop");
-            ProfileShell = new CachedTexture2D("MenuScreen//CharacterSelectBox");
-            StatsBoard = new CachedTexture2D("MenuScreen/StatsScreen");
             StatsButtons[0] = LoadTexture("MenuScreen/StatsButton1");
             StatsButtons[1] = LoadTexture("MenuScreen/StatsButton2");
             StatsButtons[2] = LoadTexture("MenuScreen/StatsButton3");
 
-            LobbyCharBar = new CachedTexture2D("LobbyScreen/PlayerBar");
-            LobbyUnderlay = new CachedTexture2D("LobbyScreen/LobbyBG");
-            LobbyOverlay = new CachedTexture2D("LobbyScreen/LobbyOverlay");
-            LobbyColorPreview = new CachedTexture2D("LobbyScreen/PlayerColorPreview");
-
-            BoardSelect = new CachedTexture2D("Misc//boardSelect");
-            ZibithLogoBG = new CachedTexture2D("Misc//LogoBG");
-            ZibithLogo = new CachedTexture2D("Misc//Logo");
-            NowLoading = new CachedTexture2D("Misc//BoardLoading");
-            Background = new CachedTexture2D("Misc//background");
-            SlaamGame.mainBlade.CurrentGameInfo.GameIcon = LoadTexture("Misc//ZBladeIcon");
-
-            SegoeUIx32pt = loadFont("SegoeUI-32pt");
-            SegoeUIx14pt = loadFont("SegoeUI-14pt");
-            SegoeUIx48ptBold = loadFont("SegoeUI-48pt");
-            BotNames = loadStringList("BotNames");
-            Credits = loadStringList("Credits");
+            SegoeUIx32pt = _resourceLoader.LoadResource<SpriteFont>("SegoeUI-32pt");
+            SegoeUIx14pt = _resourceLoader.LoadResource<SpriteFont>("SegoeUI-14pt");
+            SegoeUIx48ptBold = _resourceLoader.LoadResource<SpriteFont>("SegoeUI-48pt");
+            BotNames = _resourceLoader.LoadResource<IEnumerable<String>>("BotNames.txt").ToList();
+            Credits = _resourceLoader.LoadResource<IEnumerable<String>>("Credits.txt").ToList();
 
             loadPowerup(PU_SpeedUp, "SpeedUp");
             loadPowerup(PU_SpeedDown, "SpeedDown");
@@ -192,40 +187,23 @@ namespace SlaamMono.Resources
         }
 
 
-        public static Texture2D LoadTexture(string name)
+        public static Texture2D LoadTexture(string textureName)
         {
             Texture2D output;
-            string directoryPath;
             
             try
             {
-                directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "content\\textures\\MOBILE\\");
-                output = _imageLoader.LoadImage(directoryPath, name);
-                _logger.Log($" - {name} Texture Loaded.");
+                string filePath;
+
+                filePath = Path.Combine(Directory.GetCurrentDirectory(), "content\\textures\\MOBILE\\", textureName);
+                output = _imageLoader.LoadImage(filePath);
+                _logger.Log($" - {textureName} Texture Loaded.");
             }
             catch (Exception ex)
             {
                 output = _pixelFactory.BuildPixel();
-                _logger.Log($"Texture \"{name}\" failed to load. Replaced with a blank pixel. Error: {ex.Message}");
+                _logger.Log($"Texture \"{textureName}\" failed to load. Replaced with a blank pixel. Error: {ex.Message}");
             }
-
-            return output;
-        }
-
-        private static List<string> loadStringList(string baseName)
-        {
-            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "content");
-            return _textLineLoader.LoadTextLines(directoryPath, baseName)
-                .ToList();
-        }
-
-        private static SpriteFont loadFont(string baseName)
-        {
-            SpriteFont output;
-
-            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "content");
-            output = _fontLoader.LoadFont(directoryPath, baseName);
-            _logger.Log(" - " + baseName + " Font Loaded.");
 
             return output;
         }

@@ -1,7 +1,7 @@
 ﻿using SimpleInjector;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources;
-using SlaamMono.Resources.Loaders;
+using SlaamMono.Resources.Loading;
 using SlaamMono.Screens;
 
 namespace SlaamMono
@@ -41,10 +41,12 @@ namespace SlaamMono
 
         private void registerResources(Container output)
         {
-            output.Register<IImageLoader, ImageLoader>();
+            output.Register<ITextureLoader, TextureLoader>();
             output.Register<IPixelFactory, PixelFactory>();
             output.Register<ITextLineLoader, CommentedTextLineLoader>();
             output.Register<IFontLoader, FontLoader>();
+            output.Register<ICachedTextureFactory, CachedTextureFactory>();
+            output.Register<IResourceLoader, ResourceLoader>();
         }
     }
 }
