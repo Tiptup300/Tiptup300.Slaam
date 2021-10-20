@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Screens;
+using SlaamMono.SubClasses;
+using System;
 
-namespace SlaamMono
+namespace SlaamMono.Powerups
 {
     public abstract class Powerup
     {
@@ -59,7 +59,7 @@ namespace SlaamMono
 
         public static Texture2D GetPowerupTexture(PowerupType type)
         {
-            switch(type)
+            switch (type)
             {
                 case PowerupType.SpeedUp:
                     return Resources.PU_SpeedUp[1];

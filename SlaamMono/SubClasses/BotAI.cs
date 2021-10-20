@@ -1,11 +1,13 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
+using SlaamMono.Library.Input;
+using SlaamMono.Powerups;
+using SlaamMono.Screens;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using SlaamMono.Library.Input;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class BotPlayer : Character
     {
@@ -13,8 +15,8 @@ namespace SlaamMono
 
         GameScreen ParentGameScreen;
         InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
-        Timer DiagonalMovementSwitch = new Timer(new TimeSpan(0, 0, 0,0,500));
-        Timer LogicUpdateThreshold = new Timer(new TimeSpan(0, 0, 0,0,500));
+        Timer DiagonalMovementSwitch = new Timer(new TimeSpan(0, 0, 0, 0, 500));
+        Timer LogicUpdateThreshold = new Timer(new TimeSpan(0, 0, 0, 0, 500));
         Random rand = new Random();
         Direction CurrentDirection = Direction.None;
         Timer TargetTime = new Timer(new TimeSpan(0, 0, 5));
@@ -30,12 +32,12 @@ namespace SlaamMono
 
         #region Constructor
 
-        public BotPlayer(Texture2D skin, int profile, Vector2 pos, GameScreen parentgamescreen, Color markingcolor, int plyeridx):
-            base(skin,profile,pos,null,markingcolor,plyeridx)
+        public BotPlayer(Texture2D skin, int profile, Vector2 pos, GameScreen parentgamescreen, Color markingcolor, int plyeridx) :
+            base(skin, profile, pos, null, markingcolor, plyeridx)
         {
             Gamepad = AIInput;
             ParentGameScreen = parentgamescreen;
-            base.IsBot = true;
+            IsBot = true;
 
 
 
@@ -64,7 +66,7 @@ namespace SlaamMono
                 LogicUpdate(tiles, CurrentCoordinates, TilePos);
                 LogicUpdateThreshold.Reset();
             }
-            
+
 
 
             CreateInput();
@@ -77,10 +79,10 @@ namespace SlaamMono
         private void LogicUpdate(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
         {
             Tile CurrentTile = tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
-            bool Moving = true, Attacking = false, InDanger = (CurrentTile.CurrentTileCondition != Tile.TileCondition.Normal && CurrentTile.CurrentTileCondition != Tile.TileCondition.RespawnPoint);
+            bool Moving = true, Attacking = false, InDanger = CurrentTile.CurrentTileCondition != Tile.TileCondition.Normal && CurrentTile.CurrentTileCondition != Tile.TileCondition.RespawnPoint;
 
 
-            if (base.CurrentState == CharacterState.Dead || base.CurrentState == CharacterState.Dieing)
+            if (CurrentState == CharacterState.Dead || CurrentState == CharacterState.Dieing)
             {
                 // Dont Do Anything...your dead!
                 Moving = false;
@@ -125,12 +127,12 @@ namespace SlaamMono
 
                 for (int x = 0; x < ParentGameScreen.Characters.Count; x++)
                 {
-                    if (x != base.PlayerIndex &&
+                    if (x != PlayerIndex &&
                          ParentGameScreen.Characters[x] != null &&
                          ParentGameScreen.Characters[x].CurrentState != CharacterState.Dead &&
                          ParentGameScreen.Characters[x].CurrentState != CharacterState.Dieing &&
                          /*( ParentGameScreen.Characters[x].CurrentTile != null && ParentGameScreen.Characters[x].CurrentTile.CurrentTileCondition != Tile.TileCondition.RespawnPoint ) && */
-                         ParentGameScreen.Characters[x].MarkingColor != base.MarkingColor)
+                         ParentGameScreen.Characters[x].MarkingColor != MarkingColor)
                     {
                         Vector2 pos = ParentGameScreen.InterpretCoordinates(ParentGameScreen.Characters[x].Position, true);
                         if (pos != CurrentCoordinates)
@@ -177,10 +179,10 @@ namespace SlaamMono
                 }
             }
 
-            Attacking = (CurrentTarget != null &&
+            Attacking = CurrentTarget != null &&
     CurrentTarget.ThisTargetType == Target.TargetType.Character &&
     ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
-    ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dieing);
+    ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dieing;
 
             if (Moving)
             {
@@ -300,7 +302,7 @@ namespace SlaamMono
                 Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + PlacesToGo[x][0], CurrentCoordinates.Y + PlacesToGo[x][1]);
                 if (IsSafeAndClear(CurrentTileLocation))
                 {
-                    SafePlace = new Vector2(CurrentTileLocation.X,CurrentTileLocation.Y);
+                    SafePlace = new Vector2(CurrentTileLocation.X, CurrentTileLocation.Y);
                     FoundSafePlace = true;
                 }
 
@@ -310,7 +312,7 @@ namespace SlaamMono
             {
                 return SafePlace;
             }
-            else 
+            else
             {
                 float Highest = ParentGameScreen.tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
 
@@ -366,7 +368,7 @@ namespace SlaamMono
                 }
             }
             return false;
-            
+
         }
 
         #region Movement Methods
@@ -447,7 +449,7 @@ namespace SlaamMono
 
         private bool IsSafe(Tile[,] s, Vector2 Coords, int x, int y)
         {
-            return base.IsSafe(new Vector2(Coords.X + x, Coords.Y + y));
+            return IsSafe(new Vector2(Coords.X + x, Coords.Y + y));
         }
 
         #endregion

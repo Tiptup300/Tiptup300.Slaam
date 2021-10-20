@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Logging;
+using SlaamMono.Screens;
+using System;
+using System.IO;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class CurrentMatchSettings
     {
@@ -166,7 +166,7 @@ namespace SlaamMono
 
             for (int x = 0; x < 6; x++)
             {
-                int y = (Int32)parent.MainMenu.Items[x].ToSetting().OptionChoice.Value;
+                int y = parent.MainMenu.Items[x].ToSetting().OptionChoice.Value;
                 writer.Write(y);
             }
             writer.Write(BoardLocation != null ? BoardLocation : "");
@@ -209,7 +209,7 @@ namespace SlaamMono
             finally
             {
                 reader.Close();
-                SaveValues(parent,BoardLocation);
+                SaveValues(parent, BoardLocation);
             }
         }
     }

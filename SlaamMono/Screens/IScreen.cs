@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     public interface IScreen
     {

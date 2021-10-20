@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Input;
+using System;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class CharacterShell
     {
@@ -21,7 +18,7 @@ namespace SlaamMono
 
         #region Constructor
 
-        public CharacterShell(String skinloc, int profile, ExtendedPlayerIndex idx, PlayerType type, Color col)
+        public CharacterShell(string skinloc, int profile, ExtendedPlayerIndex idx, PlayerType type, Color col)
         {
             SkinLocation = skinloc;
             CharProfile = profile;

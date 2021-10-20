@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
+using SlaamMono.Screens;
+using SlaamMono.SubClasses;
+using System;
 
-namespace SlaamMono
+namespace SlaamMono.Powerups
 {
     public class SpeedDown : Powerup
     {
@@ -15,7 +16,7 @@ namespace SlaamMono
         private TimeSpan CurrentTime;
 
         public SpeedDown(GameScreen parentscreen, int charindex)
-            : base(DialogStrings.SpeedDoownName, Resources.PU_SpeedDown,PowerupUse.Strategy)
+            : base(DialogStrings.SpeedDoownName, Resources.PU_SpeedDown, PowerupUse.Strategy)
         {
             ParentGameScreen = parentscreen;
             CharacterIndex = charindex;
@@ -49,7 +50,7 @@ namespace SlaamMono
 
         public override void EndAttack()
         {
-            Active = false; 
+            Active = false;
             for (int x = 0; x < ParentGameScreen.Characters.Count; x++)
             {
                 if (x != CharacterIndex && ParentGameScreen.Characters[x] != null)

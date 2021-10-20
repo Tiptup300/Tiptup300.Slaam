@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class Timer
     {
@@ -35,7 +33,7 @@ namespace SlaamMono
             }
             set
             {
-                this.threshold = value;
+                threshold = value;
                 Reset();
             }
         }
@@ -72,7 +70,7 @@ namespace SlaamMono
             {
                 Active = false;
             }
-               
+
         }
 
         public void Reset()

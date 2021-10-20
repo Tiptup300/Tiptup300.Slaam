@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 
 namespace SlaamMono
@@ -92,7 +90,7 @@ namespace SlaamMono
             if (Status == QwertyStatus.GoingUp)
             {
                 BoardPosition.Y -= FrameRateDirector.MovementFactor * MovementSpeed;
-                
+
                 if (BoardPosition.Y <= TargetPosition.Y)
                     Status = QwertyStatus.Normal;
             }
@@ -181,9 +179,9 @@ namespace SlaamMono
             {
                 for (int x = 0; x < 10; x++)
                 {
-                    if(Keys[x,y].Type != KeyType.Space && Keys[x,y].Type != KeyType.Blank)
+                    if (Keys[x, y].Type != KeyType.Space && Keys[x, y].Type != KeyType.Blank)
                         batch.Draw(Resources.Key.Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
-                    else if(Keys[x,y].Type == KeyType.Space)
+                    else if (Keys[x, y].Type == KeyType.Space)
                         batch.Draw(Resources.Spacebar.Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
                 }
             }
@@ -202,7 +200,7 @@ namespace SlaamMono
             }
             Resources.DrawString(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
 
-            if(Keys[(int)SelectedPosition.X,(int)SelectedPosition.Y].Type != KeyType.Space)
+            if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != KeyType.Space)
                 batch.Draw(Resources.KeyHT.Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
             else
                 batch.Draw(Resources.SpaceHT.Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
@@ -220,7 +218,7 @@ namespace SlaamMono
         public static void DisplayBoard(string str)
         {
             EditingString = str;
-            BoardPosition = new Vector2(640-Resources.KeyboardBG.Width/2, 1024);
+            BoardPosition = new Vector2(640 - Resources.KeyboardBG.Width / 2, 1024);
             TargetPosition = new Vector2(640 - Resources.KeyboardBG.Width / 2, 760);
             Active = true;
             Status = QwertyStatus.GoingUp;

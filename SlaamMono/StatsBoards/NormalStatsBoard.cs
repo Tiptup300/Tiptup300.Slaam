@@ -1,10 +1,9 @@
+using Microsoft.Xna.Framework;
+using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace SlaamMono
+namespace SlaamMono.StatsBoards
 {
     class NormalStatsBoard : StatsBoard
     {
@@ -55,7 +54,7 @@ namespace SlaamMono
                 }
                 for (int x = 0; x < IndexsSelected.Count; x++)
                 {
-                    NormalStatsPage[IndexsSelected[x]] = new NormalPlayerStatsPageListing(((Places)(CurrentPlace)).ToString(), ParentScoreCollector.BestSprees[IndexsSelected[x]], TotalTime[IndexsSelected[x]]);
+                    NormalStatsPage[IndexsSelected[x]] = new NormalPlayerStatsPageListing(((Places)CurrentPlace).ToString(), ParentScoreCollector.BestSprees[IndexsSelected[x]], TotalTime[IndexsSelected[x]]);
                     AmtSelected++;
                     SelectedAlready[IndexsSelected[x]] = true;
                 }
@@ -121,7 +120,7 @@ namespace SlaamMono
             else
                 sec = "";
 
-            if (((string)(hour + min + sec)).Trim() == "")
+            if ((hour + min + sec).Trim() == "")
                 return "0 Secs";
 
             return hour + min + sec;

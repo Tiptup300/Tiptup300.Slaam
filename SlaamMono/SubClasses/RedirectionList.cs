@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class RedirectionList<T>
     {

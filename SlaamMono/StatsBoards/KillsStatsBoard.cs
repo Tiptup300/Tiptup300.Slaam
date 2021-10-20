@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.SubClasses;
+using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.StatsBoards
 {
     class KillsStatsBoard : StatsBoard
     {
@@ -71,7 +69,7 @@ namespace SlaamMono
                     else
                         itm.Details.Add(ParentScoreCollector.ParentGameScreen.Characters[x].GetProfile().Name);
 
-                    itm.Add(true,KillsPage[x].Kills.ToString(), KillsPage[x].Deaths.ToString(), KillsPage[x].Suicides.ToString());
+                    itm.Add(true, KillsPage[x].Kills.ToString(), KillsPage[x].Deaths.ToString(), KillsPage[x].Suicides.ToString());
 
                     MainBoard.Items.Add(itm);
                 }

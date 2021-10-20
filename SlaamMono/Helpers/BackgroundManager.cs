@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace SlaamMono
+namespace SlaamMono.Helpers
 {
     /// <summary>
     /// Handles all the work of backgrounds.

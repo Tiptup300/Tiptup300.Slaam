@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using SlaamMono.Library.Logging;
+﻿using SlaamMono.Library.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SlaamMono
 {

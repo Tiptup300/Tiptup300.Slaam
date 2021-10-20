@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
 
     public class DrawingBlockCollection : List<DrawingBlock>
@@ -31,7 +29,7 @@ namespace SlaamMono
         public void Draw(SpriteBatch batch)
         {
             for (int x = 0; x < Count; x++)
-                this[x].Draw(batch,Position);
+                this[x].Draw(batch, Position);
         }
     }
 

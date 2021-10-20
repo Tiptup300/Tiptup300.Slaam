@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using System;
 using ZBlade;
 
@@ -54,7 +55,8 @@ namespace SlaamMono.Screens
         public void Update() { }
         public void Draw(SpriteBatch batch) { }
 
-        public void Close() {
+        public void Close()
+        {
             SlaamGame.mainBlade.Status = BladeStatus.Hidden;
             SlaamGame.mainBlade.TopMenu = null;
             SlaamGame.mainBlade.UserCanNavigateMenu = false;

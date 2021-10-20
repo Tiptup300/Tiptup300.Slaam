@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
-using SlaamMono.Screens;
 using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     public class CreditsScreen : IScreen
     {

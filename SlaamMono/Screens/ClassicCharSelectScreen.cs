@@ -1,14 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Screens;
+using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     public class ClassicCharSelectScreen : IScreen
     {
@@ -140,7 +141,7 @@ namespace SlaamMono
 
         #region Extra Methods
 
-        public static List<String> Skins = new List<string>();
+        public static List<string> Skins = new List<string>();
         public static bool SkinsLoaded = false;
 
         /// <summary>
@@ -163,7 +164,7 @@ namespace SlaamMono
         {
             if (!SkinsLoaded)
             {
-                List<String> skins = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\content\\SkinList.txt").ToList();
+                List<string> skins = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\content\\SkinList.txt").ToList();
                 for (int x = 0; x < skins.Count; x++)
                 {
                     Skins.Add(skins[x]);

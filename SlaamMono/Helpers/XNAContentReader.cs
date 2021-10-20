@@ -1,7 +1,7 @@
 ﻿using SlaamMono.Library.Logging;
 using System.IO;
 
-namespace SlaamMono
+namespace SlaamMono.Helpers
 {
     public class XnaContentReader
     {
@@ -22,7 +22,7 @@ namespace SlaamMono
 
             WasNotFound = !File.Exists(filename);
 
-            _reader = new BinaryReader(File.Open(filename,FileMode.OpenOrCreate));
+            _reader = new BinaryReader(File.Open(filename, FileMode.OpenOrCreate));
         }
 
         public void Close()

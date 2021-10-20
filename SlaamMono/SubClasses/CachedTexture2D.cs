@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+using System;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class CachedTexture2D
     {
@@ -36,8 +33,9 @@ namespace SlaamMono
                 }
                 return texture;
             }
-            set { 
-                texture = value; 
+            set
+            {
+                texture = value;
             }
         }
 

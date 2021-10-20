@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
-namespace SlaamMono
+namespace SlaamMono.Helpers
 {
     public class XnaContentWriter
     {
@@ -22,7 +21,7 @@ namespace SlaamMono
             writer.Write(str);
         }
 
-        public void Write(Int32 val)
+        public void Write(int val)
         {
             writer.Write(val);
         }

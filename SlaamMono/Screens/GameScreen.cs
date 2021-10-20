@@ -1,13 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Screens;
+using SlaamMono.Powerups;
+using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
 using ZBlade;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     public class GameScreen : IScreen
     {
@@ -275,10 +277,10 @@ namespace SlaamMono
                     {
                         if (Characters[x] != null)
                         {
-                            int X1 = (int)(((Characters[x].Position.X - Boardpos.X) % GameGlobals.TILE_SIZE));
-                            int Y1 = (int)(((Characters[x].Position.Y - Boardpos.Y) % GameGlobals.TILE_SIZE));
-                            int X = (int)(((Characters[x].Position.X - Boardpos.X) - X1) / GameGlobals.TILE_SIZE);
-                            int Y = (int)(((Characters[x].Position.Y - Boardpos.Y) - Y1) / GameGlobals.TILE_SIZE);
+                            int X1 = (int)((Characters[x].Position.X - Boardpos.X) % GameGlobals.TILE_SIZE);
+                            int Y1 = (int)((Characters[x].Position.Y - Boardpos.Y) % GameGlobals.TILE_SIZE);
+                            int X = (int)((Characters[x].Position.X - Boardpos.X - X1) / GameGlobals.TILE_SIZE);
+                            int Y = (int)((Characters[x].Position.Y - Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
                             Characters[x].Update(tiles, new Vector2(X, Y), new Vector2(X1, Y1));
                             if (Characters[x].CurrentState == Character.CharacterState.Respawning)
                             {
@@ -394,7 +396,7 @@ namespace SlaamMono
 
                 if (CurrentGameStatus == GameStatus.Waiting || CurrentGameStatus == GameStatus.Over)
                 {
-                    batch.Draw(Resources.ReadySetGo.Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + (GameGlobals.DRAWING_GAME_WIDTH / 2) - Resources.ReadySetGo.Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.ReadySetGo.Width / 8), new Rectangle(0, ReadySetGoPart * (Resources.ReadySetGo.Height / 4), Resources.ReadySetGo.Width, (Resources.ReadySetGo.Height / 4)), Color.White);
+                    batch.Draw(Resources.ReadySetGo.Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - Resources.ReadySetGo.Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.ReadySetGo.Width / 8), new Rectangle(0, ReadySetGoPart * (Resources.ReadySetGo.Height / 4), Resources.ReadySetGo.Width, Resources.ReadySetGo.Height / 4), Color.White);
                 }
 
                 //Timer.Draw(batch);
@@ -481,7 +483,7 @@ namespace SlaamMono
                 newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
             }
             Vector2 newCharPos = InterpretCoordinates(new Vector2(newx, newy), false);
-            Characters[x].Respawn(new Vector2(newCharPos.X + (GameGlobals.TILE_SIZE / 2f), newCharPos.Y + (GameGlobals.TILE_SIZE / 2f)), new Vector2(newx, newy));
+            Characters[x].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy));
         }
 
         #endregion
@@ -565,14 +567,14 @@ namespace SlaamMono
         public Vector2 InterpretCoordinates(Vector2 pos, bool flip)
         {
             if (!flip)
-                return new Vector2(Boardpos.X + (pos.X * GameGlobals.TILE_SIZE), Boardpos.Y + (pos.Y * GameGlobals.TILE_SIZE));
+                return new Vector2(Boardpos.X + pos.X * GameGlobals.TILE_SIZE, Boardpos.Y + pos.Y * GameGlobals.TILE_SIZE);
             else
             {
 
-                int X1 = (int)(((pos.X - Boardpos.X) % GameGlobals.TILE_SIZE));
-                int Y1 = (int)(((pos.Y - Boardpos.Y) % GameGlobals.TILE_SIZE));
-                int X = (int)(((pos.X - Boardpos.X) - X1) / GameGlobals.TILE_SIZE);
-                int Y = (int)(((pos.Y - Boardpos.Y) - Y1) / GameGlobals.TILE_SIZE);
+                int X1 = (int)((pos.X - Boardpos.X) % GameGlobals.TILE_SIZE);
+                int Y1 = (int)((pos.Y - Boardpos.Y) % GameGlobals.TILE_SIZE);
+                int X = (int)((pos.X - Boardpos.X - X1) / GameGlobals.TILE_SIZE);
+                int Y = (int)((pos.Y - Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
 
                 if (pos.X < Boardpos.X)
                     X = -1;

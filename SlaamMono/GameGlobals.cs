@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace SlaamMono
 {
     // Xbox 360 + PC Defaults 

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Screens;
+using SlaamMono.SubClasses;
 using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     public class SurvivalCharSelectScreen : ClassicCharSelectScreen
     {

@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Screens;
+using SlaamMono.SubClasses;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     public class LobbyScreen : IScreen
     {

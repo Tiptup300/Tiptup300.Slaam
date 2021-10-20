@@ -1,12 +1,11 @@
+using Microsoft.Xna.Framework;
+using SlaamMono.Helpers;
+using SlaamMono.Library.Logging;
+using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.IO;
-using SlaamMono.Library.Logging;
 
-namespace SlaamMono
+namespace SlaamMono.StatsBoards
 {
     class SurvivalStatsBoard : StatsBoard
     {
@@ -36,9 +35,9 @@ namespace SlaamMono
 
             if (AddingNewChar)
                 PeopleToCompare[0] = new SurvivalStatsPageListing(ParentScoreCollector.ParentGameScreen.Characters[0].GetProfile().Name, ParentScoreCollector.ParentGameScreen.Characters[0].Kills, ParentScoreCollector.ParentGameScreen.Characters[0].TimeAlive,
-                System.DateTime.Now.ToString());
-            
-            
+                DateTime.Now.ToString());
+
+
 
             SurvivalStatsPage = new List<SurvivalStatsPageListing>();
 
@@ -68,7 +67,7 @@ namespace SlaamMono
                 }
                 for (int x = 0; x < IndexsSelected.Count; x++)
                 {
-                    SurvivalStatsPage.Add( new SurvivalStatsPageListing((/*(Places)*/GetRank(CurrentPlace)).ToString(),PeopleToCompare[IndexsSelected[x]]));
+                    SurvivalStatsPage.Add(new SurvivalStatsPageListing(/*(Places)*/GetRank(CurrentPlace).ToString(), PeopleToCompare[IndexsSelected[x]]));
                     if (IndexsSelected[x] == 0)
                         NewScoreLoc = SurvivalStatsPage.Count - 1;
                     AmtSelected++;
@@ -109,7 +108,7 @@ namespace SlaamMono
                 }
             }
             MainBoard.CalculateBlocks();
-            if(NewScoreLoc < RowsToDraw && NewScoreLoc != -2)
+            if (NewScoreLoc < RowsToDraw && NewScoreLoc != -2)
                 MainBoard.SetHighlight(NewScoreLoc);
             return MainBoard;
         }
@@ -167,7 +166,7 @@ namespace SlaamMono
             {
                 string Name = reader.ReadString();
                 int Kills = reader.ReadInt32();
-                TimeSpan TimeSurvived = new TimeSpan(0,0,0,0,reader.ReadInt32());
+                TimeSpan TimeSurvived = new TimeSpan(0, 0, 0, 0, reader.ReadInt32());
                 string DateSet = reader.ReadString();
 
 
@@ -181,14 +180,14 @@ namespace SlaamMono
         {
             XnaContentWriter writer = new XnaContentWriter(DialogStrings.SurvivalScoresFilename);
 
-            
+
             writer.Write(PeopleToCompare.Length);
 
             for (int x = 0; x < PeopleToCompare.Length; x++)
             {
                 writer.Write(PeopleToCompare[x].Name);
                 writer.Write(PeopleToCompare[x].Kills);
-                writer.Write((int)(Math.Round(PeopleToCompare[x].TimeSurvived.TotalMilliseconds, 0)));
+                writer.Write((int)Math.Round(PeopleToCompare[x].TimeSurvived.TotalMilliseconds, 0));
                 writer.Write(PeopleToCompare[x].DateSet);
             }
 
@@ -204,7 +203,7 @@ namespace SlaamMono
             else if (x == 3)
                 return "3rd";
             else
-                return x+"th";
+                return x + "th";
         }
     }
 

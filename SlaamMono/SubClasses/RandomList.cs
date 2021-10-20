@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
-    class RandomList<T> : List<T>
+    public class RandomList<T> : List<T>
     {
         private Random rand = new Random();
 
@@ -13,14 +12,14 @@ namespace SlaamMono
             List<T> temp = new List<T>();
             List<int> intsused = new List<int>();
 
-            while (temp.Count != this.Count)
+            while (temp.Count != Count)
             {
-                int x = rand.Next(0, this.Count);
+                int x = rand.Next(0, Count);
                 bool used = false;
 
-                for(int y = 0; y < intsused.Count; y++)
+                for (int y = 0; y < intsused.Count; y++)
                 {
-                    if(x == intsused[y])
+                    if (x == intsused[y])
                     {
                         used = true;
                         break;
@@ -34,10 +33,10 @@ namespace SlaamMono
                 }
             }
 
-            this.Clear();
+            Clear();
 
-            for(int x = 0; x < temp.Count; x++)
-                this.Add(temp[x]);
+            for (int x = 0; x < temp.Count; x++)
+                Add(temp[x]);
         }
     }
 }

@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.SubClasses;
+using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.StatsBoards
 {
     class PvPStatsBoard : StatsBoard
     {

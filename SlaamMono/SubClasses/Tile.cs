@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
+using SlaamMono.Powerups;
+using SlaamMono.Screens;
+using System;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class Tile
     {
@@ -13,7 +14,7 @@ namespace SlaamMono
         private Vector2 TileCoors;
         private Texture2D ParentTileTileset;
         public TileCondition CurrentTileCondition = TileCondition.Normal;
-        private static TimeSpan FadeOutTime = new TimeSpan(0, 0, 0,0,25);
+        private static TimeSpan FadeOutTime = new TimeSpan(0, 0, 0, 0, 25);
         public Color TileColor = Color.White;
         public Color MarkedColor;
         public int MarkedIndex;
@@ -42,12 +43,12 @@ namespace SlaamMono
         {
             ParentTileTileset = tiletex;
             TileCoors = TileLoc;
-            AbsTileloc = new Vector2(Boardpos.X + (TileLoc.X * GameGlobals.TILE_SIZE) + 1, Boardpos.Y + (TileLoc.Y * GameGlobals.TILE_SIZE) + 1);
+            AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
         }
 
-        public Tile(Tile tile,Texture2D parenttiletex)
+        public Tile(Tile tile, Texture2D parenttiletex)
         {
-            this.ParentTileTileset = parenttiletex;
+            ParentTileTileset = parenttiletex;
             AbsTileloc = tile.AbsTileloc;
         }
 
@@ -125,7 +126,7 @@ namespace SlaamMono
 
         public void DrawShadow(SpriteBatch batch)
         {
-            if(CurrentTileCondition != TileCondition.Clear)
+            if (CurrentTileCondition != TileCondition.Clear)
                 batch.Draw(Resources.Dot, new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
         }
 
@@ -163,11 +164,11 @@ namespace SlaamMono
         /// <param name="IDX">Player's Index</param>
         public void MarkTile(Color markingcolor, TimeSpan FallDelay, bool cominback, int IDX)
         {
-            if (CurrentTileCondition == TileCondition.Normal || (CurrentTileCondition == TileCondition.RespawnPoint && cominback))
+            if (CurrentTileCondition == TileCondition.Normal || CurrentTileCondition == TileCondition.RespawnPoint && cominback)
             {
                 MarkedIndex = IDX;
                 MarkedColor = markingcolor;
-                TileOverlayColor = new Color((byte)markingcolor.R, (byte)markingcolor.G, (byte)markingcolor.B, (byte)127);
+                TileOverlayColor = new Color(markingcolor.R, markingcolor.G, markingcolor.B, (byte)127);
                 CurrentTileCondition = TileCondition.Marked;
                 FallSpeed.Threshold = FallDelay;
                 FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
@@ -190,7 +191,7 @@ namespace SlaamMono
         public void ResetTileLoc(Vector2 Boardpos, Vector2 TileLoc)
         {
             TileCoors = TileLoc;
-            AbsTileloc = new Vector2(Boardpos.X + (TileLoc.X * GameGlobals.TILE_SIZE) + 1, Boardpos.Y + (TileLoc.Y * GameGlobals.TILE_SIZE) + 1);
+            AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
         }
 
         /// <summary>

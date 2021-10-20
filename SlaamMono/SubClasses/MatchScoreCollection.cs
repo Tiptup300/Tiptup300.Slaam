@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SlaamMono.Screens;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class MatchScoreCollection
     {
@@ -68,7 +66,7 @@ namespace SlaamMono
 
         private void ResetSpree(int PlayerIndex)
         {
-            if(Sprees[PlayerIndex] > BestSprees[PlayerIndex])
+            if (Sprees[PlayerIndex] > BestSprees[PlayerIndex])
                 BestSprees[PlayerIndex] = Sprees[PlayerIndex];
 
             Sprees[PlayerIndex] = 0;
@@ -77,20 +75,20 @@ namespace SlaamMono
 
     #region Places Enum
 
-        public enum Places
-        {
-            Loser = 0,
-            First = 1,
-            Second = 2,
-            Third = 3,
-            Fourth = 4,
-            Fifth = 5,
-            Sixth = 6,
-            Seventh = 7,
-            Eighth = 8,
-        }
+    public enum Places
+    {
+        Loser = 0,
+        First = 1,
+        Second = 2,
+        Third = 3,
+        Fourth = 4,
+        Fifth = 5,
+        Sixth = 6,
+        Seventh = 7,
+        Eighth = 8,
+    }
 
-        #endregion
+    #endregion
 
     public enum GameType
     {

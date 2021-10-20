@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Screens;
+using SlaamMono.SubClasses;
+using System;
 
-namespace SlaamMono
+namespace SlaamMono.Powerups
 {
     public class SlaamPowerup : Powerup
     {
@@ -13,7 +13,7 @@ namespace SlaamMono
         private const int size = 4;
 
         public SlaamPowerup(GameScreen parentscreen, Character parentcharacter, int playerindex)
-            : base("Slaam!", Resources.PU_Slaam,PowerupUse.Attacking)
+            : base("Slaam!", Resources.PU_Slaam, PowerupUse.Attacking)
         {
             ParentGameScreen = parentscreen;
             PlayerIndex = playerindex;
@@ -36,9 +36,9 @@ namespace SlaamMono
         {
             Vector2 Charpos = ParentGameScreen.InterpretCoordinates(ParentCharacter.Position, true);
 
-            for (int x = (int)Charpos.X - ( size - 1 ); x < Charpos.X + size; x++)
+            for (int x = (int)Charpos.X - (size - 1); x < Charpos.X + size; x++)
             {
-                for (int y = (int)Charpos.Y - ( size - 1 ); y < Charpos.Y + size; y++)
+                for (int y = (int)Charpos.Y - (size - 1); y < Charpos.Y + size; y++)
                 {
                     if (x == (int)Charpos.X && y == (int)Charpos.Y)
                     {

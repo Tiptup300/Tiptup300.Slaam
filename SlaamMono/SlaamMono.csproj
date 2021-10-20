@@ -13,14 +13,8 @@
     <DefineConstants>TRACE;ZUNE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Powerups\MuhLazza.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
     <EmbeddedResource Include="Icon.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Powerups\MuhLazza.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Content\Credits.txt" />

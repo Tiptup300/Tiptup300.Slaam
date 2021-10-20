@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
+using SlaamMono.Screens;
+using System;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     /// <summary>
     /// Scoreboards for the players in a game.
@@ -16,7 +16,7 @@ namespace SlaamMono
         private Vector2 Position;
         private Character Character;
         public bool Moving = false;
-        private const float MovementSpeed = (20f / 10f);
+        private const float MovementSpeed = 20f / 10f;
         private GameType CurrentGametype;
         private bool AlphaUp = false;
         private float Alpha = 255f;
@@ -78,12 +78,12 @@ namespace SlaamMono
             Resources.DrawString(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
             if (CurrentGametype == GameType.Classic || CurrentGametype == GameType.Survival)
                 Resources.DrawString(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
-            else if(CurrentGametype == GameType.Spree || CurrentGametype == GameType.TimedSpree)
+            else if (CurrentGametype == GameType.Spree || CurrentGametype == GameType.TimedSpree)
                 Resources.DrawString("inf.", new Vector2(73 + Position.X, 68 + Position.Y), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
-            batch.Draw(Resources.Dot, new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y),5,33), Character.MarkingColor);
+            batch.Draw(Resources.Dot, new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);
             if (Character.CurrentPowerup != null && !Character.CurrentPowerup.Used)
-                batch.Draw(Character.CurrentPowerup.SmallTex, new Vector2(125+Position.X - Character.CurrentPowerup.SmallTex.Width/2, 42 + Position.Y - Character.CurrentPowerup.SmallTex.Height/2), new Color((byte)255, (byte)255, (byte)255,(byte)Alpha));
+                batch.Draw(Character.CurrentPowerup.SmallTex, new Vector2(125 + Position.X - Character.CurrentPowerup.SmallTex.Width / 2, 42 + Position.Y - Character.CurrentPowerup.SmallTex.Height / 2), new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));
         }
 
         #endregion
@@ -101,7 +101,7 @@ namespace SlaamMono
         public TimeSpan TimeRemaining;
         public TimeSpan CurrentGameTime;
         public readonly TimeSpan EndingTime = CurrentMatchSettings.TimeOfMatch;
-        private const float MovementSpeed = (10f / 10f);
+        private const float MovementSpeed = 10f / 10f;
         public bool Moving = false;
         private GameScreen ParentGameScreen;
         private float StepSize;

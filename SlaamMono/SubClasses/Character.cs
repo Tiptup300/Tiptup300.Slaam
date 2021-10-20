@@ -1,17 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
+using SlaamMono.Powerups;
+using SlaamMono.Screens;
+using System;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class Character
     {
         #region Variables
 
-        public const float CharDrawScale = (GameGlobals.TILE_SIZE / 45f);//0.67f;
+        public const float CharDrawScale = GameGlobals.TILE_SIZE / 45f;//0.67f;
 
         public bool Drawn = false;
         public int Lives = CurrentMatchSettings.LivesAmt;
@@ -19,7 +20,7 @@ namespace SlaamMono
         public int PowerupsUsed = 0;
         public int Deaths = 0;
 
-        public readonly float SpeedOfMovement = (GameGlobals.TILE_SIZE / 50f) * (5f / 30f) * CurrentMatchSettings.SpeedMultiplyer;
+        public readonly float SpeedOfMovement = GameGlobals.TILE_SIZE / 50f * (5f / 30f) * CurrentMatchSettings.SpeedMultiplyer;
 
         public bool IsBot = false;
         public Texture2D CharacterSkin;
@@ -28,7 +29,7 @@ namespace SlaamMono
         public InputDevice Gamepad;
 
         public Timer WalkingAnimationChange = new Timer(new TimeSpan(0, 0, 0, 0, 60));
-        public Timer AttackingAnimationChange = new Timer(new TimeSpan(0, 0, 0, 0, (int)((GameGlobals.TILE_SIZE / 50f) * 300)));
+        public Timer AttackingAnimationChange = new Timer(new TimeSpan(0, 0, 0, 0, (int)(GameGlobals.TILE_SIZE / 50f * 300)));
         private Timer ReappearTime = new Timer(CurrentMatchSettings.RespawnTime);
 
         public int Row;
@@ -80,7 +81,7 @@ namespace SlaamMono
 #else
             if (Gamepad.PressedStart)
 #endif
-                GameScreen.Instance.PauseGame(this.PlayerIndex);
+                GameScreen.Instance.PauseGame(PlayerIndex);
 
             if (Lives > 0)
                 TimeAlive += FrameRateDirector.MovementFactorTimeSpan;
@@ -111,16 +112,16 @@ namespace SlaamMono
                 if (Movement < 50f)
                 {
 
-                    if ((Gamepad.PressingDown || Gamepad.PressedDown))
+                    if (Gamepad.PressingDown || Gamepad.PressedDown)
                     {
-                        if(IsClear(Position, new Vector2(0, Movement)))
+                        if (IsClear(Position, new Vector2(0, Movement)))
                             Position.Y += Movement;
 
                         Row = 0;
                         fx = SpriteEffects.None;
                         currentlymoving = true;
                     }
-                    else if ((Gamepad.PressingUp || Gamepad.PressedUp))
+                    else if (Gamepad.PressingUp || Gamepad.PressedUp)
                     {
                         //if (!(TilePos.Y < 1f + Movement && !IsClear(tiles, CurrentCoordinates, 0, -1)))
                         if (IsClear(Position, new Vector2(0, -Movement)))
@@ -129,19 +130,19 @@ namespace SlaamMono
                         fx = SpriteEffects.None;
                         currentlymoving = true;
                     }
-                    else if ((Gamepad.PressingLeft || Gamepad.PressedLeft))
+                    else if (Gamepad.PressingLeft || Gamepad.PressedLeft)
                     {
                         //if (!(TilePos.X < 1f + Movement && !IsClear(tiles, CurrentCoordinates, -1, 0)))
-                        if (IsClear(Position, new Vector2(-Movement,0)))
+                        if (IsClear(Position, new Vector2(-Movement, 0)))
                             Position.X -= Movement;
 
                         Row = 1;
                         fx = SpriteEffects.FlipHorizontally;
                         currentlymoving = true;
                     }
-                    else if ((Gamepad.PressingRight || Gamepad.PressedRight))
+                    else if (Gamepad.PressingRight || Gamepad.PressedRight)
                     {
-                        if (IsClear(Position, new Vector2(Movement, 0)))  
+                        if (IsClear(Position, new Vector2(Movement, 0)))
                             Position.X += Movement;
 
                         Row = 1;
@@ -153,7 +154,7 @@ namespace SlaamMono
                 if (WalkingAnimationChange.Active && currentlymoving)
                     currAni.Add(1);
 #if ZUNE
-                if(Gamepad.PressedAction && CurrentState != CharacterState.Attacking)
+                if (Gamepad.PressedAction && CurrentState != CharacterState.Attacking)
 #else
                 if (Gamepad.PressedAction2 && CurrentState != CharacterState.Attacking)
 #endif
@@ -181,7 +182,7 @@ namespace SlaamMono
                     AttackingAnimationChange.Update(FrameRateDirector.MovementFactorTimeSpan);
                 }
 
-                
+
 
             }
             else if (CurrentState == CharacterState.Attacking)
@@ -250,7 +251,7 @@ namespace SlaamMono
                     Alpha -= 10.625f;
                 if (Alpha <= 0)
                 {
-                    ReportDeath(tiles,CurrentCoordinates);
+                    ReportDeath(tiles, CurrentCoordinates);
                     if (CurrentPowerup != null && CurrentPowerup.Active & !CurrentPowerup.AttackingType)
                         CurrentPowerup.EndAttack();
                 }
@@ -289,7 +290,7 @@ namespace SlaamMono
         public virtual void Draw(SpriteBatch batch)
         {
             batch.Draw(CharacterSkin, Position, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), SpriteColor, 0f, new Vector2(25, 50), CharDrawScale, fx, 0f);
-            
+
         }
 
         #endregion
@@ -320,7 +321,7 @@ namespace SlaamMono
 
             if (tile.CurrentTileCondition == Tile.TileCondition.Clear ||
                 tile.CurrentTileCondition == Tile.TileCondition.Clearing ||
-                (tile.MarkedColor == MarkingColor && (tile.CurrentTileCondition == Tile.TileCondition.Clear || tile.CurrentTileCondition == Tile.TileCondition.Clearing || tile.CurrentTileCondition == Tile.TileCondition.Marked)))
+                tile.MarkedColor == MarkingColor && (tile.CurrentTileCondition == Tile.TileCondition.Clear || tile.CurrentTileCondition == Tile.TileCondition.Clearing || tile.CurrentTileCondition == Tile.TileCondition.Marked))
                 return false;
 
             return true;
@@ -418,15 +419,15 @@ namespace SlaamMono
         /// <param name="TileCoor">Current Coordinates of the player.</param>
         private void CheckForDeath(Tile[,] tiles, Vector2 TileCoor)
         {
-            if(CurrentState != CharacterState.Dieing && CurrentState != CharacterState.Dead)
+            if (CurrentState != CharacterState.Dieing && CurrentState != CharacterState.Dead)
                 if (
-                    tiles[(int)TileCoor.X, (int)TileCoor.Y].CurrentTileCondition == Tile.TileCondition.Clearing || 
+                    tiles[(int)TileCoor.X, (int)TileCoor.Y].CurrentTileCondition == Tile.TileCondition.Clearing ||
                     tiles[(int)TileCoor.X, (int)TileCoor.Y].CurrentTileCondition == Tile.TileCondition.Clear
                     )
-            {
-                CurrentState = CharacterState.Dieing;
-                FadeThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-            }
+                {
+                    CurrentState = CharacterState.Dieing;
+                    FadeThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+                }
         }
 
         /// <summary>
@@ -446,7 +447,7 @@ namespace SlaamMono
             CurrentState = CharacterState.Dead;
             ReappearTime.Update(FrameRateDirector.MovementFactorTimeSpan);
         }
-        
+
         /// <summary>
         /// Resets Most Variables to prepare for a Respawn.
         /// </summary>

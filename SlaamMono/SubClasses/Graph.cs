@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class Graph
     {
@@ -15,7 +13,7 @@ namespace SlaamMono
         private List<WritingString> StringsToWrite = new List<WritingString>();
         private Color ColorToDraw;
 
-        public Graph(Rectangle graphrect,int gap, Color coltodraw)
+        public Graph(Rectangle graphrect, int gap, Color coltodraw)
         {
             GraphRectangle = graphrect;
             Gap = gap;
@@ -29,15 +27,15 @@ namespace SlaamMono
             int SizeOfColumns = GraphRectangle.Width / Items.Columns.Count;
             int HeightOfRows = 30;
 
-            int ColumnWidth = (SizeOfColumns - Gap);
-            int RowHeight = (HeightOfRows - Gap);
+            int ColumnWidth = SizeOfColumns - Gap;
+            int RowHeight = HeightOfRows - Gap;
 
             int XOffset = ColumnWidth + Gap;
             int YOffset = RowHeight + Gap;
 
             for (int x = 0; x < Items.Columns.Count; x++)
             {
-                Rectangle NewBlock = new Rectangle(GraphRectangle.X + XOffset * x, GraphRectangle.Y, ColumnWidth,RowHeight);
+                Rectangle NewBlock = new Rectangle(GraphRectangle.X + XOffset * x, GraphRectangle.Y, ColumnWidth, RowHeight);
 
                 if (Items.Columns[x].Trim() != "")
                 {
@@ -58,7 +56,7 @@ namespace SlaamMono
                         {
                             Rectangle NewBlock = new Rectangle(GraphRectangle.X + XOffset * y, GraphRectangle.Y + YOffset * (1 + x), ColumnWidth, RowHeight);
                             if (Items[x].Highlight)
-                                Drawings.Add(new DrawingBlock(NewBlock, new Color((byte)135, (byte)206, (byte)250, (byte)ColorToDraw.A)));
+                                Drawings.Add(new DrawingBlock(NewBlock, new Color((byte)135, (byte)206, (byte)250, ColorToDraw.A)));
                             else
                                 Drawings.Add(new DrawingBlock(NewBlock, ColorToDraw));
 
@@ -150,7 +148,7 @@ namespace SlaamMono
             for (int x = 1; x < str.Length; x++)
                 Options.Add(str[x]);
             OptionChoice = new IntRange(val, 0, str.Length - 2);
-            Details.Add(str[val+1]);
+            Details.Add(str[val + 1]);
         }
 
         public void ChangeValue(bool Adding)

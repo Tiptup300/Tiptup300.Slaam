@@ -1,11 +1,9 @@
-#region Using Statements
+using SlaamMono.Library.Logging;
+using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using SlaamMono.Library.Logging;
-#endregion
 
-namespace SlaamMono
+namespace SlaamMono.Helpers
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
@@ -53,7 +51,7 @@ namespace SlaamMono
             else
             {
                 int ProfileAmt = reader.ReadInt32();
-                
+
 
                 for (int x = 0; x < ProfileAmt; x++)
                 {
@@ -87,9 +85,9 @@ namespace SlaamMono
                     }
                 }
                 BotProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
-                for (int x = 0; x < Resources.BotNames.Count; x++ )
+                for (int x = 0; x < Resources.BotNames.Count; x++)
                 {
-                    AllProfiles.Add(new PlayerProfile(Resources.BotNames[x].Replace("\r",""),true));
+                    AllProfiles.Add(new PlayerProfile(Resources.BotNames[x].Replace("\r", ""), true));
                     BotProfiles.Add(AllProfiles.Count - 1);
                 }
             }
@@ -101,7 +99,7 @@ namespace SlaamMono
         {
             XnaContentWriter writer = new XnaContentWriter(DialogStrings.ProfileFilename);
 
-            writer.Write(AllProfiles.Count-1);
+            writer.Write(AllProfiles.Count - 1);
 
             for (int x = 1; x < AllProfiles.Count; x++)
             {
@@ -129,7 +127,7 @@ namespace SlaamMono
 
         public static int GetBotProfile()
         {
-            int index = rand.Next(0,BotProfiles.Count);
+            int index = rand.Next(0, BotProfiles.Count);
             int ct = 0;
             do
             {
@@ -139,7 +137,7 @@ namespace SlaamMono
                 if (ct > 100000)
                     throw new Exception("Infinite Loop detected...");
             }
-            while(BotProfiles[index].Used);
+            while (BotProfiles[index].Used);
 
             BotProfiles[index].Used = true;
 
@@ -177,7 +175,7 @@ namespace SlaamMono
         public bool Used = false;
         public TimeSpan BestGame = TimeSpan.Zero;
 
-        public PlayerProfile(int totalkills,int totalgames,int totaldeaths,string skin,string name,
+        public PlayerProfile(int totalkills, int totalgames, int totaldeaths, string skin, string name,
                              bool isbot, int totalpowerups, int bestgame)
         {
             TotalKills = totalkills;

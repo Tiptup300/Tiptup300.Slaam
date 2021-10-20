@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using System;
 
 namespace SlaamMono.Screens

@@ -1,20 +1,20 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
-using SlaamMono.Screens;
+using SlaamMono.SubClasses;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     class BoardThumbnailViewer : IScreen
     {
         public LobbyScreen ParentScreen;
 
         private List<Texture2D> Boards = new List<Texture2D>();
-        private List<String> ValidBoards = new List<string>();
+        private List<string> ValidBoards = new List<string>();
 
         private IntRange DrawingBoardIndex = new IntRange(0, 0, 0);
 
@@ -185,7 +185,7 @@ namespace SlaamMono
 
                 }
             }
-            
+
 
         }
 
@@ -198,7 +198,7 @@ namespace SlaamMono
             {
                 for (int y = 0; y < 11; y++)
                 {
-                    Vector2 Pos = new Vector2((GameGlobals.DRAWING_GAME_WIDTH / 2 - DrawSizeWidth / 2 + x * DrawSizeWidth + HOffset) - (DrawSizeWidth * 2), (GameGlobals.DRAWING_GAME_HEIGHT / 2 - DrawSizeHeight / 2 + y * DrawSizeHeight + VOffset) - (DrawSizeHeight * 2));
+                    Vector2 Pos = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - DrawSizeWidth / 2 + x * DrawSizeWidth + HOffset - DrawSizeWidth * 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - DrawSizeHeight / 2 + y * DrawSizeHeight + VOffset - DrawSizeHeight * 2);
                     if (!(Pos.X < -DrawSizeWidth || Pos.X > GameGlobals.DRAWING_GAME_WIDTH || Pos.Y < -DrawSizeHeight || Pos.Y > GameGlobals.DRAWING_GAME_HEIGHT))
                     {
                         if (DrawingBoardIndex.Value < Boards.Count && Boards[DrawingBoardIndex.Value] != null)
@@ -231,7 +231,7 @@ namespace SlaamMono
 #if !ZUNE
                 batch.Draw(Resources.BoardSelectTextUnderlay.Texture, new Vector2(0, 175), new Color(255, 255, 255, 100));
 #endif
-                Resources.DrawString(DialogStrings.CleanMapName(ValidBoards[save]) , new Vector2(27, 225), Resources.SegoeUIx32pt, FontAlignment.Left, Color.White, true);
+                Resources.DrawString(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), Resources.SegoeUIx32pt, FontAlignment.Left, Color.White, true);
             }
         }
 
@@ -255,7 +255,7 @@ namespace SlaamMono
             for (int x = 0; x < boards.Length; x++)
             {
                 //if (boards[x].EndsWith(".png"))
-                    strs.Add(boards[x]);
+                strs.Add(boards[x]);
             }
             boards = new string[strs.Count];
             for (int x = 0; x < strs.Count; x++)
@@ -307,7 +307,7 @@ namespace SlaamMono
 
         private Rectangle CenterRectangle(Rectangle rect, Vector2 pos)
         {
-            return new Rectangle((int)pos.X-rect.Width/2,(int)pos.Y-rect.Height/2,rect.Width,rect.Height);
+            return new Rectangle((int)pos.X - rect.Width / 2, (int)pos.Y - rect.Height / 2, rect.Width, rect.Height);
         }
     }
 }

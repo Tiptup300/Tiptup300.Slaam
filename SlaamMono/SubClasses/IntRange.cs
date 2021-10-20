@@ -1,4 +1,4 @@
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class IntRange
     {
@@ -117,11 +117,11 @@ namespace SlaamMono
             {
                 if (Value < min)
                 {
-                    Value = max - ((min - Value) - 1);
+                    Value = max - (min - Value - 1);
                 }
                 else if (Value > max)
                 {
-                    Value = min + ((Value - max) - 1);
+                    Value = min + (Value - max - 1);
                 }
             }
         }

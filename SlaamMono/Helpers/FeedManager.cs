@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace SlaamMono
+namespace SlaamMono.Helpers
 {
     /// <summary>
     /// Manages the feed you see at the bottom of menus within the game.
@@ -13,8 +10,8 @@ namespace SlaamMono
     {
         #region Variables
 
-        public const float BarMovement = (15f / 10f);
-        public const float TextMovement = (3f / 20f);
+        public const float BarMovement = 15f / 10f;
+        public const float TextMovement = 3f / 20f;
 
         public static bool FeedsActive = false;
 
@@ -46,7 +43,7 @@ namespace SlaamMono
             {
                 if (FeedRect.Width >= 1280)
                 {
-                    TextX -= (FrameRateDirector.MovementFactor * TextMovement);
+                    TextX -= FrameRateDirector.MovementFactor * TextMovement;
                     if (TextX <= FeedText.Length * -8)
                         TextX = 1350;
                 }

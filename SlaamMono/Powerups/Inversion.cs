@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
+using SlaamMono.Screens;
+using SlaamMono.SubClasses;
+using System;
 
-namespace SlaamMono
+namespace SlaamMono.Powerups
 {
     public class Inversion : Powerup
     {
@@ -15,7 +16,7 @@ namespace SlaamMono
         private TimeSpan CurrentTime;
 
         public Inversion(GameScreen parentscreen, int charindex)
-            : base(DialogStrings.InversionName, Resources.PU_Inversion,PowerupUse.Strategy)
+            : base(DialogStrings.InversionName, Resources.PU_Inversion, PowerupUse.Strategy)
         {
             ParentGameScreen = parentscreen;
             CharacterIndex = charindex;

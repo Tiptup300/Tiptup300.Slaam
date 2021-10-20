@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Screens;
+using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     class SurvivalScreen : GameScreen
     {
@@ -97,7 +98,7 @@ namespace SlaamMono
                 SlaamGame.Content.Load<Texture2D>("content\\skins\\" + ClassicCharSelectScreen.ReturnRandSkin(_logger))//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, CharSelectScreen.Instance.ReturnRandSkin())
                 , ProfileManager.GetBotProfile(), new Vector2(-200, -200), this, Color.Black, Characters.Count));
             ProfileManager.ResetAllBots();
-            base.RespawnChar(Characters.Count - 1);
+            RespawnChar(Characters.Count - 1);
         }
 
         public override void EndGame()

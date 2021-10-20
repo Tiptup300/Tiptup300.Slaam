@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
+using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,10 +78,6 @@ namespace SlaamMono
 
         public static Texture2D DefaultBoard;
         //public static Texture2D DefaultChar;
-
-        // Powerups
-        public static CachedTexture2D MuhLazza1;
-        public static CachedTexture2D MuhLazza2;
 
         // Stats
         public static CachedTexture2D StatsBoard;

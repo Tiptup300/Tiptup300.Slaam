@@ -2,12 +2,12 @@ using Microsoft.Xna.Framework;
 using System;
 
 
-namespace SlaamMono
+namespace SlaamMono.Helpers
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class FrameRateDirector : Microsoft.Xna.Framework.DrawableGameComponent
+    public class FrameRateDirector : DrawableGameComponent
     {
         public static float MovementFactor { private set; get; }
         public static TimeSpan MovementFactorTimeSpan { get { return new TimeSpan(0, 0, 0, 0, (int)MovementFactor); } }

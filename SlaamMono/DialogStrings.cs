@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SlaamMono.SubClasses;
 
 namespace SlaamMono
 {
@@ -97,7 +95,7 @@ namespace SlaamMono
             string[] strs = new string[2];
             strs[0] = str.Substring(str.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\" + GameGlobals.TEXTURE_FILE_PATH, "");
             strs[1] = ((str.IndexOf('_') >= 0) ? str.Substring(0, str.IndexOf('_')).Replace(".png", "").Replace("boards\\" + GameGlobals.TEXTURE_FILE_PATH, "") : "");
-            if(strs[1] != "" && strs[1] != "0")
+            if (strs[1] != "" && strs[1] != "0")
             {
                 return strs[0] + " by " + strs[1];
             }
@@ -138,7 +136,7 @@ namespace SlaamMono
         public const string HostingScreenFeed = "Welcome to the hosting screen. Players may automatically connect to you now. If you need the ip of your computer refer to http://whatsmyip.com/ for retreiving it.";
         public const string CharacterSelectScreenFeed = "Welcome to character select. Where you get to choose your profile and character for use in game matches. If you would like to create a profile, please use the Profile Manager in the options menu.";
         public const string BoardSelectScreenFeed = "Welcome to the board design select screen. Where you get to choose the desired design of flooring for the gamematch.";
-        
+
         #endregion
 
 

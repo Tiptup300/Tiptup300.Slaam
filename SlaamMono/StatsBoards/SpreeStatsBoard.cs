@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.SubClasses;
+using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.StatsBoards
 {
     class SpreeStatsBoard : StatsBoard
     {
@@ -57,7 +55,7 @@ namespace SlaamMono
                 }
                 for (int x = 0; x < IndexsSelected.Count; x++)
                 {
-                    SpreeStatsPage[IndexsSelected[x]] = new SpreePlayerStatsPageListing(((Places)(CurrentPlace)).ToString(), ParentScoreCollector.BestSprees[IndexsSelected[x]], TotalScore[IndexsSelected[x]]);
+                    SpreeStatsPage[IndexsSelected[x]] = new SpreePlayerStatsPageListing(((Places)CurrentPlace).ToString(), ParentScoreCollector.BestSprees[IndexsSelected[x]], TotalScore[IndexsSelected[x]]);
                     AmtSelected++;
                     SelectedAlready[IndexsSelected[x]] = true;
                 }

@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Screens;
+using SlaamMono.StatsBoards;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     public class HighScoreScreen : IScreen
     {

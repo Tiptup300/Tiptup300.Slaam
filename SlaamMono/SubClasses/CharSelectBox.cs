@@ -1,19 +1,20 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Helpers;
+using SlaamMono.Library.Input;
+using SlaamMono.StatsBoards;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using SlaamMono.Library.Input;
 
-namespace SlaamMono
+namespace SlaamMono.SubClasses
 {
     public class CharSelectBox
     {
         #region Variables
 
-        private const float ScrollSpeed = (4f / 35f);
+        private const float ScrollSpeed = 4f / 35f;
 
-        private List<String> ParentSkinStrings = new List<string>();
+        private List<string> ParentSkinStrings = new List<string>();
 
         private int PlayerIDX;
         private int SelectedIndex = -1;
@@ -30,7 +31,7 @@ namespace SlaamMono
         private Texture2D[] ParentCharSkins;
 
         private Vector2[] Positions = new Vector2[10];
-        private String[] MsgStrings = new string[6];
+        private string[] MsgStrings = new string[6];
 
         public bool Survival = false;
 
@@ -38,7 +39,7 @@ namespace SlaamMono
 
         #region Constructor
 
-        public CharSelectBox(Vector2 Position, Texture2D[] parentcharskins, ExtendedPlayerIndex playeridx, List<String> parentskinstrings)
+        public CharSelectBox(Vector2 Position, Texture2D[] parentcharskins, ExtendedPlayerIndex playeridx, List<string> parentskinstrings)
         {
             PlayerIDX = InputComponent.GetIndex(playeridx);
             ParentCharSkins = parentcharskins;
@@ -57,7 +58,7 @@ namespace SlaamMono
             Positions[8] = new Vector2(Position.X + 209, Position.Y + 188);
             Positions[9] = new Vector2(Position.X + 412, Position.Y + 188);
 
-            MsgStrings[0] = DialogStrings.Player+(ExtendedPlayerIndex)PlayerIDX;
+            MsgStrings[0] = DialogStrings.Player + (ExtendedPlayerIndex)PlayerIDX;
             MsgStrings[1] = DialogStrings.PressStartToJoin;
             MsgStrings[2] = "";
             MsgStrings[3] = "";
@@ -67,8 +68,8 @@ namespace SlaamMono
 
         public void Reset()
         {
-            if(ChosenProfile == null || ProfileManager.PlayableProfiles.Count-1 != ChosenProfile.Max)
-                ChosenProfile = new IntRange(0, 0, ProfileManager.PlayableProfiles.Count-1);
+            if (ChosenProfile == null || ProfileManager.PlayableProfiles.Count - 1 != ChosenProfile.Max)
+                ChosenProfile = new IntRange(0, 0, ProfileManager.PlayableProfiles.Count - 1);
         }
 
         #endregion
@@ -81,7 +82,7 @@ namespace SlaamMono
             {
                 case CharSelectBoxState.Computer:
                     {
-                        if (InputComponent.Players[(int)PlayerIDX].PressedStart)
+                        if (InputComponent.Players[PlayerIDX].PressedStart)
                         {
                             CurrentState = CharSelectBoxState.ProfileSelect;
                             MsgStrings[1] = DialogStrings.SelectAProfile;
@@ -93,7 +94,7 @@ namespace SlaamMono
 
                 case CharSelectBoxState.ProfileSelect:
                     {
-                        if (InputComponent.Players[(int)PlayerIDX].PressedAction2)
+                        if (InputComponent.Players[PlayerIDX].PressedAction2)
                         {
                             MsgStrings[0] = DialogStrings.Player + (ExtendedPlayerIndex)PlayerIDX;
                             MsgStrings[1] = DialogStrings.PressStartToJoin;
@@ -104,21 +105,21 @@ namespace SlaamMono
                             CurrentState = CharSelectBoxState.Computer;
                         }
 
-                        if (InputComponent.Players[(int)PlayerIDX].PressedUp)
+                        if (InputComponent.Players[PlayerIDX].PressedUp)
                         {
                             ChosenProfile.Add(1);
                             MsgStrings[0] = ProfileManager.PlayableProfiles[ChosenProfile.Value].Name;
                             ResetStats();
                         }
 
-                        if (InputComponent.Players[(int)PlayerIDX].PressedDown)
+                        if (InputComponent.Players[PlayerIDX].PressedDown)
                         {
                             ChosenProfile.Sub(1);
                             MsgStrings[0] = ProfileManager.PlayableProfiles[ChosenProfile.Value].Name;
                             ResetStats();
                         }
-                        
-                        if (InputComponent.Players[(int)PlayerIDX].PressedAction)
+
+                        if (InputComponent.Players[PlayerIDX].PressedAction)
                         {
                             CurrentState = CharSelectBoxState.CharSelect;
                             FindSkin(ProfileManager.PlayableProfiles[ChosenProfile.Value].Skin);
@@ -129,22 +130,22 @@ namespace SlaamMono
 
                 case CharSelectBoxState.CharSelect:
                     {
-                        if (InputComponent.Players[(int)PlayerIDX].PressedAction2)
+                        if (InputComponent.Players[PlayerIDX].PressedAction2)
                         {
                             MsgStrings[1] = DialogStrings.SelectAProfile;
                             CurrentState = CharSelectBoxState.ProfileSelect;
                         }
 
-                        if (InputComponent.Players[(int)PlayerIDX].PressingUp && CurrentStatus == Status.Stationary)
+                        if (InputComponent.Players[PlayerIDX].PressingUp && CurrentStatus == Status.Stationary)
                         {
                             CurrentStatus = Status.Lowering;
                         }
-                        else if (InputComponent.Players[(int)PlayerIDX].PressingDown && CurrentStatus == Status.Stationary)
+                        else if (InputComponent.Players[PlayerIDX].PressingDown && CurrentStatus == Status.Stationary)
                         {
                             CurrentStatus = Status.Raising;
                         }
 
-                        if (InputComponent.Players[(int)PlayerIDX].PressedAction && CurrentState == CharSelectBoxState.CharSelect)
+                        if (InputComponent.Players[PlayerIDX].PressedAction && CurrentState == CharSelectBoxState.CharSelect)
                         {
                             ProfileManager.PlayableProfiles[ChosenProfile.Value].Skin = ParentSkinStrings[ChosenSkin.Value];
                             ProfileManager.SaveProfiles();
@@ -154,15 +155,15 @@ namespace SlaamMono
 
                         if (CurrentStatus != Status.Stationary)
                         {
-                                if (CurrentStatus == Status.Lowering)
-                                    Offset -= FrameRateDirector.MovementFactor * ScrollSpeed;
-                                else
-                                    Offset += FrameRateDirector.MovementFactor * ScrollSpeed;
+                            if (CurrentStatus == Status.Lowering)
+                                Offset -= FrameRateDirector.MovementFactor * ScrollSpeed;
+                            else
+                                Offset += FrameRateDirector.MovementFactor * ScrollSpeed;
 
-                                Positions[1] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset - 70);
-                                Positions[2] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset);
-                                Positions[3] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset + 70);
-                            
+                            Positions[1] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset - 70);
+                            Positions[2] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset);
+                            Positions[3] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset + 70);
+
                         }
 
                         if (Offset >= 70)
@@ -223,17 +224,17 @@ namespace SlaamMono
             Resources.DrawString(MsgStrings[5], Positions[9], Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
 #else
             batch.Draw(Resources.ProfileShell.Texture, new Vector2(13, 96), Color.White);
-            
+
             var temp = MsgStrings[1];
 
             if (CurrentState == CharSelectBoxState.CharSelect)
             {
-                batch.Draw(DispResources[1], new Vector2(152,239), new Rectangle(0, 0, 50, 60), Color.White);
+                batch.Draw(DispResources[1], new Vector2(152, 239), new Rectangle(0, 0, 50, 60), Color.White);
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
 
-            Resources.DrawString(temp, new Vector2(31,141), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+            Resources.DrawString(temp, new Vector2(31, 141), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
             Resources.DrawString(MsgStrings[0], new Vector2(20, 70), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
 #endif
         }
@@ -277,7 +278,7 @@ namespace SlaamMono
                 MsgStrings[4] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalPowerups;
                 MsgStrings[5] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalKills;
 #endif
-                }
+            }
         }
 
         #endregion
@@ -288,7 +289,7 @@ namespace SlaamMono
         /// Finds the inserted skin, if its not found it gets a random one.
         /// </summary>
         /// <param name="str">The Skin its looking for.</param>
-        private void FindSkin(String str)
+        private void FindSkin(string str)
         {
             for (int x = 0; x < ParentSkinStrings.Count; x++)
             {

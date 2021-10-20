@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Screens;
+using SlaamMono.Helpers;
+using SlaamMono.Subclasses;
+using SlaamMono.SubClasses;
 using System;
 
-namespace SlaamMono
+namespace SlaamMono.Screens
 {
     public class LogoScreen : IScreen
     {
@@ -12,7 +14,7 @@ namespace SlaamMono
         private Timer displaytime = new Timer(new TimeSpan(0, 0, 4));
 
         private Transition LogoColor = new Transition(null, new Vector2(0), new Vector2(255), TimeSpan.FromSeconds(1));
-        private Boolean hasShown = false;
+        private bool hasShown = false;
         private readonly MainMenuScreen _menuScreen;
 
         #endregion
@@ -67,7 +69,7 @@ namespace SlaamMono
         {
             byte alpha = (byte)LogoColor.Position.X;
             batch.Draw(Resources.ZibithLogoBG.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(Resources.ZibithLogo.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - (Resources.ZibithLogo.Width / 2), GameGlobals.DRAWING_GAME_HEIGHT / 2 - (Resources.ZibithLogo.Height / 2)), new Color((byte)255, (byte)255, (byte)255, (byte)alpha));
+            batch.Draw(Resources.ZibithLogo.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - Resources.ZibithLogo.Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.ZibithLogo.Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
         #endregion
