@@ -10,9 +10,12 @@ namespace SlaamMono.Resources
 {
     public static class ResourceManager
     {
+
         // General
         public static Texture2D WhitePixel;
-        public static Texture2D DefaultBoard;
+
+        private static Dictionary<string, CachedTexture> _textures;
+
         public static CachedTexture Feedbar;
         public static CachedTexture FirstTime;
         public static CachedTexture ZBladeGameIcon;
@@ -75,9 +78,6 @@ namespace SlaamMono.Resources
         public static SpriteFont SegoeUIx32pt;
         public static SpriteFont SegoeUIx14pt;
         public static SpriteFont SegoeUIx48ptBold;
-        // Logos
-        public static CachedTexture ZibithLogo;
-        public static CachedTexture ZibithLogoBG;
         // Text Files
         public static List<string> BotNames;
         public static List<string> Credits;
@@ -138,12 +138,12 @@ namespace SlaamMono.Resources
             LobbyOverlay = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/LobbyOverlay");
             LobbyColorPreview = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/PlayerColorPreview");
             BoardSelect = _resourceLoader.Load<CachedTexture>("textures/Misc/boardSelect");
-            ZibithLogoBG = _resourceLoader.Load<CachedTexture>("textures/Misc/LogoBG");
-            ZibithLogo = _resourceLoader.Load<CachedTexture>("textures/Misc/Logo");
             NowLoading = _resourceLoader.Load<CachedTexture>("textures/Misc/BoardLoading");
             Background = _resourceLoader.Load<CachedTexture>("textures/Misc/background");
             FirstTime = _resourceLoader.Load<CachedTexture>("textures/firsttime");
             ZBladeGameIcon = _resourceLoader.Load<CachedTexture>("textures/Misc/ZBladeIcon");
+
+            _textures = loadTextures();
 
             SegoeUIx32pt = _resourceLoader.Load<SpriteFont>("SegoeUI-32pt");
             SegoeUIx14pt = _resourceLoader.Load<SpriteFont>("SegoeUI-14pt");
@@ -164,15 +164,42 @@ namespace SlaamMono.Resources
             _logger.Log("All Resources Finished Loading;");
         }
 
+        private static Dictionary<string, CachedTexture> loadTextures()
+        {
+            Dictionary<string, CachedTexture> output;
+
+            output = new Dictionary<string, CachedTexture>();
+            output["BattleBG"] = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/battlebg");
+            output["ReadySetGo"] = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/readysetgo");
+            output["RespawnTileOverlay"] = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/respawnOverlay");
+            output["TileOverlay"] = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/tileOverlay");
+            output["MenuTop"] = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/menutop");
+            output["ProfileShell"] = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/CharacterSelectBox");
+            output["StatsBoard"] = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/StatsScreen");
+            output["LobbyCharBar"] = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/PlayerBar");
+            output["LobbyUnderlay"] = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/LobbyBG");
+            output["LobbyOverlay"] = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/LobbyOverlay");
+            output["LobbyColorPreview"] = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/PlayerColorPreview");
+            output["BoardSelect"] = _resourceLoader.Load<CachedTexture>("textures/Misc/boardSelect");
+            output["ZibithLogoBG"] = _resourceLoader.Load<CachedTexture>("textures/Misc/LogoBG");
+            output["ZibithLogo"] = _resourceLoader.Load<CachedTexture>("textures/Misc/Logo");
+            output["NowLoading"] = _resourceLoader.Load<CachedTexture>("textures/Misc/BoardLoading");
+            output["Background"] = _resourceLoader.Load<CachedTexture>("textures/Misc/background");
+            output["FirstTime"] = _resourceLoader.Load<CachedTexture>("textures/firsttime");
+            output["ZBladeGameIcon"] = _resourceLoader.Load<CachedTexture>("textures/Misc/ZBladeIcon");
+
+            return output;
+        }
+
+        public static CachedTexture GetTexture(string textureName)
+        {
+            return _textures[textureName];
+        }
+
         private static void loadPowerup(CachedTexture[] Texs, string powerupname)
         {
             Texs[0] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname);
             Texs[1] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname + "0");
-        }
-
-        public static void DrawText(string text, Vector2 position, SpriteFont font, Color color, TextAlignment alignment, bool drawShadow)
-        {
-            _textRenderer.AddTextToRender(text, position, font, color, alignment, drawShadow);
         }
     }
 }

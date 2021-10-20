@@ -13,6 +13,7 @@ namespace SlaamMono.Screens
 {
     public class LobbyScreen : IScreen
     {
+        public static Texture2D DefaultBoard;
 #if !ZUNE
         private const int MAX_PLAYERS = 8;
 #else
@@ -93,7 +94,7 @@ namespace SlaamMono.Screens
 
         public static Texture2D LoadQuickBoard()
         {
-            if (ResourceManager.DefaultBoard == null)
+            if (DefaultBoard == null)
             {
                 BoardThumbnailViewer viewer = new BoardThumbnailViewer(null);
                 viewer.Open();
@@ -101,11 +102,11 @@ namespace SlaamMono.Screens
                 {
                     viewer.Update();
                 }
-                ResourceManager.DefaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.ValidBoard);
+                DefaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.ValidBoard);
                 viewer.Close();
             }
 
-            return ResourceManager.DefaultBoard;
+            return DefaultBoard;
         }
 
         public void Open()
@@ -334,7 +335,7 @@ namespace SlaamMono.Screens
                 else
                     Dialogs[1] = "";
 
-                ResourceManager.DefaultBoard = CurrentBoardTexture;
+                DefaultBoard = CurrentBoardTexture;
             }
         }
 

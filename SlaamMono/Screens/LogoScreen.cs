@@ -64,8 +64,8 @@ namespace SlaamMono.Screens
 #endif
 
             byte alpha = (byte)LogoColor.Position.X;
-            batch.Draw(ResourceManager.ZibithLogoBG.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(ResourceManager.ZibithLogo.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.ZibithLogo.Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.ZibithLogo.Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
+            batch.Draw(ResourceManager.GetTexture("ZibithLogoBG").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+            batch.Draw(ResourceManager.GetTexture("ZibithLogo").Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
         #endregion
@@ -74,8 +74,8 @@ namespace SlaamMono.Screens
 
         public void Close()
         {
-            ResourceManager.ZibithLogo.Dispose();
-            ResourceManager.ZibithLogoBG.Dispose();
+            ResourceManager.GetTexture("ZibithLogo").Dispose();
+            ResourceManager.GetTexture("ZibithLogoBG").Dispose();
         }
 
         #endregion
