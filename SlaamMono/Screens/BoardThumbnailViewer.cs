@@ -236,7 +236,7 @@ namespace SlaamMono.Screens
 #if !ZUNE
                 batch.Draw(Resources.BoardSelectTextUnderlay.Texture, new Vector2(0, 175), new Color(255, 255, 255, 100));
 #endif
-                ResourceManager.DrawText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), ResourceManager.SegoeUIx32pt, TextAlignment.Default, Color.White, true);
+                ResourceManager.DrawText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), ResourceManager.SegoeUIx32pt, Color.White, TextAlignment.Default, true);
             }
         }
 

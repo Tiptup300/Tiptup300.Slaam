@@ -213,8 +213,8 @@ namespace SlaamMono.SubClasses
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
-            ResourceManager.DrawText(temp, new Vector2(31, 141), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
-            ResourceManager.DrawText(MsgStrings[0], new Vector2(20, 70), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
+            ResourceManager.DrawText(temp, new Vector2(31, 141), ResourceManager.SegoeUIx14pt, Color.Black, TextAlignment.Default, false);
+            ResourceManager.DrawText(MsgStrings[0], new Vector2(20, 70), ResourceManager.SegoeUIx14pt, Color.Black, TextAlignment.Default, false);
         }
 
         #endregion

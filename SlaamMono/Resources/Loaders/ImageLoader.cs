@@ -6,14 +6,6 @@ namespace SlaamMono.Resources.Loaders
 {
     public class ImageLoader : IImageLoader
     {
-        private ILogger _logger;
-        private readonly IPixelFactory _pixelFactory;
-
-        public ImageLoader(ILogger logger, IPixelFactory pixelFactory)
-        {
-            _logger = logger;
-            _pixelFactory = pixelFactory;
-        }
 
         public Texture2D LoadImage(string directoryPath, string baseName)
         {

@@ -76,15 +76,15 @@ namespace SlaamMono.SubClasses
         public void Draw(SpriteBatch batch)
         {
             batch.Draw(ResourceManager.GameScreenScoreBoard.Texture, Position, Color.White);
-            ResourceManager.DrawText(Character.GetProfile().Name, new Vector2(8 + Position.X, 18 + Position.Y), ResourceManager.SegoeUIx14pt, TextAlignment.Default, Color.White, true);
-            ResourceManager.DrawText(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
+            ResourceManager.DrawText(Character.GetProfile().Name, new Vector2(8 + Position.X, 18 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Default, true);
+            ResourceManager.DrawText(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
             if (CurrentGametype == GameType.Classic || CurrentGametype == GameType.Survival)
             {
-                ResourceManager.DrawText(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
+                ResourceManager.DrawText(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
             }
             else if (CurrentGametype == GameType.Spree || CurrentGametype == GameType.TimedSpree)
             {
-                ResourceManager.DrawText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
+                ResourceManager.DrawText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
             }
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
             batch.Draw(ResourceManager.Dot, new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);
@@ -182,16 +182,16 @@ namespace SlaamMono.SubClasses
         public void Draw(SpriteBatch batch)
         {
             batch.Draw(ResourceManager.TopGameBoard.Texture, new Vector2(1280 - ResourceManager.TopGameBoard.Width + Position.X, 0), Color.White);
-            ResourceManager.DrawText(ZeroImpress(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), ResourceManager.SegoeUIx14pt, TextAlignment.Centered, Color.Black, false);
-            ResourceManager.DrawText(ZeroImpress(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), ResourceManager.SegoeUIx14pt, TextAlignment.Centered, Color.Black, false);
-            ResourceManager.DrawText(ZeroImpress(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), ResourceManager.SegoeUIx14pt, TextAlignment.Centered, Color.Black, false);
+            ResourceManager.DrawText(ZeroImpress(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), ResourceManager.SegoeUIx14pt, Color.Black, TextAlignment.Centered, false);
+            ResourceManager.DrawText(ZeroImpress(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), ResourceManager.SegoeUIx14pt, Color.Black, TextAlignment.Centered, false);
+            ResourceManager.DrawText(ZeroImpress(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), ResourceManager.SegoeUIx14pt, Color.Black, TextAlignment.Centered, false);
             if (ParentGameScreen.ThisGameType == GameType.Classic || ParentGameScreen.ThisGameType == GameType.Spree || ParentGameScreen.ThisGameType == GameType.Survival)
             {
-                ResourceManager.DrawText("Time Elapsed", new Vector2(Position.X + 1270, 30), ResourceManager.SegoeUIx32pt, TextAlignment.Right, Color.White, true);
+                ResourceManager.DrawText("Time Elapsed", new Vector2(Position.X + 1270, 30), ResourceManager.SegoeUIx32pt, Color.White, TextAlignment.Right, true);
             }
             else if (ParentGameScreen.ThisGameType == GameType.TimedSpree)
             {
-                ResourceManager.DrawText("Time Remaining", new Vector2(Position.X + 1270, 30), ResourceManager.SegoeUIx32pt, TextAlignment.Right, Color.White, true);
+                ResourceManager.DrawText("Time Remaining", new Vector2(Position.X + 1270, 30), ResourceManager.SegoeUIx32pt, Color.White, TextAlignment.Right, true);
             }
         }
 

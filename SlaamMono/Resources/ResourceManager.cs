@@ -83,7 +83,7 @@ namespace SlaamMono.Resources
         public static Texture2D[] StatsButtons = new Texture2D[3];
 
         // Fonts
-        public static TextManager textmanager;
+        public static TextManager textManager;
         public static SpriteFont SegoeUIx32pt;
         public static SpriteFont SegoeUIx14pt;
         public static SpriteFont SegoeUIx48ptBold;
@@ -137,9 +137,6 @@ namespace SlaamMono.Resources
             _fontLoader = fontLoader;
         }
 
-        /// <summary>
-        /// Loads all nessessary resources that are constant.
-        /// </summary>
         public static void LoadAll()
         {
             _logger.Log("Resources Loading...");
@@ -172,11 +169,11 @@ namespace SlaamMono.Resources
             Background = new CachedTexture2D("Misc//background");
             SlaamGame.mainBlade.CurrentGameInfo.GameIcon = LoadTexture("Misc//ZBladeIcon");
 
-            SegoeUIx32pt = LoadFont("SegoeUI-32pt");
-            SegoeUIx14pt = LoadFont("SegoeUI-14pt");
-            SegoeUIx48ptBold = LoadFont("SegoeUI-48pt");
-            BotNames = LoadStringList("BotNames");
-            Credits = LoadStringList("Credits");
+            SegoeUIx32pt = loadFont("SegoeUI-32pt");
+            SegoeUIx14pt = loadFont("SegoeUI-14pt");
+            SegoeUIx48ptBold = loadFont("SegoeUI-48pt");
+            BotNames = loadStringList("BotNames");
+            Credits = loadStringList("Credits");
 
             loadPowerup(PU_SpeedUp, "SpeedUp");
             loadPowerup(PU_SpeedDown, "SpeedDown");
@@ -184,8 +181,8 @@ namespace SlaamMono.Resources
             loadPowerup(PU_Slaam, "Slaam");
 
             _logger.Log("All Resources Finished Loading;");
-            textmanager = new TextManager(SlaamGame.Instance);
-            SlaamGame.Instance.Components.Add(textmanager);
+            textManager = new TextManager(SlaamGame.Instance);
+            SlaamGame.Instance.Components.Add(textManager);
         }
 
         private static void loadPowerup(Texture2D[] Texs, string powerupname)
@@ -215,19 +212,14 @@ namespace SlaamMono.Resources
             return output;
         }
 
-        private static List<string> LoadStringList(string baseName)
+        private static List<string> loadStringList(string baseName)
         {
             string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "content");
             return _textLineLoader.LoadTextLines(directoryPath, baseName)
                 .ToList();
         }
 
-        /// <summary>
-        /// Easy method of loading in an font.
-        /// </summary>
-        /// <param name="baseName">Name of Resource</param>
-        /// <returns></returns>
-        private static SpriteFont LoadFont(string baseName)
+        private static SpriteFont loadFont(string baseName)
         {
             SpriteFont output;
 
@@ -238,23 +230,9 @@ namespace SlaamMono.Resources
             return output;
         }
 
-        /// <summary>
-        /// Draws in a string using Nuclex.Fonts library.
-        /// </summary>
-        /// <param name="str">String to draw</param>
-        /// <param name="pos">Position to draw</param>
-        /// <param name="fnt">Font to draw in</param>
-        /// <param name="alnt">Alignment to draw</param>
-        /// <param name="col">Color of font</param>
-        /// <param name="Shadow">Draw shadow?</param>
-        public static void DrawText(/*SpriteBatch batch,*/ string str, Vector2 pos, SpriteFont fnt, TextAlignment alignment, Color col, bool Shadow)
+        public static void DrawText(string text, Vector2 position, SpriteFont font, Color color, TextAlignment alignment, bool drawShadow)
         {
-            if (Shadow)
-            {
-                textmanager.DrawText(fnt, new Vector2(pos.X + 1, pos.Y + 2), str, alignment, new Color(0, 0, 0, 127));
-                textmanager.DrawText(fnt, new Vector2(pos.X + 2, pos.Y + 1), str, alignment, new Color(0, 0, 0, 127));
-            }
-            textmanager.DrawText(fnt, pos, str, alignment, col);
+            textManager.AddTextToRender(text, position, font, color, alignment, drawShadow);
         }
     }
 }
