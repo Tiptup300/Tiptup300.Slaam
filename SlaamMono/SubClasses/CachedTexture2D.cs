@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Resources;
 using System;
 
 namespace SlaamMono.SubClasses
@@ -29,7 +30,7 @@ namespace SlaamMono.SubClasses
                         throw new Exception("No Location Specified For Texture");
                     }
 
-                    texture = Resources.LoadImage(Location);
+                    texture = x_Resources.LoadImage(Location);
                 }
                 return texture;
             }

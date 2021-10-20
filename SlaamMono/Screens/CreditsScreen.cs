@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
+using SlaamMono.Resources;
 using System.Collections.Generic;
 
 namespace SlaamMono.Screens
@@ -29,7 +30,7 @@ namespace SlaamMono.Screens
 
         public void Open()
         {
-            credits = Resources.Credits.ToArray();
+            credits = x_Resources.Credits.ToArray();
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Credits);
             for (int x = 0; x < credits.Length; x++)
             {
@@ -84,18 +85,18 @@ namespace SlaamMono.Screens
 
             for (int CurrentCredit = 0; CurrentCredit < CreditsListings.Count; CurrentCredit++)
             {
-                if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + Resources.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y)
+                if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + x_Resources.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y)
                 {
-                    Resources.DrawString(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), Resources.SegoeUIx32pt, FontAlignment.Left, MainCreditColor, false);
+                    x_Resources.DrawString(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), x_Resources.SegoeUIx32pt, FontAlignment.Left, MainCreditColor, false);
                 }
-                Offset += Resources.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
+                Offset += x_Resources.SegoeUIx32pt.MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
                 for (int x = 0; x < CreditsListings[CurrentCredit].Credits.Count; x++)
                 {
-                    if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + Resources.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
+                    if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + x_Resources.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
                     {
-                        Resources.DrawString(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), Resources.SegoeUIx14pt, FontAlignment.Left, SubCreditColor, false);
+                        x_Resources.DrawString(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), x_Resources.SegoeUIx14pt, FontAlignment.Left, SubCreditColor, false);
                     }
-                    Offset += (int)Resources.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
+                    Offset += (int)x_Resources.SegoeUIx14pt.MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
                 }
                 Offset += 20;
             }

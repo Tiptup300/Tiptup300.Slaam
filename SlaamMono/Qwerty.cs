@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
+using SlaamMono.Resources;
 
 namespace SlaamMono
 {
@@ -173,37 +174,37 @@ namespace SlaamMono
 
         public static void Draw(SpriteBatch batch)
         {
-            batch.Draw(Resources.Dot, new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 200));
-            batch.Draw(Resources.KeyboardBG.Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);
+            batch.Draw(x_Resources.Dot, new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 200));
+            batch.Draw(x_Resources.KeyboardBG.Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);
             for (int y = 0; y < 4; y++)
             {
                 for (int x = 0; x < 10; x++)
                 {
                     if (Keys[x, y].Type != KeyType.Space && Keys[x, y].Type != KeyType.Blank)
-                        batch.Draw(Resources.Key.Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
+                        batch.Draw(x_Resources.Key.Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
                     else if (Keys[x, y].Type == KeyType.Space)
-                        batch.Draw(Resources.Spacebar.Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
+                        batch.Draw(x_Resources.Spacebar.Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
                 }
             }
 
-            batch.Draw(Resources.Textbox.Texture, new Vector2(BoardPosition.X + 91.5f, BoardPosition.Y - 60f), Color.White);
+            batch.Draw(x_Resources.Textbox.Texture, new Vector2(BoardPosition.X + 91.5f, BoardPosition.Y - 60f), Color.White);
 
             for (int y = 0; y < 4; y++)
             {
                 for (int x = 0; x < 10; x++)
                 {
                     if (Keys[x, y].Type == KeyType.Normal)
-                        Resources.DrawString(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), Resources.SegoeUIx32pt, FontAlignment.Center, Color.White, true);
+                        x_Resources.DrawString(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), x_Resources.SegoeUIx32pt, FontAlignment.Center, Color.White, true);
                     else
-                        Resources.DrawString(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, false);
+                        x_Resources.DrawString(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), x_Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, false);
                 }
             }
-            Resources.DrawString(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+            x_Resources.DrawString(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), x_Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
 
             if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != KeyType.Space)
-                batch.Draw(Resources.KeyHT.Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
+                batch.Draw(x_Resources.KeyHT.Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
             else
-                batch.Draw(Resources.SpaceHT.Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
+                batch.Draw(x_Resources.SpaceHT.Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
         }
 
         #endregion
@@ -218,8 +219,8 @@ namespace SlaamMono
         public static void DisplayBoard(string str)
         {
             EditingString = str;
-            BoardPosition = new Vector2(640 - Resources.KeyboardBG.Width / 2, 1024);
-            TargetPosition = new Vector2(640 - Resources.KeyboardBG.Width / 2, 760);
+            BoardPosition = new Vector2(640 - x_Resources.KeyboardBG.Width / 2, 1024);
+            TargetPosition = new Vector2(640 - x_Resources.KeyboardBG.Width / 2, 760);
             Active = true;
             Status = QwertyStatus.GoingUp;
         }

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Resources;
 using SlaamMono.Subclasses;
 using SlaamMono.SubClasses;
 using System;
@@ -58,8 +59,8 @@ namespace SlaamMono.Screens
         public void Draw(SpriteBatch batch)
         {
             byte alpha = (byte)LogoColor.Position.X;
-            batch.Draw(Resources.ZibithLogoBG.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(Resources.ZibithLogo.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - Resources.ZibithLogo.Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.ZibithLogo.Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
+            batch.Draw(x_Resources.ZibithLogoBG.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+            batch.Draw(x_Resources.ZibithLogo.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - x_Resources.ZibithLogo.Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - x_Resources.ZibithLogo.Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
         #endregion
@@ -68,8 +69,8 @@ namespace SlaamMono.Screens
 
         public void Close()
         {
-            Resources.ZibithLogo.Dispose();
-            Resources.ZibithLogoBG.Dispose();
+            x_Resources.ZibithLogo.Dispose();
+            x_Resources.ZibithLogoBG.Dispose();
         }
 
         #endregion

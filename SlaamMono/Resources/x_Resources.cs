@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace SlaamMono
+namespace SlaamMono.Resources
 {
-    public static class Resources
+    public static class x_Resources
     {
         // General
         public static Texture2D Dot;
@@ -95,8 +95,8 @@ namespace SlaamMono
         public static CachedTexture2D ZibithLogoBG;
 
         // Text Files
-        public static List<String> BotNames;
-        public static List<String> Credits;
+        public static List<string> BotNames;
+        public static List<string> Credits;
 
         // Player Colors
         public static Color[] PlayerColors = new Color[] {
@@ -142,7 +142,7 @@ namespace SlaamMono
             Dot = new Texture2D(SlaamGame.Graphics.GraphicsDevice, 1, 1);
 
             //Dot = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1, 1, TextureUsage.None, SurfaceFormat.Color);
-            Dot.SetData<Color>(new Color[] { Color.White });
+            Dot.SetData(new Color[] { Color.White });
             _logger.Log(" - Dot Image Created.");
 
 
@@ -197,10 +197,10 @@ namespace SlaamMono
         /// <returns></returns>
         public static Texture2D LoadImage(string baseName)
         {
-            String loc;
+            string loc;
 
 #if ZUNE
-            loc = System.IO.Path.Combine("content\\textures\\MOBILE\\", baseName);
+            loc = Path.Combine("content\\textures\\MOBILE\\", baseName);
 #else
             loc = System.IO.Path.Combine($"content\\textures{GameGlobals.TEXTURE_FILE_PATH}", baseName);
 #endif
@@ -220,7 +220,7 @@ namespace SlaamMono
             return output;
         }
 
-        private static List<String> LoadStringList(string baseName)
+        private static List<string> LoadStringList(string baseName)
         {
             var temp = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\content\\" + baseName + ".txt").ToList();
 
@@ -264,7 +264,7 @@ namespace SlaamMono
         /// <param name="alnt">Alignment to draw</param>
         /// <param name="col">Color of font</param>
         /// <param name="Shadow">Draw shadow?</param>
-        public static void DrawString(/*SpriteBatch batch,*/ String str, Vector2 pos, SpriteFont fnt, FontAlignment alnt, Color col, bool Shadow)
+        public static void DrawString(/*SpriteBatch batch,*/ string str, Vector2 pos, SpriteFont fnt, FontAlignment alnt, Color col, bool Shadow)
         {
             TextAlignment alignment = TextAlignment.Default;
 

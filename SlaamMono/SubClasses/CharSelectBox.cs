@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
+using SlaamMono.Resources;
 using SlaamMono.StatsBoards;
 using System;
 using System.Collections.Generic;
@@ -223,7 +224,7 @@ namespace SlaamMono.SubClasses
             Resources.DrawString(MsgStrings[4], Positions[8], Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
             Resources.DrawString(MsgStrings[5], Positions[9], Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
 #else
-            batch.Draw(Resources.ProfileShell.Texture, new Vector2(13, 96), Color.White);
+            batch.Draw(x_Resources.ProfileShell.Texture, new Vector2(13, 96), Color.White);
 
             var temp = MsgStrings[1];
 
@@ -234,8 +235,8 @@ namespace SlaamMono.SubClasses
             }
 
 
-            Resources.DrawString(temp, new Vector2(31, 141), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
-            Resources.DrawString(MsgStrings[0], new Vector2(20, 70), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+            x_Resources.DrawString(temp, new Vector2(31, 141), x_Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+            x_Resources.DrawString(MsgStrings[0], new Vector2(20, 70), x_Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
 #endif
         }
 
@@ -315,7 +316,7 @@ namespace SlaamMono.SubClasses
             PlayerType type = PlayerType.Computer;
             if (CurrentState != CharSelectBoxState.Computer)
                 type = PlayerType.Player;
-            return new CharacterShell(ParentSkinStrings[ChosenSkin.Value], ProfileManager.PlayableProfiles.GetRealIndex(ChosenProfile.Value), (ExtendedPlayerIndex)PlayerIDX, type, Resources.PlayerColors[PlayerIDX]);
+            return new CharacterShell(ParentSkinStrings[ChosenSkin.Value], ProfileManager.PlayableProfiles.GetRealIndex(ChosenProfile.Value), (ExtendedPlayerIndex)PlayerIDX, type, x_Resources.PlayerColors[PlayerIDX]);
         }
 
         #endregion

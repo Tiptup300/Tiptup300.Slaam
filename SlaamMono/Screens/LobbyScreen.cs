@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Resources;
 using SlaamMono.SubClasses;
 using System.Collections.Generic;
 using System.IO;
@@ -91,7 +92,7 @@ namespace SlaamMono.Screens
 
         public static Texture2D LoadQuickBoard()
         {
-            if (Resources.DefaultBoard == null)
+            if (x_Resources.DefaultBoard == null)
             {
                 BoardThumbnailViewer viewer = new BoardThumbnailViewer(null);
                 viewer.Open();
@@ -99,11 +100,11 @@ namespace SlaamMono.Screens
                 {
                     viewer.Update();
                 }
-                Resources.DefaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.ValidBoard);
+                x_Resources.DefaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.ValidBoard);
                 viewer.Close();
             }
 
-            return Resources.DefaultBoard;
+            return x_Resources.DefaultBoard;
         }
 
         public void Open()
@@ -273,19 +274,19 @@ namespace SlaamMono.Screens
             }
             else
             {
-                batch.Draw(Resources.LobbyUnderlay.Texture, Vector2.Zero, Color.White);
+                batch.Draw(x_Resources.LobbyUnderlay.Texture, Vector2.Zero, Color.White);
                 float YOffset = 75;
 
                 for (int x = 0; x < SetupChars.Count; x++)
                 {
-                    batch.Draw(Resources.LobbyCharBar.Texture, new Vector2(0, YOffset + 30 * x), Color.White);
-                    batch.Draw(Resources.LobbyColorPreview.Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
+                    batch.Draw(x_Resources.LobbyCharBar.Texture, new Vector2(0, YOffset + 30 * x), Color.White);
+                    batch.Draw(x_Resources.LobbyColorPreview.Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
                     if (SetupChars[x].Type == PlayerType.Player)
-                        Resources.DrawString(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
+                        x_Resources.DrawString(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), x_Resources.SegoeUIx14pt, FontAlignment.Left, Color.Black, false);
                     else
-                        Resources.DrawString(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), Resources.SegoeUIx14pt, FontAlignment.Left, Color.Red, false);
+                        x_Resources.DrawString(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), x_Resources.SegoeUIx14pt, FontAlignment.Left, Color.Red, false);
                 }
-                batch.Draw(Resources.LobbyOverlay.Texture, Vector2.Zero, Color.White);
+                batch.Draw(x_Resources.LobbyOverlay.Texture, Vector2.Zero, Color.White);
             }
         }
 #endif
@@ -296,10 +297,10 @@ namespace SlaamMono.Screens
         public void Close()
         {
             CurrentBoardTexture = null;
-            Resources.LobbyUnderlay.Dispose();
-            Resources.LobbyCharBar.Dispose();
-            Resources.LobbyColorPreview.Dispose();
-            Resources.LobbyOverlay.Dispose();
+            x_Resources.LobbyUnderlay.Dispose();
+            x_Resources.LobbyCharBar.Dispose();
+            x_Resources.LobbyColorPreview.Dispose();
+            x_Resources.LobbyOverlay.Dispose();
         }
 
         #endregion
@@ -332,7 +333,7 @@ namespace SlaamMono.Screens
                 else
                     Dialogs[1] = "";
 
-                Resources.DefaultBoard = CurrentBoardTexture;
+                x_Resources.DefaultBoard = CurrentBoardTexture;
             }
         }
 
@@ -341,7 +342,7 @@ namespace SlaamMono.Screens
         /// </summary>
         private void AddComputer()
         {
-            SetupChars.Add(new CharacterShell(ClassicCharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, Resources.PlayerColors[SetupChars.Count]));
+            SetupChars.Add(new CharacterShell(ClassicCharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, x_Resources.PlayerColors[SetupChars.Count]));
         }
 
         #endregion

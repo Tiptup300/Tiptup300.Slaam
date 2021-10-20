@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Resources;
 using SlaamMono.Screens;
 using SlaamMono.SubClasses;
 using System;
@@ -62,16 +63,16 @@ namespace SlaamMono.Powerups
             switch (type)
             {
                 case PowerupType.SpeedUp:
-                    return Resources.PU_SpeedUp[1];
+                    return x_Resources.PU_SpeedUp[1];
 
                 case PowerupType.SpeedDown:
-                    return Resources.PU_SpeedDown[1];
+                    return x_Resources.PU_SpeedDown[1];
 
                 case PowerupType.Inversion:
-                    return Resources.PU_Inversion[1];
+                    return x_Resources.PU_Inversion[1];
 
                 case PowerupType.Slaam:
-                    return Resources.PU_Slaam[1];
+                    return x_Resources.PU_Slaam[1];
 
                 default:
                     throw new Exception();

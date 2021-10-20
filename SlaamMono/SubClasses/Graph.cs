@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Resources;
 using System.Collections.Generic;
 
 namespace SlaamMono.SubClasses
@@ -80,7 +81,7 @@ namespace SlaamMono.SubClasses
         {
             Drawings.Draw(batch);
             for (int x = 0; x < StringsToWrite.Count; x++)
-                Resources.DrawString(StringsToWrite[x].Str, StringsToWrite[x].Pos, Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
+                x_Resources.DrawString(StringsToWrite[x].Str, StringsToWrite[x].Pos, x_Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
         }
     }
 

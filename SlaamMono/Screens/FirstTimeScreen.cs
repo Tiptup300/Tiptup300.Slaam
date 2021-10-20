@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
+using SlaamMono.Resources;
 using SlaamMono.SubClasses;
 
 namespace SlaamMono.Screens
@@ -21,7 +22,7 @@ namespace SlaamMono.Screens
         {
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
             FeedManager.InitializeFeeds("");
-            firsttime = Resources.LoadImage("firsttime");
+            firsttime = x_Resources.LoadImage("firsttime");
             controlsgraph.Items.Columns.Add("");
             controlsgraph.Items.Columns.Add("Gamepad");
             controlsgraph.Items.Columns.Add("Keyboard");

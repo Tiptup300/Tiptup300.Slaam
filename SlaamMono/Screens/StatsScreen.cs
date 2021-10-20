@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Resources;
 using SlaamMono.StatsBoards;
 using SlaamMono.SubClasses;
 
@@ -151,13 +152,13 @@ namespace SlaamMono.Screens
 
         public void Draw(SpriteBatch batch)
         {
-            Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - Resources.StatsBoard.Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.StatsBoard.Height / 2);
+            Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - x_Resources.StatsBoard.Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - x_Resources.StatsBoard.Height / 2);
             //MainBG.Draw(batch);
             for (int x = 0; x < 3; x++)
             {
-                batch.Draw(Resources.StatsButtons[x], Statsboard, x == CurrentPage.Value ? Color.LightSkyBlue : ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
+                batch.Draw(x_Resources.StatsButtons[x], Statsboard, x == CurrentPage.Value ? Color.LightSkyBlue : ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
             }
-            batch.Draw(Resources.StatsBoard.Texture, Statsboard, Color.White);
+            batch.Draw(x_Resources.StatsBoard.Texture, Statsboard, Color.White);
             //DrawingButton.Draw(batch);
             if (CurrentPage.Value == 0)
                 PlayerStats.MainBoard.Draw(batch);

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Resources;
 using SlaamMono.Screens;
 using SlaamMono.SubClasses;
 using System;
@@ -16,7 +17,7 @@ namespace SlaamMono.Powerups
         private TimeSpan CurrentTime;
 
         public Inversion(GameScreen parentscreen, int charindex)
-            : base(DialogStrings.InversionName, Resources.PU_Inversion, PowerupUse.Strategy)
+            : base(DialogStrings.InversionName, x_Resources.PU_Inversion, PowerupUse.Strategy)
         {
             ParentGameScreen = parentscreen;
             CharacterIndex = charindex;

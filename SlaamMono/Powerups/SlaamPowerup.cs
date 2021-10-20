@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Resources;
 using SlaamMono.Screens;
 using SlaamMono.SubClasses;
 using System;
@@ -13,7 +14,7 @@ namespace SlaamMono.Powerups
         private const int size = 4;
 
         public SlaamPowerup(GameScreen parentscreen, Character parentcharacter, int playerindex)
-            : base("Slaam!", Resources.PU_Slaam, PowerupUse.Attacking)
+            : base("Slaam!", x_Resources.PU_Slaam, PowerupUse.Attacking)
         {
             ParentGameScreen = parentscreen;
             PlayerIndex = playerindex;

@@ -4,6 +4,7 @@ using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Powerups;
+using SlaamMono.Resources;
 using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
@@ -79,8 +80,8 @@ namespace SlaamMono.Screens
             SetupTheBoard(CurrentMatchSettings.BoardLocation);
             CurrentGameStatus = GameStatus.MovingBoard;
 
-            Resources.ReadySetGo.Load();
-            Resources.BattleBG.Load();
+            x_Resources.ReadySetGo.Load();
+            x_Resources.BattleBG.Load();
         }
 
         public void Open()
@@ -398,7 +399,7 @@ namespace SlaamMono.Screens
 
                 if (CurrentGameStatus == GameStatus.Waiting || CurrentGameStatus == GameStatus.Over)
                 {
-                    batch.Draw(Resources.ReadySetGo.Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - Resources.ReadySetGo.Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.ReadySetGo.Width / 8), new Rectangle(0, ReadySetGoPart * (Resources.ReadySetGo.Height / 4), Resources.ReadySetGo.Width, Resources.ReadySetGo.Height / 4), Color.White);
+                    batch.Draw(x_Resources.ReadySetGo.Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - x_Resources.ReadySetGo.Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - x_Resources.ReadySetGo.Width / 8), new Rectangle(0, ReadySetGoPart * (x_Resources.ReadySetGo.Height / 4), x_Resources.ReadySetGo.Width, x_Resources.ReadySetGo.Height / 4), Color.White);
                 }
 
                 //Timer.Draw(batch);
@@ -412,8 +413,8 @@ namespace SlaamMono.Screens
 
         public void Close()
         {
-            Resources.ReadySetGo.Dispose();
-            Resources.BattleBG.Dispose();
+            x_Resources.ReadySetGo.Dispose();
+            x_Resources.BattleBG.Dispose();
         }
 
         #endregion

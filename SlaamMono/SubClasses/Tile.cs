@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
 using SlaamMono.Powerups;
+using SlaamMono.Resources;
 using SlaamMono.Screens;
 using System;
 
@@ -113,9 +114,9 @@ namespace SlaamMono.SubClasses
 
                 batch.Draw(ParentTileTileset, AbsTileloc, new Rectangle((int)TileCoors.X * GameGlobals.TILE_SIZE, (int)TileCoors.Y * GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileColor);
                 if (CurrentTileCondition != TileCondition.Normal)
-                    batch.Draw(Resources.TileOverlay.Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileOverlayColor);
+                    batch.Draw(x_Resources.TileOverlay.Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileOverlayColor);
                 if (CurrentTileCondition == TileCondition.RespawnPoint)
-                    batch.Draw(Resources.RespawnTileOverlay.Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), MarkedColor);
+                    batch.Draw(x_Resources.RespawnTileOverlay.Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), MarkedColor);
                 if (CurrentPowerupType != PowerupType.None)
                 {
                     Texture2D tex = PowerupManager.GetPowerupTexture(CurrentPowerupType);
@@ -127,7 +128,7 @@ namespace SlaamMono.SubClasses
         public void DrawShadow(SpriteBatch batch)
         {
             if (CurrentTileCondition != TileCondition.Clear)
-                batch.Draw(Resources.Dot, new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
+                batch.Draw(x_Resources.Dot, new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
         }
 
         #endregion

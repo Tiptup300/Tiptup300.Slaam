@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Resources;
 using SlaamMono.Screens;
 using System;
 
@@ -73,15 +74,15 @@ namespace SlaamMono.SubClasses
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(Resources.GameScreenScoreBoard.Texture, Position, Color.White);
-            Resources.DrawString(Character.GetProfile().Name, new Vector2(8 + Position.X, 18 + Position.Y), Resources.SegoeUIx14pt, FontAlignment.Left, Color.White, true);
-            Resources.DrawString(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
+            batch.Draw(x_Resources.GameScreenScoreBoard.Texture, Position, Color.White);
+            x_Resources.DrawString(Character.GetProfile().Name, new Vector2(8 + Position.X, 18 + Position.Y), x_Resources.SegoeUIx14pt, FontAlignment.Left, Color.White, true);
+            x_Resources.DrawString(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), x_Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
             if (CurrentGametype == GameType.Classic || CurrentGametype == GameType.Survival)
-                Resources.DrawString(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
+                x_Resources.DrawString(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), x_Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
             else if (CurrentGametype == GameType.Spree || CurrentGametype == GameType.TimedSpree)
-                Resources.DrawString("inf.", new Vector2(73 + Position.X, 68 + Position.Y), Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
+                x_Resources.DrawString("inf.", new Vector2(73 + Position.X, 68 + Position.Y), x_Resources.SegoeUIx14pt, FontAlignment.Center, Color.White, true);
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
-            batch.Draw(Resources.Dot, new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);
+            batch.Draw(x_Resources.Dot, new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);
             if (Character.CurrentPowerup != null && !Character.CurrentPowerup.Used)
                 batch.Draw(Character.CurrentPowerup.SmallTex, new Vector2(125 + Position.X - Character.CurrentPowerup.SmallTex.Width / 2, 42 + Position.Y - Character.CurrentPowerup.SmallTex.Height / 2), new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));
         }
@@ -175,17 +176,17 @@ namespace SlaamMono.SubClasses
         /// <param name="batch"></param>
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(Resources.TopGameBoard.Texture, new Vector2(1280 - Resources.TopGameBoard.Width + Position.X, 0), Color.White);
-            Resources.DrawString(ZeroImpress(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), Resources.SegoeUIx14pt, FontAlignment.Center, Color.Black, false);
-            Resources.DrawString(ZeroImpress(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), Resources.SegoeUIx14pt, FontAlignment.Center, Color.Black, false);
-            Resources.DrawString(ZeroImpress(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), Resources.SegoeUIx14pt, FontAlignment.Center, Color.Black, false);
+            batch.Draw(x_Resources.TopGameBoard.Texture, new Vector2(1280 - x_Resources.TopGameBoard.Width + Position.X, 0), Color.White);
+            x_Resources.DrawString(ZeroImpress(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), x_Resources.SegoeUIx14pt, FontAlignment.Center, Color.Black, false);
+            x_Resources.DrawString(ZeroImpress(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), x_Resources.SegoeUIx14pt, FontAlignment.Center, Color.Black, false);
+            x_Resources.DrawString(ZeroImpress(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), x_Resources.SegoeUIx14pt, FontAlignment.Center, Color.Black, false);
             if (ParentGameScreen.ThisGameType == GameType.Classic || ParentGameScreen.ThisGameType == GameType.Spree || ParentGameScreen.ThisGameType == GameType.Survival)
             {
-                Resources.DrawString("Time Elapsed", new Vector2(Position.X + 1270, 30), Resources.SegoeUIx32pt, FontAlignment.Right, Color.White, true);
+                x_Resources.DrawString("Time Elapsed", new Vector2(Position.X + 1270, 30), x_Resources.SegoeUIx32pt, FontAlignment.Right, Color.White, true);
             }
             else if (ParentGameScreen.ThisGameType == GameType.TimedSpree)
             {
-                Resources.DrawString("Time Remaining", new Vector2(Position.X + 1270, 30), Resources.SegoeUIx32pt, FontAlignment.Right, Color.White, true);
+                x_Resources.DrawString("Time Remaining", new Vector2(Position.X + 1270, 30), x_Resources.SegoeUIx32pt, FontAlignment.Right, Color.White, true);
             }
         }
 
