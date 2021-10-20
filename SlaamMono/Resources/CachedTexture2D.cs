@@ -3,51 +3,41 @@ using System;
 
 namespace SlaamMono.Resources
 {
-    public class CachedTexture2D
+    public class CachedTexture2D : IDisposable
     {
-        public string Location;
-        private Texture2D texture;
+        private string _filePath;
+        private Texture2D _texture;
 
-        public CachedTexture2D()
+        public CachedTexture2D(string filePath)
         {
-
-        }
-
-        public CachedTexture2D(string loc)
-        {
-            Location = loc;
+            _filePath = filePath ?? throw new Exception("No Location Specified For Texture");
         }
 
         public Texture2D Texture
         {
             get
             {
-                if (texture == null || texture.IsDisposed)
+                if (_texture == null || _texture.IsDisposed)
                 {
-                    if (Location == null)
-                    {
-                        throw new Exception("No Location Specified For Texture");
-                    }
-
-                    texture = x_Resources.LoadTexture(Location);
+                    _texture = ResourceManager.LoadTexture(_filePath);
                 }
-                return texture;
+                return _texture;
             }
             set
             {
-                texture = value;
+                _texture = value;
             }
         }
 
         public void Dispose()
         {
-            if (texture == null)
+            if (_texture == null)
             {
                 return;
             }
 
-            texture.Dispose();
-            texture = null;
+            _texture.Dispose();
+            _texture = null;
         }
 
         public void Load()
