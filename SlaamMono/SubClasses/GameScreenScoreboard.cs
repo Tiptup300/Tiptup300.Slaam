@@ -75,15 +75,15 @@ namespace SlaamMono.SubClasses
         public void Draw(SpriteBatch batch)
         {
             batch.Draw(ResourceManager.GameScreenScoreBoard.Texture, Position, Color.White);
-            ResourceManager.DrawText(Character.GetProfile().Name, new Vector2(8 + Position.X, 18 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Default, true);
-            ResourceManager.DrawText(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
+            TextManager.Instance.AddTextToRender(Character.GetProfile().Name, new Vector2(8 + Position.X, 18 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Default, true);
+            TextManager.Instance.AddTextToRender(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
             if (CurrentGametype == GameType.Classic || CurrentGametype == GameType.Survival)
             {
-                ResourceManager.DrawText(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
+                TextManager.Instance.AddTextToRender(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
             }
             else if (CurrentGametype == GameType.Spree || CurrentGametype == GameType.TimedSpree)
             {
-                ResourceManager.DrawText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
+                TextManager.Instance.AddTextToRender("inf.", new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, true);
             }
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
             batch.Draw(ResourceManager.WhitePixel, new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);

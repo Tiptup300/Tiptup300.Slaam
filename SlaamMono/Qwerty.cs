@@ -195,12 +195,12 @@ namespace SlaamMono
                 for (int x = 0; x < 10; x++)
                 {
                     if (Keys[x, y].Type == KeyType.Normal)
-                        ResourceManager.DrawText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), ResourceManager.SegoeUIx32pt, Color.White, TextAlignment.Centered, true);
+                        TextManager.Instance.AddTextToRender(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), ResourceManager.SegoeUIx32pt, Color.White, TextAlignment.Centered, true);
                     else
-                        ResourceManager.DrawText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, false);
+                        TextManager.Instance.AddTextToRender(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), ResourceManager.SegoeUIx14pt, Color.White, TextAlignment.Centered, false);
                 }
             }
-            ResourceManager.DrawText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), ResourceManager.SegoeUIx14pt, Color.Black, TextAlignment.Default, false);
+            TextManager.Instance.AddTextToRender(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), ResourceManager.SegoeUIx14pt, Color.Black, TextAlignment.Default, false);
 
             if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != KeyType.Space)
                 batch.Draw(ResourceManager.KeyHT.Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);

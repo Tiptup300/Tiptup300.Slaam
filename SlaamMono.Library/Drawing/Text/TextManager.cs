@@ -4,11 +4,10 @@ using System.Collections.Generic;
 
 namespace SlaamMono.Library.Drawing.Text
 {
-    /// <summary>
-    /// This is a game component that implements IUpdateable.
-    /// </summary>
     public class TextManager : DrawableGameComponent, ITextRenderer
     {
+        public static ITextRenderer Instance;
+
         private SpriteBatch _batch;
         private List<TextEntry> _textToDraw = new List<TextEntry>();
 
@@ -22,6 +21,8 @@ namespace SlaamMono.Library.Drawing.Text
             LoadContent();
 
             slaamGame.Game.Components.Add(this);
+
+            Instance = this;
         }
 
         protected override void LoadContent()
@@ -52,6 +53,7 @@ namespace SlaamMono.Library.Drawing.Text
                 sortMode: SpriteSortMode.Immediate,
                 blendState: BlendState.AlphaBlend,
                 transformMatrix: Matrix.Identity);
+
             _textToDraw.ForEach(textLine => drawTextLine(textLine));
             _batch.End();
             _textToDraw.Clear();
