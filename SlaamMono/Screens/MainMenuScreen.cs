@@ -8,10 +8,12 @@ namespace SlaamMono.Screens
     public class MainMenuScreen : IScreen
     {
         private readonly IScreenFactory _screenFactory;
+        private readonly IScreenDirector _screenDirector;
 
-        public MainMenuScreen(IScreenFactory screenFactory)
+        public MainMenuScreen(IScreenFactory screenFactory, IScreenDirector screenDirector)
         {
             _screenFactory = screenFactory;
+            _screenDirector = screenDirector;
         }
 
         public void Open()
@@ -49,7 +51,7 @@ namespace SlaamMono.Screens
 
         private void changeScreen(string screenName)
         {
-            ScreenDirector.Instance.ChangeScreen(_screenFactory.Get(screenName));
+            _screenDirector.ChangeTo(_screenFactory.Get(screenName));
         }
 
         public void Update() { }

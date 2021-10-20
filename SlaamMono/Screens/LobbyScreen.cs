@@ -29,12 +29,14 @@ namespace SlaamMono.Screens
         private IntRange MenuChoice;
 
         private readonly ILogger _logger;
+        private readonly IScreenDirector _screenDirector;
 
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenDirector screenDirector)
         {
-            _logger = logger;
-
             SetupChars = chars;
+            _logger = logger;
+            _screenDirector = screenDirector;
+
             PlayerAmt = SetupChars.Count;
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Columns.Add("SETTING");
@@ -164,7 +166,7 @@ namespace SlaamMono.Screens
                         }
                         else
                         {
-                            ScreenDirector.Instance.ChangeScreen(new BoardThumbnailViewer(this));
+                            _screenDirector.ChangeTo(new BoardThumbnailViewer(this));
                         }
                         BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
                     }
@@ -174,7 +176,11 @@ namespace SlaamMono.Screens
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    ScreenDirector.Instance.ChangeScreen(new ClassicCharSelectScreen(DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
+                    _screenDirector.ChangeTo(
+                        new ClassicCharSelectScreen(
+                            DiImplementer.Instance.Get<ILogger>(), 
+                            DiImplementer.Instance.Get<MainMenuScreen>(),
+                            DiImplementer.Instance.Get<IScreenDirector>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }
@@ -194,8 +200,11 @@ namespace SlaamMono.Screens
                 if (InputComponent.Players[0].PressedStart)
                 {
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
-                    GameScreen.Instance = new GameScreen(SetupChars, DI.Instance.Get<ILogger>());
-                    ScreenDirector.Instance.ChangeScreen(GameScreen.Instance);
+                    GameScreen.Instance = new GameScreen(
+                        SetupChars, 
+                        DiImplementer.Instance.Get<ILogger>(),
+                        DiImplementer.Instance.Get<IScreenDirector>());
+                    _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }

@@ -1,6 +1,5 @@
 namespace SlaamMono
 {
-    // Xbox 360 + PC Defaults 
     public static class GameGlobals
     {
 #if !ZUNE

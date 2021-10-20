@@ -9,28 +9,20 @@ namespace SlaamMono.Screens
 {
     public class LogoScreen : IScreen
     {
-        #region Variables
-
         private Timer displaytime = new Timer(new TimeSpan(0, 0, 4));
 
         private Transition LogoColor = new Transition(null, new Vector2(0), new Vector2(255), TimeSpan.FromSeconds(1));
         private bool hasShown = false;
         private readonly MainMenuScreen _menuScreen;
+        private readonly IScreenDirector _screenDirector;
 
-        #endregion
-
-        #region Constructor
-
-        public LogoScreen(MainMenuScreen menuScreen)
+        public LogoScreen(MainMenuScreen menuScreen, IScreenDirector screenDirector)
         {
             _menuScreen = menuScreen;
+            _screenDirector = screenDirector;
         }
 
         public void Open() { }
-
-        #endregion
-
-        #region Update
 
         public void Update()
         {
@@ -56,12 +48,10 @@ namespace SlaamMono.Screens
                     // if (ProfileManager.FirstTime)
                     //  ScreenHelper.ChangeScreen(new FirstTimeScreen());
                     // else
-                    ScreenDirector.Instance.ChangeScreen(_menuScreen);
+                    _screenDirector.ChangeTo(_menuScreen);
                 }
             }
         }
-
-        #endregion
 
         #region Draw
 

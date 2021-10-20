@@ -24,8 +24,12 @@ namespace SlaamMono
             output.Register<ProfileEditScreen>();
             output.Register<SurvivalCharSelectScreen>();
             output.Register<ClassicCharSelectScreen>();
+            output.Register<IScreenDirector, ScreenDirector>(Lifestyle.Singleton);
+            output.Register<IFirstScreenResolver, FirstScreenResolver>(Lifestyle.Singleton);
 
-            output.Register<IScreenFactory, ScreenFactory>();
+            output.Register<LogoScreen>();
+
+            output.Register<IScreenFactory, ScreenFactory>(Lifestyle.Singleton);
 
             return output;
         }

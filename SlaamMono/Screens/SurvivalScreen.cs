@@ -16,11 +16,13 @@ namespace SlaamMono.Screens
         private int _botsAdded = 0;
 
         private readonly ILogger _logger;
+        private readonly IScreenDirector _screenDirector;
 
-        public SurvivalScreen(List<CharacterShell> shell, ILogger logger)
-            : base(shell, logger)
+        public SurvivalScreen(List<CharacterShell> shell, ILogger logger, IScreenDirector screenDirector)
+            : base(shell, logger, screenDirector)
         {
             _logger = logger;
+            _screenDirector = screenDirector;
         }
 
         public override void SetupTheBoard(string BoardLoc)
@@ -106,7 +108,12 @@ namespace SlaamMono.Screens
             if (ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame < Timer.CurrentGameTime)
                 ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame = Timer.CurrentGameTime;
             ProfileManager.SaveProfiles();
-            ScreenDirector.Instance.ChangeScreen(new StatsScreen(ScoreKeeper, DI.Instance.Get<ILogger>(), DI.Instance.Get<MainMenuScreen>()));
+            _screenDirector.ChangeTo(
+                new StatsScreen(
+                    ScoreKeeper, 
+                    DiImplementer.Instance.Get<ILogger>(), 
+                    DiImplementer.Instance.Get<MainMenuScreen>(),
+                    DiImplementer.Instance.Get<IScreenDirector>()));
         }
     }
 }

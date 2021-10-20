@@ -4,45 +4,58 @@ using System;
 
 namespace SlaamMono.Screens
 {
-    public class ScreenDirector
+    public class ScreenDirector : IScreenDirector
     {
-        public static ScreenDirector Instance = new ScreenDirector();
+        private IScreen _currentScreen;
+        private IScreen _nextScreen;
+        private bool _isChangingScreens = false;
 
-        private IScreen CurrentScreen = new LogoScreen(DI.Instance.Get<MainMenuScreen>());
-        private IScreen NextScreen;
+        public ScreenDirector()
+        {
+        }
 
-        private bool ChangingScreens = false;
+        private bool _hasCurrentScreen => _currentScreen != null;
 
         public void Update()
         {
-            CurrentScreen.Update();
+            if(_hasCurrentScreen)
+            {
+                _currentScreen.Update();
+            }
 
-            if (ChangingScreens)
+            if (_isChangingScreens)
             {
                 changeScreen();
             }
         }
-        
+
         private void changeScreen()
         {
-            ChangingScreens = false;
-            CurrentScreen.Close();
-            CurrentScreen = NextScreen;
-            NextScreen = null;
+            if (_hasCurrentScreen)
+            {
+                _currentScreen.Close();
+            }
+            _currentScreen = _nextScreen;
+            _nextScreen = null;
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Normal);
-            CurrentScreen.Open();
-            GC.Collect();
+            _currentScreen.Open();
+            _currentScreen.Update();
+
+            _isChangingScreens = false;
         }
 
         public void Draw(SpriteBatch batch)
         {
-            CurrentScreen.Draw(batch);
+            if (_hasCurrentScreen)
+            {
+                _currentScreen.Draw(batch);
+            }
         }
 
-        public void ChangeScreen(IScreen scrn)
+        public void ChangeTo(IScreen nextScreen)
         {
-            ChangingScreens = true;
-            NextScreen = scrn;
+            _isChangingScreens = true;
+            _nextScreen = nextScreen;
         }
     }
 }

@@ -12,12 +12,14 @@ namespace SlaamMono.Screens
         public const int MAX_HIGHSCORES = 7;
         private readonly ILogger _logger;
         private readonly MainMenuScreen _menuScreen;
+        private readonly IScreenDirector _screenDirector;
         private SurvivalStatsBoard _statsboard;
 
-        public HighScoreScreen(ILogger logger, MainMenuScreen menuScreen)
+        public HighScoreScreen(ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
         {
             _logger = logger;
             _menuScreen = menuScreen;
+            _screenDirector = screenDirector;
         }
 
         public void Open()
@@ -33,7 +35,7 @@ namespace SlaamMono.Screens
         {
             if (InputComponent.Players[0].PressedAction2)
             {
-                ScreenDirector.Instance.ChangeScreen(_menuScreen);
+                _screenDirector.ChangeTo(_menuScreen);
             }
         }
 

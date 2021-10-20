@@ -10,11 +10,10 @@ namespace SlaamMono.Screens
 {
     class StatsScreen : IScreen
     {
-        #region Variables
-
         public MatchScoreCollection ScoreCollection;
         private readonly ILogger _logger;
         private readonly MainMenuScreen _menuScreen;
+        private readonly IScreenDirector _screenDirector;
         private IntRange CurrentPage = new IntRange(0, 0, 2);
         private IntRange CurrentChar;
 
@@ -33,15 +32,12 @@ namespace SlaamMono.Screens
         private Color StatsCol = new Color(0, 0, 0, 125);
 
 
-        #endregion
-
-        #region Constructor
-
-        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, MainMenuScreen menuScreen)
+        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
         {
             ScoreCollection = scorecollection;
             _logger = logger;
             _menuScreen = menuScreen;
+            _screenDirector = screenDirector;
         }
 
         public void Open()
@@ -108,8 +104,6 @@ namespace SlaamMono.Screens
             }
         }
 
-        #endregion
-
         #region Update
 
         public void Update()
@@ -147,7 +141,7 @@ namespace SlaamMono.Screens
 
             if (InputComponent.Players[0].PressedAction)
             {
-                ScreenDirector.Instance.ChangeScreen(_menuScreen);
+                _screenDirector.ChangeTo(_menuScreen);
             }
         }
 

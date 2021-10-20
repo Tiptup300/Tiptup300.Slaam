@@ -31,11 +31,14 @@ namespace SlaamMono
         private XnaContentManager _contentManager;
 
         private readonly ILogger _logger;
+        private readonly IScreenDirector _screenDirector;
+        private readonly IFirstScreenResolver _firstScreenResolver;
 
-
-        public SlaamGame(ILogger logger)
+        public SlaamGame(ILogger logger, IScreenDirector screenDirector, IFirstScreenResolver firstScreenResolver)
         {
             _logger = logger;
+            _screenDirector = screenDirector;
+            _firstScreenResolver = firstScreenResolver;
 
             graphics = new GraphicsDeviceManager(this);
             Content = new ContentManager(Services);
@@ -64,12 +67,13 @@ namespace SlaamMono
 
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
-            Resources.Initiailze(DI.Instance.Get<ILogger>());
+            Resources.Initiailze(DiImplementer.Instance.Get<ILogger>());
             Resources.LoadAll();
             Qwerty.CurrentPlayer = InputComponent.Players[0];
-            _contentManager = new XnaContentManager(DI.Instance.Get<ILogger>());
+            _contentManager = new XnaContentManager(DiImplementer.Instance.Get<ILogger>());
 
             GameGlobals.SetupGame();
+            _screenDirector.ChangeTo(_firstScreenResolver.Resolve());
         }
 
         public void SetupZuneBlade()
@@ -109,7 +113,7 @@ namespace SlaamMono
                 }
                 else
                 {
-                    ScreenDirector.Instance.Update();
+                    _screenDirector.Update();
                 }
             }
 
@@ -125,7 +129,7 @@ namespace SlaamMono
 
             BackgroundManager.Draw(gamebatch);
 
-            ScreenDirector.Instance.Draw(gamebatch);
+            _screenDirector.Draw(gamebatch);
 
             FeedManager.Draw(gamebatch);
 

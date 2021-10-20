@@ -10,6 +10,12 @@ namespace SlaamMono.Screens
     {
         Texture2D firsttime;
         Graph controlsgraph = new Graph(new Rectangle(50, 350, GameGlobals.DRAWING_GAME_WIDTH - 100, 500), 2, new Color(0, 0, 0, 150));
+        private readonly IScreenDirector _screenDirector;
+
+        public FirstTimeScreen(IScreenDirector screenDirector)
+        {
+            _screenDirector = screenDirector;
+        }
 
         public void Open()
         {
@@ -35,7 +41,7 @@ namespace SlaamMono.Screens
             if (InputComponent.Players[0].PressedAction)
             {
                 ProfileEditScreen.Instance.SetupNewProfile = true;
-                ScreenDirector.Instance.ChangeScreen(ProfileEditScreen.Instance);
+                _screenDirector.ChangeTo(ProfileEditScreen.Instance);
             }
         }
 

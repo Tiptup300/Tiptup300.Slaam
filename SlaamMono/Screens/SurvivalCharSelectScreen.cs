@@ -9,11 +9,13 @@ namespace SlaamMono.Screens
     public class SurvivalCharSelectScreen : ClassicCharSelectScreen
     {
         private ILogger _logger;
+        private readonly IScreenDirector _screenDirector;
 
-        public SurvivalCharSelectScreen(ILogger logger, MainMenuScreen menuScreen)
-            : base(logger, menuScreen)
+        public SurvivalCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
+            : base(logger, menuScreen, screenDirector)
         {
             _logger = logger;
+            _screenDirector = screenDirector;
         }
 
         public override void ResetBoxes()
@@ -32,8 +34,11 @@ namespace SlaamMono.Screens
         {
             List<CharacterShell> list = new List<CharacterShell>();
             list.Add(SelectBoxes[0].GetShell());
-            GameScreen.Instance = new SurvivalScreen(list, DI.Instance.Get<ILogger>());
-            ScreenDirector.Instance.ChangeScreen(GameScreen.Instance);
+            GameScreen.Instance = new SurvivalScreen(
+                list, 
+                DiImplementer.Instance.Get<ILogger>(),
+                DiImplementer.Instance.Get<IScreenDirector>());
+            _screenDirector.ChangeTo(GameScreen.Instance);
         }
     }
 }

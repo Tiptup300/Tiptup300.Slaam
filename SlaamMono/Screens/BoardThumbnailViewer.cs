@@ -9,7 +9,7 @@ using System.IO;
 
 namespace SlaamMono.Screens
 {
-    class BoardThumbnailViewer : IScreen
+    public class BoardThumbnailViewer : IScreen
     {
         public LobbyScreen ParentScreen;
 
@@ -51,9 +51,12 @@ namespace SlaamMono.Screens
         public int DrawSizeWidth = ((GameGlobals.TILE_SIZE * GameGlobals.BOARD_WIDTH) / 4);
         public int DrawSizeHeight = ((GameGlobals.TILE_SIZE * GameGlobals.BOARD_HEIGHT) / 4);
 #endif
+        private readonly IScreenDirector _screenDirector;
+
         public BoardThumbnailViewer(LobbyScreen parentscreen)
         {
             ParentScreen = parentscreen;
+            _screenDirector = DiImplementer.Instance.Get<IScreenDirector>();
         }
 
         public void Open()
@@ -96,7 +99,7 @@ namespace SlaamMono.Screens
                     if (InputComponent.Players[0].PressedAction)
                     {
                         ParentScreen.LoadBoard(ValidBoards[save]);
-                        ScreenDirector.Instance.ChangeScreen(ParentScreen);
+                        _screenDirector.ChangeTo(ParentScreen);
                     }
 
                     if (InputComponent.Players[0].PressedAction2)

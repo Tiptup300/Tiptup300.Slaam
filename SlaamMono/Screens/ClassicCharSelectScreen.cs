@@ -27,14 +27,16 @@ namespace SlaamMono.Screens
 
         private readonly ILogger _logger;
         private readonly MainMenuScreen _menuScreen;
+        private readonly IScreenDirector _screenDirector;
 
 
         #region Constructor
 
-        public ClassicCharSelectScreen(ILogger logger, MainMenuScreen menuScreen)
+        public ClassicCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
         {
             _logger = logger;
             _menuScreen = menuScreen;
+            _screenDirector = screenDirector;
         }
 
         public void Open()
@@ -104,7 +106,7 @@ namespace SlaamMono.Screens
 
         public virtual void GoBack()
         {
-            ScreenDirector.Instance.ChangeScreen(_menuScreen);
+            _screenDirector.ChangeTo(_menuScreen);
         }
 
         public virtual void GoForward()
@@ -114,7 +116,11 @@ namespace SlaamMono.Screens
                 if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
                     templist.Add(SelectBoxes[idx].GetShell());
 
-            ScreenDirector.Instance.ChangeScreen(new LobbyScreen(templist, DI.Instance.Get<ILogger>()));
+            _screenDirector.ChangeTo(
+                new LobbyScreen(
+                    templist, 
+                    DiImplementer.Instance.Get<ILogger>(),
+                    DiImplementer.Instance.Get<IScreenDirector>()));
         }
 
         #endregion

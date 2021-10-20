@@ -9,11 +9,12 @@ namespace SlaamMono.Screens
 {
     class ProfileEditScreen : IScreen
     {
-        #region Variables
+        public static ProfileEditScreen Instance = 
+            new ProfileEditScreen(
+                DiImplementer.Instance.Get<MainMenuScreen>(),
+                DiImplementer.Instance.Get<IScreenDirector>());
 
-        public static ProfileEditScreen Instance = new ProfileEditScreen(DI.Instance.Get<MainMenuScreen>());
         private const float RotationSpeed = MathHelper.Pi / 3000f;
-        private readonly MainMenuScreen _menuScreen;
         private Graph MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150));
         private Graph SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150));
         private IntRange CurrentMenu = new IntRange(0, 0, 1);
@@ -21,13 +22,14 @@ namespace SlaamMono.Screens
         private int EditingProfile;
         private bool WaitingForQwerty = false;
         public bool SetupNewProfile = false;
-        #endregion
 
-        #region Constructor
+        private readonly MainMenuScreen _menuScreen;
+        private readonly IScreenDirector _screenDirector;
 
-        public ProfileEditScreen(MainMenuScreen menuScreen)
+        public ProfileEditScreen(MainMenuScreen menuScreen, IScreenDirector screenDirector)
         {
             _menuScreen = menuScreen;
+            _screenDirector = screenDirector;
         }
 
         public void Open()
@@ -46,10 +48,6 @@ namespace SlaamMono.Screens
                 Qwerty.DisplayBoard("");
             }
         }
-
-        #endregion
-
-        #region Update
 
         public void Update()
         {
@@ -97,7 +95,7 @@ namespace SlaamMono.Screens
                     }
                     if (InputComponent.Players[0].PressedAction2)
                     {
-                        ScreenDirector.Instance.ChangeScreen(_menuScreen);
+                        _screenDirector.ChangeTo(_menuScreen);
                     }
                 }
             }
@@ -163,8 +161,6 @@ namespace SlaamMono.Screens
                 }
             }
         }
-
-        #endregion
 
         #region Draw
 

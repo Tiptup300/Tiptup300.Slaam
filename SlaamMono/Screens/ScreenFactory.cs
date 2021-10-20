@@ -26,7 +26,7 @@ namespace SlaamMono.Screens
 
         public IScreen Get(string screenName)
         {
-            return (IScreen)DI.Instance.Get(_screens[screenName]);
+            return (IScreen)DiImplementer.Instance.Get(_screens[screenName]);
         }
     }
 }
