@@ -9,7 +9,6 @@ namespace SlaamMono.Screens
 {
     public class FirstTimeScreen : IScreen
     {
-        Texture2D firsttime;
         Graph controlsgraph = new Graph(new Rectangle(50, 350, GameGlobals.DRAWING_GAME_WIDTH - 100, 500), 2, new Color(0, 0, 0, 150));
         private readonly IScreenDirector _screenDirector;
 
@@ -22,7 +21,6 @@ namespace SlaamMono.Screens
         {
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
             FeedManager.InitializeFeeds("");
-            //firsttime = ResourceManager.LoadTexture("firsttime");
             controlsgraph.Items.Columns.Add("");
             controlsgraph.Items.Columns.Add("Gamepad");
             controlsgraph.Items.Columns.Add("Keyboard");
@@ -48,13 +46,13 @@ namespace SlaamMono.Screens
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(firsttime, Vector2.Zero, Color.White);
+            batch.Draw(ResourceManager.FirstTime.Texture, Vector2.Zero, Color.White);
             controlsgraph.Draw(batch);
         }
 
         public void Close()
         {
-            firsttime.Dispose();
+            ResourceManager.FirstTime.Dispose();
         }
     }
 }

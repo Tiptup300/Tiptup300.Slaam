@@ -72,7 +72,6 @@ namespace SlaamMono
             instance = this;
             ResourceManager.Initiailze(
                 DiImplementer.Instance.Get<ILogger>(), 
-                DiImplementer.Instance.Get<ITextureLoader>(),
                 DiImplementer.Instance.Get<IPixelFactory>(),
                 DiImplementer.Instance.Get<IResourceLoader>());
             ResourceManager.LoadAll();

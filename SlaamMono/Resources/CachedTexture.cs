@@ -7,10 +7,10 @@ namespace SlaamMono.Resources
     public class CachedTexture : IDisposable
     {
         private string _filePath;
-        private readonly ITextureLoader _textureLoader;
+        private readonly IFileLoader<Texture2D> _textureLoader;
         private Texture2D _texture;
 
-        public CachedTexture(string filePath, ITextureLoader textureLoader)
+        public CachedTexture(string filePath, IFileLoader<Texture2D> textureLoader)
         {
             _filePath = filePath;
             _textureLoader = textureLoader;
@@ -22,7 +22,7 @@ namespace SlaamMono.Resources
             {
                 if (_texture == null || _texture.IsDisposed)
                 {
-                    _texture = _textureLoader.Load(_filePath);
+                    _texture = (Texture2D)_textureLoader.Load(_filePath);
                 }
                 return _texture;
             }

@@ -43,7 +43,7 @@ namespace SlaamMono
 
         private void registerResources(Container output)
         {
-            output.Register<ITextureLoader, TextureLoader>();
+            output.Register<IFileLoader<Texture2D>, Texture2DLoader>();
             output.Register<IPixelFactory, PixelFactory>();
             output.Register<IFileLoader<IEnumerable<string>>, CommentedTextLineLoader>();
             output.Register<IFileLoader<SpriteFont>, FontLoader>();

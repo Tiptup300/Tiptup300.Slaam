@@ -1,24 +1,17 @@
-﻿using SlaamMono.Resources.Loading;
+﻿using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Resources.Loading;
 
 namespace SlaamMono.Resources
 {
     public class CachedTextureLoader : IFileLoader<CachedTexture>
     {
-        private readonly ITextureLoader _textureLoader;
+        private readonly IFileLoader<Texture2D> _textureLoader;
 
-        public CachedTextureLoader(ITextureLoader textureLoader)
+        public CachedTextureLoader(IFileLoader<Texture2D> textureLoader)
         {
             _textureLoader = textureLoader;
         }
 
-
-        public object Load(string textureFilePath)
-        {
-            CachedTexture output;
-
-            output = new CachedTexture(textureFilePath, _textureLoader);
-
-            return output;
-        }
+        public object Load(string textureFilePath) => new CachedTexture(textureFilePath, _textureLoader);
     }
 }

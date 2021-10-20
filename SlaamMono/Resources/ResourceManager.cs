@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources.Loading;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace SlaamMono.Resources
@@ -15,6 +13,7 @@ namespace SlaamMono.Resources
         // General
         public static Texture2D WhitePixel;
         public static CachedTexture Feedbar;
+        public static CachedTexture FirstTime;
 
         // BG
         public static CachedTexture Background;
@@ -119,18 +118,15 @@ namespace SlaamMono.Resources
         public static CachedTexture[] PU_Slaam = new CachedTexture[2];
 
         private static ILogger _logger;
-        private static ITextureLoader _imageLoader;
         private static IPixelFactory _pixelFactory;
         private static IResourceLoader _resourceLoader;
 
         public static void Initiailze(
-            ILogger logger, 
-            ITextureLoader textureLoader,
+            ILogger logger,
             IPixelFactory pixelFactory,
             IResourceLoader resourceLoader)
         {
             _logger = logger;
-            _imageLoader = textureLoader;
             _pixelFactory = pixelFactory;
             _resourceLoader = resourceLoader;
         }
@@ -158,6 +154,7 @@ namespace SlaamMono.Resources
             ZibithLogo = _resourceLoader.Load<CachedTexture>("textures/Misc/Logo");
             NowLoading = _resourceLoader.Load<CachedTexture>("textures/Misc/BoardLoading");
             Background = _resourceLoader.Load<CachedTexture>("textures/Misc/background");
+            FirstTime = _resourceLoader.Load<CachedTexture>("textures/firsttime");
             ZBladeGameIcon = _resourceLoader.Load<CachedTexture>("textures/Misc/ZBladeIcon");
 
             SegoeUIx32pt = _resourceLoader.Load<SpriteFont>("SegoeUI-32pt");
@@ -185,28 +182,6 @@ namespace SlaamMono.Resources
         {
             Texs[0] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname);
             Texs[1] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname + "0");
-        }
-
-
-        public static Texture2D LoadTexture(string textureName)
-        {
-            Texture2D output;
-            
-            try
-            {
-                string filePath;
-
-                filePath = Path.Combine(Directory.GetCurrentDirectory(), "content\\textures\\MOBILE\\", textureName);
-                output = _imageLoader.Load(filePath);
-                _logger.Log($" - {textureName} Texture Loaded.");
-            }
-            catch (Exception ex)
-            {
-                output = _pixelFactory.BuildPixel();
-                _logger.Log($"Texture \"{textureName}\" failed to load. Replaced with a blank pixel. Error: {ex.Message}");
-            }
-
-            return output;
         }
 
         public static void DrawText(string text, Vector2 position, SpriteFont font, Color color, TextAlignment alignment, bool drawShadow)
