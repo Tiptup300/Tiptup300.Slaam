@@ -68,7 +68,12 @@ namespace SlaamMono
 
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
-            x_Resources.Initiailze(DiImplementer.Instance.Get<ILogger>());
+            x_Resources.Initiailze(
+                DiImplementer.Instance.Get<ILogger>(), 
+                DiImplementer.Instance.Get<IImageLoader>(),
+                DiImplementer.Instance.Get<IPixelFactory>(),
+                DiImplementer.Instance.Get<ITextLineLoader>(),
+                DiImplementer.Instance.Get<IFontLoader>());
             x_Resources.LoadAll();
             Qwerty.CurrentPlayer = InputComponent.Players[0];
             _contentManager = new XnaContentManager(DiImplementer.Instance.Get<ILogger>());

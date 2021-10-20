@@ -1,8 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using SimpleInjector;
+﻿using SimpleInjector;
 using SlaamMono.Library.Logging;
+using SlaamMono.Resources;
 using SlaamMono.Screens;
-using System;
 
 namespace SlaamMono
 {
@@ -18,6 +17,15 @@ namespace SlaamMono
             output.Register<ISlaamGame, SlaamGame>(Lifestyle.Singleton);
             output.Register<ILoggingDevice, TextFileLoggingDevice>(Lifestyle.Singleton);
             output.Register<ILogger, Logger>(Lifestyle.Singleton);
+
+            registerScreens(output);
+            registerResources(output);
+
+            return output;
+        }
+
+        private void registerScreens(Container output)
+        {
             output.Register<MainMenuScreen>();
             output.Register<CreditsScreen>();
             output.Register<HighScoreScreen>();
@@ -26,12 +34,16 @@ namespace SlaamMono
             output.Register<ClassicCharSelectScreen>();
             output.Register<IScreenDirector, ScreenDirector>(Lifestyle.Singleton);
             output.Register<IFirstScreenResolver, FirstScreenResolver>(Lifestyle.Singleton);
-
             output.Register<LogoScreen>();
-
             output.Register<IScreenFactory, ScreenFactory>(Lifestyle.Singleton);
+        }
 
-            return output;
+        private void registerResources(Container output)
+        {
+            output.Register<IImageLoader, ImageLoader>();
+            output.Register<IPixelFactory, PixelFactory>();
+            output.Register<ITextLineLoader, CommentedTextLineLoader>();
+            output.Register<IFontLoader, FontLoader>();
         }
     }
 }

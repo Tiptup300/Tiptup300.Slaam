@@ -22,7 +22,7 @@ namespace SlaamMono.Screens
         {
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
             FeedManager.InitializeFeeds("");
-            firsttime = x_Resources.LoadImage("firsttime");
+            firsttime = x_Resources.LoadTexture("firsttime");
             controlsgraph.Items.Columns.Add("");
             controlsgraph.Items.Columns.Add("Gamepad");
             controlsgraph.Items.Columns.Add("Keyboard");

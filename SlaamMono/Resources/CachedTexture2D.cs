@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Resources;
 using System;
 
-namespace SlaamMono.SubClasses
+namespace SlaamMono.Resources
 {
     public class CachedTexture2D
     {
@@ -30,7 +29,7 @@ namespace SlaamMono.SubClasses
                         throw new Exception("No Location Specified For Texture");
                     }
 
-                    texture = x_Resources.LoadImage(Location);
+                    texture = x_Resources.LoadTexture(Location);
                 }
                 return texture;
             }

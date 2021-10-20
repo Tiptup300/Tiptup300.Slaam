@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
-using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -120,17 +119,24 @@ namespace SlaamMono.Resources
         public static Texture2D[] PU_Slaam = new Texture2D[2];
 
         private static ILogger _logger;
+        private static IImageLoader _imageLoader;
+        private static IPixelFactory _pixelFactory;
+        private static ITextLineLoader _textLineLoader;
+        private static IFontLoader _fontLoader;
 
-        #region Constructor
-
-        public static void Initiailze(ILogger logger)
+        public static void Initiailze(
+            ILogger logger, 
+            IImageLoader imageLoader,
+            IPixelFactory pixelFactory,
+            ITextLineLoader textLineLoader,
+            IFontLoader fontLoader)
         {
             _logger = logger;
+            _imageLoader = imageLoader;
+            _pixelFactory = pixelFactory;
+            _textLineLoader = textLineLoader;
+            _fontLoader = fontLoader;
         }
-
-        #endregion
-
-        #region Load All Method
 
         /// <summary>
         /// Loads all nessessary resources that are constant.
@@ -139,10 +145,7 @@ namespace SlaamMono.Resources
         {
             _logger.Log("Resources Loading...");
 
-            Dot = new Texture2D(SlaamGame.Graphics.GraphicsDevice, 1, 1);
-
-            //Dot = new Texture2D(Game1.Graphics.GraphicsDevice, 1, 1, 1, TextureUsage.None, SurfaceFormat.Color);
-            Dot.SetData(new Color[] { Color.White });
+            Dot = _pixelFactory.BuildPixel();
             _logger.Log(" - Dot Image Created.");
 
 
@@ -154,9 +157,9 @@ namespace SlaamMono.Resources
             MenuTop = new CachedTexture2D("MenuScreen//menutop");
             ProfileShell = new CachedTexture2D("MenuScreen//CharacterSelectBox");
             StatsBoard = new CachedTexture2D("MenuScreen/StatsScreen");
-            StatsButtons[0] = LoadImage("MenuScreen/StatsButton1");
-            StatsButtons[1] = LoadImage("MenuScreen/StatsButton2");
-            StatsButtons[2] = LoadImage("MenuScreen/StatsButton3");
+            StatsButtons[0] = LoadTexture("MenuScreen/StatsButton1");
+            StatsButtons[1] = LoadTexture("MenuScreen/StatsButton2");
+            StatsButtons[2] = LoadTexture("MenuScreen/StatsButton3");
 
             LobbyCharBar = new CachedTexture2D("LobbyScreen/PlayerBar");
             LobbyUnderlay = new CachedTexture2D("LobbyScreen/LobbyBG");
@@ -168,7 +171,7 @@ namespace SlaamMono.Resources
             ZibithLogo = new CachedTexture2D("Misc//Logo");
             NowLoading = new CachedTexture2D("Misc//BoardLoading");
             Background = new CachedTexture2D("Misc//background");
-            SlaamGame.mainBlade.CurrentGameInfo.GameIcon = LoadImage("Misc//ZBladeIcon");
+            SlaamGame.mainBlade.CurrentGameInfo.GameIcon = LoadTexture("Misc//ZBladeIcon");
 
             SegoeUIx32pt = LoadFont("SegoeUI-32pt");
             SegoeUIx14pt = LoadFont("SegoeUI-14pt");
@@ -176,67 +179,48 @@ namespace SlaamMono.Resources
             BotNames = LoadStringList("BotNames");
             Credits = LoadStringList("Credits");
 
-            LoadPowerup(PU_SpeedUp, "SpeedUp");
-            LoadPowerup(PU_SpeedDown, "SpeedDown");
-            LoadPowerup(PU_Inversion, "Inversion");
-            LoadPowerup(PU_Slaam, "Slaam");
+            loadPowerup(PU_SpeedUp, "SpeedUp");
+            loadPowerup(PU_SpeedDown, "SpeedDown");
+            loadPowerup(PU_Inversion, "Inversion");
+            loadPowerup(PU_Slaam, "Slaam");
 
             _logger.Log("All Resources Finished Loading;");
             textmanager = new TextManager(SlaamGame.Instance);
             SlaamGame.Instance.Components.Add(textmanager);
         }
 
-        #endregion
-
-        #region Easy Load Methods
-
-        /// <summary>
-        /// Easy method of loading in an image.
-        /// </summary>
-        /// <param name="baseName">Name of Resource</param>
-        /// <returns></returns>
-        public static Texture2D LoadImage(string baseName)
+        private static void loadPowerup(Texture2D[] Texs, string powerupname)
         {
-            string loc;
+            Texs[0] = LoadTexture("powerups\\" + powerupname);
+            Texs[1] = LoadTexture("powerups\\" + powerupname + "0");
+        }
 
-#if ZUNE
-            loc = Path.Combine("content\\textures\\MOBILE\\", baseName);
-#else
-            loc = System.IO.Path.Combine($"content\\textures{GameGlobals.TEXTURE_FILE_PATH}", baseName);
-#endif
 
+        public static Texture2D LoadTexture(string name)
+        {
             Texture2D output;
-
+            string directoryPath;
+            
             try
             {
-                output = SlaamGame.Content.Load<Texture2D>(loc);
-                _logger.Log(" - " + baseName + " Texture Loaded.");
+                directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "content\\textures\\MOBILE\\");
+                output = _imageLoader.LoadImage(directoryPath, name);
+                _logger.Log($" - {name} Texture Loaded.");
             }
             catch (Exception ex)
             {
-                _logger.Log($"Texture at {loc} failed to load. Error: {ex.Message}");
-                output = new Texture2D(SlaamGame.Graphics.GraphicsDevice, 1, 1);
+                output = _pixelFactory.BuildPixel();
+                _logger.Log($"Texture \"{name}\" failed to load. Replaced with a blank pixel. Error: {ex.Message}");
             }
+
             return output;
         }
 
         private static List<string> LoadStringList(string baseName)
         {
-            var temp = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\content\\" + baseName + ".txt").ToList();
-
-            for (int x = 0; x < temp.Count; x++)
-            {
-                if (temp[x].Trim().Substring(0, 2) == "//")
-                    temp.RemoveAt(x--);
-
-            }
-            return temp;
-        }
-
-        private static void LoadPowerup(Texture2D[] Texs, string powerupname)
-        {
-            Texs[0] = LoadImage("powerups\\" + powerupname);
-            Texs[1] = LoadImage("powerups\\" + powerupname + "0");
+            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "content");
+            return _textLineLoader.LoadTextLines(directoryPath, baseName)
+                .ToList();
         }
 
         /// <summary>
@@ -246,14 +230,14 @@ namespace SlaamMono.Resources
         /// <returns></returns>
         private static SpriteFont LoadFont(string baseName)
         {
-            SpriteFont temp = SlaamGame.Content.Load<SpriteFont>(string.Format("content\\{0}", baseName));
+            SpriteFont output;
+
+            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "content");
+            output = _fontLoader.LoadFont(directoryPath, baseName);
             _logger.Log(" - " + baseName + " Font Loaded.");
-            return temp;
+
+            return output;
         }
-
-        #endregion
-
-        #region Draw String Method
 
         /// <summary>
         /// Draws in a string using Nuclex.Fonts library.
@@ -296,24 +280,5 @@ namespace SlaamMono.Resources
             }
             textmanager.DrawString(fnt, pos, str, alignment, col);
         }
-
-
-
-        #endregion
     }
-
-    #region FontAlignment Enumeration
-
-    public enum FontAlignment
-    {
-        Left,
-        Center,
-        Right,
-        Top,
-        Middle,
-        Bottom,
-        CompletelyCentered,
-    }
-
-    #endregion
 }
