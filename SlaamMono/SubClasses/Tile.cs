@@ -36,17 +36,28 @@ namespace SlaamMono.SubClasses
             }
         }
 
+        private IWhitePixelResolver _whitePixelResolver;
+
         public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex)
         {
             ParentTileTileset = tiletex;
             TileCoors = TileLoc;
             AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
+
+            x_initWhitePixel();
         }
+
 
         public Tile(Tile tile, Texture2D parenttiletex)
         {
             ParentTileTileset = parenttiletex;
             AbsTileloc = tile.AbsTileloc;
+
+            x_initWhitePixel();
+        }
+        private void x_initWhitePixel()
+        {
+            _whitePixelResolver = DiImplementer.Instance.Get<IWhitePixelResolver>();
         }
 
         public void Update()
@@ -116,7 +127,9 @@ namespace SlaamMono.SubClasses
         public void DrawShadow(SpriteBatch batch)
         {
             if (CurrentTileCondition != TileCondition.Clear)
-                batch.Draw(ResourceManager.Instance.WhitePixel, new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
+            {
+                batch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
+            }
         }
 
         /// <summary>

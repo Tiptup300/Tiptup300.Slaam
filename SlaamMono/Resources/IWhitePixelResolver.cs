@@ -2,8 +2,8 @@
 
 namespace SlaamMono.Resources
 {
-    public interface IPixelFactory
+    public interface IWhitePixelResolver
     {
-        Texture2D BuildPixel();
+        Texture2D GetWhitePixel();
     }
 }

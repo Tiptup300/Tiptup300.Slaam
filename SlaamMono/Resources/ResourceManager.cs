@@ -10,8 +10,6 @@ namespace SlaamMono.Resources
     {
         public static ResourceManager Instance;
 
-        // General
-        public Texture2D WhitePixel;
         // Text Files
         public List<string> BotNames;
         public List<string> Credits;
@@ -20,12 +18,12 @@ namespace SlaamMono.Resources
         private Dictionary<string, SpriteFont> _fonts;
 
         private ILogger _logger;
-        private IPixelFactory _pixelFactory;
+        private IWhitePixelResolver _pixelFactory;
         private IResourceLoader _resourceLoader;
 
         public ResourceManager(
             ILogger logger,
-            IPixelFactory pixelFactory,
+            IWhitePixelResolver pixelFactory,
             IResourceLoader resourceLoader)
         {
             _logger = logger;
@@ -38,11 +36,10 @@ namespace SlaamMono.Resources
         public void LoadAll()
         {
             _logger.Log("Resources Loading...");
-            WhitePixel = _pixelFactory.BuildPixel();
-            _logger.Log(" - Dot Image Created.");
-
             _textures = loadTextures();
+            _logger.Log("Textures Loaded.");
             _fonts = loadFonts();
+            _logger.Log("Fonts Loaded.");
 
             BotNames = _resourceLoader.Load<IEnumerable<string>>("BotNames.txt").ToList();
             Credits = _resourceLoader.Load<IEnumerable<string>>("Credits.txt").ToList();

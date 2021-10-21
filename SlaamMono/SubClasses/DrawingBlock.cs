@@ -10,10 +10,14 @@ namespace SlaamMono.SubClasses
         private Rectangle DrawingRectangle;
         private Color DrawingColor;
 
+        private readonly IWhitePixelResolver _whitePixelResolver;
+
         public DrawingBlock(Rectangle drawingrect, Color drawingcol)
         {
             DrawingRectangle = drawingrect;
             DrawingColor = drawingcol;
+
+            _whitePixelResolver = DiImplementer.Instance.Get<IWhitePixelResolver>();
         }
 
         public void ChangeColor(Color newcol)
@@ -23,8 +27,7 @@ namespace SlaamMono.SubClasses
 
         public void Draw(SpriteBatch batch, Vector2 Offset)
         {
-
-            batch.Draw(ResourceManager.Instance.WhitePixel, new Rectangle(DrawingRectangle.X + (int)Offset.X, DrawingRectangle.Y + (int)Offset.Y, DrawingRectangle.Width, DrawingRectangle.Height), DrawingColor);
+            batch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle(DrawingRectangle.X + (int)Offset.X, DrawingRectangle.Y + (int)Offset.Y, DrawingRectangle.Width, DrawingRectangle.Height), DrawingColor);
         }
 
     }

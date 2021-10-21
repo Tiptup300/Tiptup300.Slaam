@@ -59,7 +59,7 @@ namespace SlaamMono
         {
             _container.Register<ResourceManager>(Lifestyle.Singleton);
             _container.Register<IFileLoader<Texture2D>, Texture2DLoader>(Lifestyle.Singleton);
-            _container.Register<IPixelFactory, PixelFactory>(Lifestyle.Singleton);
+            _container.Register<IWhitePixelResolver, WhitePixelResolver>(Lifestyle.Singleton);
             _container.Register<IFileLoader<IEnumerable<string>>, CommentedTextLineLoader>(Lifestyle.Singleton);
             _container.Register<IFileLoader<SpriteFont>, FontLoader>(Lifestyle.Singleton);
             _container.Register<IFileLoader<CachedTexture>, CachedTextureLoader>(Lifestyle.Singleton);

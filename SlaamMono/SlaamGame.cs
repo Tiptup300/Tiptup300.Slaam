@@ -31,19 +31,22 @@ namespace SlaamMono
 
         public static SlaamGame instance;
 
-        public static bool ShowFPS = false;
+        public static bool ShowFPS = true;
 
         private XnaContentManager _contentManager;
 
         private readonly ILogger _logger;
         private readonly IScreenDirector _screenDirector;
         private readonly IFirstScreenResolver _firstScreenResolver;
+        private readonly IWhitePixelResolver _whitePixelResolver;
 
-        public SlaamGame(ILogger logger, IScreenDirector screenDirector, IFirstScreenResolver firstScreenResolver)
+        public SlaamGame(ILogger logger, IScreenDirector screenDirector, IFirstScreenResolver firstScreenResolver,
+            IWhitePixelResolver whitePixelResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _firstScreenResolver = firstScreenResolver;
+            _whitePixelResolver = whitePixelResolver;
             graphics = new GraphicsDeviceManager(this);
             Content = new ContentManager(Services);
             this.Exiting += Game1_Exiting;
@@ -135,7 +138,7 @@ namespace SlaamMono
             {
                 string temp = "" + FrameRateDirector.FUPS;
                 Vector2 fpsBack = ResourceManager.Instance.GetFont("SegoeUIx32pt").MeasureString(temp);
-                gamebatch.Draw(ResourceManager.Instance.WhitePixel, new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
+                gamebatch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
                 TextManager.Instance.AddTextToRender(temp, new Vector2(5, fpsBack.Y / 2f), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
             }
 

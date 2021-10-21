@@ -7,9 +7,9 @@ namespace SlaamMono.Resources.Loading
     public class Texture2DLoader : IFileLoader<Texture2D>
     {
         private readonly ILogger _logger;
-        private readonly IPixelFactory _pixelFactory;
+        private readonly IWhitePixelResolver _pixelFactory;
 
-        public Texture2DLoader(ILogger logger, IPixelFactory pixelFactory)
+        public Texture2DLoader(ILogger logger, IWhitePixelResolver pixelFactory)
         {
             _logger = logger;
             _pixelFactory = pixelFactory;
@@ -26,7 +26,7 @@ namespace SlaamMono.Resources.Loading
             }
             catch (Exception ex)
             {
-                output = _pixelFactory.BuildPixel();
+                output = _pixelFactory.GetWhitePixel();
                 _logger.Log($"Texture \"{filePath}\" failed to load. Replaced with a blank pixel. Error: {ex.Message}");
             }
             return output;

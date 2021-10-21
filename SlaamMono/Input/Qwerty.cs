@@ -25,10 +25,20 @@ namespace SlaamMono.Input
 
         public static string EditingString = "";
 
+        private static IWhitePixelResolver _whitePixelResolver;
+
         static Qwerty()
         {
+            x_init(DiImplementer.Instance.Get<IWhitePixelResolver>());
+
             InitKeys();
         }
+
+        private static void x_init(IWhitePixelResolver whitePixelResolver)
+        {
+            _whitePixelResolver = whitePixelResolver;
+        }
+
         public static void InitKeys()
         {
             Keys[0, 0] = new QwertyKey("q", QwertyKeyType.Normal);
@@ -160,7 +170,7 @@ namespace SlaamMono.Input
 
         public static void Draw(SpriteBatch batch)
         {
-            batch.Draw(ResourceManager.Instance.WhitePixel, new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 200));
+            batch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 200));
             batch.Draw(ResourceManager.Instance.GetTexture("KeyboardBG").Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);
             for (int y = 0; y < 4; y++)
             {
