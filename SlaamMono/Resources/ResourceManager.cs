@@ -29,18 +29,15 @@ namespace SlaamMono.Resources
         private static ILogger _logger;
         private static IPixelFactory _pixelFactory;
         private static IResourceLoader _resourceLoader;
-        private static ITextRenderer _textRenderer;
 
         public static void Initiailze(
             ILogger logger,
             IPixelFactory pixelFactory,
-            IResourceLoader resourceLoader,
-            ITextRenderer textRenderer)
+            IResourceLoader resourceLoader)
         {
             _logger = logger;
             _pixelFactory = pixelFactory;
             _resourceLoader = resourceLoader;
-            _textRenderer = textRenderer;
         }
 
         public static void LoadAll()
