@@ -47,6 +47,7 @@ namespace SlaamMono.Resources
 
             _logger.Log("All Resources Finished Loading;");
         }
+
         private Dictionary<string, string[]> loadTextLists()
         {
             Dictionary<string, string[]> output;
@@ -55,32 +56,29 @@ namespace SlaamMono.Resources
             output["BotNames"] = _resourceLoader.Load<string[]>("BotNames.txt");
             output["Credits"] = _resourceLoader.Load<string[]>("Credits.txt");
             output["Textures"] = _resourceLoader.Load<string[]>("Textures.txt");
+            output["Fonts"] = _resourceLoader.Load<string[]>("Fonts.txt");
 
             return output;
         }
+
         private Dictionary<string, CachedTexture> loadTextures()
         {
-            Dictionary<string, CachedTexture> output;
-
-            output = _textLists["Textures"]
+            return _textLists["Textures"]
                 .Select(line => line.Split(","))
                 .ToDictionary(
                     x => x[0],
                     x => _resourceLoader.Load<CachedTexture>(x[1])
                 );
-
-            return output;
         }
+
         private Dictionary<string, SpriteFont> loadFonts()
         {
-            Dictionary<string, SpriteFont> output;
-
-            output = new Dictionary<string, SpriteFont>();
-            output["SegoeUIx32pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI-32pt");
-            output["SegoeUIx14pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI-14pt");
-            output["SegoeUIx48ptBold"] = _resourceLoader.Load<SpriteFont>("SegoeUI-48pt");
-
-            return output;
+            return _textLists["Fonts"]
+                .Select(line => line.Split(","))
+                .ToDictionary(
+                    x => x[0],
+                    x => _resourceLoader.Load<SpriteFont>(x[1])
+                );
         }
 
 

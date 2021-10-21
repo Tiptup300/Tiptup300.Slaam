@@ -173,6 +173,9 @@
     <None Update="Content\Credits.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Content\Fonts.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Content\SegoeUI-14pt.spritefont">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

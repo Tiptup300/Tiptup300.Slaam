@@ -1,0 +1,3 @@
+﻿SegoeUIx32pt,SegoeUI-32pt
+SegoeUIx14pt,SegoeUI-14pt
+SegoeUIx48ptBold,SegoeUI-48pt
