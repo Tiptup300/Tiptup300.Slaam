@@ -17,7 +17,7 @@ namespace SlaamMono.Powerups
         private TimeSpan CurrentTime;
 
         public SpeedDown(GameScreen parentscreen, int charindex)
-            : base(DialogStrings.SpeedDoownName, ResourceManager.Instance.PU_SpeedDown, PowerupUse.Strategy)
+            : base(DialogStrings.SpeedDoownName, new CachedTexture[] { ResourceManager.Instance.GetTexture("SpeedDown"), ResourceManager.Instance.GetTexture("SpeedDown0") }, PowerupUse.Strategy)
         {
             ParentGameScreen = parentscreen;
             CharacterIndex = charindex;

@@ -18,16 +18,16 @@ namespace SlaamMono.Powerups
             switch (type)
             {
                 case PowerupType.SpeedUp:
-                    return ResourceManager.Instance.PU_SpeedUp[1].Texture;
+                    return ResourceManager.Instance.GetTexture("SpeedUp0").Texture;
 
                 case PowerupType.SpeedDown:
-                    return ResourceManager.Instance.PU_SpeedDown[1].Texture;
+                    return ResourceManager.Instance.GetTexture("SpeedDown0").Texture;
 
                 case PowerupType.Inversion:
-                    return ResourceManager.Instance.PU_Inversion[1].Texture;
+                    return ResourceManager.Instance.GetTexture("Inversion0").Texture;
 
                 case PowerupType.Slaam:
-                    return ResourceManager.Instance.PU_Slaam[1].Texture;
+                    return ResourceManager.Instance.GetTexture("Slaam0").Texture;
 
                 default:
                     throw new Exception();

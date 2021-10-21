@@ -10,16 +10,11 @@ namespace SlaamMono.Resources
     {
         public static ResourceManager Instance;
 
+        // General
+        public Texture2D WhitePixel;
         // Text Files
         public List<string> BotNames;
         public List<string> Credits;
-        // PowerUps 
-        public CachedTexture[] PU_SpeedUp = new CachedTexture[2];
-        public CachedTexture[] PU_SpeedDown = new CachedTexture[2];
-        public CachedTexture[] PU_Inversion = new CachedTexture[2];
-        public CachedTexture[] PU_Slaam = new CachedTexture[2];
-        // General
-        public Texture2D WhitePixel;
 
         private Dictionary<string, CachedTexture> _textures;
         private Dictionary<string, SpriteFont> _fonts;
@@ -43,22 +38,19 @@ namespace SlaamMono.Resources
         public void LoadAll()
         {
             _logger.Log("Resources Loading...");
-
             WhitePixel = _pixelFactory.BuildPixel();
             _logger.Log(" - Dot Image Created.");
+
             _textures = loadTextures();
             _fonts = loadFonts();
 
             BotNames = _resourceLoader.Load<IEnumerable<string>>("BotNames.txt").ToList();
             Credits = _resourceLoader.Load<IEnumerable<string>>("Credits.txt").ToList();
 
-
-            loadPowerup(PU_SpeedUp, "SpeedUp");
-            loadPowerup(PU_SpeedDown, "SpeedDown");
-            loadPowerup(PU_Inversion, "Inversion");
-            loadPowerup(PU_Slaam, "Slaam");
-
             _logger.Log("All Resources Finished Loading;");
+        }
+        private void loadPowerup(CachedTexture[] Texs, string powerupname)
+        {
         }
 
         private Dictionary<string, SpriteFont> loadFonts()
@@ -99,6 +91,14 @@ namespace SlaamMono.Resources
             output["StatsButton1"] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton1");
             output["StatsButton2"] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton2");
             output["StatsButton3"] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton3");
+            output["Inversion"] = _resourceLoader.Load<CachedTexture>("powerups\\Inversion");
+            output["Inversion0"] = _resourceLoader.Load<CachedTexture>("powerups\\Inversion0");
+            output["SpeedUp"] = _resourceLoader.Load<CachedTexture>("powerups\\SpeedUp");
+            output["SpeedUp0"] = _resourceLoader.Load<CachedTexture>("powerups\\SpeedUp0");
+            output["SpeedDown"] = _resourceLoader.Load<CachedTexture>("powerups\\SpeedDown");
+            output["SpeedDown0"] = _resourceLoader.Load<CachedTexture>("powerups\\SpeedDown0");
+            output["Slaam"] = _resourceLoader.Load<CachedTexture>("powerups\\Slaam");
+            output["Slaam0"] = _resourceLoader.Load<CachedTexture>("powerups\\Slaam0");
 
             return output;
         }
@@ -113,10 +113,5 @@ namespace SlaamMono.Resources
             return _fonts[fontName];
         }
 
-        private void loadPowerup(CachedTexture[] Texs, string powerupname)
-        {
-            Texs[0] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname);
-            Texs[1] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname + "0");
-        }
     }
 }
