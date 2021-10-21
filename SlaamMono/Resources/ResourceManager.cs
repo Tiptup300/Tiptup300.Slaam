@@ -1,9 +1,6 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources.Loading;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +8,6 @@ namespace SlaamMono.Resources
 {
     public static class ResourceManager
     {
-        public static CachedTexture[] StatsButtons = new CachedTexture[3];
         // Text Files
         public static List<string> BotNames;
         public static List<string> Credits;
@@ -52,9 +48,6 @@ namespace SlaamMono.Resources
             BotNames = _resourceLoader.Load<IEnumerable<string>>("BotNames.txt").ToList();
             Credits = _resourceLoader.Load<IEnumerable<string>>("Credits.txt").ToList();
 
-            StatsButtons[0] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton1");
-            StatsButtons[1] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton2");
-            StatsButtons[2] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton3");
 
             loadPowerup(PU_SpeedUp, "SpeedUp");
             loadPowerup(PU_SpeedDown, "SpeedDown");
@@ -99,6 +92,9 @@ namespace SlaamMono.Resources
             output["Background"] = _resourceLoader.Load<CachedTexture>("textures/Misc/background");
             output["FirstTime"] = _resourceLoader.Load<CachedTexture>("textures/firsttime");
             output["ZBladeGameIcon"] = _resourceLoader.Load<CachedTexture>("textures/Misc/ZBladeIcon");
+            output["StatsButton1"] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton1");
+            output["StatsButton2"] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton2");
+            output["StatsButton3"] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton3");
 
             return output;
         }

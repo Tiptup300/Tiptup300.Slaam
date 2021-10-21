@@ -125,19 +125,16 @@ namespace SlaamMono
         }
         protected override void Draw(GameTime gameTime)
         {
-
             GraphicsDevice.Clear(Color.Black);
-
             gamebatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, Matrix.Identity);
-
             BackgroundManager.Draw(gamebatch);
-
             _screenDirector.Draw(gamebatch);
-
             FeedManager.Draw(gamebatch);
 
             if (Qwerty.Active)
+            {
                 Qwerty.Draw(gamebatch);
+            }
 
             if (ShowFPS)
             {

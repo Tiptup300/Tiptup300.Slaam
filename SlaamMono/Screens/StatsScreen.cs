@@ -6,6 +6,7 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Resources;
 using SlaamMono.StatsBoards;
 using SlaamMono.SubClasses;
+using System;
 
 namespace SlaamMono.Screens
 {
@@ -21,6 +22,9 @@ namespace SlaamMono.Screens
         private StatsBoard PlayerStats;
         private StatsBoard Kills;
         private StatsBoard PvP;
+
+
+        private CachedTexture[] _statsButtons = new CachedTexture[3];
 
 #if !ZUNE
         private Rectangle StatsRect = new Rectangle(175, 290, 930, 700);
@@ -41,6 +45,7 @@ namespace SlaamMono.Screens
 
         public void Open()
         {
+            _statsButtons = setStatsButtons();
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
             if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Classic)
             {
@@ -103,6 +108,18 @@ namespace SlaamMono.Screens
             }
         }
 
+        private CachedTexture[] setStatsButtons()
+        {
+            CachedTexture[] output;
+
+            output = new CachedTexture[3];
+            output[0] = ResourceManager.GetTexture("StatsButton1");
+            output[1] = ResourceManager.GetTexture("StatsButton2");
+            output[2] = ResourceManager.GetTexture("StatsButton3");
+
+            return output;
+        }
+
         public void Update()
         {
             BackgroundManager.SetRotation(1f);
@@ -148,7 +165,7 @@ namespace SlaamMono.Screens
             //MainBG.Draw(batch);
             for (int x = 0; x < 3; x++)
             {
-                batch.Draw(ResourceManager.StatsButtons[x].Texture, Statsboard, x == CurrentPage.Value ? Color.LightSkyBlue : ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
+                batch.Draw(_statsButtons[x].Texture, Statsboard, x == CurrentPage.Value ? Color.LightSkyBlue : ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
             }
             batch.Draw(ResourceManager.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
             //DrawingButton.Draw(batch);
