@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Gameplay;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
@@ -17,7 +18,7 @@ namespace SlaamMono.SubClasses
         private const float ScrollSpeed = 4f / 35f;
 
         private List<string> ParentSkinStrings = new List<string>();
-
+        private readonly PlayerColorResolver _playerColorResolver;
         private int PlayerIDX;
         private int SelectedIndex = -1;
 
@@ -41,11 +42,13 @@ namespace SlaamMono.SubClasses
 
         #region Constructor
 
-        public CharSelectBox(Vector2 Position, Texture2D[] parentcharskins, ExtendedPlayerIndex playeridx, List<string> parentskinstrings)
+        public CharSelectBox(Vector2 Position, Texture2D[] parentcharskins, ExtendedPlayerIndex playeridx, List<string> parentskinstrings, PlayerColorResolver playerColorResolver)
         {
             PlayerIDX = InputComponent.GetIndex(playeridx);
             ParentCharSkins = parentcharskins;
             ParentSkinStrings = parentskinstrings;
+            _playerColorResolver = playerColorResolver;
+
             RefreshSkins();
 
             Positions[0] = Position;
@@ -286,7 +289,7 @@ namespace SlaamMono.SubClasses
             PlayerType type = PlayerType.Computer;
             if (CurrentState != CharSelectBoxState.Computer)
                 type = PlayerType.Player;
-            return new CharacterShell(ParentSkinStrings[ChosenSkin.Value], ProfileManager.PlayableProfiles.GetRealIndex(ChosenProfile.Value), (ExtendedPlayerIndex)PlayerIDX, type, ResourceManager.PlayerColors[PlayerIDX]);
+            return new CharacterShell(ParentSkinStrings[ChosenSkin.Value], ProfileManager.PlayableProfiles.GetRealIndex(ChosenProfile.Value), (ExtendedPlayerIndex)PlayerIDX, type, _playerColorResolver.GetColorByIndex(PlayerIDX));
         }
 
         #endregion

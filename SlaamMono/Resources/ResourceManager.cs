@@ -26,19 +26,6 @@ namespace SlaamMono.Resources
         private static Dictionary<string, CachedTexture> _textures;
         private static Dictionary<string, SpriteFont> _fonts;
 
-
-        // Player Colors
-        public static Color[] PlayerColors = new Color[] {
-            Color.Red,
-            Color.Blue,
-            Color.Green,
-            Color.Yellow,
-            Color.Cyan,
-            Color.Orange,
-            Color.Purple,
-            Color.Pink
-        };
-
         private static ILogger _logger;
         private static IPixelFactory _pixelFactory;
         private static IResourceLoader _resourceLoader;
@@ -88,8 +75,8 @@ namespace SlaamMono.Resources
 
             output = new Dictionary<string, SpriteFont>();
             output["SegoeUIx32pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI-32pt");
-            output["SegoeUIx14pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI -14pt");
-            output["SegoeUIx48ptBold"] = _resourceLoader.Load<SpriteFont>("SegoeUI -48pt");
+            output["SegoeUIx14pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI-14pt");
+            output["SegoeUIx48ptBold"] = _resourceLoader.Load<SpriteFont>("SegoeUI-48pt");
 
             return output;
         }

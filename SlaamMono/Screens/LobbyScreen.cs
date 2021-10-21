@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Gameplay;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
@@ -33,13 +34,14 @@ namespace SlaamMono.Screens
 
         private readonly ILogger _logger;
         private readonly IScreenDirector _screenDirector;
+        private readonly PlayerColorResolver _playerColorResolver;
 
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenDirector screenDirector)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenDirector screenDirector, PlayerColorResolver playerColorResolver)
         {
             SetupChars = chars;
             _logger = logger;
             _screenDirector = screenDirector;
-
+            _playerColorResolver = playerColorResolver;
             PlayerAmt = SetupChars.Count;
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Columns.Add("SETTING");
@@ -344,7 +346,7 @@ namespace SlaamMono.Screens
         /// </summary>
         private void AddComputer()
         {
-            SetupChars.Add(new CharacterShell(ClassicCharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, ResourceManager.PlayerColors[SetupChars.Count]));
+            SetupChars.Add(new CharacterShell(ClassicCharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(SetupChars.Count)));
         }
 
         #endregion

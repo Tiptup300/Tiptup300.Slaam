@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using SlaamMono.Gameplay;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.SubClasses;
@@ -21,7 +22,7 @@ namespace SlaamMono.Screens
         public override void ResetBoxes()
         {
             SelectBoxes = new CharSelectBox[1];
-            SelectBoxes[0] = new CharSelectBox(new Vector2(340, 427), SkinTexture, ExtendedPlayerIndex.One, Skins);
+            SelectBoxes[0] = new CharSelectBox(new Vector2(340, 427), SkinTexture, ExtendedPlayerIndex.One, Skins, DiImplementer.Instance.Get<PlayerColorResolver>());
             SelectBoxes[0].Survival = true;
         }
 

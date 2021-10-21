@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SimpleInjector;
+using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
@@ -12,51 +13,61 @@ namespace SlaamMono
 {
     public class Bootstrap
     {
+        private Container _container;
+
         public Container BuildContainer()
         {
-            Container output;
+            _container = new Container();
 
-            output = new Container();
+            register();
+            registerComponents();
+            registerScreens();
+            registerResources();
+            registerGameplay();
 
-            output.Register<IApp, SlaamGameApp>(Lifestyle.Singleton);
-            output.Register<ISlaamGame, SlaamGame>(Lifestyle.Singleton);
-            output.Register<ILoggingDevice, TextFileLoggingDevice>(Lifestyle.Singleton);
-            output.Register<ILogger, Logger>(Lifestyle.Singleton);
-
-            registerComponents(output);
-            registerScreens(output);
-            registerResources(output);
-
-            return output;
+            return _container;
         }
 
-        public void registerComponents(Container output)
+        private void register()
         {
-            output.Register<ITextRenderer, TextManager>(Lifestyle.Singleton);
+            _container.Register<IApp, SlaamGameApp>(Lifestyle.Singleton);
+            _container.Register<ISlaamGame, SlaamGame>(Lifestyle.Singleton);
+            _container.Register<ILoggingDevice, TextFileLoggingDevice>(Lifestyle.Singleton);
+            _container.Register<ILogger, Logger>(Lifestyle.Singleton);
         }
 
-        private void registerScreens(Container output)
+        public void registerComponents()
         {
-            output.Register<MainMenuScreen>();
-            output.Register<CreditsScreen>();
-            output.Register<HighScoreScreen>();
-            output.Register<ProfileEditScreen>();
-            output.Register<SurvivalCharSelectScreen>();
-            output.Register<ClassicCharSelectScreen>();
-            output.Register<IScreenDirector, ScreenDirector>(Lifestyle.Singleton);
-            output.Register<IFirstScreenResolver, FirstScreenResolver>(Lifestyle.Singleton);
-            output.Register<LogoScreen>();
-            output.Register<IScreenFactory, ScreenFactory>(Lifestyle.Singleton);
+            _container.Register<ITextRenderer, TextManager>(Lifestyle.Singleton);
         }
 
-        private void registerResources(Container output)
+        private void registerScreens()
         {
-            output.Register<IFileLoader<Texture2D>, Texture2DLoader>();
-            output.Register<IPixelFactory, PixelFactory>();
-            output.Register<IFileLoader<IEnumerable<string>>, CommentedTextLineLoader>();
-            output.Register<IFileLoader<SpriteFont>, FontLoader>();
-            output.Register<IFileLoader<CachedTexture>, CachedTextureLoader>();
-            output.Register<IResourceLoader, ResourceLoader>();
+            _container.Register<MainMenuScreen>();
+            _container.Register<CreditsScreen>();
+            _container.Register<HighScoreScreen>();
+            _container.Register<ProfileEditScreen>();
+            _container.Register<SurvivalCharSelectScreen>();
+            _container.Register<ClassicCharSelectScreen>();
+            _container.Register<IScreenDirector, ScreenDirector>(Lifestyle.Singleton);
+            _container.Register<IFirstScreenResolver, FirstScreenResolver>(Lifestyle.Singleton);
+            _container.Register<LogoScreen>();
+            _container.Register<IScreenFactory, ScreenFactory>(Lifestyle.Singleton);
+        }
+
+        private void registerResources()
+        {
+            _container.Register<IFileLoader<Texture2D>, Texture2DLoader>();
+            _container.Register<IPixelFactory, PixelFactory>();
+            _container.Register<IFileLoader<IEnumerable<string>>, CommentedTextLineLoader>();
+            _container.Register<IFileLoader<SpriteFont>, FontLoader>();
+            _container.Register<IFileLoader<CachedTexture>, CachedTextureLoader>();
+            _container.Register<IResourceLoader, ResourceLoader>();
+        }
+
+        private void registerGameplay()
+        {
+            _container.Register<PlayerColorResolver>(Lifestyle.Singleton);
         }
     }
 }

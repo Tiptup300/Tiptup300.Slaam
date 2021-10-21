@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Gameplay;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
@@ -86,17 +87,26 @@ namespace SlaamMono.Screens
             Peopledone = 0;
             PeopleIn = 0;
 
-            if (PeopleIn == 0 && InputComponent.Players[0].PressedAction2 && SelectBoxes[0].CurrentState == CharSelectBoxState.Computer)
+            if (
+                PeopleIn == 0 && 
+                InputComponent.Players[0].PressedAction2 && 
+                SelectBoxes[0].CurrentState == CharSelectBoxState.Computer)
+            {
                 GoBack();
+            }
 
             for (int idx = 0; idx < SelectBoxes.Length; idx++)
             {
                 SelectBoxes[idx].Update();
                 if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
+                {
                     Peopledone++;
+                }
 
                 if (SelectBoxes[idx].CurrentState != CharSelectBoxState.Computer)
+                {
                     PeopleIn++;
+                }
             }
             if (PeopleIn > 0 && Peopledone == PeopleIn)
             {
@@ -111,16 +121,17 @@ namespace SlaamMono.Screens
 
         public virtual void GoForward()
         {
-            List<CharacterShell> templist = new List<CharacterShell>();
-            for (int idx = 0; idx < SelectBoxes.Length; idx++)
-                if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
-                    templist.Add(SelectBoxes[idx].GetShell());
+            var characterShells = SelectBoxes
+                .Where(selectBox => selectBox.CurrentState == CharSelectBoxState.Done)
+                .Select(selectBox => selectBox.GetShell())
+                .ToList();
 
             _screenDirector.ChangeTo(
                 new LobbyScreen(
-                    templist, 
+                    characterShells, 
                     DiImplementer.Instance.Get<ILogger>(),
-                    DiImplementer.Instance.Get<IScreenDirector>()));
+                    DiImplementer.Instance.Get<IScreenDirector>(),
+                    DiImplementer.Instance.Get<PlayerColorResolver>()));
         }
 
         #endregion
@@ -197,7 +208,7 @@ namespace SlaamMono.Screens
 
             for (int x = 0; x < InputComponent.Players.Length; x++)
             {
-                SelectBoxes[x] = new CharSelectBox(BoxPositions[x], SkinTexture, (ExtendedPlayerIndex)x, Skins);
+                SelectBoxes[x] = new CharSelectBox(BoxPositions[x], SkinTexture, (ExtendedPlayerIndex)x, Skins, DiImplementer.Instance.Get<PlayerColorResolver>());
             }
 
         }
