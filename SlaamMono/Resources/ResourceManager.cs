@@ -54,6 +54,7 @@ namespace SlaamMono.Resources
             output = new Dictionary<string, string[]>();
             output["BotNames"] = _resourceLoader.Load<string[]>("BotNames.txt");
             output["Credits"] = _resourceLoader.Load<string[]>("Credits.txt");
+            output["Textures"] = _resourceLoader.Load<string[]>("Textures.txt");
 
             return output;
         }
@@ -61,36 +62,12 @@ namespace SlaamMono.Resources
         {
             Dictionary<string, CachedTexture> output;
 
-            output = new Dictionary<string, CachedTexture>();
-            output["BattleBG"] = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/battlebg");
-            output["ReadySetGo"] = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/readysetgo");
-            output["RespawnTileOverlay"] = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/respawnOverlay");
-            output["TileOverlay"] = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/tileOverlay");
-            output["MenuTop"] = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/menutop");
-            output["ProfileShell"] = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/CharacterSelectBox");
-            output["StatsBoard"] = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/StatsScreen");
-            output["LobbyCharBar"] = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/PlayerBar");
-            output["LobbyUnderlay"] = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/LobbyBG");
-            output["LobbyOverlay"] = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/LobbyOverlay");
-            output["LobbyColorPreview"] = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/PlayerColorPreview");
-            output["BoardSelect"] = _resourceLoader.Load<CachedTexture>("textures/Misc/boardSelect");
-            output["ZibithLogoBG"] = _resourceLoader.Load<CachedTexture>("textures/Misc/LogoBG");
-            output["ZibithLogo"] = _resourceLoader.Load<CachedTexture>("textures/Misc/Logo");
-            output["NowLoading"] = _resourceLoader.Load<CachedTexture>("textures/Misc/BoardLoading");
-            output["Background"] = _resourceLoader.Load<CachedTexture>("textures/Misc/background");
-            output["FirstTime"] = _resourceLoader.Load<CachedTexture>("textures/firsttime");
-            output["ZBladeGameIcon"] = _resourceLoader.Load<CachedTexture>("textures/Misc/ZBladeIcon");
-            output["StatsButton1"] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton1");
-            output["StatsButton2"] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton2");
-            output["StatsButton3"] = _resourceLoader.Load<CachedTexture>("MenuScreen/StatsButton3");
-            output["Inversion"] = _resourceLoader.Load<CachedTexture>("powerups\\Inversion");
-            output["Inversion0"] = _resourceLoader.Load<CachedTexture>("powerups\\Inversion0");
-            output["SpeedUp"] = _resourceLoader.Load<CachedTexture>("powerups\\SpeedUp");
-            output["SpeedUp0"] = _resourceLoader.Load<CachedTexture>("powerups\\SpeedUp0");
-            output["SpeedDown"] = _resourceLoader.Load<CachedTexture>("powerups\\SpeedDown");
-            output["SpeedDown0"] = _resourceLoader.Load<CachedTexture>("powerups\\SpeedDown0");
-            output["Slaam"] = _resourceLoader.Load<CachedTexture>("powerups\\Slaam");
-            output["Slaam0"] = _resourceLoader.Load<CachedTexture>("powerups\\Slaam0");
+            output = _textLists["Textures"]
+                .Select(line => line.Split(","))
+                .ToDictionary(
+                    x => x[0],
+                    x => _resourceLoader.Load<CachedTexture>(x[1])
+                );
 
             return output;
         }
