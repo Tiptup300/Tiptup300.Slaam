@@ -74,8 +74,8 @@ namespace SlaamMono.Screens
             SetupTheBoard(CurrentMatchSettings.BoardLocation);
             CurrentGameStatus = GameStatus.MovingBoard;
 
-            ResourceManager.GetTexture("ReadySetGo").Load();
-            ResourceManager.GetTexture("BattleBG").Load();
+            ResourceManager.Instance.GetTexture("ReadySetGo").Load();
+            ResourceManager.Instance.GetTexture("BattleBG").Load();
         }
 
         public void Open()
@@ -372,7 +372,7 @@ namespace SlaamMono.Screens
 
                 if (CurrentGameStatus == GameStatus.Waiting || CurrentGameStatus == GameStatus.Over)
                 {
-                    batch.Draw(ResourceManager.GetTexture("ReadySetGo").Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.GetTexture("ReadySetGo").Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, ReadySetGoPart * (ResourceManager.GetTexture("ReadySetGo").Height / 4), ResourceManager.GetTexture("ReadySetGo").Width, ResourceManager.GetTexture("ReadySetGo").Height / 4), Color.White);
+                    batch.Draw(ResourceManager.Instance.GetTexture("ReadySetGo").Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.Instance.GetTexture("ReadySetGo").Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.Instance.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, ReadySetGoPart * (ResourceManager.Instance.GetTexture("ReadySetGo").Height / 4), ResourceManager.Instance.GetTexture("ReadySetGo").Width, ResourceManager.Instance.GetTexture("ReadySetGo").Height / 4), Color.White);
                 }
 
                 //Timer.Draw(batch);
@@ -382,8 +382,8 @@ namespace SlaamMono.Screens
 
         public void Close()
         {
-            ResourceManager.GetTexture("ReadySetGo").Dispose();
-            ResourceManager.GetTexture("BattleBG").Dispose();
+            ResourceManager.Instance.GetTexture("ReadySetGo").Dispose();
+            ResourceManager.Instance.GetTexture("BattleBG").Dispose();
         }
 
         /// <summary>

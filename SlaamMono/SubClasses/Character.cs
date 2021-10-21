@@ -261,12 +261,12 @@ namespace SlaamMono.SubClasses
             if (Lives == 0)
             {
                 batch.Draw(CharacterSkin, pos, new Rectangle(0, 0, 50, 60), new Color(255, 255, 255, 140), 0f, new Vector2(25, 50), 1f, SpriteEffects.None, 0f);
-                batch.Draw(ResourceManager.GetTexture("DeadChar").Texture, pos, new Rectangle(0, 0, 50, 60), Color.White, 0f, new Vector2(25, 50), 1f, fx, 0f);
+                batch.Draw(ResourceManager.Instance.GetTexture("DeadChar").Texture, pos, new Rectangle(0, 0, 50, 60), Color.White, 0f, new Vector2(25, 50), 1f, fx, 0f);
             }
             else if (CurrentState == CharacterState.Dead)
             {
                 batch.Draw(CharacterSkin, pos, new Rectangle(0, 0, 50, 60), new Color(255, 255, 255, 140), 0f, new Vector2(25, 50), 1f, SpriteEffects.None, 0f);
-                batch.Draw(ResourceManager.GetTexture("Waiting").Texture, pos, new Rectangle(0, 0, 50, 60), Color.White, 0f, new Vector2(25, 50), 1f, fx, 0f);
+                batch.Draw(ResourceManager.Instance.GetTexture("Waiting").Texture, pos, new Rectangle(0, 0, 50, 60), Color.White, 0f, new Vector2(25, 50), 1f, fx, 0f);
             }
             else
                 batch.Draw(CharacterSkin, pos, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), SpriteColor, 0f, new Vector2(25, 50), 1f, fx, 0f);

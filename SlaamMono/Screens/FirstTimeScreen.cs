@@ -46,13 +46,13 @@ namespace SlaamMono.Screens
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(ResourceManager.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
+            batch.Draw(ResourceManager.Instance.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
             controlsgraph.Draw(batch);
         }
 
         public void Close()
         {
-            ResourceManager.GetTexture("FirstTime").Dispose();
+            ResourceManager.Instance.GetTexture("FirstTime").Dispose();
         }
     }
 }

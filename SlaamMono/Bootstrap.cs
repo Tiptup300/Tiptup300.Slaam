@@ -57,12 +57,13 @@ namespace SlaamMono
 
         private void registerResources()
         {
-            _container.Register<IFileLoader<Texture2D>, Texture2DLoader>();
-            _container.Register<IPixelFactory, PixelFactory>();
-            _container.Register<IFileLoader<IEnumerable<string>>, CommentedTextLineLoader>();
-            _container.Register<IFileLoader<SpriteFont>, FontLoader>();
-            _container.Register<IFileLoader<CachedTexture>, CachedTextureLoader>();
-            _container.Register<IResourceLoader, ResourceLoader>();
+            _container.Register<ResourceManager>(Lifestyle.Singleton);
+            _container.Register<IFileLoader<Texture2D>, Texture2DLoader>(Lifestyle.Singleton);
+            _container.Register<IPixelFactory, PixelFactory>(Lifestyle.Singleton);
+            _container.Register<IFileLoader<IEnumerable<string>>, CommentedTextLineLoader>(Lifestyle.Singleton);
+            _container.Register<IFileLoader<SpriteFont>, FontLoader>(Lifestyle.Singleton);
+            _container.Register<IFileLoader<CachedTexture>, CachedTextureLoader>(Lifestyle.Singleton);
+            _container.Register<IResourceLoader, ResourceLoader>(Lifestyle.Singleton);
         }
 
         private void registerGameplay()

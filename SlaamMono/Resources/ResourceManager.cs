@@ -6,27 +6,29 @@ using System.Linq;
 
 namespace SlaamMono.Resources
 {
-    public static class ResourceManager
+    public class ResourceManager
     {
+        public static ResourceManager Instance;
+
         // Text Files
-        public static List<string> BotNames;
-        public static List<string> Credits;
+        public List<string> BotNames;
+        public List<string> Credits;
         // PowerUps 
-        public static CachedTexture[] PU_SpeedUp = new CachedTexture[2];
-        public static CachedTexture[] PU_SpeedDown = new CachedTexture[2];
-        public static CachedTexture[] PU_Inversion = new CachedTexture[2];
-        public static CachedTexture[] PU_Slaam = new CachedTexture[2];
+        public CachedTexture[] PU_SpeedUp = new CachedTexture[2];
+        public CachedTexture[] PU_SpeedDown = new CachedTexture[2];
+        public CachedTexture[] PU_Inversion = new CachedTexture[2];
+        public CachedTexture[] PU_Slaam = new CachedTexture[2];
         // General
-        public static Texture2D WhitePixel;
+        public Texture2D WhitePixel;
 
-        private static Dictionary<string, CachedTexture> _textures;
-        private static Dictionary<string, SpriteFont> _fonts;
+        private Dictionary<string, CachedTexture> _textures;
+        private Dictionary<string, SpriteFont> _fonts;
 
-        private static ILogger _logger;
-        private static IPixelFactory _pixelFactory;
-        private static IResourceLoader _resourceLoader;
+        private ILogger _logger;
+        private IPixelFactory _pixelFactory;
+        private IResourceLoader _resourceLoader;
 
-        public static void Initiailze(
+        public ResourceManager(
             ILogger logger,
             IPixelFactory pixelFactory,
             IResourceLoader resourceLoader)
@@ -34,9 +36,11 @@ namespace SlaamMono.Resources
             _logger = logger;
             _pixelFactory = pixelFactory;
             _resourceLoader = resourceLoader;
+
+            Instance = this;
         }
 
-        public static void LoadAll()
+        public void LoadAll()
         {
             _logger.Log("Resources Loading...");
 
@@ -57,7 +61,7 @@ namespace SlaamMono.Resources
             _logger.Log("All Resources Finished Loading;");
         }
 
-        private static Dictionary<string, SpriteFont> loadFonts()
+        private Dictionary<string, SpriteFont> loadFonts()
         {
             Dictionary<string, SpriteFont> output;
 
@@ -69,7 +73,7 @@ namespace SlaamMono.Resources
             return output;
         }
 
-        private static Dictionary<string, CachedTexture> loadTextures()
+        private Dictionary<string, CachedTexture> loadTextures()
         {
             Dictionary<string, CachedTexture> output;
 
@@ -99,17 +103,17 @@ namespace SlaamMono.Resources
             return output;
         }
 
-        public static CachedTexture GetTexture(string textureName)
+        public CachedTexture GetTexture(string textureName)
         {
             return _textures[textureName];
         }
 
-        public static SpriteFont GetFont(string fontName)
+        public SpriteFont GetFont(string fontName)
         {
             return _fonts[fontName];
         }
 
-        private static void loadPowerup(CachedTexture[] Texs, string powerupname)
+        private void loadPowerup(CachedTexture[] Texs, string powerupname)
         {
             Texs[0] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname);
             Texs[1] = _resourceLoader.Load<CachedTexture>("powerups\\" + powerupname + "0");

@@ -16,7 +16,7 @@ namespace SlaamMono.Powerups
         private TimeSpan CurrentTime;
 
         public SpeedUp(Character parent)
-            : base(DialogStrings.SpeedUpName, ResourceManager.PU_SpeedUp, PowerupUse.Evasion)
+            : base(DialogStrings.SpeedUpName, ResourceManager.Instance.PU_SpeedUp, PowerupUse.Evasion)
         {
             ParentCharacter = parent;
         }

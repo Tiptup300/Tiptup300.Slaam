@@ -210,7 +210,7 @@ namespace SlaamMono.Screens
                         }
                         else
                         {
-                            batch.Draw(ResourceManager.GetTexture("NowLoading").Texture, Pos, Color.White);
+                            batch.Draw(ResourceManager.Instance.GetTexture("NowLoading").Texture, Pos, Color.White);
                         }
                     }
                     if (Pos == new Vector2(CenteredRectangle.X, CenteredRectangle.Y))
@@ -220,7 +220,7 @@ namespace SlaamMono.Screens
                     DrawingBoardIndex.Add(1);
                 }
             }
-            batch.Draw(ResourceManager.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
+            batch.Draw(ResourceManager.Instance.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
             if (!StillLoadingBoards)
             {
                 CenteredRectangle = CenterRectangle(new Rectangle(0, 0, (int)(SizeIncrease * DrawSizeWidth), (int)(SizeIncrease * DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
@@ -228,11 +228,11 @@ namespace SlaamMono.Screens
                 {
                     batch.Draw(Boards[save], CenteredRectangle, Color.White);
                 }
-                batch.Draw(ResourceManager.GetTexture("BoardSelect").Texture, CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));
+                batch.Draw(ResourceManager.Instance.GetTexture("BoardSelect").Texture, CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));
 #if !ZUNE
                 batch.Draw(Resources.BoardSelectTextUnderlay.Texture, new Vector2(0, 175), new Color(255, 255, 255, 100));
 #endif
-                TextManager.Instance.AddTextToRender(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), ResourceManager.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
+                TextManager.Instance.AddTextToRender(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
             }
         }
 

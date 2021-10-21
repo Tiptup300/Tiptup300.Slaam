@@ -31,7 +31,7 @@ namespace SlaamMono.Screens
 
         public void Open()
         {
-            credits = ResourceManager.Credits.ToArray();
+            credits = ResourceManager.Instance.Credits.ToArray();
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Credits);
             for (int x = 0; x < credits.Length; x++)
             {
@@ -78,18 +78,18 @@ namespace SlaamMono.Screens
 
             for (int CurrentCredit = 0; CurrentCredit < CreditsListings.Count; CurrentCredit++)
             {
-                if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y)
+                if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.Instance.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y)
                 {
-                    TextManager.Instance.AddTextToRender(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), ResourceManager.GetFont("SegoeUIx32pt"), MainCreditColor, TextAlignment.Default, false);
+                    TextManager.Instance.AddTextToRender(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), ResourceManager.Instance.GetFont("SegoeUIx32pt"), MainCreditColor, TextAlignment.Default, false);
                 }
-                Offset += ResourceManager.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
+                Offset += ResourceManager.Instance.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
                 for (int x = 0; x < CreditsListings[CurrentCredit].Credits.Count; x++)
                 {
-                    if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
+                    if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.Instance.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
                     {
-                        TextManager.Instance.AddTextToRender(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), ResourceManager.GetFont("SegoeUIx14pt"), SubCreditColor, TextAlignment.Default, false);
+                        TextManager.Instance.AddTextToRender(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), ResourceManager.Instance.GetFont("SegoeUIx14pt"), SubCreditColor, TextAlignment.Default, false);
                     }
-                    Offset += (int)ResourceManager.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
+                    Offset += (int)ResourceManager.Instance.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
                 }
                 Offset += 20;
             }

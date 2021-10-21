@@ -14,7 +14,7 @@ namespace SlaamMono.Powerups
         private const int size = 4;
 
         public SlaamPowerup(GameScreen parentscreen, Character parentcharacter, int playerindex)
-            : base("Slaam!", ResourceManager.PU_Slaam, PowerupUse.Attacking)
+            : base("Slaam!", ResourceManager.Instance.PU_Slaam, PowerupUse.Attacking)
         {
             ParentGameScreen = parentscreen;
             PlayerIndex = playerindex;

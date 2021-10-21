@@ -58,18 +58,18 @@ namespace SlaamMono.Screens
         public void Draw(SpriteBatch batch)
         {
 #if DEBUG
-            TextManager.Instance.AddTextToRender("Hello World!", new Vector2(10, 10), ResourceManager.GetFont("SegoeUIx48ptBold"), Color.White, Library.Drawing.Text.TextAlignment.Default, true);
+            TextManager.Instance.AddTextToRender("Hello World!", new Vector2(10, 10), ResourceManager.Instance.GetFont("SegoeUIx48ptBold"), Color.White, Library.Drawing.Text.TextAlignment.Default, true);
 #endif
 
             byte alpha = (byte)LogoColor.Position.X;
-            batch.Draw(ResourceManager.GetTexture("ZibithLogoBG").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(ResourceManager.GetTexture("ZibithLogo").Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
+            batch.Draw(ResourceManager.Instance.GetTexture("ZibithLogoBG").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+            batch.Draw(ResourceManager.Instance.GetTexture("ZibithLogo").Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.Instance.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.Instance.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
         public void Close()
         {
-            ResourceManager.GetTexture("ZibithLogo").Dispose();
-            ResourceManager.GetTexture("ZibithLogoBG").Dispose();
+            ResourceManager.Instance.GetTexture("ZibithLogo").Dispose();
+            ResourceManager.Instance.GetTexture("ZibithLogoBG").Dispose();
         }
     }
 }

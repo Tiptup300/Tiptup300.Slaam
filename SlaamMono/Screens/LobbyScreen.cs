@@ -270,29 +270,29 @@ namespace SlaamMono.Screens
             }
             else
             {
-                batch.Draw(ResourceManager.GetTexture("LobbyUnderlay").Texture, Vector2.Zero, Color.White);
+                batch.Draw(ResourceManager.Instance.GetTexture("LobbyUnderlay").Texture, Vector2.Zero, Color.White);
                 float YOffset = 75;
 
                 for (int x = 0; x < SetupChars.Count; x++)
                 {
-                    batch.Draw(ResourceManager.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
-                    batch.Draw(ResourceManager.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
+                    batch.Draw(ResourceManager.Instance.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
+                    batch.Draw(ResourceManager.Instance.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
                     if (SetupChars[x].Type == PlayerType.Player)
-                        TextManager.Instance.AddTextToRender(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+                        TextManager.Instance.AddTextToRender(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
                     else
-                        TextManager.Instance.AddTextToRender(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.GetFont("SegoeUIx14pt"), Color.Red, TextAlignment.Default, false);
+                        TextManager.Instance.AddTextToRender(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Red, TextAlignment.Default, false);
                 }
-                batch.Draw(ResourceManager.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
+                batch.Draw(ResourceManager.Instance.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
             }
         }
 #endif
         public void Close()
         {
             CurrentBoardTexture = null;
-            ResourceManager.GetTexture("LobbyUnderlay").Dispose();
-            ResourceManager.GetTexture("LobbyCharBar").Dispose();
-            ResourceManager.GetTexture("LobbyColorPreview").Dispose();
-            ResourceManager.GetTexture("LobbyOverlay").Dispose();
+            ResourceManager.Instance.GetTexture("LobbyUnderlay").Dispose();
+            ResourceManager.Instance.GetTexture("LobbyCharBar").Dispose();
+            ResourceManager.Instance.GetTexture("LobbyColorPreview").Dispose();
+            ResourceManager.Instance.GetTexture("LobbyOverlay").Dispose();
         }
 
         /// <summary>
