@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Input;
 using SlaamMono.Library;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;

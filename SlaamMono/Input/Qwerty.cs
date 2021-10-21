@@ -1,11 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
+using SlaamMono.Input;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Resources;
 
-namespace SlaamMono
+namespace SlaamMono.Input
 {
     public static class Qwerty
     {
@@ -20,16 +21,12 @@ namespace SlaamMono
         private static Vector2 SelectedPosition = new Vector2(0, 0);
         private static Vector2 BoardPosition = new Vector2(500, 300);
         private static Vector2 TargetPosition = new Vector2(500, 300);
-        private static Key[,] Keys = new Key[10, 4];
+        private static QwertyKey[,] Keys = new QwertyKey[10, 4];
 
         public static bool CapslockToggled = false;
         public static bool ShiftToggled = false;
 
         public static string EditingString = "";
-
-        
-
-        
 
         static Qwerty()
         {
@@ -39,53 +36,50 @@ namespace SlaamMono
 
         public static void InitKeys()
         {
-            Keys[0, 0] = new Key("q", KeyType.Normal);
-            Keys[1, 0] = new Key("w", KeyType.Normal);
-            Keys[2, 0] = new Key("e", KeyType.Normal);
-            Keys[3, 0] = new Key("r", KeyType.Normal);
-            Keys[4, 0] = new Key("t", KeyType.Normal);
-            Keys[5, 0] = new Key("y", KeyType.Normal);
-            Keys[6, 0] = new Key("u", KeyType.Normal);
-            Keys[7, 0] = new Key("i", KeyType.Normal);
-            Keys[8, 0] = new Key("o", KeyType.Normal);
-            Keys[9, 0] = new Key("p", KeyType.Normal);
+            Keys[0, 0] = new QwertyKey("q", QwertyKeyType.Normal);
+            Keys[1, 0] = new QwertyKey("w", QwertyKeyType.Normal);
+            Keys[2, 0] = new QwertyKey("e", QwertyKeyType.Normal);
+            Keys[3, 0] = new QwertyKey("r", QwertyKeyType.Normal);
+            Keys[4, 0] = new QwertyKey("t", QwertyKeyType.Normal);
+            Keys[5, 0] = new QwertyKey("y", QwertyKeyType.Normal);
+            Keys[6, 0] = new QwertyKey("u", QwertyKeyType.Normal);
+            Keys[7, 0] = new QwertyKey("i", QwertyKeyType.Normal);
+            Keys[8, 0] = new QwertyKey("o", QwertyKeyType.Normal);
+            Keys[9, 0] = new QwertyKey("p", QwertyKeyType.Normal);
 
-            Keys[0, 1] = new Key("a", KeyType.Normal);
-            Keys[1, 1] = new Key("s", KeyType.Normal);
-            Keys[2, 1] = new Key("d", KeyType.Normal);
-            Keys[3, 1] = new Key("f", KeyType.Normal);
-            Keys[4, 1] = new Key("g", KeyType.Normal);
-            Keys[5, 1] = new Key("h", KeyType.Normal);
-            Keys[6, 1] = new Key("j", KeyType.Normal);
-            Keys[7, 1] = new Key("k", KeyType.Normal);
-            Keys[8, 1] = new Key("l", KeyType.Normal);
-            Keys[9, 1] = new Key("Caps", KeyType.Caps);
+            Keys[0, 1] = new QwertyKey("a", QwertyKeyType.Normal);
+            Keys[1, 1] = new QwertyKey("s", QwertyKeyType.Normal);
+            Keys[2, 1] = new QwertyKey("d", QwertyKeyType.Normal);
+            Keys[3, 1] = new QwertyKey("f", QwertyKeyType.Normal);
+            Keys[4, 1] = new QwertyKey("g", QwertyKeyType.Normal);
+            Keys[5, 1] = new QwertyKey("h", QwertyKeyType.Normal);
+            Keys[6, 1] = new QwertyKey("j", QwertyKeyType.Normal);
+            Keys[7, 1] = new QwertyKey("k", QwertyKeyType.Normal);
+            Keys[8, 1] = new QwertyKey("l", QwertyKeyType.Normal);
+            Keys[9, 1] = new QwertyKey("Caps", QwertyKeyType.Caps);
 
-            Keys[0, 2] = new Key("z", KeyType.Normal);
-            Keys[1, 2] = new Key("x", KeyType.Normal);
-            Keys[2, 2] = new Key("c", KeyType.Normal);
-            Keys[3, 2] = new Key("v", KeyType.Normal);
-            Keys[4, 2] = new Key("b", KeyType.Normal);
-            Keys[5, 2] = new Key("n", KeyType.Normal);
-            Keys[6, 2] = new Key("m", KeyType.Normal);
-            Keys[7, 2] = new Key(".", KeyType.Normal);
-            Keys[8, 2] = new Key("#", KeyType.Nums);
-            Keys[9, 2] = new Key("Shift", KeyType.Shift);
+            Keys[0, 2] = new QwertyKey("z", QwertyKeyType.Normal);
+            Keys[1, 2] = new QwertyKey("x", QwertyKeyType.Normal);
+            Keys[2, 2] = new QwertyKey("c", QwertyKeyType.Normal);
+            Keys[3, 2] = new QwertyKey("v", QwertyKeyType.Normal);
+            Keys[4, 2] = new QwertyKey("b", QwertyKeyType.Normal);
+            Keys[5, 2] = new QwertyKey("n", QwertyKeyType.Normal);
+            Keys[6, 2] = new QwertyKey("m", QwertyKeyType.Normal);
+            Keys[7, 2] = new QwertyKey(".", QwertyKeyType.Normal);
+            Keys[8, 2] = new QwertyKey("#", QwertyKeyType.Nums);
+            Keys[9, 2] = new QwertyKey("Shift", QwertyKeyType.Shift);
 
-            Keys[0, 3] = new Key("Space", KeyType.Space);
-            Keys[1, 3] = new Key("", KeyType.Blank);
-            Keys[2, 3] = new Key("", KeyType.Blank);
-            Keys[3, 3] = new Key("", KeyType.Blank);
-            Keys[4, 3] = new Key("", KeyType.Blank);
-            Keys[5, 3] = new Key("", KeyType.Blank);
-            Keys[6, 3] = new Key("", KeyType.Blank);
-            Keys[7, 3] = new Key("", KeyType.Blank);
-            Keys[8, 3] = new Key("", KeyType.Blank);
-            Keys[9, 3] = new Key("Done", KeyType.Done);
+            Keys[0, 3] = new QwertyKey("Space", QwertyKeyType.Space);
+            Keys[1, 3] = new QwertyKey("", QwertyKeyType.Blank);
+            Keys[2, 3] = new QwertyKey("", QwertyKeyType.Blank);
+            Keys[3, 3] = new QwertyKey("", QwertyKeyType.Blank);
+            Keys[4, 3] = new QwertyKey("", QwertyKeyType.Blank);
+            Keys[5, 3] = new QwertyKey("", QwertyKeyType.Blank);
+            Keys[6, 3] = new QwertyKey("", QwertyKeyType.Blank);
+            Keys[7, 3] = new QwertyKey("", QwertyKeyType.Blank);
+            Keys[8, 3] = new QwertyKey("", QwertyKeyType.Blank);
+            Keys[9, 3] = new QwertyKey("Done", QwertyKeyType.Done);
         }
-        
-
-        
 
         public static void Update()
         {
@@ -107,7 +101,7 @@ namespace SlaamMono
             {
                 CheckKeys();
 
-                if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type == KeyType.Blank)
+                if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type == QwertyKeyType.Blank)
                 {
                     SelectedPosition.X = 0;
                 }
@@ -181,9 +175,9 @@ namespace SlaamMono
             {
                 for (int x = 0; x < 10; x++)
                 {
-                    if (Keys[x, y].Type != KeyType.Space && Keys[x, y].Type != KeyType.Blank)
+                    if (Keys[x, y].Type != QwertyKeyType.Space && Keys[x, y].Type != QwertyKeyType.Blank)
                         batch.Draw(ResourceManager.GetTexture("Key").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
-                    else if (Keys[x, y].Type == KeyType.Space)
+                    else if (Keys[x, y].Type == QwertyKeyType.Space)
                         batch.Draw(ResourceManager.GetTexture("Spacebar").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
                 }
             }
@@ -194,7 +188,7 @@ namespace SlaamMono
             {
                 for (int x = 0; x < 10; x++)
                 {
-                    if (Keys[x, y].Type == KeyType.Normal)
+                    if (Keys[x, y].Type == QwertyKeyType.Normal)
                         TextManager.Instance.AddTextToRender(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), ResourceManager.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Centered, true);
                     else
                         TextManager.Instance.AddTextToRender(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), ResourceManager.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, false);
@@ -202,7 +196,7 @@ namespace SlaamMono
             }
             TextManager.Instance.AddTextToRender(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), ResourceManager.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
 
-            if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != KeyType.Space)
+            if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != QwertyKeyType.Space)
                 batch.Draw(ResourceManager.GetTexture("KeyHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
             else
                 batch.Draw(ResourceManager.GetTexture("SpaceHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
@@ -299,38 +293,6 @@ namespace SlaamMono
                 SelectedPosition.Y = 3;
         }
 
-        private struct Key
-        {
-            public bool Selected;
-            public string Chars;
-            public KeyType Type;
 
-            public Key(string chars, KeyType type)
-            {
-                Selected = false;
-                Chars = chars;
-                Type = type;
-            }
-        }
-
-        private enum KeyType
-        {
-            Normal,
-            Nums,
-            Caps,
-            Shift,
-            Done,
-            Space,
-            Blank,
-        }
-
-        private enum QwertyStatus
-        {
-            GoingUp,
-            Normal,
-            GoingDown,
-        }
-
-        
     }
 }
