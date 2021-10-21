@@ -10,20 +10,20 @@ namespace ZBlade
 {
 	public class MenuChoiceItem : MenuTextItem
 	{
-		#region Fields
+		
 
 		private List<string> choices;
 		private int currentIndex = 0;
 
-		#endregion
+		
 
-		#region Events
+		
 
 		public event EventHandler ValueChanged;
 
-		#endregion
+		
 
-		#region Properties
+		
 
 		public string CurrentChoice
 		{
@@ -54,9 +54,9 @@ namespace ZBlade
 			}
 		}
 
-		#endregion
+		
 
-		#region Constructors
+		
 
 		public MenuChoiceItem(string text, params string[] allChoices)
 			: this(text, 0, allChoices)
@@ -81,9 +81,9 @@ namespace ZBlade
 			currentIndex = defaultIndex;
 		}
 
-		#endregion
+		
 
-		#region MenuItem Overrides
+		
 
 		/*public override void Draw(SpriteBatch batch, Vector2 position, bool isSelected)
 		{
@@ -112,15 +112,15 @@ namespace ZBlade
 			return false;
 		}
 
-		#endregion
+		
 
-		#region Object Overrides
+		
 
 		public override string ToString()
 		{
 			return Text + ": < " + CurrentChoice + " >";
 		}
 
-		#endregion
+		
 	}
 }

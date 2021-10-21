@@ -31,7 +31,7 @@ namespace SlaamMono.Screens
         private readonly IScreenDirector _screenDirector;
 
 
-        #region Constructor
+        
 
         public ClassicCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
         {
@@ -77,9 +77,9 @@ namespace SlaamMono.Screens
 
         }
 
-        #endregion
+        
 
-        #region Update
+        
 
         public void Update()
         {
@@ -134,9 +134,9 @@ namespace SlaamMono.Screens
                     DiImplementer.Instance.Get<PlayerColorResolver>()));
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         public void Draw(SpriteBatch batch)
         {
@@ -145,18 +145,18 @@ namespace SlaamMono.Screens
                     SelectBoxes[idx].Draw(batch);
         }
 
-        #endregion
+        
 
-        #region Dispose
+        
 
         public void Close()
         {
             SelectBoxes = null;
         }
 
-        #endregion
+        
 
-        #region Extra Methods
+        
 
         public static List<string> Skins = new List<string>();
         public static bool SkinsLoaded = false;
@@ -224,6 +224,6 @@ namespace SlaamMono.Screens
 
         };
 
-        #endregion
+        
     }
 }

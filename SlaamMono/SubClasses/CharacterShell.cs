@@ -6,7 +6,7 @@ namespace SlaamMono.SubClasses
 {
     public class CharacterShell
     {
-        #region Variables
+        
 
         public string SkinLocation;
         public int CharProfile;
@@ -14,9 +14,9 @@ namespace SlaamMono.SubClasses
         public PlayerType Type;
         public Color PlayerColor;
 
-        #endregion
+        
 
-        #region Constructor
+        
 
         public CharacterShell(string skinloc, int profile, ExtendedPlayerIndex idx, PlayerType type, Color col)
         {
@@ -27,10 +27,10 @@ namespace SlaamMono.SubClasses
             PlayerColor = col;
         }
 
-        #endregion
+        
     }
 
-    #region Enums
+    
 
     public enum PlayerType
     {
@@ -38,5 +38,5 @@ namespace SlaamMono.SubClasses
         Computer
     }
 
-    #endregion
+    
 }

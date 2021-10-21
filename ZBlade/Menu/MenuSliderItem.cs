@@ -10,26 +10,26 @@ namespace ZBlade
 {
 	public class MenuSliderItem : MenuItem
 	{
-		#region Static Fields
+		
 
 		public static string Fill = ">";
 		public static string Space = "=";
 
-		#endregion
+		
 
-		#region Fields
+		
 
 		private int currentValue, minValue, maxValue;
 
-		#endregion
+		
 
-		#region Events
+		
 
 		public event EventHandler ValueChanged;
 
-		#endregion
+		
 
-		#region Properties
+		
 
         public string Text { get; set; }
 
@@ -69,9 +69,9 @@ namespace ZBlade
 			}
 		}
 
-		#endregion
+		
 
-		#region Constructors
+		
 
 		public MenuSliderItem(string name, int minimum, int maximum)
 		{
@@ -80,9 +80,9 @@ namespace ZBlade
 			MaximumValue = maximum;
 		}
 
-		#endregion
+		
 
-		#region MenuItem Overrides
+		
 
 		public override void Draw(SpriteBatch batch, Vector2 position, bool isSelected)
         {
@@ -108,9 +108,9 @@ namespace ZBlade
                 return false;
 		}
 
-		#endregion
+		
 
-		#region Object Overrides
+		
 
 		public override string ToString()
         {
@@ -126,6 +126,6 @@ namespace ZBlade
             return Text + ":  [ " + temp + "]";
 		}
 
-		#endregion
+		
 	}
 }

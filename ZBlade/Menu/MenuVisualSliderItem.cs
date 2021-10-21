@@ -11,32 +11,32 @@ namespace ZBlade
 {
 	public class MenuVisualSliderItem : MenuSliderItem
 	{
-		#region Fields
+		
 
 		Transition barAppear = new Transition(new Vector2(255), new Vector2(0), TimeSpan.FromSeconds(.25));
 		bool lastSelected;
 
-		#endregion
+		
 
-		#region Properties
+		
 
 		private string Percentage
 		{
 			get { return ((CurrentValue / (double)MaximumValue) * 100) + "%"; }
 		}
 
-		#endregion
+		
 
-		#region Constructors
+		
 
 		public MenuVisualSliderItem(string name, int minimum, int maximum)
 			: base(name, minimum, maximum)
 		{
 		}
 
-		#endregion
+		
 
-		#region IMenuItem Methods
+		
 
 		public override void Update(GameTime elapsed, bool isSelected)
 		{
@@ -96,15 +96,15 @@ namespace ZBlade
 					: new Color((byte)50, (byte)50, (byte)50, (byte)(barAppear.Position.X)));
 		}
 
-		#endregion
+		
 
-		#region Object Overrides
+		
 
 		public override string ToString()
 		{
 			return Text + ":  [ " + Percentage + " ]";
 		}
 
-		#endregion
+		
 	}
 }

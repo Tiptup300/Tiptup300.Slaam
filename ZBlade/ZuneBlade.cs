@@ -15,7 +15,6 @@ namespace ZBlade
 	/// </summary>
 	public partial class ZuneBlade : Microsoft.Xna.Framework.DrawableGameComponent
 	{
-		#region Private/Internal Const/Static
 
 		private const int RepeatDelayUpDown = 30;
 		private const int RepeatDelayLeftRight = 30;
@@ -56,9 +55,9 @@ namespace ZBlade
 			get { return instance.progressbarOverlay; }
 		}
 
-		#endregion
+		
 
-		#region Public Static
+		
 
 		/// <summary>
 		/// Gets a reference to the ZuneBlade instance.
@@ -68,9 +67,9 @@ namespace ZBlade
 			get { return instance; }
 		}
 
-		#endregion
+		
 
-		#region Private Fields
+		
 
 		private ContentManager content = null;
 
@@ -127,9 +126,9 @@ namespace ZBlade
         }
 
 
-		#endregion
+		
 
-		#region Public Properties
+		
 
 		/// <summary>
 		/// Gets or sets information which shows in the bar at the bottom of the menu.
@@ -239,9 +238,9 @@ namespace ZBlade
 			get { return currentTransition.IsFinished(); } 
 		}
 
-		#endregion
+		
 
-		#region Private Properties
+		
 
 		
 
@@ -261,9 +260,9 @@ namespace ZBlade
 			set { currentMenu.CurrentIndex = value; }
 		}
 
-		#endregion
+		
 
-		#region Constructor
+		
 
 		public ZuneBlade(Game game)
 			: base(game)
@@ -289,9 +288,9 @@ namespace ZBlade
 			currentTransition = new Transition(hiddenPosition, inPosition, TimeSpan.FromSeconds(1));
 		}
 
-		#endregion
+		
 
-		#region LoadContent
+		
 
 		protected override void LoadContent()
         {
@@ -352,9 +351,9 @@ namespace ZBlade
 			return output;
         }
 
-        #endregion
+        
 
-        #region Update
+        
 
         /// <summary>
         /// Allows the game component to update itself.
@@ -530,9 +529,9 @@ namespace ZBlade
             } while (!CurrentMenu.Nodes[CurrentMenuItem].IsEnabled);
         }
 
-		#endregion
+		
 
-		#region Draw
+		
 
 		public override void Draw(GameTime gameTime)
 		{
@@ -693,9 +692,9 @@ namespace ZBlade
 			}
 		}
 
-		#endregion
+		
 
-		#region Private Helper Methods
+		
 
 		private void CalcMatrix()
 		{
@@ -711,7 +710,7 @@ namespace ZBlade
 			}*/
 		}
 
-		#endregion
+		
 
         
 	}

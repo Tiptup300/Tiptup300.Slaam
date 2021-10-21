@@ -11,7 +11,7 @@ namespace SlaamMono.SubClasses
 {
     public class Character
     {
-        #region Variables
+        
 
         public const float CharDrawScale = GameGlobals.TILE_SIZE / 45f;//0.67f;
 
@@ -51,9 +51,9 @@ namespace SlaamMono.SubClasses
 
         public Powerup CurrentPowerup;
 
-        #endregion
+        
 
-        #region Constructor
+        
 
         public Character(Texture2D skin, int profileidx, Vector2 pos, InputDevice gamepad, Color markingcolor, int idx)
         {
@@ -70,9 +70,9 @@ namespace SlaamMono.SubClasses
                 SpeedMultiplyer[x] = 1f;
         }
 
-        #endregion
+        
 
-        #region Update
+        
 
         public virtual void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
         {
@@ -268,9 +268,9 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         public void Draw(SpriteBatch batch, Vector2 pos)
         {
@@ -294,9 +294,9 @@ namespace SlaamMono.SubClasses
 
         }
 
-        #endregion
+        
 
-        #region Is Tile Clear Method
+        
 
         /// <summary>
         /// Detects whether the selected tile is able to be walked over.
@@ -354,7 +354,7 @@ namespace SlaamMono.SubClasses
             return true;
         }
 
-        #endregion
+        
 
         private void GetPowerup(Tile currtile)
         {
@@ -387,7 +387,7 @@ namespace SlaamMono.SubClasses
             currtile.MarkWithPowerup(PowerupType.None);
         }
 
-        #region Profile Data Methods
+        
 
         /// <summary>
         /// Gets the profile of the current character based on the ProfileIndex.
@@ -409,9 +409,9 @@ namespace SlaamMono.SubClasses
             ProfileManager.AllProfiles[ProfileIndex].TotalDeaths += Deaths;
         }
 
-        #endregion
+        
 
-        #region Death Methods
+        
 
         /// <summary>
         /// Checks if the current player should die.
@@ -467,9 +467,9 @@ namespace SlaamMono.SubClasses
             GameScreen.Instance.tiles[(int)other.X, (int)other.Y].MarkTileForRespawn(MarkingColor, new TimeSpan(0, 0, 0, 8), PlayerIndex);
         }
 
-        #endregion
+        
 
-        #region Enums
+        
 
         public enum CharacterState
         {
@@ -480,6 +480,6 @@ namespace SlaamMono.SubClasses
             Respawning,
         }
 
-        #endregion
+        
     }
 }

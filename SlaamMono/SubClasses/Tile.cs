@@ -10,7 +10,7 @@ namespace SlaamMono.SubClasses
 {
     public class Tile
     {
-        #region Variables
+        
         private Vector2 AbsTileloc;
         private Vector2 TileCoors;
         private Texture2D ParentTileTileset;
@@ -36,9 +36,9 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        #endregion
+        
 
-        #region Constructor
+        
 
         public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex)
         {
@@ -53,9 +53,9 @@ namespace SlaamMono.SubClasses
             AbsTileloc = tile.AbsTileloc;
         }
 
-        #endregion
+        
 
-        #region Update
+        
 
         public void Update()
         {
@@ -103,9 +103,9 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         public void Draw(SpriteBatch batch)
         {
@@ -131,9 +131,9 @@ namespace SlaamMono.SubClasses
                 batch.Draw(ResourceManager.WhitePixel, new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
         }
 
-        #endregion
+        
 
-        #region Marking Methods
+        
 
         /// <summary>
         /// Marks the current tile for respawn so its invincible.
@@ -180,9 +180,9 @@ namespace SlaamMono.SubClasses
                 Dead = cominback;
         }
 
-        #endregion
+        
 
-        #region Extra Methods
+        
 
         /// <summary>
         /// Resets real location of tile on screen.
@@ -210,9 +210,9 @@ namespace SlaamMono.SubClasses
             ReappearSpeed.Reset();
         }
 
-        #endregion
+        
 
-        #region Enums
+        
 
         public enum TileCondition
         {
@@ -223,6 +223,6 @@ namespace SlaamMono.SubClasses
             Clear
         }
 
-        #endregion
+        
     }
 }

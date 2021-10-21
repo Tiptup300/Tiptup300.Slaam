@@ -11,7 +11,7 @@ namespace SlaamMono.SubClasses
 {
     public class BotPlayer : Character
     {
-        #region Variables
+        
 
         GameScreen ParentGameScreen;
         InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
@@ -28,9 +28,9 @@ namespace SlaamMono.SubClasses
         private readonly Vector2 NullVector2 = new Vector2(-2, -2);
         private Target CurrentTarget;
         private bool SwitchMovements = false;
-        #endregion
+        
 
-        #region Constructor
+        
 
         public BotPlayer(Texture2D skin, int profile, Vector2 pos, GameScreen parentgamescreen, Color markingcolor, int plyeridx) :
             base(skin, profile, pos, null, markingcolor, plyeridx)
@@ -47,7 +47,7 @@ namespace SlaamMono.SubClasses
             PlacesToGo.Add(new int[] { -1, 0 });
         }
 
-        #endregion
+        
 
 
         public override void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
@@ -371,7 +371,7 @@ namespace SlaamMono.SubClasses
 
         }
 
-        #region Movement Methods
+        
 
         /// <summary>
         /// Takes in the current Directions and converts them into actual input.
@@ -432,9 +432,9 @@ namespace SlaamMono.SubClasses
 #endif
         }
 
-        #endregion
+        
 
-        #region Positioning Methods
+        
 
         /// <summary>
         /// Calc's the distance from point A to B
@@ -452,9 +452,9 @@ namespace SlaamMono.SubClasses
             return IsSafe(new Vector2(Coords.X + x, Coords.Y + y));
         }
 
-        #endregion
+        
 
-        #region Enums
+        
 
         private enum BotStatus
         {
@@ -463,7 +463,7 @@ namespace SlaamMono.SubClasses
             Roaming,
         }
 
-        #endregion
+        
 
     }
 

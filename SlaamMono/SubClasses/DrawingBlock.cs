@@ -36,14 +36,14 @@ namespace SlaamMono.SubClasses
 
     public class DrawingBlock
     {
-        #region Variables
+        
 
         private Rectangle DrawingRectangle;
         private Color DrawingColor;
 
-        #endregion
+        
 
-        #region Constructor
+        
 
         public DrawingBlock(Rectangle drawingrect, Color drawingcol)
         {
@@ -56,9 +56,9 @@ namespace SlaamMono.SubClasses
             DrawingColor = newcol;
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         public void Draw(SpriteBatch batch, Vector2 Offset)
         {
@@ -66,7 +66,7 @@ namespace SlaamMono.SubClasses
             batch.Draw(ResourceManager.WhitePixel, new Rectangle(DrawingRectangle.X + (int)Offset.X, DrawingRectangle.Y + (int)Offset.Y, DrawingRectangle.Width, DrawingRectangle.Height), DrawingColor);
         }
 
-        #endregion
+        
 
     }
 }

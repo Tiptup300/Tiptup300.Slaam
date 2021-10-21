@@ -13,7 +13,7 @@ namespace SlaamMono.SubClasses
     /// </summary>
     public class GameScreenTimer
     {
-        #region Variables
+        
 
         private Vector2 Position;
         public TimeSpan GameMatchTime;
@@ -26,9 +26,9 @@ namespace SlaamMono.SubClasses
         private float StepSize;
         private float CurrentStep;
 
-        #endregion
+        
 
-        #region Constructor
+        
 
         public GameScreenTimer(Vector2 position, GameScreen parentgamescreen)
         {
@@ -41,9 +41,9 @@ namespace SlaamMono.SubClasses
 
         }
 
-        #endregion
+        
 
-        #region Update
+        
 
         public void Update(bool StartTiming)
         {
@@ -84,9 +84,9 @@ namespace SlaamMono.SubClasses
             SetGameMatchTime(ParentGameScreen.ThisGameType);
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         /// <summary>
         /// Draws the board on top of the gamescreen with various information
@@ -108,7 +108,7 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        #endregion
+        
 
         private void SetGameMatchTime(GameType type)
         {
@@ -118,7 +118,7 @@ namespace SlaamMono.SubClasses
                 GameMatchTime = TimeRemaining;
         }
 
-        #region ZeroImpress Method
+        
 
         /// <summary>
         /// Takes an int and gives it leading leading zeros if it needs it.
@@ -133,6 +133,6 @@ namespace SlaamMono.SubClasses
                 return x.ToString().Substring(0, 2);
         }
 
-        #endregion
+        
     }
 }

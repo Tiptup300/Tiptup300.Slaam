@@ -122,7 +122,7 @@ namespace SlaamMono.Screens
             FeedManager.InitializeFeeds(DialogStrings.LobbyScreenFeed);
         }
 
-        #region Update
+        
 
         public void Update()
         {
@@ -225,9 +225,9 @@ namespace SlaamMono.Screens
             }
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 #if !ZUNE
         public void Draw(SpriteBatch batch)
         {
@@ -294,9 +294,9 @@ namespace SlaamMono.Screens
             }
         }
 #endif
-        #endregion
+        
 
-        #region Dispose
+        
 
         public void Close()
         {
@@ -307,9 +307,9 @@ namespace SlaamMono.Screens
             ResourceManager.GetTexture("LobbyOverlay").Dispose();
         }
 
-        #endregion
+        
 
-        #region Extra Methods
+        
 
         /// <summary>
         /// Loads the new Board Texture and loads its name/creator.
@@ -349,6 +349,6 @@ namespace SlaamMono.Screens
             SetupChars.Add(new CharacterShell(ClassicCharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(SetupChars.Count)));
         }
 
-        #endregion
+        
     }
 }

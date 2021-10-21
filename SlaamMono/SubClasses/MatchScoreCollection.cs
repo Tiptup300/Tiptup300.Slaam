@@ -4,7 +4,7 @@ namespace SlaamMono.SubClasses
 {
     public class MatchScoreCollection
     {
-        #region Variables
+        
 
         public GameScreen ParentGameScreen;
         public int[][] Kills;
@@ -12,7 +12,7 @@ namespace SlaamMono.SubClasses
         private int[] Sprees;
 
 
-        #endregion
+        
 
         public MatchScoreCollection(GameScreen parentgamecreen)
         {
@@ -73,7 +73,7 @@ namespace SlaamMono.SubClasses
         }
     }
 
-    #region Places Enum
+    
 
     public enum Places
     {
@@ -88,7 +88,7 @@ namespace SlaamMono.SubClasses
         Eighth = 8,
     }
 
-    #endregion
+    
 
     public enum GameType
     {

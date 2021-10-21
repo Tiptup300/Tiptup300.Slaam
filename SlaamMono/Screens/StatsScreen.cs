@@ -105,7 +105,7 @@ namespace SlaamMono.Screens
             }
         }
 
-        #region Update
+        
 
         public void Update()
         {
@@ -146,9 +146,9 @@ namespace SlaamMono.Screens
             }
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         public void Draw(SpriteBatch batch)
         {
@@ -174,15 +174,15 @@ namespace SlaamMono.Screens
 #endif
         }
 
-        #endregion
+        
 
-        #region Dispose
+        
 
         public void Close()
         {
 
         }
 
-        #endregion
+        
     }
 }

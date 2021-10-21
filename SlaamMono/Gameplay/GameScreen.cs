@@ -14,7 +14,7 @@ namespace SlaamMono.Screens
 {
     public class GameScreen : IScreen
     {
-        #region Variables
+        
 
         public static GameScreen Instance;
 
@@ -66,9 +66,9 @@ namespace SlaamMono.Screens
         private float SpreeStepSize;
         private float SpreeCurrentStep;
         private int SpreeHighestKillCount;
-        #endregion
+        
 
-        #region Constructor
+        
 
         public GameScreen(List<CharacterShell> chars, ILogger logger, IScreenDirector screenDirector)
         {
@@ -104,9 +104,13 @@ namespace SlaamMono.Screens
 
 
             if (ThisGameType == GameType.Classic)
+            {
                 StepsRemaining = SetupChars.Count - 1;
+            }
             else if (ThisGameType == GameType.TimedSpree)
+            {
                 StepsRemaining = 7;
+            }
             else if (ThisGameType == GameType.Spree)
             {
                 //CurrentMatchSettings.KillsToWin = 7;
@@ -116,11 +120,8 @@ namespace SlaamMono.Screens
                 SpreeCurrentStep = 0;
             }
 
-#if ZUNE 
             SetupPauseMenu();
-#endif
         }
-#if ZUNE
         public MenuItemTree main = new MenuItemTree();
         public void SetupPauseMenu()
         {
@@ -148,17 +149,7 @@ namespace SlaamMono.Screens
 
             SlaamGame.mainBlade.TopMenu = main;
         }
-
-        void quit_onSelected(object sender)
-        {
-
-        }
-
-        void resume_onSelected(object sender)
-        {
-
-        }
-#endif
+        
         public virtual void SetupTheBoard(string BoardLoc)
         {
             Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, BoardLoc);
@@ -181,10 +172,6 @@ namespace SlaamMono.Screens
 #endif
             }
         }
-
-        #endregion
-
-        #region Update
 
         public virtual void Update()
         {
@@ -333,10 +320,6 @@ namespace SlaamMono.Screens
             }
         }
 
-        #endregion
-
-        #region Draw
-
         public void Draw(SpriteBatch batch)
         {
             //batch.Draw(Resources.TileUnderlay, Boardpos, Color.White);
@@ -407,21 +390,11 @@ namespace SlaamMono.Screens
 
         }
 
-        #endregion
-
-        #region Dispose
-
         public void Close()
         {
             ResourceManager.GetTexture("ReadySetGo").Dispose();
             ResourceManager.GetTexture("BattleBG").Dispose();
         }
-
-        #endregion
-
-        #region Extra Methods
-
-        #region Killing Methods
 
         /// <summary>
         /// Update the kill tables for final scoring.
@@ -488,10 +461,6 @@ namespace SlaamMono.Screens
             Vector2 newCharPos = InterpretCoordinates(new Vector2(newx, newy), false);
             Characters[x].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy));
         }
-
-        #endregion
-
-        #region GameProgress Methods
 
         public void PauseGame(int playerindex)
         {
@@ -562,10 +531,6 @@ namespace SlaamMono.Screens
                     DiImplementer.Instance.Get<IScreenDirector>()));
         }
 
-        #endregion
-
-        #region Coord Method
-
         /// <summary>
         /// Converts the real postion for the onboard positioning.
         /// </summary>
@@ -592,23 +557,6 @@ namespace SlaamMono.Screens
                 return new Vector2(X, Y);
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #region GameStatus Enum
-
-        public enum GameStatus
-        {
-            MovingBoard,
-            Respawning,
-            Waiting,
-            Playing,
-            Over,
-        }
-
-        #endregion
 
     }
 }

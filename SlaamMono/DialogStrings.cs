@@ -8,24 +8,24 @@ namespace SlaamMono
     static class DialogStrings
     {
 
-        #region GameScreen
+        
 
         public const string ContinueSelected = "> Continue <";
         public const string Continue = "Continue";
         public const string QuitSelected = "> Quit <";
         public const string Quit = "Quit";
 
-        #endregion
+        
 
-        #region Powerups
+        
 
         public const string SpeedUpName = "Speed UP!";
         public const string SpeedDoownName = "Speed Doown";
         public const string InversionName = "Inversion";
 
-        #endregion
+        
 
-        #region Storage
+        
 
         // Storage
         public const string StorageLocation = "Slaam! Saved Files";
@@ -33,9 +33,9 @@ namespace SlaamMono
         public const string SurvivalScoresFilename = "survivalscores.g2g";
         public const string MatchSettingsFilename = "settings.cya";
 
-        #endregion
+        
 
-        #region Main Menu
+        
 
         // Main Menu
         public const string Start = "Start";
@@ -50,9 +50,9 @@ namespace SlaamMono
         public const string Credits = "Credits";
         public const string ViewHighScores = "High Score List";
 
-        #endregion
+        
 
-        #region Lobby
+        
 
         // Lobby
         public const string CurrentPeers = "Current Peers: ";
@@ -103,18 +103,18 @@ namespace SlaamMono
                 return strs[0];
         }
 
-        #endregion
+        
 
-        #region Char Select
+        
 
         // Char Select
         public const string PressStartToJoin = "Press start to join.";
         public const string SelectAProfile = "Select a profile.";
         public const string PlayingAs = "Playing as ";
 
-        #endregion
+        
 
-        #region Stats
+        
 
         // Stats
         public const string Played = "Played ";
@@ -126,9 +126,9 @@ namespace SlaamMono
         public const string Kills = " Kills";
         public const string Powerups = " Powerups";
 
-        #endregion
+        
 
-        #region Feeds
+        
 
         // Feeds
         public const string MenuScreenFeed = "Welcome to the main menu! Please use the directional keys, ctrl, and shift to navigate via keyboard. READ THE README!";
@@ -137,7 +137,7 @@ namespace SlaamMono
         public const string CharacterSelectScreenFeed = "Welcome to character select. Where you get to choose your profile and character for use in game matches. If you would like to create a profile, please use the Profile Manager in the options menu.";
         public const string BoardSelectScreenFeed = "Welcome to the board design select screen. Where you get to choose the desired design of flooring for the gamematch.";
 
-        #endregion
+        
 
 
     }

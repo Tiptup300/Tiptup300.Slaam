@@ -19,7 +19,7 @@ namespace ZBlade
             IsEnabled = isEnabled;
         }
 
-        #region MenuItem Overrides
+        
 
         public override void Draw(SpriteBatch batch, Vector2 position, bool isSelected)
         {
@@ -50,7 +50,7 @@ namespace ZBlade
             return false;
         }
 
-        #endregion
+        
 
         public override string ToString() => Text;
     }

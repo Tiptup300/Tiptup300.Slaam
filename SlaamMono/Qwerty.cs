@@ -9,7 +9,7 @@ namespace SlaamMono
 {
     public static class Qwerty
     {
-        #region Variables
+        
 
         private const float MovementSpeed = (20f / 10f);
 
@@ -27,9 +27,9 @@ namespace SlaamMono
 
         public static string EditingString = "";
 
-        #endregion
+        
 
-        #region Constructor
+        
 
         static Qwerty()
         {
@@ -83,9 +83,9 @@ namespace SlaamMono
             Keys[8, 3] = new Key("", KeyType.Blank);
             Keys[9, 3] = new Key("Done", KeyType.Done);
         }
-        #endregion
+        
 
-        #region Update
+        
 
         public static void Update()
         {
@@ -169,9 +169,9 @@ namespace SlaamMono
             }
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         public static void Draw(SpriteBatch batch)
         {
@@ -208,9 +208,9 @@ namespace SlaamMono
                 batch.Draw(ResourceManager.GetTexture("SpaceHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
         }
 
-        #endregion
+        
 
-        #region Extra Methods
+        
 
         /// <summary>
         /// Displays the board onscreen in cool motion
@@ -299,10 +299,6 @@ namespace SlaamMono
                 SelectedPosition.Y = 3;
         }
 
-        #endregion
-
-        #region Structs & Enums
-
         private struct Key
         {
             public bool Selected;
@@ -335,6 +331,6 @@ namespace SlaamMono
             GoingDown,
         }
 
-        #endregion
+        
     }
 }

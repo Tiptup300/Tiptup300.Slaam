@@ -55,7 +55,7 @@ namespace SlaamMono.Screens
             }
         }
 
-        #region Draw
+        
 
         public void Draw(SpriteBatch batch)
         {
@@ -68,9 +68,9 @@ namespace SlaamMono.Screens
             batch.Draw(ResourceManager.GetTexture("ZibithLogo").Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
-        #endregion
+        
 
-        #region Dispose
+        
 
         public void Close()
         {
@@ -78,6 +78,6 @@ namespace SlaamMono.Screens
             ResourceManager.GetTexture("ZibithLogoBG").Dispose();
         }
 
-        #endregion
+        
     }
 }

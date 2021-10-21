@@ -162,7 +162,7 @@ namespace SlaamMono.Screens
             }
         }
 
-        #region Draw
+        
 
         public void Draw(SpriteBatch batch)
         {
@@ -173,16 +173,16 @@ namespace SlaamMono.Screens
                 SubMenu.Draw(batch);
         }
 
-        #endregion
+        
 
-        #region Dispose
+        
 
         public void Close()
         {
 
         }
 
-        #endregion
+        
 
         private void SetupMainMenu()
         {

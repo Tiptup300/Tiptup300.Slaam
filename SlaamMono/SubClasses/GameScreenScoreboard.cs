@@ -12,7 +12,7 @@ namespace SlaamMono.SubClasses
     /// </summary>
     public class GameScreenScoreboard
     {
-        #region Variables
+        
 
         private Vector2 Position;
         private Character Character;
@@ -22,9 +22,9 @@ namespace SlaamMono.SubClasses
         private bool AlphaUp = false;
         private float Alpha = 255f;
 
-        #endregion
+        
 
-        #region Constructor
+        
 
         public GameScreenScoreboard(Vector2 position, Character character, GameType type)
         {
@@ -33,9 +33,9 @@ namespace SlaamMono.SubClasses
             CurrentGametype = type;
         }
 
-        #endregion
+        
 
-        #region Update
+        
 
         public void Update()
         {
@@ -68,9 +68,9 @@ namespace SlaamMono.SubClasses
                 Alpha = 255f;
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         public void Draw(SpriteBatch batch)
         {
@@ -91,6 +91,6 @@ namespace SlaamMono.SubClasses
                 batch.Draw(Character.CurrentPowerup.SmallTex, new Vector2(125 + Position.X - Character.CurrentPowerup.SmallTex.Width / 2, 42 + Position.Y - Character.CurrentPowerup.SmallTex.Height / 2), new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));
         }
 
-        #endregion
+        
     }
 }

@@ -13,7 +13,7 @@ namespace SlaamMono.SubClasses
 {
     public class CharSelectBox
     {
-        #region Variables
+        
 
         private const float ScrollSpeed = 4f / 35f;
 
@@ -38,9 +38,9 @@ namespace SlaamMono.SubClasses
 
         public bool Survival = false;
 
-        #endregion
+        
 
-        #region Constructor
+        
 
         public CharSelectBox(Vector2 Position, Texture2D[] parentcharskins, ExtendedPlayerIndex playeridx, List<string> parentskinstrings, PlayerColorResolver playerColorResolver)
         {
@@ -77,9 +77,9 @@ namespace SlaamMono.SubClasses
                 ChosenProfile = new IntRange(0, 0, ProfileManager.PlayableProfiles.Count - 1);
         }
 
-        #endregion
+        
 
-        #region Update
+        
 
         public void Update()
         {
@@ -200,9 +200,9 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         public void Draw(SpriteBatch batch) // 387
         {
@@ -220,9 +220,9 @@ namespace SlaamMono.SubClasses
             TextManager.Instance.AddTextToRender(MsgStrings[0], new Vector2(20, 70), ResourceManager.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
         }
 
-        #endregion
+        
 
-        #region Info Reset Methods
+        
 
         /// <summary>
         /// Sets the new skins for display
@@ -255,9 +255,9 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        #endregion
+        
 
-        #region Find Skin Method
+        
 
         /// <summary>
         /// Finds the inserted skin, if its not found it gets a random one.
@@ -276,9 +276,9 @@ namespace SlaamMono.SubClasses
             RefreshSkins();
         }
 
-        #endregion
+        
 
-        #region Get Shell Method
+        
 
         /// <summary>
         /// Gets a characters base information into a simple class for the gamescreen.
@@ -292,9 +292,9 @@ namespace SlaamMono.SubClasses
             return new CharacterShell(ParentSkinStrings[ChosenSkin.Value], ProfileManager.PlayableProfiles.GetRealIndex(ChosenProfile.Value), (ExtendedPlayerIndex)PlayerIDX, type, _playerColorResolver.GetColorByIndex(PlayerIDX));
         }
 
-        #endregion
+        
 
-        #region Enums
+        
 
         public enum Status
         {
@@ -303,10 +303,10 @@ namespace SlaamMono.SubClasses
             Raising,
         }
 
-        #endregion
+        
     }
 
-    #region Enums
+    
 
     public enum CharSelectBoxState
     {
@@ -316,5 +316,5 @@ namespace SlaamMono.SubClasses
         Done,
     }
 
-    #endregion
+    
 }

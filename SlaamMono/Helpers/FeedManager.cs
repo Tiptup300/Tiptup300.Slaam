@@ -8,7 +8,7 @@ namespace SlaamMono.Helpers
     /// </summary>
     static class FeedManager
     {
-        #region Variables
+        
 
         public const float BarMovement = 15f / 10f;
         public const float TextMovement = 3f / 20f;
@@ -21,9 +21,9 @@ namespace SlaamMono.Helpers
 
         private static string FeedText;
 
-        #endregion
+        
 
-        #region Constructor
+        
 
         public static void InitializeFeeds(string str)
         {
@@ -33,9 +33,9 @@ namespace SlaamMono.Helpers
             FeedRect.Width = 0;
         }
 
-        #endregion
+        
 
-        #region Update
+        
 
         public static void Update()
         {
@@ -54,9 +54,9 @@ namespace SlaamMono.Helpers
             }
         }
 
-        #endregion
+        
 
-        #region Draw
+        
 
         public static void Draw(SpriteBatch batch)
         {
@@ -69,6 +69,6 @@ namespace SlaamMono.Helpers
 #endif
         }
 
-        #endregion
+        
     }
 }

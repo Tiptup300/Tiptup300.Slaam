@@ -16,7 +16,7 @@ namespace ZBlade
             onInit?.Invoke(this);
         }
 
-        #region MenuItem Overrides
+        
 
 
         public override bool DetectInput(ZuneButtons type)
@@ -27,15 +27,15 @@ namespace ZBlade
             return false;
         }
 
-        #endregion
+        
 
-        #region Object Overrides
+        
 
         public override string ToString()
         {
             return Text;
         }
 
-        #endregion
+        
     }
 }
