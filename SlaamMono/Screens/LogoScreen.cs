@@ -55,8 +55,6 @@ namespace SlaamMono.Screens
             }
         }
 
-        
-
         public void Draw(SpriteBatch batch)
         {
 #if DEBUG
@@ -68,16 +66,10 @@ namespace SlaamMono.Screens
             batch.Draw(ResourceManager.GetTexture("ZibithLogo").Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
-        
-
-        
-
         public void Close()
         {
             ResourceManager.GetTexture("ZibithLogo").Dispose();
             ResourceManager.GetTexture("ZibithLogoBG").Dispose();
         }
-
-        
     }
 }

@@ -38,7 +38,7 @@ namespace ZBlade
                 keyboardXPosition = value;
 
                 if (keyboardXPosition < 0)
-                    keyboardXPosition = KeyboardRowSize-1;
+                    keyboardXPosition = KeyboardRowSize - 1;
 
                 if (keyboardXPosition >= KeyboardRowSize)
                     keyboardXPosition -= KeyboardRowSize;
@@ -49,19 +49,19 @@ namespace ZBlade
 
         internal Key CurrentKey
         {
-            get 
+            get
             {
                 int x = 0;
                 int y = 0;
-                for(int i = 0; i < Keys.Length; i++)
+                for (int i = 0; i < Keys.Length; i++)
                 {
-                    if (KeyboardXPosition >= x && keyboardXPosition < x+Keys[i].Size &&
+                    if (KeyboardXPosition >= x && keyboardXPosition < x + Keys[i].Size &&
                         y == KeyboardYPosition)
                         return Keys[i];
 
                     x += Keys[i].Size;
 
-                    if(x >= KeyboardRowSize)
+                    if (x >= KeyboardRowSize)
                     {
                         y++;
                         x -= KeyboardRowSize;
@@ -163,7 +163,7 @@ namespace ZBlade
             instance.CurrentKeyboardIndex = instance.CurrentKeyboardString.Length;
             InfoBlade.BladeKeyOutSetup.MiddleButtonText = title;
             instance.OnFinished = onFinished;
-            
+
         }
 
         public static string EndShowKeyboardInput()
@@ -184,9 +184,9 @@ namespace ZBlade
             }
             if (input.IsPressed(ZuneButtons.PlayPause))
             {
-               // Keys = null;
-               // status = tempStatus;
-               // OnFinished(CurrentKeyboardString, null);
+                // Keys = null;
+                // status = tempStatus;
+                // OnFinished(CurrentKeyboardString, null);
             }
             else if (input.IsPressed(ZuneButtons.Back))
             {
@@ -199,9 +199,9 @@ namespace ZBlade
                 if (CurrentKey.Type == Key.KeyType.Normal && CurrentKeyboardString.Length != MaximumSize)
                 {
 
-                    if(PhoneNo && char.IsDigit(KeyToString(CurrentKey)[0]) && CurrentKeyboardString.Length < 10
+                    if (PhoneNo && char.IsDigit(KeyToString(CurrentKey)[0]) && CurrentKeyboardString.Length < 10
                         || !PhoneNo)
-                    CurrentKeyboardString = CurrentKeyboardString.Insert(CurrentKeyboardIndex++, KeyToString(CurrentKey));
+                        CurrentKeyboardString = CurrentKeyboardString.Insert(CurrentKeyboardIndex++, KeyToString(CurrentKey));
 
                     if (ShiftMode)
                     {
@@ -211,8 +211,8 @@ namespace ZBlade
                 }
                 else if (CurrentKey.Type == Key.KeyType.Left)
                 {
-                    if(CurrentKeyboardString.Length > 0)
-                        CurrentKeyboardString = CurrentKeyboardString.Remove(CurrentKeyboardIndex - 1,1);
+                    if (CurrentKeyboardString.Length > 0)
+                        CurrentKeyboardString = CurrentKeyboardString.Remove(CurrentKeyboardIndex - 1, 1);
                 }
                 else if (CurrentKey.Type == Key.KeyType.Right)
                     CurrentKeyboardIndex++;
@@ -255,8 +255,6 @@ namespace ZBlade
 
             if (KeyboardYPosition >= KeyboardColSize)
                 KeyboardYPosition -= KeyboardColSize;
-
-
         }
 
         internal string KeyToString(Key key)
@@ -297,7 +295,7 @@ namespace ZBlade
                 if (CurrentKeyboardString.Length > 10)
                     temp = CurrentKeyboardString.Substring(0, 10);
                 else if (CurrentKeyboardString.Length < 10)
-                    temp = CurrentKeyboardString.PadRight(10,'_');
+                    temp = CurrentKeyboardString.PadRight(10, '_');
 
                 string str = "(";
                 str += temp.Substring(0, 3);
@@ -318,11 +316,11 @@ namespace ZBlade
         {
             var ButtonPos = new Vector2(0, 8) + new Vector2(pos.X * blockSize.X, pos.Y * blockSize.Y);
 
-            var TextPos = ButtonPos + new Vector2(blockSize.X * key.Size, blockSize.Y)/2;
+            var TextPos = ButtonPos + new Vector2(blockSize.X * key.Size, blockSize.Y) / 2;
 
             int amt = 1;
 
-            if(highlighted)
+            if (highlighted)
             {
                 amt = 3;
             }
@@ -338,10 +336,10 @@ namespace ZBlade
             }
 
             if (highlighted)
-                Helpers.DrawString(batch, font_12, KeyToString(key), TextPos + new Vector2(1f,0), font_12.MeasureString(KeyToString(key)) / 2, Color.White);
+                Helpers.DrawString(batch, font_12, KeyToString(key), TextPos + new Vector2(1f, 0), font_12.MeasureString(KeyToString(key)) / 2, Color.White);
             else
-                Helpers.DrawString(batch, font_10, KeyToString(key), TextPos + new Vector2(.5f,.5f), font_10.MeasureString(KeyToString(key)) / 2f, Color.White);
-            
+                Helpers.DrawString(batch, font_10, KeyToString(key), TextPos + new Vector2(.5f, .5f), font_10.MeasureString(KeyToString(key)) / 2f, Color.White);
+
         }
     }
 
@@ -404,7 +402,7 @@ namespace ZBlade
 
                 case KeyType.Submit:
                     Value1 = "Submit";
-                    Value2 = "Submit"; 
+                    Value2 = "Submit";
                     Size = 2;
                     break;
             }
@@ -423,8 +421,4 @@ namespace ZBlade
         }
     }
 
-
-
-        
-    
 }

@@ -77,8 +77,6 @@ namespace SlaamMono.StatsBoards
             MainBoard.CalculateBlocks();
             return MainBoard;
         }
-
-
         public struct KillsPageListing
         {
             public int Kills;

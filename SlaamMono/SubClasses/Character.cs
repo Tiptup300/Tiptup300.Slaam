@@ -11,8 +11,6 @@ namespace SlaamMono.SubClasses
 {
     public class Character
     {
-        
-
         public const float CharDrawScale = GameGlobals.TILE_SIZE / 45f;//0.67f;
 
         public bool Drawn = false;
@@ -51,10 +49,6 @@ namespace SlaamMono.SubClasses
 
         public Powerup CurrentPowerup;
 
-        
-
-        
-
         public Character(Texture2D skin, int profileidx, Vector2 pos, InputDevice gamepad, Color markingcolor, int idx)
         {
             WalkingAnimationChange.MakeUpTime = false;
@@ -69,10 +63,6 @@ namespace SlaamMono.SubClasses
             for (int x = 0; x < SpeedMultiplyer.Length; x++)
                 SpeedMultiplyer[x] = 1f;
         }
-
-        
-
-        
 
         public virtual void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
         {
@@ -183,8 +173,6 @@ namespace SlaamMono.SubClasses
                     AttackingAnimationChange.Update(FrameRateDirector.MovementFactorTimeSpan);
                 }
 
-
-
             }
             else if (CurrentState == CharacterState.Attacking)
             {
@@ -268,10 +256,6 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        
-
-        
-
         public void Draw(SpriteBatch batch, Vector2 pos)
         {
             if (Lives == 0)
@@ -293,10 +277,6 @@ namespace SlaamMono.SubClasses
             batch.Draw(CharacterSkin, Position, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), SpriteColor, 0f, new Vector2(25, 50), CharDrawScale, fx, 0f);
 
         }
-
-        
-
-        
 
         /// <summary>
         /// Detects whether the selected tile is able to be walked over.
@@ -354,8 +334,6 @@ namespace SlaamMono.SubClasses
             return true;
         }
 
-        
-
         private void GetPowerup(Tile currtile)
         {
             if (CurrentPowerup != null && !CurrentPowerup.Used)
@@ -387,8 +365,6 @@ namespace SlaamMono.SubClasses
             currtile.MarkWithPowerup(PowerupType.None);
         }
 
-        
-
         /// <summary>
         /// Gets the profile of the current character based on the ProfileIndex.
         /// </summary>
@@ -408,10 +384,6 @@ namespace SlaamMono.SubClasses
             ProfileManager.AllProfiles[ProfileIndex].TotalGames += 1;
             ProfileManager.AllProfiles[ProfileIndex].TotalDeaths += Deaths;
         }
-
-        
-
-        
 
         /// <summary>
         /// Checks if the current player should die.
@@ -467,10 +439,6 @@ namespace SlaamMono.SubClasses
             GameScreen.Instance.tiles[(int)other.X, (int)other.Y].MarkTileForRespawn(MarkingColor, new TimeSpan(0, 0, 0, 8), PlayerIndex);
         }
 
-        
-
-        
-
         public enum CharacterState
         {
             Normal,
@@ -479,7 +447,5 @@ namespace SlaamMono.SubClasses
             Dead,
             Respawning,
         }
-
-        
     }
 }

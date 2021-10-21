@@ -32,8 +32,6 @@ namespace SlaamMono.Screens
             CurrentMatchSettings.SpeedMultiplyer = 1f;
             CurrentMatchSettings.RespawnTime = new TimeSpan(0, 0, 8);
             CurrentMatchSettings.LivesAmt = 1;
-
-
             Tileset = LobbyScreen.LoadQuickBoard();
 
             Characters.Add(new Character(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupChars[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0));
@@ -70,8 +68,6 @@ namespace SlaamMono.Screens
             }
 
             bool temp = CurrentGameStatus == GameStatus.Waiting;
-
-
 
             base.Update();
 
@@ -110,8 +106,8 @@ namespace SlaamMono.Screens
             ProfileManager.SaveProfiles();
             _screenDirector.ChangeTo(
                 new StatsScreen(
-                    ScoreKeeper, 
-                    DiImplementer.Instance.Get<ILogger>(), 
+                    ScoreKeeper,
+                    DiImplementer.Instance.Get<ILogger>(),
                     DiImplementer.Instance.Get<MainMenuScreen>(),
                     DiImplementer.Instance.Get<IScreenDirector>()));
         }

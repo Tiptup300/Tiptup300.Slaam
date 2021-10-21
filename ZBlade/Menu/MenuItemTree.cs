@@ -15,10 +15,6 @@ namespace ZBlade
             Parent = parent;
             onInit?.Invoke(this);
         }
-
-        
-
-
         public override bool DetectInput(ZuneButtons type)
         {
             if (type == ZuneButtons.PadCenter)
@@ -27,15 +23,9 @@ namespace ZBlade
             return false;
         }
 
-        
-
-        
-
         public override string ToString()
         {
             return Text;
         }
-
-        
     }
 }

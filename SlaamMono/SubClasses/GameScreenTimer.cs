@@ -13,8 +13,6 @@ namespace SlaamMono.SubClasses
     /// </summary>
     public class GameScreenTimer
     {
-        
-
         private Vector2 Position;
         public TimeSpan GameMatchTime;
         public TimeSpan TimeRemaining;
@@ -26,10 +24,6 @@ namespace SlaamMono.SubClasses
         private float StepSize;
         private float CurrentStep;
 
-        
-
-        
-
         public GameScreenTimer(Vector2 position, GameScreen parentgamescreen)
         {
             TimeRemaining = EndingTime;
@@ -40,10 +34,6 @@ namespace SlaamMono.SubClasses
             SetGameMatchTime(ParentGameScreen.ThisGameType);
 
         }
-
-        
-
-        
 
         public void Update(bool StartTiming)
         {
@@ -84,10 +74,6 @@ namespace SlaamMono.SubClasses
             SetGameMatchTime(ParentGameScreen.ThisGameType);
         }
 
-        
-
-        
-
         /// <summary>
         /// Draws the board on top of the gamescreen with various information
         /// </summary>
@@ -108,8 +94,6 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        
-
         private void SetGameMatchTime(GameType type)
         {
             if (type == GameType.Classic || type == GameType.Spree || type == GameType.Survival)
@@ -117,8 +101,6 @@ namespace SlaamMono.SubClasses
             else if (type == GameType.TimedSpree)
                 GameMatchTime = TimeRemaining;
         }
-
-        
 
         /// <summary>
         /// Takes an int and gives it leading leading zeros if it needs it.
@@ -132,7 +114,5 @@ namespace SlaamMono.SubClasses
             else
                 return x.ToString().Substring(0, 2);
         }
-
-        
     }
 }

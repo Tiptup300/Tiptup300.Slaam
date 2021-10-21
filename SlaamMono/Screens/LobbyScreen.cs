@@ -122,8 +122,6 @@ namespace SlaamMono.Screens
             FeedManager.InitializeFeeds(DialogStrings.LobbyScreenFeed);
         }
 
-        
-
         public void Update()
         {
             BackgroundManager.SetRotation(1f);
@@ -183,7 +181,7 @@ namespace SlaamMono.Screens
                 {
                     _screenDirector.ChangeTo(
                         new ClassicCharSelectScreen(
-                            DiImplementer.Instance.Get<ILogger>(), 
+                            DiImplementer.Instance.Get<ILogger>(),
                             DiImplementer.Instance.Get<MainMenuScreen>(),
                             DiImplementer.Instance.Get<IScreenDirector>()));
                     ProfileManager.ResetAllBots();
@@ -194,8 +192,6 @@ namespace SlaamMono.Screens
                 {
                     AddComputer();
                 }
-
-
                 if (InputComponent.Players[0].PressedDown && SetupChars.Count > PlayerAmt)
                 {
                     ProfileManager.ResetBot(SetupChars[SetupChars.Count - 1].CharProfile);
@@ -206,7 +202,7 @@ namespace SlaamMono.Screens
                 {
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
                     GameScreen.Instance = new GameScreen(
-                        SetupChars, 
+                        SetupChars,
                         DiImplementer.Instance.Get<ILogger>(),
                         DiImplementer.Instance.Get<IScreenDirector>());
                     _screenDirector.ChangeTo(GameScreen.Instance);
@@ -224,10 +220,6 @@ namespace SlaamMono.Screens
 
             }
         }
-
-        
-
-        
 #if !ZUNE
         public void Draw(SpriteBatch batch)
         {
@@ -294,10 +286,6 @@ namespace SlaamMono.Screens
             }
         }
 #endif
-        
-
-        
-
         public void Close()
         {
             CurrentBoardTexture = null;
@@ -306,10 +294,6 @@ namespace SlaamMono.Screens
             ResourceManager.GetTexture("LobbyColorPreview").Dispose();
             ResourceManager.GetTexture("LobbyOverlay").Dispose();
         }
-
-        
-
-        
 
         /// <summary>
         /// Loads the new Board Texture and loads its name/creator.
@@ -348,7 +332,5 @@ namespace SlaamMono.Screens
         {
             SetupChars.Add(new CharacterShell(ClassicCharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(SetupChars.Count)));
         }
-
-        
     }
 }

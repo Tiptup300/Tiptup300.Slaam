@@ -46,10 +46,6 @@ namespace SlaamMono.Screens
             }
             FeedManager.FeedsActive = false;
         }
-
-
-        
-
         public void Update()
         {
             if (InputComponent.Players[0].PressedAction)
@@ -72,10 +68,6 @@ namespace SlaamMono.Screens
                 _screenDirector.ChangeTo(_menuScreen);
             }
         }
-
-        
-
-        
 
         public void Draw(SpriteBatch batch)
         {
@@ -105,32 +97,20 @@ namespace SlaamMono.Screens
             TextHeight = Offset;
         }
 
-        
-
-        
-
         public void Close()
         {
 
         }
 
-        
-
-        
-
         private struct CreditsListing
         {
             public string Name;
             public List<string> Credits;
-
-
             public CreditsListing(string name, List<string> credits)
             {
                 Name = name;
                 Credits = credits;
             }
         }
-
-        
     }
 }

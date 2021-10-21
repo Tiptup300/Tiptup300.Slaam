@@ -8,8 +8,6 @@ namespace SlaamMono.Helpers
     /// </summary>
     static class FeedManager
     {
-        
-
         public const float BarMovement = 15f / 10f;
         public const float TextMovement = 3f / 20f;
 
@@ -21,10 +19,6 @@ namespace SlaamMono.Helpers
 
         private static string FeedText;
 
-        
-
-        
-
         public static void InitializeFeeds(string str)
         {
             FeedsActive = true;
@@ -32,10 +26,6 @@ namespace SlaamMono.Helpers
             TextX = 1350;
             FeedRect.Width = 0;
         }
-
-        
-
-        
 
         public static void Update()
         {
@@ -54,10 +44,6 @@ namespace SlaamMono.Helpers
             }
         }
 
-        
-
-        
-
         public static void Draw(SpriteBatch batch)
         {
 #if !ZUNE
@@ -68,7 +54,5 @@ namespace SlaamMono.Helpers
             }
 #endif
         }
-
-        
     }
 }

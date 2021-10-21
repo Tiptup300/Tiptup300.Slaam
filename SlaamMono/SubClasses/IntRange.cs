@@ -2,16 +2,10 @@ namespace SlaamMono.SubClasses
 {
     public class IntRange
     {
-        
-
         public int Value = 0;
         public int last = 0;
         public int Min = 0;
         public int Max = 0;
-
-        
-
-        
 
         public IntRange(int y)
         {
@@ -27,10 +21,6 @@ namespace SlaamMono.SubClasses
             if (Min > Max)
                 throw new System.Exception("Minimum is greater than maximum, WTF WERE YOU THINKING!?!?");
         }
-
-        
-
-        
 
         /// <summary>
         /// Previews the previous value.
@@ -68,10 +58,6 @@ namespace SlaamMono.SubClasses
             return a;
         }
 
-        
-
-        
-
         /// <summary>
         /// Adds the specified amount while staying in the min/max boundries.
         /// </summary>
@@ -102,10 +88,6 @@ namespace SlaamMono.SubClasses
             return Value;
         }
 
-        
-
-        
-
         /// <summary>
         /// Decides whether the current value is under/over the current range. If so it resets at the top/bottom and continues.
         /// </summary>
@@ -125,10 +107,6 @@ namespace SlaamMono.SubClasses
                 }
             }
         }
-
-        
-
-        
 
         /// <summary>
         /// Subtracts the specified amount while staying in the min/max boundries.
@@ -159,7 +137,5 @@ namespace SlaamMono.SubClasses
 
             return Value;
         }
-
-        
     }
 }

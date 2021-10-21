@@ -4,16 +4,10 @@ namespace SlaamMono.SubClasses
 {
     public class MatchScoreCollection
     {
-        
-
         public GameScreen ParentGameScreen;
         public int[][] Kills;
         public int[] BestSprees;
         private int[] Sprees;
-
-
-        
-
         public MatchScoreCollection(GameScreen parentgamecreen)
         {
             ParentGameScreen = parentgamecreen;
@@ -73,8 +67,6 @@ namespace SlaamMono.SubClasses
         }
     }
 
-    
-
     public enum Places
     {
         Loser = 0,
@@ -87,8 +79,6 @@ namespace SlaamMono.SubClasses
         Seventh = 7,
         Eighth = 8,
     }
-
-    
 
     public enum GameType
     {

@@ -29,10 +29,6 @@ namespace SlaamMono.Screens
         private readonly ILogger _logger;
         private readonly MainMenuScreen _menuScreen;
         private readonly IScreenDirector _screenDirector;
-
-
-        
-
         public ClassicCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
         {
             _logger = logger;
@@ -77,10 +73,6 @@ namespace SlaamMono.Screens
 
         }
 
-        
-
-        
-
         public void Update()
         {
             BackgroundManager.SetRotation(1f);
@@ -88,8 +80,8 @@ namespace SlaamMono.Screens
             PeopleIn = 0;
 
             if (
-                PeopleIn == 0 && 
-                InputComponent.Players[0].PressedAction2 && 
+                PeopleIn == 0 &&
+                InputComponent.Players[0].PressedAction2 &&
                 SelectBoxes[0].CurrentState == CharSelectBoxState.Computer)
             {
                 GoBack();
@@ -128,15 +120,11 @@ namespace SlaamMono.Screens
 
             _screenDirector.ChangeTo(
                 new LobbyScreen(
-                    characterShells, 
+                    characterShells,
                     DiImplementer.Instance.Get<ILogger>(),
                     DiImplementer.Instance.Get<IScreenDirector>(),
                     DiImplementer.Instance.Get<PlayerColorResolver>()));
         }
-
-        
-
-        
 
         public void Draw(SpriteBatch batch)
         {
@@ -145,18 +133,10 @@ namespace SlaamMono.Screens
                     SelectBoxes[idx].Draw(batch);
         }
 
-        
-
-        
-
         public void Close()
         {
             SelectBoxes = null;
         }
-
-        
-
-        
 
         public static List<string> Skins = new List<string>();
         public static bool SkinsLoaded = false;
@@ -223,7 +203,5 @@ namespace SlaamMono.Screens
             new Vector2(600, 768),
 
         };
-
-        
     }
 }

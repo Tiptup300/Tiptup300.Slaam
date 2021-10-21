@@ -13,8 +13,6 @@ namespace SlaamMono.SubClasses
 {
     public class CharSelectBox
     {
-        
-
         private const float ScrollSpeed = 4f / 35f;
 
         private List<string> ParentSkinStrings = new List<string>();
@@ -37,10 +35,6 @@ namespace SlaamMono.SubClasses
         private string[] MsgStrings = new string[6];
 
         public bool Survival = false;
-
-        
-
-        
 
         public CharSelectBox(Vector2 Position, Texture2D[] parentcharskins, ExtendedPlayerIndex playeridx, List<string> parentskinstrings, PlayerColorResolver playerColorResolver)
         {
@@ -76,10 +70,6 @@ namespace SlaamMono.SubClasses
             if (ChosenProfile == null || ProfileManager.PlayableProfiles.Count - 1 != ChosenProfile.Max)
                 ChosenProfile = new IntRange(0, 0, ProfileManager.PlayableProfiles.Count - 1);
         }
-
-        
-
-        
 
         public void Update()
         {
@@ -200,10 +190,6 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        
-
-        
-
         public void Draw(SpriteBatch batch) // 387
         {
             batch.Draw(ResourceManager.GetTexture("ProfileShell").Texture, new Vector2(13, 96), Color.White);
@@ -219,10 +205,6 @@ namespace SlaamMono.SubClasses
             TextManager.Instance.AddTextToRender(temp, new Vector2(31, 141), ResourceManager.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
             TextManager.Instance.AddTextToRender(MsgStrings[0], new Vector2(20, 70), ResourceManager.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
         }
-
-        
-
-        
 
         /// <summary>
         /// Sets the new skins for display
@@ -255,10 +237,6 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        
-
-        
-
         /// <summary>
         /// Finds the inserted skin, if its not found it gets a random one.
         /// </summary>
@@ -276,10 +254,6 @@ namespace SlaamMono.SubClasses
             RefreshSkins();
         }
 
-        
-
-        
-
         /// <summary>
         /// Gets a characters base information into a simple class for the gamescreen.
         /// </summary>
@@ -292,21 +266,13 @@ namespace SlaamMono.SubClasses
             return new CharacterShell(ParentSkinStrings[ChosenSkin.Value], ProfileManager.PlayableProfiles.GetRealIndex(ChosenProfile.Value), (ExtendedPlayerIndex)PlayerIDX, type, _playerColorResolver.GetColorByIndex(PlayerIDX));
         }
 
-        
-
-        
-
         public enum Status
         {
             Lowering,
             Stationary,
             Raising,
         }
-
-        
     }
-
-    
 
     public enum CharSelectBoxState
     {
@@ -315,6 +281,4 @@ namespace SlaamMono.SubClasses
         CharSelect,
         Done,
     }
-
-    
 }

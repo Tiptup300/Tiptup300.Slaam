@@ -10,16 +10,12 @@ namespace ZBlade
         public string Text { get; set; }
 
         public event EventHandler Activated;
-
-
         public MenuTextItem(string text, EventHandler onActivated = null, bool isEnabled = true)
         {
             Text = text;
             Activated = onActivated;
             IsEnabled = isEnabled;
         }
-
-        
 
         public override void Draw(SpriteBatch batch, Vector2 position, bool isSelected)
         {
@@ -49,8 +45,6 @@ namespace ZBlade
             }
             return false;
         }
-
-        
 
         public override string ToString() => Text;
     }

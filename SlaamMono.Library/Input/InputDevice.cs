@@ -40,8 +40,6 @@ namespace SlaamMono.Library.Input
                 PlayerIndex = playerIndex;
                 KeyboardIndex = keyboardIndex;
             }
-
-
         }
 
         public void Update()

@@ -17,8 +17,6 @@ namespace SlaamMono.StatsBoards
         private int RowsToDraw;
 
         private ILogger _logger;
-
-
         public SurvivalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, int rowstodraw, ILogger logger)
             : base(scorekeeper)
         {
@@ -36,8 +34,6 @@ namespace SlaamMono.StatsBoards
             if (AddingNewChar)
                 PeopleToCompare[0] = new SurvivalStatsPageListing(ParentScoreCollector.ParentGameScreen.Characters[0].GetProfile().Name, ParentScoreCollector.ParentGameScreen.Characters[0].Kills, ParentScoreCollector.ParentGameScreen.Characters[0].TimeAlive,
                 DateTime.Now.ToString());
-
-
 
             SurvivalStatsPage = new List<SurvivalStatsPageListing>();
 
@@ -168,8 +164,6 @@ namespace SlaamMono.StatsBoards
                 int Kills = reader.ReadInt32();
                 TimeSpan TimeSurvived = new TimeSpan(0, 0, 0, 0, reader.ReadInt32());
                 string DateSet = reader.ReadString();
-
-
                 PeopleToCompare[x] = new SurvivalStatsPageListing(Name, Kills, TimeSurvived, DateSet);
             }
 
@@ -179,8 +173,6 @@ namespace SlaamMono.StatsBoards
         public void XNASaveHighScores()
         {
             XnaContentWriter writer = new XnaContentWriter(DialogStrings.SurvivalScoresFilename);
-
-
             writer.Write(PeopleToCompare.Length);
 
             for (int x = 0; x < PeopleToCompare.Length; x++)
@@ -206,6 +198,4 @@ namespace SlaamMono.StatsBoards
                 return x + "th";
         }
     }
-
-
 }

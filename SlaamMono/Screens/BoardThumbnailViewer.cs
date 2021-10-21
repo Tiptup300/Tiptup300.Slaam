@@ -190,8 +190,6 @@ namespace SlaamMono.Screens
 
                 }
             }
-
-
         }
 
         public Rectangle CenteredRectangle;
@@ -219,8 +217,6 @@ namespace SlaamMono.Screens
                     {
                         save = DrawingBoardIndex.Value;
                     }
-
-
                     DrawingBoardIndex.Add(1);
                 }
             }

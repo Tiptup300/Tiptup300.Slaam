@@ -11,8 +11,6 @@ namespace SlaamMono.SubClasses
 {
     public class BotPlayer : Character
     {
-        
-
         GameScreen ParentGameScreen;
         InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
         Timer DiagonalMovementSwitch = new Timer(new TimeSpan(0, 0, 0, 0, 500));
@@ -28,10 +26,6 @@ namespace SlaamMono.SubClasses
         private readonly Vector2 NullVector2 = new Vector2(-2, -2);
         private Target CurrentTarget;
         private bool SwitchMovements = false;
-        
-
-        
-
         public BotPlayer(Texture2D skin, int profile, Vector2 pos, GameScreen parentgamescreen, Color markingcolor, int plyeridx) :
             base(skin, profile, pos, null, markingcolor, plyeridx)
         {
@@ -39,17 +33,11 @@ namespace SlaamMono.SubClasses
             ParentGameScreen = parentgamescreen;
             IsBot = true;
 
-
-
             PlacesToGo.Add(new int[] { 0, 1 });
             PlacesToGo.Add(new int[] { 0, -1 });
             PlacesToGo.Add(new int[] { 1, 0 });
             PlacesToGo.Add(new int[] { -1, 0 });
         }
-
-        
-
-
         public override void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
         {
             AIInput.PressedAction2 = false;
@@ -67,8 +55,6 @@ namespace SlaamMono.SubClasses
                 LogicUpdateThreshold.Reset();
             }
 
-
-
             CreateInput();
 
             base.Update(tiles, CurrentCoordinates, TilePos);
@@ -80,8 +66,6 @@ namespace SlaamMono.SubClasses
         {
             Tile CurrentTile = tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
             bool Moving = true, Attacking = false, InDanger = CurrentTile.CurrentTileCondition != Tile.TileCondition.Normal && CurrentTile.CurrentTileCondition != Tile.TileCondition.RespawnPoint;
-
-
             if (CurrentState == CharacterState.Dead || CurrentState == CharacterState.Dieing)
             {
                 // Dont Do Anything...your dead!
@@ -342,8 +326,6 @@ namespace SlaamMono.SubClasses
         {
             if (CurrentPowerup != null && !CurrentPowerup.Used && CurrentPowerup.ThisPowerupsUse == use)
                 return true;
-
-
             return false;
         }
 
@@ -370,8 +352,6 @@ namespace SlaamMono.SubClasses
             return false;
 
         }
-
-        
 
         /// <summary>
         /// Takes in the current Directions and converts them into actual input.
@@ -432,10 +412,6 @@ namespace SlaamMono.SubClasses
 #endif
         }
 
-        
-
-        
-
         /// <summary>
         /// Calc's the distance from point A to B
         /// </summary>
@@ -452,10 +428,6 @@ namespace SlaamMono.SubClasses
             return IsSafe(new Vector2(Coords.X + x, Coords.Y + y));
         }
 
-        
-
-        
-
         private enum BotStatus
         {
             GoingTowardsEnemy,
@@ -463,11 +435,7 @@ namespace SlaamMono.SubClasses
             Roaming,
         }
 
-        
-
     }
-
-
     public enum Direction
     {
         UpperLeft,

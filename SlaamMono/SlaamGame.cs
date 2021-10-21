@@ -62,8 +62,6 @@ namespace SlaamMono
         {
             Components.Insert(0, new FrameRateDirector(this));
             Components.Add(new InputComponent(this));
-
-
             SetupZuneBlade();
             _logger.Log("Creating SpriteBatch...");
             gamebatch = new SpriteBatch(graphics.GraphicsDevice);
@@ -73,7 +71,7 @@ namespace SlaamMono
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
             ResourceManager.Initiailze(
-                DiImplementer.Instance.Get<ILogger>(), 
+                DiImplementer.Instance.Get<ILogger>(),
                 DiImplementer.Instance.Get<IPixelFactory>(),
                 DiImplementer.Instance.Get<IResourceLoader>(),
                 DiImplementer.Instance.Get<ITextRenderer>());
@@ -100,8 +98,6 @@ namespace SlaamMono
 
             Components.Add(mainBlade);
         }
-
-
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -128,8 +124,6 @@ namespace SlaamMono
             }
 
         }
-
-
         protected override void Draw(GameTime gameTime)
         {
 
@@ -158,8 +152,6 @@ namespace SlaamMono
 
             base.Draw(gameTime);
         }
-
-
 
         void Game1_Exiting(object sender, EventArgs e)
         {

@@ -31,8 +31,6 @@ namespace SlaamMono.Screens
         public const int MAX_HIGHSCORES = 5;
 #endif
         private Color StatsCol = new Color(0, 0, 0, 125);
-
-
         public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
         {
             ScoreCollection = scorecollection;
@@ -105,8 +103,6 @@ namespace SlaamMono.Screens
             }
         }
 
-        
-
         public void Update()
         {
             BackgroundManager.SetRotation(1f);
@@ -146,10 +142,6 @@ namespace SlaamMono.Screens
             }
         }
 
-        
-
-        
-
         public void Draw(SpriteBatch batch)
         {
             Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.GetTexture("StatsBoard").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.GetTexture("StatsBoard").Height / 2);
@@ -174,15 +166,9 @@ namespace SlaamMono.Screens
 #endif
         }
 
-        
-
-        
-
         public void Close()
         {
 
         }
-
-        
     }
 }

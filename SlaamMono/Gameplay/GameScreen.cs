@@ -14,8 +14,6 @@ namespace SlaamMono.Screens
 {
     public class GameScreen : IScreen
     {
-        
-
         public static GameScreen Instance;
 
         public GameScreenTimer Timer;
@@ -66,10 +64,6 @@ namespace SlaamMono.Screens
         private float SpreeStepSize;
         private float SpreeCurrentStep;
         private int SpreeHighestKillCount;
-        
-
-        
-
         public GameScreen(List<CharacterShell> chars, ILogger logger, IScreenDirector screenDirector)
         {
             SetupChars = chars;
@@ -101,8 +95,6 @@ namespace SlaamMono.Screens
             ScoreKeeper = new MatchScoreCollection(this);
             ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.BattleScreen);
-
-
             if (ThisGameType == GameType.Classic)
             {
                 StepsRemaining = SetupChars.Count - 1;
@@ -134,8 +126,6 @@ namespace SlaamMono.Screens
                 BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.BattleScreen);
                 SlaamGame.mainBlade.Status = BladeStatus.Hidden;
             };
-
-
             MenuTextItem quit = new MenuTextItem("Quit Game");
 
             quit.Activated += delegate
@@ -149,7 +139,7 @@ namespace SlaamMono.Screens
 
             SlaamGame.mainBlade.TopMenu = main;
         }
-        
+
         public virtual void SetupTheBoard(string BoardLoc)
         {
             Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, BoardLoc);
@@ -406,8 +396,6 @@ namespace SlaamMono.Screens
             if (Characters[Killee].Lives == 0 && ThisGameType == GameType.Classic)
                 ShortenBoard();
 
-
-
             if (Killer != -2 && Killer < Characters.Count)
             {
                 Characters[Killer].Kills++;
@@ -525,8 +513,8 @@ namespace SlaamMono.Screens
             ProfileManager.SaveProfiles();
             _screenDirector.ChangeTo(
                 new StatsScreen(
-                    ScoreKeeper, 
-                    DiImplementer.Instance.Get<ILogger>(), 
+                    ScoreKeeper,
+                    DiImplementer.Instance.Get<ILogger>(),
                     DiImplementer.Instance.Get<MainMenuScreen>(),
                     DiImplementer.Instance.Get<IScreenDirector>()));
         }

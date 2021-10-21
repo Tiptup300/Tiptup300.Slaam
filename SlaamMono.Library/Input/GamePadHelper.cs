@@ -46,8 +46,6 @@ namespace SlaamMono.Library.Input
         public bool PressingPadDown { get { return Pressing(CurrentState.DPad.Down, LastState.DPad.Down); } }
         public bool PressingPadLeft { get { return Pressing(CurrentState.DPad.Left, LastState.DPad.Left); } }
         public bool PressingPadRight { get { return Pressing(CurrentState.DPad.Right, LastState.DPad.Right); } }
-
-
         public bool PressingLeftShoulder { get { return Pressed(CurrentState.Buttons.LeftShoulder, LastState.Buttons.RightShoulder); } }
         public bool PressingRightShoulder { get { return Pressed(CurrentState.DPad.Up, LastState.DPad.Up); } }
 
@@ -60,8 +58,6 @@ namespace SlaamMono.Library.Input
         public bool PressingLeftStickDown { get { return CurrentState.ThumbSticks.Left.Y <= -0.5f; } }
         public bool PressingLeftStickRight { get { return CurrentState.ThumbSticks.Left.X >= 0.5f; } }
         public bool PressingLeftStickLeft { get { return CurrentState.ThumbSticks.Left.X <= -0.5f; } }
-
-
         private bool Pressed(ButtonState last, ButtonState curr)
         {
             return last == ButtonState.Released && curr == ButtonState.Pressed;

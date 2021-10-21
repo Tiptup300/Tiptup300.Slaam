@@ -11,8 +11,6 @@ namespace SlaamMono.SubClasses
         /// The amount of time the input has been held
         /// </summary>
         private TimeSpan HoldCount;
-
-
         public TimeSpan TimeLeft
         {
             get

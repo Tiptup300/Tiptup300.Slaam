@@ -7,8 +7,6 @@ namespace SlaamMono.Library.Logging
         private const string DefaultFileName = "log.log";
 
         private TextWriter _textWriter;
-
-
         public void Begin()
         {
             _textWriter = File.CreateText(DefaultFileName);

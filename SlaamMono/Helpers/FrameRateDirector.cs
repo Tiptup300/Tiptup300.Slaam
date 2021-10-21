@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using System;
-
-
 namespace SlaamMono.Helpers
 {
     /// <summary>
@@ -55,5 +53,3 @@ namespace SlaamMono.Helpers
         }
     }
 }
-
-

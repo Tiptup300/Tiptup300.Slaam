@@ -9,18 +9,12 @@ namespace SlaamMono.Helpers
     /// </summary>
     static class BackgroundManager
     {
-        
-
         private static BackgroundType CurrentType = BackgroundType.Normal;
         private static float BGOffset = 0f;
         private static float Rotation = 0f;
         private const float RotationSpeed = MathHelper.Pi / 3000f;
         private static float Multiplier = 1f;
         //private static TimeSpan TimeElapsed = new TimeSpan();
-
-        
-
-        
 
         public static void Update()
         {
@@ -35,10 +29,6 @@ namespace SlaamMono.Helpers
                 Rotation += FrameRateDirector.MovementFactor * RotationSpeed * Multiplier;
             }
         }
-
-        
-
-        
 
         public static void Draw(SpriteBatch batch)
         {
@@ -70,10 +60,6 @@ namespace SlaamMono.Helpers
             ChangeBG(temp);
         }
 
-        
-
-        
-
         /// <summary>
         /// Sets the background type and does calculations for the according type.
         /// </summary>
@@ -88,10 +74,6 @@ namespace SlaamMono.Helpers
             Multiplier = rotation;
         }
 
-        
-
-        
-
         public enum BackgroundType
         {
             Normal,
@@ -99,7 +81,5 @@ namespace SlaamMono.Helpers
             Credits,
             BattleScreen,
         }
-
-        
     }
 }

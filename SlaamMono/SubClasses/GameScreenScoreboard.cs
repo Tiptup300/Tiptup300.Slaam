@@ -12,8 +12,6 @@ namespace SlaamMono.SubClasses
     /// </summary>
     public class GameScreenScoreboard
     {
-        
-
         private Vector2 Position;
         private Character Character;
         public bool Moving = false;
@@ -22,20 +20,12 @@ namespace SlaamMono.SubClasses
         private bool AlphaUp = false;
         private float Alpha = 255f;
 
-        
-
-        
-
         public GameScreenScoreboard(Vector2 position, Character character, GameType type)
         {
             Position = position;
             Character = character;
             CurrentGametype = type;
         }
-
-        
-
-        
 
         public void Update()
         {
@@ -68,10 +58,6 @@ namespace SlaamMono.SubClasses
                 Alpha = 255f;
         }
 
-        
-
-        
-
         public void Draw(SpriteBatch batch)
         {
             batch.Draw(ResourceManager.GetTexture("GameScreenScoreBoard").Texture, Position, Color.White);
@@ -90,7 +76,5 @@ namespace SlaamMono.SubClasses
             if (Character.CurrentPowerup != null && !Character.CurrentPowerup.Used)
                 batch.Draw(Character.CurrentPowerup.SmallTex, new Vector2(125 + Position.X - Character.CurrentPowerup.SmallTex.Width / 2, 42 + Position.Y - Character.CurrentPowerup.SmallTex.Height / 2), new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));
         }
-
-        
     }
 }

@@ -30,15 +30,13 @@ namespace ZBlade
             get { return width; }
             set { width = value; }
         }
-
-
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(SpriteBatch batch, Vector2 Position);
     }
 
     public class InfoBlade : IBlade
     {
-        
+
         /// <summary>
         /// Gets or sets the display data for when the blade is out.
         /// </summary>
@@ -96,7 +94,7 @@ namespace ZBlade
                 batch,
                 ZuneBlade.Font12,
                 CurrentBladeSetup.PlayButtonText,
-                Position + new Vector2(Width-10, (int)(Height / 2)),
+                Position + new Vector2(Width - 10, (int)(Height / 2)),
                 new Vector2(
                     ZuneBlade.Font12.MeasureString(CurrentBladeSetup.PlayButtonText).X,
                     ZuneBlade.Font12.MeasureString(CurrentBladeSetup.PlayButtonText).Y / 2f));

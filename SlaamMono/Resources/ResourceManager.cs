@@ -49,8 +49,6 @@ namespace SlaamMono.Resources
 
             WhitePixel = _pixelFactory.BuildPixel();
             _logger.Log(" - Dot Image Created.");
-
-
             _textures = loadTextures();
             _fonts = loadFonts();
 

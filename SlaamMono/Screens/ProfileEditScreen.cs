@@ -10,7 +10,7 @@ namespace SlaamMono.Screens
 {
     class ProfileEditScreen : IScreen
     {
-        public static ProfileEditScreen Instance = 
+        public static ProfileEditScreen Instance =
             new ProfileEditScreen(
                 DiImplementer.Instance.Get<MainMenuScreen>(),
                 DiImplementer.Instance.Get<IScreenDirector>());
@@ -39,8 +39,6 @@ namespace SlaamMono.Screens
 
             SetupMainMenu();
             ResetSubMenu();
-
-
             if (SetupNewProfile)
             {
                 SetupNewProfile = false;
@@ -163,8 +161,6 @@ namespace SlaamMono.Screens
             }
         }
 
-        
-
         public void Draw(SpriteBatch batch)
         {
 
@@ -174,16 +170,10 @@ namespace SlaamMono.Screens
                 SubMenu.Draw(batch);
         }
 
-        
-
-        
-
         public void Close()
         {
 
         }
-
-        
 
         private void SetupMainMenu()
         {

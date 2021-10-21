@@ -76,8 +76,4 @@ namespace SlaamMono.Library.Input
         }
 
     }
-
-
-
-
 }

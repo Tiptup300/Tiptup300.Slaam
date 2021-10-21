@@ -10,7 +10,7 @@ namespace SlaamMono.SubClasses
 {
     public class Tile
     {
-        
+
         private Vector2 AbsTileloc;
         private Vector2 TileCoors;
         private Texture2D ParentTileTileset;
@@ -36,10 +36,6 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        
-
-        
-
         public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex)
         {
             ParentTileTileset = tiletex;
@@ -52,10 +48,6 @@ namespace SlaamMono.SubClasses
             ParentTileTileset = parenttiletex;
             AbsTileloc = tile.AbsTileloc;
         }
-
-        
-
-        
 
         public void Update()
         {
@@ -103,10 +95,6 @@ namespace SlaamMono.SubClasses
             }
         }
 
-        
-
-        
-
         public void Draw(SpriteBatch batch)
         {
             if (CurrentTileCondition != TileCondition.Clear)
@@ -130,10 +118,6 @@ namespace SlaamMono.SubClasses
             if (CurrentTileCondition != TileCondition.Clear)
                 batch.Draw(ResourceManager.WhitePixel, new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
         }
-
-        
-
-        
 
         /// <summary>
         /// Marks the current tile for respawn so its invincible.
@@ -180,10 +164,6 @@ namespace SlaamMono.SubClasses
                 Dead = cominback;
         }
 
-        
-
-        
-
         /// <summary>
         /// Resets real location of tile on screen.
         /// </summary>
@@ -210,10 +190,6 @@ namespace SlaamMono.SubClasses
             ReappearSpeed.Reset();
         }
 
-        
-
-        
-
         public enum TileCondition
         {
             Normal,
@@ -222,7 +198,5 @@ namespace SlaamMono.SubClasses
             Clearing,
             Clear
         }
-
-        
     }
 }

@@ -10,8 +10,6 @@ namespace SlaamMono.Input
 {
     public static class Qwerty
     {
-        
-
         private const float MovementSpeed = (20f / 10f);
 
         public static bool Active = false;
@@ -32,8 +30,6 @@ namespace SlaamMono.Input
         {
             InitKeys();
         }
-
-
         public static void InitKeys()
         {
             Keys[0, 0] = new QwertyKey("q", QwertyKeyType.Normal);
@@ -163,10 +159,6 @@ namespace SlaamMono.Input
             }
         }
 
-        
-
-        
-
         public static void Draw(SpriteBatch batch)
         {
             batch.Draw(ResourceManager.WhitePixel, new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 200));
@@ -201,10 +193,6 @@ namespace SlaamMono.Input
             else
                 batch.Draw(ResourceManager.GetTexture("SpaceHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
         }
-
-        
-
-        
 
         /// <summary>
         /// Displays the board onscreen in cool motion
@@ -292,7 +280,5 @@ namespace SlaamMono.Input
             if (SelectedPosition.Y < 0)
                 SelectedPosition.Y = 3;
         }
-
-
     }
 }
