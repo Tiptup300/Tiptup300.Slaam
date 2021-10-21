@@ -11,26 +11,21 @@ namespace SlaamMono.Resources
 {
     public static class ResourceManager
     {
-
+        public static CachedTexture[] StatsButtons = new CachedTexture[3];
+        // Text Files
+        public static List<string> BotNames;
+        public static List<string> Credits;
+        // PowerUps 
+        public static CachedTexture[] PU_SpeedUp = new CachedTexture[2];
+        public static CachedTexture[] PU_SpeedDown = new CachedTexture[2];
+        public static CachedTexture[] PU_Inversion = new CachedTexture[2];
+        public static CachedTexture[] PU_Slaam = new CachedTexture[2];
         // General
         public static Texture2D WhitePixel;
 
         private static Dictionary<string, CachedTexture> _textures;
         private static Dictionary<string, SpriteFont> _fonts;
 
-        public static CachedTexture[] StatsButtons = new CachedTexture[3];
-
-        // Text Files
-        public static List<string> BotNames;
-        public static List<string> Credits;
-        // Menu
-        public static CachedTexture MenuChoice;
-        public static CachedTexture MenuChoiceGlow;
-        // PowerUps 
-        public static CachedTexture[] PU_SpeedUp = new CachedTexture[2];
-        public static CachedTexture[] PU_SpeedDown = new CachedTexture[2];
-        public static CachedTexture[] PU_Inversion = new CachedTexture[2];
-        public static CachedTexture[] PU_Slaam = new CachedTexture[2];
 
         // Player Colors
         public static Color[] PlayerColors = new Color[] {
