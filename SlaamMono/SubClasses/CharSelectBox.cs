@@ -6,7 +6,6 @@ using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Resources;
 using SlaamMono.StatsBoards;
-using System;
 using System.Collections.Generic;
 
 namespace SlaamMono.SubClasses
