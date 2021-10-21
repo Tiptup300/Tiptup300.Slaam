@@ -16,24 +16,28 @@ namespace SlaamMono.Resources
         private Dictionary<string, string[]> _textLists;
 
         private ILogger _logger;
-        private IWhitePixelResolver _pixelFactory;
         private IResourceLoader _resourceLoader;
 
         public ResourceManager(
             ILogger logger,
-            IWhitePixelResolver pixelFactory,
             IResourceLoader resourceLoader)
         {
             _logger = logger;
-            _pixelFactory = pixelFactory;
             _resourceLoader = resourceLoader;
 
             Instance = this;
         }
 
+        public CachedTexture GetTexture(string textureName) => _textures[textureName];
+        public SpriteFont GetFont(string fontName) => _fonts[fontName];
+        public List<string> GetTextList(string listName) => _textLists[listName].ToList();
+
         public void LoadAll()
         {
             _logger.Log("Resources Loading...");
+
+            _textLists = loadTextLists();
+            _logger.Log("Text Lists Loaded.");
 
             _textures = loadTextures();
             _logger.Log("Textures Loaded.");
@@ -41,12 +45,8 @@ namespace SlaamMono.Resources
             _fonts = loadFonts();
             _logger.Log("Fonts Loaded.");
 
-            _textLists = loadTextLists();
-
-
             _logger.Log("All Resources Finished Loading;");
         }
-
         private Dictionary<string, string[]> loadTextLists()
         {
             Dictionary<string, string[]> output;
@@ -57,23 +57,6 @@ namespace SlaamMono.Resources
 
             return output;
         }
-
-        private void loadPowerup(CachedTexture[] Texs, string powerupname)
-        {
-        }
-
-        private Dictionary<string, SpriteFont> loadFonts()
-        {
-            Dictionary<string, SpriteFont> output;
-
-            output = new Dictionary<string, SpriteFont>();
-            output["SegoeUIx32pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI-32pt");
-            output["SegoeUIx14pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI-14pt");
-            output["SegoeUIx48ptBold"] = _resourceLoader.Load<SpriteFont>("SegoeUI-48pt");
-
-            return output;
-        }
-
         private Dictionary<string, CachedTexture> loadTextures()
         {
             Dictionary<string, CachedTexture> output;
@@ -111,21 +94,21 @@ namespace SlaamMono.Resources
 
             return output;
         }
-
-        public CachedTexture GetTexture(string textureName)
+        private Dictionary<string, SpriteFont> loadFonts()
         {
-            return _textures[textureName];
+            Dictionary<string, SpriteFont> output;
+
+            output = new Dictionary<string, SpriteFont>();
+            output["SegoeUIx32pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI-32pt");
+            output["SegoeUIx14pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI-14pt");
+            output["SegoeUIx48ptBold"] = _resourceLoader.Load<SpriteFont>("SegoeUI-48pt");
+
+            return output;
         }
 
-        public SpriteFont GetFont(string fontName)
-        {
-            return _fonts[fontName];
-        }
 
-        public List<string> GetTextList(string listName)
-        {
-            return _textLists[listName].ToList();
-        }
+
+
 
     }
 }
