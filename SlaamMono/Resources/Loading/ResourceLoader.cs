@@ -12,23 +12,23 @@ namespace SlaamMono.Resources.Loading
         private readonly Dictionary<Type, IFileLoader> _fileLoaders;
 
         public ResourceLoader(
-            IFileLoader<SpriteFont> fontLoader, 
-            IFileLoader<IEnumerable<string>> textLineLoader, 
+            IFileLoader<SpriteFont> fontLoader,
+            IFileLoader<string[]> textLineLoader,
             IFileLoader<CachedTexture> cachedTextureFactory)
         {
             _fileLoaders = buildFileLoaders(fontLoader, textLineLoader, cachedTextureFactory);
         }
 
         public Dictionary<Type, IFileLoader> buildFileLoaders(
-            IFileLoader<SpriteFont> fontLoader, 
-            IFileLoader<IEnumerable<string>> textLineLoader, 
+            IFileLoader<SpriteFont> fontLoader,
+            IFileLoader<string[]> textLineLoader,
             IFileLoader<CachedTexture> cachedTextureFactory)
         {
             Dictionary<Type, IFileLoader> output;
 
             output = new Dictionary<Type, IFileLoader>();
             output.Add(typeof(SpriteFont), fontLoader);
-            output.Add(typeof(IEnumerable<string>), textLineLoader);
+            output.Add(typeof(string[]), textLineLoader);
             output.Add(typeof(CachedTexture), cachedTextureFactory);
 
             return output;

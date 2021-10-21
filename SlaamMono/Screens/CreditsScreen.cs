@@ -31,7 +31,7 @@ namespace SlaamMono.Screens
 
         public void Open()
         {
-            credits = ResourceManager.Instance.Credits.ToArray();
+            credits = ResourceManager.Instance.GetTextList("Credits").ToArray();
             BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Credits);
             for (int x = 0; x < credits.Length; x++)
             {

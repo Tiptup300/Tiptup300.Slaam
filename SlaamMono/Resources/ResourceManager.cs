@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources.Loading;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,12 +11,9 @@ namespace SlaamMono.Resources
     {
         public static ResourceManager Instance;
 
-        // Text Files
-        public List<string> BotNames;
-        public List<string> Credits;
-
         private Dictionary<string, CachedTexture> _textures;
         private Dictionary<string, SpriteFont> _fonts;
+        private Dictionary<string, string[]> _textLists;
 
         private ILogger _logger;
         private IWhitePixelResolver _pixelFactory;
@@ -36,16 +34,30 @@ namespace SlaamMono.Resources
         public void LoadAll()
         {
             _logger.Log("Resources Loading...");
+
             _textures = loadTextures();
             _logger.Log("Textures Loaded.");
+
             _fonts = loadFonts();
             _logger.Log("Fonts Loaded.");
 
-            BotNames = _resourceLoader.Load<IEnumerable<string>>("BotNames.txt").ToList();
-            Credits = _resourceLoader.Load<IEnumerable<string>>("Credits.txt").ToList();
+            _textLists = loadTextLists();
+
 
             _logger.Log("All Resources Finished Loading;");
         }
+
+        private Dictionary<string, string[]> loadTextLists()
+        {
+            Dictionary<string, string[]> output;
+
+            output = new Dictionary<string, string[]>();
+            output["BotNames"] = _resourceLoader.Load<string[]>("BotNames.txt");
+            output["Credits"] = _resourceLoader.Load<string[]>("Credits.txt");
+
+            return output;
+        }
+
         private void loadPowerup(CachedTexture[] Texs, string powerupname)
         {
         }
@@ -108,6 +120,11 @@ namespace SlaamMono.Resources
         public SpriteFont GetFont(string fontName)
         {
             return _fonts[fontName];
+        }
+
+        public List<string> GetTextList(string listName)
+        {
+            return _textLists[listName].ToList();
         }
 
     }

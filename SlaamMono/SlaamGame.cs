@@ -124,7 +124,7 @@ namespace SlaamMono
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            gamebatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, Matrix.Identity);
+            gamebatch.Begin(blendState: BlendState.AlphaBlend, transformMatrix: Matrix.Identity);
             BackgroundManager.Draw(gamebatch);
             _screenDirector.Draw(gamebatch);
             FeedManager.Draw(gamebatch);
