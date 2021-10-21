@@ -203,7 +203,7 @@ namespace SlaamMono.SubClasses
 
         public void Draw(SpriteBatch batch) // 387
         {
-            batch.Draw(ResourceManager.ProfileShell.Texture, new Vector2(13, 96), Color.White);
+            batch.Draw(ResourceManager.GetTexture("ProfileShell").Texture, new Vector2(13, 96), Color.White);
 
             var temp = MsgStrings[1];
 
@@ -213,8 +213,8 @@ namespace SlaamMono.SubClasses
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
-            TextManager.Instance.AddTextToRender(temp, new Vector2(31, 141), ResourceManager.SegoeUIx14pt, Color.Black, TextAlignment.Default, false);
-            TextManager.Instance.AddTextToRender(MsgStrings[0], new Vector2(20, 70), ResourceManager.SegoeUIx14pt, Color.Black, TextAlignment.Default, false);
+            TextManager.Instance.AddTextToRender(temp, new Vector2(31, 141), ResourceManager.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            TextManager.Instance.AddTextToRender(MsgStrings[0], new Vector2(20, 70), ResourceManager.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
         }
 
         #endregion

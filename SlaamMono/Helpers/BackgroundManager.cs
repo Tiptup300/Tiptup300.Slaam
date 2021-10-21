@@ -44,17 +44,12 @@ namespace SlaamMono.Helpers
         {
             if (CurrentType == BackgroundType.Normal)
             {
-                batch.Draw(ResourceManager.Background.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+                batch.Draw(ResourceManager.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
             }
             else if (CurrentType == BackgroundType.Menu)
             {
-                batch.Draw(ResourceManager.Background.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-#if !ZUNE
-                batch.Draw(Resources.Gear.Texture, new Vector2(1280, 1024), new Rectangle(0, 0, Resources.Gear.Width, Resources.Gear.Height), Color.White, Rotation, new Vector2(Resources.Gear.Width / 2, Resources.Gear.Height / 2), 1f, SpriteEffects.None, 0);
-                batch.Draw(Resources.Gear.Texture, new Vector2(0, 50), new Rectangle(0, 0, Resources.Gear.Width, Resources.Gear.Height), Color.White, -Rotation, new Vector2(Resources.Gear.Width / 2, Resources.Gear.Height / 2), 0.75f, SpriteEffects.FlipVertically, 0);
-                batch.Draw(Resources.Gear.Texture, new Vector2(0, 1024), new Rectangle(0, 0, Resources.Gear.Width, Resources.Gear.Height), Color.White, Rotation, new Vector2(Resources.Gear.Width / 2, Resources.Gear.Height / 2), 0.5f, SpriteEffects.None, 0);
-#endif
-                batch.Draw(ResourceManager.MenuTop.Texture, Vector2.Zero, Color.White);
+                batch.Draw(ResourceManager.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+                batch.Draw(ResourceManager.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
             }
             else if (CurrentType == BackgroundType.Credits)
             {
@@ -62,8 +57,8 @@ namespace SlaamMono.Helpers
             }
             else if (CurrentType == BackgroundType.BattleScreen)
             {
-                batch.Draw(ResourceManager.BattleBG.Texture, new Vector2(0, BGOffset - ResourceManager.BattleBG.Height), Color.White);
-                batch.Draw(ResourceManager.BattleBG.Texture, new Vector2(0, BGOffset), Color.White);
+                batch.Draw(ResourceManager.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset - ResourceManager.GetTexture("BattleBG").Height), Color.White);
+                batch.Draw(ResourceManager.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset), Color.White);
             }
         }
 

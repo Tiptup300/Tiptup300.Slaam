@@ -152,13 +152,13 @@ namespace SlaamMono.Screens
 
         public void Draw(SpriteBatch batch)
         {
-            Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.StatsBoard.Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.StatsBoard.Height / 2);
+            Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.GetTexture("StatsBoard").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.GetTexture("StatsBoard").Height / 2);
             //MainBG.Draw(batch);
             for (int x = 0; x < 3; x++)
             {
                 batch.Draw(ResourceManager.StatsButtons[x].Texture, Statsboard, x == CurrentPage.Value ? Color.LightSkyBlue : ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
             }
-            batch.Draw(ResourceManager.StatsBoard.Texture, Statsboard, Color.White);
+            batch.Draw(ResourceManager.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
             //DrawingButton.Draw(batch);
             if (CurrentPage.Value == 0)
                 PlayerStats.MainBoard.Draw(batch);

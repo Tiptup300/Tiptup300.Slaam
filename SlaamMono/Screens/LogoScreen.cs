@@ -60,7 +60,7 @@ namespace SlaamMono.Screens
         public void Draw(SpriteBatch batch)
         {
 #if DEBUG
-            TextManager.Instance.AddTextToRender("Hello World!", new Vector2(10, 10), ResourceManager.SegoeUIx48ptBold, Color.White, Library.Drawing.Text.TextAlignment.Default, true);
+            TextManager.Instance.AddTextToRender("Hello World!", new Vector2(10, 10), ResourceManager.GetFont("SegoeUIx48ptBold"), Color.White, Library.Drawing.Text.TextAlignment.Default, true);
 #endif
 
             byte alpha = (byte)LogoColor.Position.X;

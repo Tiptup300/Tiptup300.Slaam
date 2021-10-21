@@ -77,7 +77,7 @@ namespace SlaamMono
                 DiImplementer.Instance.Get<IResourceLoader>(),
                 DiImplementer.Instance.Get<ITextRenderer>());
             ResourceManager.LoadAll();
-            SlaamGame.mainBlade.CurrentGameInfo.GameIcon = ResourceManager.ZBladeGameIcon.Texture;
+            SlaamGame.mainBlade.CurrentGameInfo.GameIcon = ResourceManager.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = InputComponent.Players[0];
             _contentManager = new XnaContentManager(DiImplementer.Instance.Get<ILogger>());
 
@@ -148,9 +148,9 @@ namespace SlaamMono
             if (ShowFPS)
             {
                 string temp = "" + FrameRateDirector.FUPS;
-                Vector2 fpsBack = ResourceManager.SegoeUIx32pt.MeasureString(temp);
+                Vector2 fpsBack = ResourceManager.GetFont("SegoeUIx32pt").MeasureString(temp);
                 gamebatch.Draw(ResourceManager.WhitePixel, new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
-                TextManager.Instance.AddTextToRender(temp, new Vector2(5, fpsBack.Y / 2f), ResourceManager.SegoeUIx32pt, Color.White, TextAlignment.Default, true);
+                TextManager.Instance.AddTextToRender(temp, new Vector2(5, fpsBack.Y / 2f), ResourceManager.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
             }
 
             gamebatch.End();

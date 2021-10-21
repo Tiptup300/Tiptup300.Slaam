@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
 using SlaamMono.Resources.Loading;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,69 +16,10 @@ namespace SlaamMono.Resources
         public static Texture2D WhitePixel;
 
         private static Dictionary<string, CachedTexture> _textures;
+        private static Dictionary<string, SpriteFont> _fonts;
 
-        public static CachedTexture Feedbar;
-        public static CachedTexture FirstTime;
-        public static CachedTexture ZBladeGameIcon;
-        // BG
-        public static CachedTexture Background;
-        public static CachedTexture BattleBG;
-        public static CachedTexture CreditsBG;
-        // Qwerty
-        public static CachedTexture Textbox;
-        public static CachedTexture KeyboardBG;
-        public static CachedTexture Key;
-        public static CachedTexture Spacebar;
-        public static CachedTexture KeyHT;
-        public static CachedTexture SpaceHT;
-        // Char Select
-        public static CachedTexture ProfileShell;
-        public static CachedTexture ProfileShello;
-        // Lobby
-        public static CachedTexture LobbyUnderlay;
-        public static CachedTexture LobbyOverlay;
-        public static CachedTexture LobbyColorPreview;
-        public static CachedTexture LobbyCharBar;
-        public static CachedTexture HostingBG;
-        public static CachedTexture CPU;
-        public static CachedTexture LButton;
-        public static CachedTexture LButtonHT;
-        public static CachedTexture LobbyInfoOverlay;
-        public static CachedTexture BoardSelect;
-        public static CachedTexture NowLoading;
-        public static CachedTexture BoardSelectTextUnderlay;
-        // Menu
-        public static CachedTexture Gear;
-        public static CachedTexture MenuTop;
-        public static CachedTexture MenuBoard;
-        public static CachedTexture MenuBlock;
-        public static CachedTexture MenuOverlay;
-        // Menu BG's
-        public static CachedTexture Menu0;
-        public static CachedTexture Menu1;
-        public static CachedTexture Menu2;
-        public static CachedTexture Menu3;
-        public static CachedTexture Menu4;
-        public static CachedTexture Menu5;
-        public static CachedTexture Menu6;
-        public static CachedTexture Menu7;
-        // Game Board
-        public static CachedTexture TileOverlay;
-        public static CachedTexture RespawnTileOverlay;
-        public static CachedTexture DeadChar;
-        public static CachedTexture ReadySetGo;
-        public static CachedTexture TopGameBoard;
-        public static CachedTexture Waiting;
-        public static CachedTexture GameScreenScoreBoard;
-        public static CachedTexture PauseScreen;
-        // Stats
-        public static CachedTexture StatsBoard;
-        public static CachedTexture Star;
         public static CachedTexture[] StatsButtons = new CachedTexture[3];
-        // Fonts
-        public static SpriteFont SegoeUIx32pt;
-        public static SpriteFont SegoeUIx14pt;
-        public static SpriteFont SegoeUIx48ptBold;
+
         // Text Files
         public static List<string> BotNames;
         public static List<string> Credits;
@@ -126,28 +68,9 @@ namespace SlaamMono.Resources
             WhitePixel = _pixelFactory.BuildPixel();
             _logger.Log(" - Dot Image Created.");
 
-            BattleBG = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/battlebg");
-            ReadySetGo = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/readysetgo");
-            RespawnTileOverlay = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/respawnOverlay");
-            TileOverlay = _resourceLoader.Load<CachedTexture>("textures/BattleScreen/tileOverlay");
-            MenuTop = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/menutop");
-            ProfileShell = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/CharacterSelectBox");
-            StatsBoard = _resourceLoader.Load<CachedTexture>("textures/MenuScreen/StatsScreen");
-            LobbyCharBar = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/PlayerBar");
-            LobbyUnderlay = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/LobbyBG");
-            LobbyOverlay = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/LobbyOverlay");
-            LobbyColorPreview = _resourceLoader.Load<CachedTexture>("textures/LobbyScreen/PlayerColorPreview");
-            BoardSelect = _resourceLoader.Load<CachedTexture>("textures/Misc/boardSelect");
-            NowLoading = _resourceLoader.Load<CachedTexture>("textures/Misc/BoardLoading");
-            Background = _resourceLoader.Load<CachedTexture>("textures/Misc/background");
-            FirstTime = _resourceLoader.Load<CachedTexture>("textures/firsttime");
-            ZBladeGameIcon = _resourceLoader.Load<CachedTexture>("textures/Misc/ZBladeIcon");
 
             _textures = loadTextures();
-
-            SegoeUIx32pt = _resourceLoader.Load<SpriteFont>("SegoeUI-32pt");
-            SegoeUIx14pt = _resourceLoader.Load<SpriteFont>("SegoeUI-14pt");
-            SegoeUIx48ptBold = _resourceLoader.Load<SpriteFont>("SegoeUI-48pt");
+            _fonts = loadFonts();
 
             BotNames = _resourceLoader.Load<IEnumerable<string>>("BotNames.txt").ToList();
             Credits = _resourceLoader.Load<IEnumerable<string>>("Credits.txt").ToList();
@@ -162,6 +85,18 @@ namespace SlaamMono.Resources
             loadPowerup(PU_Slaam, "Slaam");
 
             _logger.Log("All Resources Finished Loading;");
+        }
+
+        private static Dictionary<string, SpriteFont> loadFonts()
+        {
+            Dictionary<string, SpriteFont> output;
+
+            output = new Dictionary<string, SpriteFont>();
+            output["SegoeUIx32pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI-32pt");
+            output["SegoeUIx14pt"] = _resourceLoader.Load<SpriteFont>("SegoeUI -14pt");
+            output["SegoeUIx48ptBold"] = _resourceLoader.Load<SpriteFont>("SegoeUI -48pt");
+
+            return output;
         }
 
         private static Dictionary<string, CachedTexture> loadTextures()
@@ -194,6 +129,11 @@ namespace SlaamMono.Resources
         public static CachedTexture GetTexture(string textureName)
         {
             return _textures[textureName];
+        }
+
+        public static SpriteFont GetFont(string fontName)
+        {
+            return _fonts[fontName];
         }
 
         private static void loadPowerup(CachedTexture[] Texs, string powerupname)

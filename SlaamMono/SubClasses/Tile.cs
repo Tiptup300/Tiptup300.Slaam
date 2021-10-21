@@ -114,9 +114,9 @@ namespace SlaamMono.SubClasses
 
                 batch.Draw(ParentTileTileset, AbsTileloc, new Rectangle((int)TileCoors.X * GameGlobals.TILE_SIZE, (int)TileCoors.Y * GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileColor);
                 if (CurrentTileCondition != TileCondition.Normal)
-                    batch.Draw(ResourceManager.TileOverlay.Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileOverlayColor);
+                    batch.Draw(ResourceManager.GetTexture("TileOverlay").Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileOverlayColor);
                 if (CurrentTileCondition == TileCondition.RespawnPoint)
-                    batch.Draw(ResourceManager.RespawnTileOverlay.Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), MarkedColor);
+                    batch.Draw(ResourceManager.GetTexture("RespawnTileOverlay").Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), MarkedColor);
                 if (CurrentPowerupType != PowerupType.None)
                 {
                     Texture2D tex = PowerupManager.GetPowerupTexture(CurrentPowerupType);
