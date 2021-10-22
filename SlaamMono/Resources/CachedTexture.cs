@@ -20,7 +20,7 @@ namespace SlaamMono.Resources
         {
             get
             {
-                if (_texture == null || _texture.IsDisposed)
+                if (_texture == null)
                 {
                     _texture = (Texture2D)_textureLoader.Load(_filePath);
                 }

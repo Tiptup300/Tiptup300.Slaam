@@ -4,9 +4,10 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
 using SlaamMono.Input;
 using SlaamMono.Library;
-using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Resources;
 using SlaamMono.Resources.Loading;
 using SlaamMono.Screens;
@@ -139,7 +140,7 @@ namespace SlaamMono
                 string temp = "" + FrameRateDirector.FUPS;
                 Vector2 fpsBack = ResourceManager.Instance.GetFont("SegoeUIx32pt").MeasureString(temp);
                 gamebatch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
-                TextManager.Instance.AddTextToRender(temp, new Vector2(5, fpsBack.Y / 2f), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
+                RenderGraphManager.Instance.RenderText(temp, new Vector2(5, fpsBack.Y / 2f), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
             }
 
             gamebatch.End();

@@ -2,8 +2,9 @@
 using SimpleInjector;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
-using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Resources;
 using SlaamMono.Resources.Loading;
 using SlaamMono.Screens;
@@ -38,7 +39,7 @@ namespace SlaamMono
 
         public void registerComponents()
         {
-            _container.Register<ITextRenderer, TextManager>(Lifestyle.Singleton);
+            _container.Register<ITextRenderer, RenderGraphManager>(Lifestyle.Singleton);
         }
 
         private void registerScreens()

@@ -2,9 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay;
 using SlaamMono.Helpers;
-using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Resources;
 using SlaamMono.SubClasses;
 using System.Collections.Generic;
@@ -278,9 +279,9 @@ namespace SlaamMono.Screens
                     batch.Draw(ResourceManager.Instance.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
                     batch.Draw(ResourceManager.Instance.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
                     if (SetupChars[x].Type == PlayerType.Player)
-                        TextManager.Instance.AddTextToRender(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+                        RenderGraphManager.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
                     else
-                        TextManager.Instance.AddTextToRender(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Red, TextAlignment.Default, false);
+                        RenderGraphManager.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Red, TextAlignment.Default, false);
                 }
                 batch.Draw(ResourceManager.Instance.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
             }

@@ -2,8 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay;
 using SlaamMono.Helpers;
-using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Resources;
 using SlaamMono.StatsBoards;
 using System.Collections.Generic;
@@ -201,8 +202,8 @@ namespace SlaamMono.SubClasses
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
-            TextManager.Instance.AddTextToRender(temp, new Vector2(31, 141), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
-            TextManager.Instance.AddTextToRender(MsgStrings[0], new Vector2(20, 70), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            RenderGraphManager.Instance.RenderText(temp, new Vector2(31, 141), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            RenderGraphManager.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
         }
 
         /// <summary>

@@ -1,8 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
-using SlaamMono.Library.Drawing.Text;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Resources;
 using System.Collections.Generic;
 
@@ -80,14 +81,14 @@ namespace SlaamMono.Screens
             {
                 if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.Instance.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y)
                 {
-                    TextManager.Instance.AddTextToRender(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), ResourceManager.Instance.GetFont("SegoeUIx32pt"), MainCreditColor, TextAlignment.Default, false);
+                    RenderGraphManager.Instance.RenderText(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), ResourceManager.Instance.GetFont("SegoeUIx32pt"), MainCreditColor, TextAlignment.Default, false);
                 }
                 Offset += ResourceManager.Instance.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
                 for (int x = 0; x < CreditsListings[CurrentCredit].Credits.Count; x++)
                 {
                     if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + ResourceManager.Instance.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
                     {
-                        TextManager.Instance.AddTextToRender(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), ResourceManager.Instance.GetFont("SegoeUIx14pt"), SubCreditColor, TextAlignment.Default, false);
+                        RenderGraphManager.Instance.RenderText(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), ResourceManager.Instance.GetFont("SegoeUIx14pt"), SubCreditColor, TextAlignment.Default, false);
                     }
                     Offset += (int)ResourceManager.Instance.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
                 }

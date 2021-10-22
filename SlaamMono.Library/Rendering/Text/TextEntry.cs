@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SlaamMono.Library.Drawing.Text
+namespace SlaamMono.Library.Rendering.Text
 {
     internal struct TextEntry
     {

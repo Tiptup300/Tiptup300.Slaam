@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Library.Rendering.Text;
 using System.Collections.Generic;
 
-namespace SlaamMono.Library.Drawing.Text
+namespace SlaamMono.Library.Rendering
 {
-    public class TextManager : DrawableGameComponent, ITextRenderer
+    public class RenderGraphManager : DrawableGameComponent, ITextRenderer
     {
         public static ITextRenderer Instance;
 
@@ -15,7 +16,7 @@ namespace SlaamMono.Library.Drawing.Text
         private readonly Vector2 _shadowOffset1 = new Vector2(1, 2);
         private readonly Vector2 _shadowOffset2 = new Vector2(2, 1);
 
-        public TextManager(ISlaamGame slaamGame)
+        public RenderGraphManager(ISlaamGame slaamGame)
             : base(slaamGame.Game)
         {
             LoadContent();
@@ -32,7 +33,7 @@ namespace SlaamMono.Library.Drawing.Text
             base.LoadContent();
         }
 
-        public void AddTextToRender(string text, Vector2 position, SpriteFont font, Color color, TextAlignment alignment = TextAlignment.Default, bool addShadow = false)
+        public void RenderText(string text, Vector2 position, SpriteFont font, Color color, TextAlignment alignment = TextAlignment.Default, bool addShadow = false)
         {
             if (addShadow)
             {

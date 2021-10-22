@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
-using SlaamMono.Library.Drawing.Text;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Resources;
 using SlaamMono.Screens;
 using System;
@@ -81,16 +82,16 @@ namespace SlaamMono.SubClasses
         public void Draw(SpriteBatch batch)
         {
             batch.Draw(ResourceManager.Instance.GetTexture("TopGameBoard").Texture, new Vector2(1280 - ResourceManager.Instance.GetTexture("TopGameBoard").Width + Position.X, 0), Color.White);
-            TextManager.Instance.AddTextToRender(ZeroImpress(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
-            TextManager.Instance.AddTextToRender(ZeroImpress(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
-            TextManager.Instance.AddTextToRender(ZeroImpress(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
+            RenderGraphManager.Instance.RenderText(ZeroImpress(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
+            RenderGraphManager.Instance.RenderText(ZeroImpress(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
+            RenderGraphManager.Instance.RenderText(ZeroImpress(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
             if (ParentGameScreen.ThisGameType == GameType.Classic || ParentGameScreen.ThisGameType == GameType.Spree || ParentGameScreen.ThisGameType == GameType.Survival)
             {
-                TextManager.Instance.AddTextToRender("Time Elapsed", new Vector2(Position.X + 1270, 30), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Right, true);
+                RenderGraphManager.Instance.RenderText("Time Elapsed", new Vector2(Position.X + 1270, 30), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Right, true);
             }
             else if (ParentGameScreen.ThisGameType == GameType.TimedSpree)
             {
-                TextManager.Instance.AddTextToRender("Time Remaining", new Vector2(Position.X + 1270, 30), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Right, true);
+                RenderGraphManager.Instance.RenderText("Time Remaining", new Vector2(Position.X + 1270, 30), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Right, true);
             }
         }
 
