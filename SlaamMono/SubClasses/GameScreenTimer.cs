@@ -82,9 +82,9 @@ namespace SlaamMono.SubClasses
         public void Draw(SpriteBatch batch)
         {
             batch.Draw(ResourceManager.Instance.GetTexture("TopGameBoard").Texture, new Vector2(1280 - ResourceManager.Instance.GetTexture("TopGameBoard").Width + Position.X, 0), Color.White);
-            RenderGraphManager.Instance.RenderText(ZeroImpress(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
-            RenderGraphManager.Instance.RenderText(ZeroImpress(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
-            RenderGraphManager.Instance.RenderText(ZeroImpress(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
+            RenderGraphManager.Instance.RenderText(padNumber(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
+            RenderGraphManager.Instance.RenderText(padNumber(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
+            RenderGraphManager.Instance.RenderText(padNumber(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
             if (ParentGameScreen.ThisGameType == GameType.Classic || ParentGameScreen.ThisGameType == GameType.Spree || ParentGameScreen.ThisGameType == GameType.Survival)
             {
                 RenderGraphManager.Instance.RenderText("Time Elapsed", new Vector2(Position.X + 1270, 30), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Right, true);
@@ -116,6 +116,6 @@ namespace SlaamMono.SubClasses
         /// </summary>
         /// <param name="x">Int to convert</param>
         /// <returns></returns>
-        private string ZeroImpress(int x) => x.ToString("00");
+        private string padNumber(int x) => x.ToString("00");
     }
 }
