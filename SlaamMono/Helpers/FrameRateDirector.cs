@@ -2,16 +2,18 @@ using Microsoft.Xna.Framework;
 using System;
 namespace SlaamMono.Helpers
 {
-    /// <summary>
-    /// This is a game component that implements IUpdateable.
-    /// </summary>
     public class FrameRateDirector : DrawableGameComponent
     {
         public static float MovementFactor { private set; get; }
         public static TimeSpan MovementFactorTimeSpan { get { return new TimeSpan(0, 0, 0, 0, (int)MovementFactor); } }
-        private int framesDrawn, framesUpdated;
-        private TimeSpan oneSecond = TimeSpan.FromSeconds(1), currentTimer = TimeSpan.Zero;
-        private int framesDrawnLast, framesUpdatedLast;
+
+        private int _framesDrawn;
+        private int _framesDrawnLast;
+        private int _framesUpdated;
+        private int _framesUpdatedLast;
+
+        private readonly TimeSpan _oneSecond = TimeSpan.FromSeconds(1);
+        private TimeSpan _currentTimer = TimeSpan.Zero;
 
         public static int FDPS { private set; get; }
 
@@ -25,30 +27,30 @@ namespace SlaamMono.Helpers
 
         public override void Update(GameTime gameTime)
         {
-            framesUpdated++;
-            currentTimer += gameTime.ElapsedGameTime;
+            _framesUpdated++;
+            _currentTimer += gameTime.ElapsedGameTime;
 
-            if (currentTimer >= oneSecond)
+            if (_currentTimer >= _oneSecond)
             {
-                currentTimer -= oneSecond;
-                framesUpdatedLast = framesUpdated;
-                framesDrawnLast = framesDrawn;
+                _currentTimer -= _oneSecond;
+                _framesUpdatedLast = _framesUpdated;
+                _framesDrawnLast = _framesDrawn;
 
-                framesDrawn = 0;
-                framesUpdated = 0;
+                _framesDrawn = 0;
+                _framesUpdated = 0;
             }
 
             MovementFactor = gameTime.ElapsedGameTime.Milliseconds;
 
-            FDPS = framesDrawnLast;
-            FUPS = framesUpdatedLast;
+            FDPS = _framesDrawnLast;
+            FUPS = _framesUpdatedLast;
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            framesDrawn++;
+            _framesDrawn++;
             base.Draw(gameTime);
         }
     }

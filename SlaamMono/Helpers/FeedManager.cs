@@ -29,18 +29,21 @@ namespace SlaamMono.Helpers
 
         public static void Update()
         {
-            if (FeedsActive)
+            if (FeedsActive == false)
             {
-                if (FeedRect.Width >= 1280)
+                return;
+            }
+            if (FeedRect.Width >= 1280)
+            {
+                TextX -= FrameRateDirector.MovementFactor * TextMovement;
+                if (TextX <= FeedText.Length * -8)
                 {
-                    TextX -= FrameRateDirector.MovementFactor * TextMovement;
-                    if (TextX <= FeedText.Length * -8)
-                        TextX = 1350;
+                    TextX = 1350;
                 }
-                else
-                {
-                    FeedRect.Width += (int)(FrameRateDirector.MovementFactor * BarMovement);
-                }
+            }
+            else
+            {
+                FeedRect.Width += (int)(FrameRateDirector.MovementFactor * BarMovement);
             }
         }
 
