@@ -268,13 +268,6 @@ namespace ZBlade
 
         protected override void LoadContent()
         {
-#if ZUNE
-            // todo
-            //content = new ResourceContentManager(Game.Services, Properties.Resources__Zune_.ResourceManager);
-#else
-				// TODO 
-			//content = new ResourceContentManager(Game.Services, Properties.Resources__Windows_.ResourceManager);
-#endif
             content = Game.Content;
 
             try
@@ -333,10 +326,6 @@ namespace ZBlade
 
             CurrentBlade.Update(gameTime);
 
-            /* if (status == BladeStatus.In && UserCanOpenMenu && input.IsPressed(ZuneButtons.PlayPause))
-                 Status = BladeStatus.Out;
-
-             else*/
             if (status == BladeStatus.Out && currentMenu != null && currentMenu.Nodes.Count > 0)
             {
                 UpdateMenus(gameTime);
@@ -526,11 +515,6 @@ namespace ZBlade
             batch.Draw(
                 whitePixel,
                 new Rectangle(0, 0, ScreenWidth, ScreenHeight),
-                /*new Color(
-                    (byte)(BladeColor.R * 0.63f),
-                    (byte)(BladeColor.G * 0.63f),
-                    (byte)(BladeColor.B * 0.63f),
-                    (byte)(opacity * 255)));*/
                 new Color(
                     (byte)(BladeColor.R),
                     (byte)(BladeColor.G),
@@ -550,29 +534,11 @@ namespace ZBlade
                 new Rectangle(0, -CurrentBlade.Height, CurrentBlade.Width, CurrentBlade.Height),
                 BladeColor);
 
-            //batch.Draw(
-            //    bladeBorder,
-            //    new Vector2(0, 0),
-            //    Color.White);
 
             batch.Draw(bladeBorder, new Rectangle(0, -CurrentBlade.Height, CurrentBlade.Width, CurrentBlade.Height),
                 null, Color.White, 0f, Vector2.Zero, SpriteEffects.FlipVertically, 0);
-            //        batch.Draw(
-            //            bladeBorder,
-            //new Vector2(0,-CurrentBlade.Height-bladeBorder.Height),
-            //            null,
-            //            Color.White,
-            //            0,
-            //            Vector2.Zero,
-            //            1f,
-            //            SpriteEffects.FlipVertically,
-            //            0);
-            CurrentBlade.Draw(batch, new Vector2(0, -CurrentBlade.Height));
 
-            //batch.Draw(
-            //   bladeGloss, 
-            //   new Vector2(0, -CurrentBlade.Height),
-            //   Color.White);
+            CurrentBlade.Draw(batch, new Vector2(0, -CurrentBlade.Height));
 
             batch.Draw(bladeGloss, new Rectangle(0, -CurrentBlade.Height, CurrentBlade.Width, CurrentBlade.Height), Color.White);
         }
@@ -585,15 +551,18 @@ namespace ZBlade
                 {
                     int y = x - menuTopIndex;
                     Vector2 drawPos = new Vector2(0, -3 - (y * 6)) + (new Vector2(0, menuChoiceTex.Height) * y);
-                    batch.Draw(menuChoiceTex, drawPos, Color.White);
+                    Rectangle texRect = new Rectangle((int)drawPos.X, (int)drawPos.Y, CurrentBlade.Width, menuChoiceTex.Height);
+                    batch.Draw(menuChoiceTex, texRect, Color.White);
 
-                    currentMenu.Nodes[x].Draw(batch, drawPos + new Vector2(120, 14), (x == CurrentMenuItem));
+                    currentMenu.Nodes[x].Draw(batch, drawPos + new Vector2(CurrentBlade.Width / 2f, 14), (x == CurrentMenuItem));
 
                     if (x == CurrentMenuItem)
+                    {
                         batch.Draw(
                             menuHighlightTex,
-                            drawPos + new Vector2(0, 0),
+                            texRect,
                             new Color((byte)255, (byte)255, (byte)255, (byte)selectionFade.Position.X));
+                    }
                 }
 
                 if (menuTopIndex > 0)

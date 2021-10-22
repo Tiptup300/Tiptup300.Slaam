@@ -12,7 +12,7 @@ namespace SlaamMono.Menus
 {
     public class LogoScreen : IScreen
     {
-        private Timer displaytime = new Timer(new TimeSpan(0, 0, 4));
+        private Timer displaytime = new Timer(new TimeSpan(0, 0, 1));
 
         private Transition LogoColor = new Transition(null, new Vector2(0), new Vector2(255), TimeSpan.FromSeconds(1));
         private bool hasShown = false;
