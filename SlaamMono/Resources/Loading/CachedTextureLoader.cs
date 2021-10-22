@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Library.Resources;
 
 namespace SlaamMono.Resources.Loading
 {
@@ -11,6 +12,7 @@ namespace SlaamMono.Resources.Loading
             _textureLoader = textureLoader;
         }
 
-        public object Load(string textureFilePath) => new CachedTexture(textureFilePath, _textureLoader);
+        public object Load(string textureFilePath)
+            => new CachedTexture(textureFilePath, _textureLoader);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SlaamMono.Library.Resources;
+using System.IO;
 using System.Linq;
 
 namespace SlaamMono.Resources.Loading

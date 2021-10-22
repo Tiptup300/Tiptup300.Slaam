@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Library.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
