@@ -5,7 +5,7 @@ using SlaamMono.Resources;
 using SlaamMono.SubClasses;
 using System;
 
-namespace SlaamMono.Powerups
+namespace SlaamMono.Gameplay.Powerups
 {
     public class SpeedUp : Powerup
     {

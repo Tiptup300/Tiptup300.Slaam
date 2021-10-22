@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Gameplay.Powerups;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
-using SlaamMono.Powerups;
 using SlaamMono.Screens;
 using System;
 using System.Collections.Generic;

@@ -2,7 +2,7 @@
 using SlaamMono.Resources;
 using System;
 
-namespace SlaamMono.Powerups
+namespace SlaamMono.Gameplay.Powerups
 {
     public static class PowerupManager
     {

@@ -4,7 +4,7 @@ using SlaamMono.Resources;
 using SlaamMono.Screens;
 using SlaamMono.SubClasses;
 
-namespace SlaamMono.Powerups
+namespace SlaamMono.Gameplay.Powerups
 {
     public abstract class Powerup
     {

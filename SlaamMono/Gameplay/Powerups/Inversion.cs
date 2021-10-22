@@ -6,7 +6,7 @@ using SlaamMono.Screens;
 using SlaamMono.SubClasses;
 using System;
 
-namespace SlaamMono.Powerups
+namespace SlaamMono.Gameplay.Powerups
 {
     public class Inversion : Powerup
     {
