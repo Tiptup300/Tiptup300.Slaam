@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Screens;
+using SlaamMono.Library;
 
 namespace SlaamMono.Testing
 {

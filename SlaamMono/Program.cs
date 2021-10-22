@@ -1,3 +1,4 @@
+using SlaamMono.Library;
 using SlaamMono.Library.Logging;
 using System;
 

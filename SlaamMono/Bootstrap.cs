@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SimpleInjector;
-using SlaamMono.CharacterSelection;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Resources;
+using SlaamMono.MatchCreation;
+using SlaamMono.Menus;
+using SlaamMono.PlayerProfiles;
 using SlaamMono.Resources;
 using SlaamMono.Resources.Loading;
 using SlaamMono.Screens;
@@ -17,10 +19,11 @@ namespace SlaamMono
     {
         private Container _container;
 
-        public Container BuildContainer()
+        public Container BuildContainer(IResolver resolver)
         {
             _container = new Container();
 
+            _container.RegisterInstance<IResolver>(resolver);
             register();
             registerComponents();
             registerScreens();

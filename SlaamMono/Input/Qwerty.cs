@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Helpers;
+using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;

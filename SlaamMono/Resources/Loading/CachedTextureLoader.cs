@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Resources.Loading;
 
-namespace SlaamMono.Resources
+namespace SlaamMono.Resources.Loading
 {
     public class CachedTextureLoader : IFileLoader<CachedTexture>
     {

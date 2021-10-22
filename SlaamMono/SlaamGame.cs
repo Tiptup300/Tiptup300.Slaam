@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Helpers;
 using SlaamMono.Input;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
@@ -9,10 +8,9 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Library.Resources;
-using SlaamMono.Profiles;
+using SlaamMono.PlayerProfiles;
 using SlaamMono.Resources;
-using SlaamMono.Resources.Loading;
-using SlaamMono.Screens;
+using SlaamMono.x_;
 using System;
 using ZBlade;
 
@@ -52,7 +50,6 @@ namespace SlaamMono
             _whitePixelResolver = whitePixelResolver;
             graphics = new GraphicsDeviceManager(this);
             Content = new ContentManager(Services);
-            this.Exiting += Game1_Exiting;
 
             graphics.IsFullScreen = false;
             graphics.PreferredBackBufferWidth = GameGlobals.DRAWING_GAME_WIDTH;
@@ -148,11 +145,6 @@ namespace SlaamMono
             gamebatch.End();
 
             base.Draw(gameTime);
-        }
-
-        void Game1_Exiting(object sender, EventArgs e)
-        {
-            GC.Collect();
         }
 
         public Game Game => this;

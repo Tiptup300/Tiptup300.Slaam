@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
+using SlaamMono.Gameplay;
+using SlaamMono.Graphing;
 using SlaamMono.Library.Logging;
-using SlaamMono.Profiles;
-using SlaamMono.SubClasses;
-using SlaamMono.SubClasses.Graphing;
+using SlaamMono.PlayerProfiles;
 using System;
 using System.Collections.Generic;
 
