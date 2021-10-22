@@ -46,7 +46,6 @@ namespace SlaamMono.SubClasses
                     Position.X = 0;
                     Moving = false;
                 }
-
             }
             if (StartTiming)
             {
@@ -57,7 +56,9 @@ namespace SlaamMono.SubClasses
                 }
 
                 if (TimeRemaining < TimeSpan.Zero)
+                {
                     TimeRemaining = TimeSpan.Zero;
+                }
 
                 if (ParentGameScreen.ThisGameType == GameType.TimedSpree)
                 {
@@ -71,7 +72,6 @@ namespace SlaamMono.SubClasses
 
                 }
             }
-
             SetGameMatchTime(ParentGameScreen.ThisGameType);
         }
 
@@ -97,10 +97,18 @@ namespace SlaamMono.SubClasses
 
         private void SetGameMatchTime(GameType type)
         {
-            if (type == GameType.Classic || type == GameType.Spree || type == GameType.Survival)
-                GameMatchTime = CurrentGameTime;
-            else if (type == GameType.TimedSpree)
-                GameMatchTime = TimeRemaining;
+            switch (type)
+            {
+                case GameType.Classic:
+                case GameType.Spree:
+                case GameType.Survival:
+                    GameMatchTime = CurrentGameTime;
+                    return;
+                case GameType.TimedSpree:
+                    GameMatchTime = TimeRemaining;
+                    return;
+
+            }
         }
 
         /// <summary>
@@ -108,12 +116,6 @@ namespace SlaamMono.SubClasses
         /// </summary>
         /// <param name="x">Int to convert</param>
         /// <returns></returns>
-        private string ZeroImpress(int x)
-        {
-            if (x < 10)
-                return "0" + x;
-            else
-                return x.ToString().Substring(0, 2);
-        }
+        private string ZeroImpress(int x) => x.ToString("00");
     }
 }

@@ -8,6 +8,7 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.Resources;
 using SlaamMono.Profiles;
 using SlaamMono.Resources;
 using SlaamMono.Resources.Loading;

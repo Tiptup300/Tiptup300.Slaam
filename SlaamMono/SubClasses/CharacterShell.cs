@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Library.Input;
-using System;
 
 namespace SlaamMono.SubClasses
 {
@@ -20,11 +19,5 @@ namespace SlaamMono.SubClasses
             Type = type;
             PlayerColor = col;
         }
-    }
-
-    public enum PlayerType
-    {
-        Player,
-        Computer
     }
 }

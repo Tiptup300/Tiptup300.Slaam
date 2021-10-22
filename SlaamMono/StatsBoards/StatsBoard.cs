@@ -1,4 +1,5 @@
 using SlaamMono.SubClasses;
+using SlaamMono.SubClasses.Graphing;
 
 namespace SlaamMono.StatsBoards
 {

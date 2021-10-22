@@ -5,6 +5,7 @@ using SlaamMono.Input;
 using SlaamMono.Library.Input;
 using SlaamMono.Profiles;
 using SlaamMono.SubClasses;
+using SlaamMono.SubClasses.Graphing;
 using System;
 
 namespace SlaamMono.Screens

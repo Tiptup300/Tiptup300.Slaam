@@ -1,13 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.Resources;
 using System.Collections.Generic;
 
 namespace SlaamMono.Library.Rendering
 {
-    public class RenderGraphManager : DrawableGameComponent, ITextRenderer
+    public class RenderGraphManager : DrawableGameComponent, IRenderGraphManager
     {
-        public static ITextRenderer Instance;
+        public static IRenderGraphManager Instance;
 
         private SpriteBatch _batch;
         private List<TextEntry> _textToDraw = new List<TextEntry>();
@@ -15,15 +16,17 @@ namespace SlaamMono.Library.Rendering
         private readonly Color _shadowColor = new Color(0, 0, 0, 127);
         private readonly Vector2 _shadowOffset1 = new Vector2(1, 2);
         private readonly Vector2 _shadowOffset2 = new Vector2(2, 1);
+        private readonly IWhitePixelResolver _whitePixelResolver;
 
-        public RenderGraphManager(ISlaamGame slaamGame)
+        public RenderGraphManager(ISlaamGame slaamGame, IWhitePixelResolver whitePixelResolver)
             : base(slaamGame.Game)
         {
-            LoadContent();
+            _whitePixelResolver = whitePixelResolver;
 
-            slaamGame.Game.Components.Add(this);
 
             Instance = this;
+            LoadContent();
+            slaamGame.Game.Components.Add(this);
         }
 
         protected override void LoadContent()
@@ -31,6 +34,11 @@ namespace SlaamMono.Library.Rendering
             _batch = new SpriteBatch(Game.GraphicsDevice);
 
             base.LoadContent();
+        }
+
+        public void RenderBox(Rectangle destinationRectangle, Color? color = null)
+        {
+            _batch.Draw(_whitePixelResolver.GetWhitePixel(), destinationRectangle, color.HasValue ? color.Value : Color.White);
         }
 
         public void RenderText(string text, Vector2 position, SpriteFont font, Color color, TextAlignment alignment = TextAlignment.Default, bool addShadow = false)

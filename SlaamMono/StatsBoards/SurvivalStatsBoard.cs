@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using SlaamMono.Library.Logging;
 using SlaamMono.Profiles;
 using SlaamMono.SubClasses;
+using SlaamMono.SubClasses.Graphing;
 using System;
 using System.Collections.Generic;
 

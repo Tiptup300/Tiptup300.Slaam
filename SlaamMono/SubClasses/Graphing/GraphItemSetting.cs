@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace SlaamMono.SubClasses
+namespace SlaamMono.SubClasses.Graphing
 {
     public class GraphItemSetting : GraphItem
     {

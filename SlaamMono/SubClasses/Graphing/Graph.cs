@@ -5,7 +5,7 @@ using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Resources;
 using System.Collections.Generic;
 
-namespace SlaamMono.SubClasses
+namespace SlaamMono.SubClasses.Graphing
 {
     public class Graph
     {

@@ -4,7 +4,7 @@ using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.Resources;
 using SlaamMono.Resources;
 using SlaamMono.Resources.Loading;
 using SlaamMono.Screens;
@@ -39,7 +39,7 @@ namespace SlaamMono
 
         public void registerComponents()
         {
-            _container.Register<ITextRenderer, RenderGraphManager>(Lifestyle.Singleton);
+            _container.Register<IRenderGraphManager, RenderGraphManager>(Lifestyle.Singleton);
         }
 
         private void registerScreens()

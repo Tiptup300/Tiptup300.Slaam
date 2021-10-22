@@ -4,6 +4,7 @@ using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Resources;
 using SlaamMono.SubClasses;
+using SlaamMono.SubClasses.Graphing;
 
 namespace SlaamMono.Screens
 {

@@ -4,6 +4,7 @@ using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.Resources;
 using SlaamMono.Resources;
 
 namespace SlaamMono.Input
@@ -26,18 +27,21 @@ namespace SlaamMono.Input
 
         public static string EditingString = "";
 
-        private static IWhitePixelResolver _whitePixelResolver;
+        private static IRenderGraphManager _renderGraphManager;
+
+        private static readonly Rectangle _boxRectangle = new Rectangle(0, 0, 1280, 1024);
+        private static readonly Color _boxColor = new Color(0, 0, 0, 200);
 
         static Qwerty()
         {
-            x_init(DiImplementer.Instance.Get<IWhitePixelResolver>());
+            x_init(DiImplementer.Instance.Get<IRenderGraphManager>());
 
             InitKeys();
         }
 
-        private static void x_init(IWhitePixelResolver whitePixelResolver)
+        private static void x_init(IRenderGraphManager renderGraphManager)
         {
-            _whitePixelResolver = whitePixelResolver;
+            _renderGraphManager = renderGraphManager;
         }
 
         public static void InitKeys()
@@ -171,7 +175,7 @@ namespace SlaamMono.Input
 
         public static void Draw(SpriteBatch batch)
         {
-            batch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 200));
+            _renderGraphManager.RenderBox(_boxRectangle, _boxColor);
             batch.Draw(ResourceManager.Instance.GetTexture("KeyboardBG").Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);
             for (int y = 0; y < 4; y++)
             {

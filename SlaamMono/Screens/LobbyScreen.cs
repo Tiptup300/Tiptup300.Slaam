@@ -9,6 +9,7 @@ using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Profiles;
 using SlaamMono.Resources;
 using SlaamMono.SubClasses;
+using SlaamMono.SubClasses.Graphing;
 using System.Collections.Generic;
 using System.IO;
 
