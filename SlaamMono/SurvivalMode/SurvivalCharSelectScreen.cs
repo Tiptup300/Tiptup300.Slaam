@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using SlaamMono.CharacterSelection;
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
@@ -9,13 +10,11 @@ namespace SlaamMono.Screens
 {
     public class SurvivalCharSelectScreen : ClassicCharSelectScreen
     {
-        private ILogger _logger;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
 
-        public SurvivalCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
+        public SurvivalCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenManager screenDirector)
             : base(logger, menuScreen, screenDirector)
         {
-            _logger = logger;
             _screenDirector = screenDirector;
         }
 
@@ -36,9 +35,9 @@ namespace SlaamMono.Screens
             List<CharacterShell> list = new List<CharacterShell>();
             list.Add(SelectBoxes[0].GetShell());
             GameScreen.Instance = new SurvivalScreen(
-                list, 
+                list,
                 DiImplementer.Instance.Get<ILogger>(),
-                DiImplementer.Instance.Get<IScreenDirector>());
+                DiImplementer.Instance.Get<IScreenManager>());
             _screenDirector.ChangeTo(GameScreen.Instance);
         }
     }

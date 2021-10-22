@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SimpleInjector;
+using SlaamMono.CharacterSelection;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Logging;
@@ -50,7 +51,7 @@ namespace SlaamMono
             _container.Register<ProfileEditScreen>();
             _container.Register<SurvivalCharSelectScreen>();
             _container.Register<ClassicCharSelectScreen>();
-            _container.Register<IScreenDirector, ScreenDirector>(Lifestyle.Singleton);
+            _container.Register<IScreenManager, ScreenManager>(Lifestyle.Singleton);
             _container.Register<IFirstScreenResolver, FirstScreenResolver>(Lifestyle.Singleton);
             _container.Register<LogoScreen>();
             _container.Register<IScreenFactory, ScreenFactory>(Lifestyle.Singleton);

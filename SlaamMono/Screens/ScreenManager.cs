@@ -1,16 +1,15 @@
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
-using System;
 
 namespace SlaamMono.Screens
 {
-    public class ScreenDirector : IScreenDirector
+    public class ScreenManager : IScreenManager
     {
         private IScreen _currentScreen;
         private IScreen _nextScreen;
         private bool _isChangingScreens = false;
 
-        public ScreenDirector()
+        public ScreenManager()
         {
         }
 
@@ -18,7 +17,7 @@ namespace SlaamMono.Screens
 
         public void Update()
         {
-            if(_hasCurrentScreen)
+            if (_hasCurrentScreen)
             {
                 _currentScreen.Update();
             }

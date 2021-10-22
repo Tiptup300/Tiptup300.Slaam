@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.CharacterSelection;
 using SlaamMono.Helpers;
 using System;
 using ZBlade;
@@ -8,9 +9,9 @@ namespace SlaamMono.Screens
     public class MainMenuScreen : IScreen
     {
         private readonly IScreenFactory _screenFactory;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
 
-        public MainMenuScreen(IScreenFactory screenFactory, IScreenDirector screenDirector)
+        public MainMenuScreen(IScreenFactory screenFactory, IScreenManager screenDirector)
         {
             _screenFactory = screenFactory;
             _screenDirector = screenDirector;

@@ -15,9 +15,9 @@ namespace SlaamMono.Screens
         private Transition LogoColor = new Transition(null, new Vector2(0), new Vector2(255), TimeSpan.FromSeconds(1));
         private bool hasShown = false;
         private readonly MainMenuScreen _menuScreen;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
 
-        public LogoScreen(MainMenuScreen menuScreen, IScreenDirector screenDirector)
+        public LogoScreen(MainMenuScreen menuScreen, IScreenManager screenDirector)
         {
             _menuScreen = menuScreen;
             _screenDirector = screenDirector;

@@ -8,9 +8,10 @@ using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Profiles;
 using SlaamMono.Resources;
 using SlaamMono.StatsBoards;
+using SlaamMono.SubClasses;
 using System.Collections.Generic;
 
-namespace SlaamMono.SubClasses
+namespace SlaamMono.CharacterSelection
 {
     public class CharSelectBox
     {

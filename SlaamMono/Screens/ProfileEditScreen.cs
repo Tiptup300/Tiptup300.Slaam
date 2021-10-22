@@ -15,7 +15,7 @@ namespace SlaamMono.Screens
         public static ProfileEditScreen Instance =
             new ProfileEditScreen(
                 DiImplementer.Instance.Get<MainMenuScreen>(),
-                DiImplementer.Instance.Get<IScreenDirector>());
+                DiImplementer.Instance.Get<IScreenManager>());
 
         private const float RotationSpeed = MathHelper.Pi / 3000f;
         private Graph MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150));
@@ -27,9 +27,9 @@ namespace SlaamMono.Screens
         public bool SetupNewProfile = false;
 
         private readonly MainMenuScreen _menuScreen;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
 
-        public ProfileEditScreen(MainMenuScreen menuScreen, IScreenDirector screenDirector)
+        public ProfileEditScreen(MainMenuScreen menuScreen, IScreenManager screenDirector)
         {
             _menuScreen = menuScreen;
             _screenDirector = screenDirector;

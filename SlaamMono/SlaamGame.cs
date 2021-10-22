@@ -39,11 +39,11 @@ namespace SlaamMono
         private XnaContentManager _contentManager;
 
         private readonly ILogger _logger;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
         private readonly IFirstScreenResolver _firstScreenResolver;
         private readonly IWhitePixelResolver _whitePixelResolver;
 
-        public SlaamGame(ILogger logger, IScreenDirector screenDirector, IFirstScreenResolver firstScreenResolver,
+        public SlaamGame(ILogger logger, IScreenManager screenDirector, IFirstScreenResolver firstScreenResolver,
             IWhitePixelResolver whitePixelResolver)
         {
             _logger = logger;

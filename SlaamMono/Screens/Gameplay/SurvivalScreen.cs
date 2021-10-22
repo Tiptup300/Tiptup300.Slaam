@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.CharacterSelection;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
@@ -17,9 +18,9 @@ namespace SlaamMono.Screens
         private int _botsAdded = 0;
 
         private readonly ILogger _logger;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
 
-        public SurvivalScreen(List<CharacterShell> shell, ILogger logger, IScreenDirector screenDirector)
+        public SurvivalScreen(List<CharacterShell> shell, ILogger logger, IScreenManager screenDirector)
             : base(shell, logger, screenDirector)
         {
             _logger = logger;
@@ -110,7 +111,7 @@ namespace SlaamMono.Screens
                     ScoreKeeper,
                     DiImplementer.Instance.Get<ILogger>(),
                     DiImplementer.Instance.Get<MainMenuScreen>(),
-                    DiImplementer.Instance.Get<IScreenDirector>()));
+                    DiImplementer.Instance.Get<IScreenManager>()));
         }
     }
 }

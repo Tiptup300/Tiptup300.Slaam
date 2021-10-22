@@ -54,12 +54,12 @@ namespace SlaamMono.Screens
         public int DrawSizeWidth = ((GameGlobals.TILE_SIZE * GameGlobals.BOARD_WIDTH) / 4);
         public int DrawSizeHeight = ((GameGlobals.TILE_SIZE * GameGlobals.BOARD_HEIGHT) / 4);
 #endif
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
 
         public BoardThumbnailViewer(LobbyScreen parentscreen)
         {
             ParentScreen = parentscreen;
-            _screenDirector = DiImplementer.Instance.Get<IScreenDirector>();
+            _screenDirector = DiImplementer.Instance.Get<IScreenManager>();
         }
 
         public void Open()

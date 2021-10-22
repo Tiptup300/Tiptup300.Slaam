@@ -4,13 +4,13 @@ using SlaamMono.Gameplay;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.SubClasses;
+using SlaamMono.Screens;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace SlaamMono.Screens
+namespace SlaamMono.CharacterSelection
 {
     public class ClassicCharSelectScreen : IScreen
     {
@@ -28,8 +28,8 @@ namespace SlaamMono.Screens
 
         private readonly ILogger _logger;
         private readonly MainMenuScreen _menuScreen;
-        private readonly IScreenDirector _screenDirector;
-        public ClassicCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
+        private readonly IScreenManager _screenDirector;
+        public ClassicCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenManager screenDirector)
         {
             _logger = logger;
             _menuScreen = menuScreen;
@@ -122,7 +122,7 @@ namespace SlaamMono.Screens
                 new LobbyScreen(
                     characterShells,
                     DiImplementer.Instance.Get<ILogger>(),
-                    DiImplementer.Instance.Get<IScreenDirector>(),
+                    DiImplementer.Instance.Get<IScreenManager>(),
                     DiImplementer.Instance.Get<PlayerColorResolver>()));
         }
 

@@ -20,7 +20,7 @@ namespace SlaamMono.Screens
         public GameScreenTimer Timer;
         public List<CharacterShell> SetupChars = new List<CharacterShell>();
         private readonly ILogger _logger;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
         public List<Character> Characters = new List<Character>();
         public List<GameScreenScoreboard> Scoreboards = new List<GameScreenScoreboard>();
         public Tile[,] tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
@@ -65,7 +65,7 @@ namespace SlaamMono.Screens
         private float SpreeStepSize;
         private float SpreeCurrentStep;
         private int SpreeHighestKillCount;
-        public GameScreen(List<CharacterShell> chars, ILogger logger, IScreenDirector screenDirector)
+        public GameScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector)
         {
             SetupChars = chars;
             _logger = logger;
@@ -517,7 +517,7 @@ namespace SlaamMono.Screens
                     ScoreKeeper,
                     DiImplementer.Instance.Get<ILogger>(),
                     DiImplementer.Instance.Get<MainMenuScreen>(),
-                    DiImplementer.Instance.Get<IScreenDirector>()));
+                    DiImplementer.Instance.Get<IScreenManager>()));
         }
 
         /// <summary>

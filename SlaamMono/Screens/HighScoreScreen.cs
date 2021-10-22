@@ -12,10 +12,10 @@ namespace SlaamMono.Screens
         public const int MAX_HIGHSCORES = 7;
         private readonly ILogger _logger;
         private readonly MainMenuScreen _menuScreen;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
         private SurvivalStatsBoard _statsboard;
 
-        public HighScoreScreen(ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
+        public HighScoreScreen(ILogger logger, MainMenuScreen menuScreen, IScreenManager screenDirector)
         {
             _logger = logger;
             _menuScreen = menuScreen;

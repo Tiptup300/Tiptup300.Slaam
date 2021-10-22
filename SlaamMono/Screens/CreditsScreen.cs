@@ -13,7 +13,7 @@ namespace SlaamMono.Screens
     {
         private const float MovementSpeed = 3f / 120f;
         private readonly MainMenuScreen _menuScreen;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
         private string[] credits;
         //private int CurrentCredit = 3;
         private List<CreditsListing> CreditsListings = new List<CreditsListing>();
@@ -24,7 +24,7 @@ namespace SlaamMono.Screens
         private bool Active = false;
         private float TextHeight = 0f;
 
-        public CreditsScreen(MainMenuScreen menuScreen, IScreenDirector screenDirector)
+        public CreditsScreen(MainMenuScreen menuScreen, IScreenManager screenDirector)
         {
             _menuScreen = menuScreen;
             _screenDirector = screenDirector;

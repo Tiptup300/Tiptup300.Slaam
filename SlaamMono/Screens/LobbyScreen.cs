@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.CharacterSelection;
 using SlaamMono.Gameplay;
 using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
@@ -36,10 +37,10 @@ namespace SlaamMono.Screens
         private IntRange MenuChoice;
 
         private readonly ILogger _logger;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
         private readonly PlayerColorResolver _playerColorResolver;
 
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenDirector screenDirector, PlayerColorResolver playerColorResolver)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver)
         {
             SetupChars = chars;
             _logger = logger;
@@ -186,7 +187,7 @@ namespace SlaamMono.Screens
                         new ClassicCharSelectScreen(
                             DiImplementer.Instance.Get<ILogger>(),
                             DiImplementer.Instance.Get<MainMenuScreen>(),
-                            DiImplementer.Instance.Get<IScreenDirector>()));
+                            DiImplementer.Instance.Get<IScreenManager>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }
@@ -207,7 +208,7 @@ namespace SlaamMono.Screens
                     GameScreen.Instance = new GameScreen(
                         SetupChars,
                         DiImplementer.Instance.Get<ILogger>(),
-                        DiImplementer.Instance.Get<IScreenDirector>());
+                        DiImplementer.Instance.Get<IScreenManager>());
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();

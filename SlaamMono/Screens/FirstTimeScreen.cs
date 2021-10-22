@@ -11,9 +11,9 @@ namespace SlaamMono.Screens
     public class FirstTimeScreen : IScreen
     {
         Graph controlsgraph = new Graph(new Rectangle(50, 350, GameGlobals.DRAWING_GAME_WIDTH - 100, 500), 2, new Color(0, 0, 0, 150));
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
 
-        public FirstTimeScreen(IScreenDirector screenDirector)
+        public FirstTimeScreen(IScreenManager screenDirector)
         {
             _screenDirector = screenDirector;
         }

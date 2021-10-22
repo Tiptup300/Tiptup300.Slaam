@@ -15,7 +15,7 @@ namespace SlaamMono.Screens
         public MatchScoreCollection ScoreCollection;
         private readonly ILogger _logger;
         private readonly MainMenuScreen _menuScreen;
-        private readonly IScreenDirector _screenDirector;
+        private readonly IScreenManager _screenDirector;
         private IntRange CurrentPage = new IntRange(0, 0, 2);
         private IntRange CurrentChar;
 
@@ -35,7 +35,7 @@ namespace SlaamMono.Screens
         public const int MAX_HIGHSCORES = 5;
 #endif
         private Color StatsCol = new Color(0, 0, 0, 125);
-        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, MainMenuScreen menuScreen, IScreenDirector screenDirector)
+        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, MainMenuScreen menuScreen, IScreenManager screenDirector)
         {
             ScoreCollection = scorecollection;
             _logger = logger;

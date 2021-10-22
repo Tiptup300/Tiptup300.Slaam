@@ -13,7 +13,7 @@ namespace SlaamMono.Testing
         public void CanUpdateScreen()
         {
             TestScreen screen = new TestScreen();
-            ScreenDirector screenDirector = new ScreenDirector();
+            ScreenManager screenDirector = new ScreenManager();
 
             screenDirector.ChangeTo(screen);
             screenDirector.Update();
@@ -25,7 +25,7 @@ namespace SlaamMono.Testing
         public void CanDrawScreen()
         {
             TestScreen screen = new TestScreen();
-            ScreenDirector screenDirector = new ScreenDirector();
+            ScreenManager screenDirector = new ScreenManager();
 
             screenDirector.ChangeTo(screen);
             screenDirector.Update();
@@ -39,7 +39,7 @@ namespace SlaamMono.Testing
         {
             TestScreen firstScreen = new TestScreen();
             TestScreen secondScreen = new TestScreen();
-            ScreenDirector screenDirector = new ScreenDirector();
+            ScreenManager screenDirector = new ScreenManager();
 
             screenDirector.ChangeTo(firstScreen);
             screenDirector.Update();

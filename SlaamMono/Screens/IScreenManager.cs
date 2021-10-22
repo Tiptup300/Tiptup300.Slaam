@@ -2,7 +2,7 @@
 
 namespace SlaamMono.Screens
 {
-    public interface IScreenDirector
+    public interface IScreenManager
     {
         void ChangeTo(IScreen scrn);
         void Draw(SpriteBatch batch);
