@@ -5,6 +5,7 @@ using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.Screens;
 using SlaamMono.Resources;
 using SlaamMono.x_;
 using System;

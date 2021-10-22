@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay;
-using SlaamMono.Library;
+using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;

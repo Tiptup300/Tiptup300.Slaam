@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
-using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Screens;
 using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
 using System.Collections.Generic;

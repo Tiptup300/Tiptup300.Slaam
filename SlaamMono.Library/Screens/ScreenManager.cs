@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library;
 
-namespace SlaamMono.Screens
+namespace SlaamMono.Library.Screens
 {
     public class ScreenManager : IScreenManager
     {

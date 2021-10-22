@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
-using SlaamMono.Screens;
+using SlaamMono.Library.Screens;
 using System;
 using System.Collections.Generic;
 using System.Text;

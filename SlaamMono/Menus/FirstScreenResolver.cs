@@ -1,4 +1,4 @@
-﻿using SlaamMono.Library;
+﻿using SlaamMono.Library.Screens;
 
 namespace SlaamMono.Menus
 {

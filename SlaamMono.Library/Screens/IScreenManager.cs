@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace SlaamMono.Library
+namespace SlaamMono.Library.Screens
 {
     public interface IScreenManager
     {

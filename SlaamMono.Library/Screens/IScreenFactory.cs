@@ -1,4 +1,4 @@
-﻿namespace SlaamMono.Library
+﻿namespace SlaamMono.Library.Screens
 {
     public interface IScreenFactory
     {
