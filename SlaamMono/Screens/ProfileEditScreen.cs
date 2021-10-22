@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Helpers;
 using SlaamMono.Input;
 using SlaamMono.Library.Input;
+using SlaamMono.Profiles;
 using SlaamMono.SubClasses;
 using System;
 

@@ -1,5 +1,5 @@
-using SlaamMono.Helpers;
 using SlaamMono.Library.Logging;
+using SlaamMono.Profiles;
 using SlaamMono.Screens;
 using System;
 using System.IO;

@@ -1,7 +1,7 @@
 ﻿using SlaamMono.Library.Logging;
 using System.IO;
 
-namespace SlaamMono.Helpers
+namespace SlaamMono.Profiles
 {
     public class XnaContentReader
     {

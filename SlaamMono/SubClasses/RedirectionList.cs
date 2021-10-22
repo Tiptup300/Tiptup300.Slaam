@@ -20,10 +20,7 @@ namespace SlaamMono.SubClasses
         public T this[int index]
         {
             get { return ParentList[Indexs[index]]; }
-            set
-            {
-                ParentList[Indexs[index]] = value;
-            }
+            set { ParentList[Indexs[index]] = value; }
         }
 
         public int Count

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SlaamMono.Helpers
+namespace SlaamMono.Profiles
 {
     public class PlayerProfile
     {

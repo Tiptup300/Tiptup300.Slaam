@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
-using SlaamMono.Helpers;
 using SlaamMono.Library.Logging;
+using SlaamMono.Profiles;
 using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;

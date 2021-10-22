@@ -4,7 +4,7 @@ using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
 
-namespace SlaamMono.Helpers
+namespace SlaamMono.Profiles
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.

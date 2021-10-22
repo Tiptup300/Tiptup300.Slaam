@@ -5,6 +5,7 @@ using SlaamMono.Helpers;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Profiles;
 using SlaamMono.Resources;
 using SlaamMono.StatsBoards;
 using System.Collections.Generic;

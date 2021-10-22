@@ -1,6 +1,6 @@
 ﻿using SlaamMono.Library.Logging;
 
-namespace SlaamMono.Helpers
+namespace SlaamMono.Profiles
 {
     public class XnaContentManager
     {

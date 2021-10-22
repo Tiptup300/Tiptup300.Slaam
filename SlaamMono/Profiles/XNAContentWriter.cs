@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SlaamMono.Helpers
+namespace SlaamMono.Profiles
 {
     public class XnaContentWriter
     {
