@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Resources;
+using SlaamMono.Library.Rendering;
 
 namespace SlaamMono.Library.Graphing
 {
@@ -9,15 +9,13 @@ namespace SlaamMono.Library.Graphing
     {
         private Rectangle DrawingRectangle;
         private Color DrawingColor;
+        private readonly IRenderGraph _renderGraphManager;
 
-        private readonly IWhitePixelResolver _whitePixelResolver;
-
-        public GraphDrawingBlock(Rectangle drawingrect, Color drawingcol)
+        public GraphDrawingBlock(Rectangle drawingrect, Color drawingcol, IRenderGraph renderGraphManager)
         {
             DrawingRectangle = drawingrect;
             DrawingColor = drawingcol;
-
-            _whitePixelResolver = DiImplementer.Instance.Get<IWhitePixelResolver>();
+            _renderGraphManager = renderGraphManager;
         }
 
         public void ChangeColor(Color newcol)
@@ -27,7 +25,9 @@ namespace SlaamMono.Library.Graphing
 
         public void Draw(SpriteBatch batch, Vector2 Offset)
         {
-            batch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle(DrawingRectangle.X + (int)Offset.X, DrawingRectangle.Y + (int)Offset.Y, DrawingRectangle.Width, DrawingRectangle.Height), DrawingColor);
+            _renderGraphManager.RenderBox(
+                new Rectangle(DrawingRectangle.X + (int)Offset.X, DrawingRectangle.Y + (int)Offset.Y, DrawingRectangle.Width, DrawingRectangle.Height),
+                DrawingColor);
         }
 
     }

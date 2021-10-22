@@ -1,8 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Graphing;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Resources;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.Resources;
@@ -12,30 +13,50 @@ namespace SlaamMono.Menus
 {
     public class FirstTimeScreen : IScreen
     {
-        Graph controlsgraph = new Graph(new Rectangle(50, 350, GameGlobals.DRAWING_GAME_WIDTH - 100, 500), 2, new Color(0, 0, 0, 150));
+        private Graph _controlsgraph;
         private readonly IScreenManager _screenDirector;
+        private readonly IResources _resourcesManager;
+        private readonly IRenderGraph _renderGraphManager;
 
-        public FirstTimeScreen(IScreenManager screenDirector)
+        public FirstTimeScreen(IScreenManager screenDirector, IResources resourcesManager, IRenderGraph renderGraphManager)
         {
             _screenDirector = screenDirector;
+            _resourcesManager = resourcesManager;
+            _renderGraphManager = renderGraphManager;
         }
 
         public void Open()
         {
-            BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
+            BackgroundManager.ChangeBG(BackgroundType.Menu);
             FeedManager.InitializeFeeds("");
-            controlsgraph.Items.Columns.Add("");
-            controlsgraph.Items.Columns.Add("Gamepad");
-            controlsgraph.Items.Columns.Add("Keyboard");
-            controlsgraph.Items.Columns.Add("Keyboard 2");
-            controlsgraph.Items.Add(true, new GraphItem("Attack", "A", "Right Ctrl", "Left Ctrl"));
-            controlsgraph.Items.Add(true, new GraphItem("Back", "B", "Right Shift", "Left Shift"));
-            controlsgraph.Items.Add(true, new GraphItem("Start", "Start", "Enter", "Caps Lock"));
-            controlsgraph.Items.Add(true, new GraphItem("Exit", "Back", "Escape", "Tab"));
-            controlsgraph.Items.Add(true, new GraphItem("Fullscreen", "Secret :)", "F", "N/A"));
-            controlsgraph.Items.Add(true, new GraphItem("Take Screenshot", "Secret :P", "Print Scrn", "N/A"));
-            controlsgraph.Items.Add(true, new GraphItem("Toggle FPS", "None)", "Hold SP", "N/A"));
-            controlsgraph.CalculateBlocks();
+
+            _controlsgraph = buildGraph();
+        }
+
+        private Graph buildGraph()
+        {
+            Graph output;
+
+            output = new Graph(
+                new Rectangle(50, 350, GameGlobals.DRAWING_GAME_WIDTH - 100, 500), 2,
+                new Color(0, 0, 0, 150),
+                _resourcesManager,
+                _renderGraphManager);
+
+            output.Items.Columns.Add("");
+            output.Items.Columns.Add("Gamepad");
+            output.Items.Columns.Add("Keyboard");
+            output.Items.Columns.Add("Keyboard 2");
+            output.Items.Add(true, new GraphItem("Attack", "A", "Right Ctrl", "Left Ctrl"));
+            output.Items.Add(true, new GraphItem("Back", "B", "Right Shift", "Left Shift"));
+            output.Items.Add(true, new GraphItem("Start", "Start", "Enter", "Caps Lock"));
+            output.Items.Add(true, new GraphItem("Exit", "Back", "Escape", "Tab"));
+            output.Items.Add(true, new GraphItem("Fullscreen", "Secret :)", "F", "N/A"));
+            output.Items.Add(true, new GraphItem("Take Screenshot", "Secret :P", "Print Scrn", "N/A"));
+            output.Items.Add(true, new GraphItem("Toggle FPS", "None)", "Hold SP", "N/A"));
+            output.CalculateBlocks();
+
+            return _controlsgraph;
         }
 
         public void Update()
@@ -50,7 +71,7 @@ namespace SlaamMono.Menus
         public void Draw(SpriteBatch batch)
         {
             batch.Draw(ResourceManager.Instance.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
-            controlsgraph.Draw(batch);
+            _controlsgraph.Draw(batch);
         }
 
         public void Close()

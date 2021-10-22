@@ -35,7 +35,7 @@ namespace SlaamMono.Menus
         public void Open()
         {
             credits = ResourceManager.Instance.GetTextList("Credits").ToArray();
-            BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Credits);
+            BackgroundManager.ChangeBG(BackgroundType.Credits);
             for (int x = 0; x < credits.Length; x++)
             {
                 string[] credinfo = credits[x].Replace("\r", "").Split("|".ToCharArray());

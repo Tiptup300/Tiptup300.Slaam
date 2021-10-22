@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Resources;
 using SlaamMono.Library.Screens;
 using SlaamMono.Menus;
 using SlaamMono.x_;
@@ -57,7 +59,7 @@ namespace SlaamMono.MatchCreation
             {
                 ResetBoxes();
             }
-            BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
+            BackgroundManager.ChangeBG(BackgroundType.Menu);
             FeedManager.InitializeFeeds(DialogStrings.CharacterSelectScreenFeed);
 
             for (int x = 0; x < SelectBoxes.Length; x++)
@@ -124,7 +126,9 @@ namespace SlaamMono.MatchCreation
                     characterShells,
                     DiImplementer.Instance.Get<ILogger>(),
                     DiImplementer.Instance.Get<IScreenManager>(),
-                    DiImplementer.Instance.Get<PlayerColorResolver>()));
+                    DiImplementer.Instance.Get<PlayerColorResolver>(),
+                    DiImplementer.Instance.Get<IResources>(),
+                    DiImplementer.Instance.Get<IRenderGraph>()));
         }
 
         public void Draw(SpriteBatch batch)

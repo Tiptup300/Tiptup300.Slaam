@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Graphing;
 using SlaamMono.Input;
 using SlaamMono.Library;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Resources;
 using SlaamMono.Library.Screens;
 using SlaamMono.Menus;
 using SlaamMono.x_;
@@ -17,11 +18,13 @@ namespace SlaamMono.PlayerProfiles
         public static ProfileEditScreen Instance =
             new ProfileEditScreen(
                 DiImplementer.Instance.Get<MainMenuScreen>(),
-                DiImplementer.Instance.Get<IScreenManager>());
+                DiImplementer.Instance.Get<IScreenManager>(),
+                DiImplementer.Instance.Get<IResources>(),
+                DiImplementer.Instance.Get<IRenderGraph>());
 
         private const float RotationSpeed = MathHelper.Pi / 3000f;
-        private Graph MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150));
-        private Graph SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150));
+        private Graph MainMenu;
+        private Graph SubMenu;
         private IntRange CurrentMenu = new IntRange(0, 0, 1);
         private IntRange CurrentMenuChoice = new IntRange(0, 0, 0);
         private int EditingProfile;
@@ -31,15 +34,17 @@ namespace SlaamMono.PlayerProfiles
         private readonly MainMenuScreen _menuScreen;
         private readonly IScreenManager _screenDirector;
 
-        public ProfileEditScreen(MainMenuScreen menuScreen, IScreenManager screenDirector)
+        public ProfileEditScreen(MainMenuScreen menuScreen, IScreenManager screenDirector, IResources resourcesManager, IRenderGraph renderGraphManager)
         {
             _menuScreen = menuScreen;
             _screenDirector = screenDirector;
+            MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
+            SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
         }
 
         public void Open()
         {
-            BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
+            BackgroundManager.ChangeBG(BackgroundType.Menu);
 
             SetupMainMenu();
             ResetSubMenu();

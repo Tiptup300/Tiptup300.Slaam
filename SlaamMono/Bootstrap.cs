@@ -43,7 +43,7 @@ namespace SlaamMono
 
         public void registerComponents()
         {
-            _container.Register<IRenderGraphManager, RenderGraphManager>(Lifestyle.Singleton);
+            _container.Register<IRenderGraph, RenderGraphManager>(Lifestyle.Singleton);
         }
 
         private void registerScreens()
@@ -62,7 +62,7 @@ namespace SlaamMono
 
         private void registerResources()
         {
-            _container.Register<ResourceManager>(Lifestyle.Singleton);
+            _container.Register<IResources, ResourceManager>(Lifestyle.Singleton);
             _container.Register<IFileLoader<Texture2D>, Texture2DLoader>(Lifestyle.Singleton);
             _container.Register<IWhitePixelResolver, WhitePixelResolver>(Lifestyle.Singleton);
             _container.Register<IFileLoader<string[]>, CommentedTextLineLoader>(Lifestyle.Singleton);

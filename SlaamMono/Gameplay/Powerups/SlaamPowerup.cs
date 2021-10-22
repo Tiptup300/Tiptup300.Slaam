@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Actors;
+using SlaamMono.Library.Resources;
 using SlaamMono.Resources;
 using SlaamMono.x_;
 using System;

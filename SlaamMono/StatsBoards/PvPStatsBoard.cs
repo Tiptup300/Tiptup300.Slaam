@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Graphing;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Resources;
 using System.Collections.Generic;
 
 namespace SlaamMono.StatsBoards
@@ -9,10 +11,10 @@ namespace SlaamMono.StatsBoards
     {
         public List<PvPPageListing> PvPPage = new List<PvPPageListing>();
 
-        public PvPStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col)
+        public PvPStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph)
             : base(scorekeeper)
         {
-            MainBoard = new Graph(rect, 2, col);
+            MainBoard = new Graph(rect, 2, col, resources, renderGraph);
         }
 
         public override void CalculateStats()

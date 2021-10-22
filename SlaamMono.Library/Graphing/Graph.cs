@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.Resources;
 using System.Collections.Generic;
 
 namespace SlaamMono.Library.Graphing
@@ -9,41 +10,47 @@ namespace SlaamMono.Library.Graphing
     public class Graph
     {
         public GraphItemCollection Items = new GraphItemCollection();
-        private GraphDrawingBlockCollection Drawings = new GraphDrawingBlockCollection();
-        private List<GraphWritingString> StringsToWrite = new List<GraphWritingString>();
-        private Color ColorToDraw;
-        private Rectangle GraphRectangle;
-        private int Gap;
 
-        public Graph(Rectangle graphrect, int gap, Color coltodraw)
+        private GraphDrawingBlockCollection _drawings = new GraphDrawingBlockCollection();
+        private List<GraphWritingString> _stringsToWrite = new List<GraphWritingString>();
+        private Color _colorToDraw;
+        private Rectangle _graphRectangle;
+        private int _gap;
+
+        private readonly IResources _resourceManager;
+        private readonly IRenderGraph _renderGraphManager;
+
+        public Graph(Rectangle graphrect, int gap, Color coltodraw, IResources resourceManager, IRenderGraph renderGraphManager)
         {
-            GraphRectangle = graphrect;
-            Gap = gap;
-            ColorToDraw = coltodraw;
+            _graphRectangle = graphrect;
+            _gap = gap;
+            _colorToDraw = coltodraw;
+            _resourceManager = resourceManager;
+            _renderGraphManager = renderGraphManager;
         }
 
         public void CalculateBlocks()
         {
-            Drawings.Clear();
-            StringsToWrite.Clear();
-            int SizeOfColumns = GraphRectangle.Width / Items.Columns.Count;
+            _drawings.Clear();
+            _stringsToWrite.Clear();
+            int SizeOfColumns = _graphRectangle.Width / Items.Columns.Count;
             int HeightOfRows = 30;
 
-            int ColumnWidth = SizeOfColumns - Gap;
-            int RowHeight = HeightOfRows - Gap;
+            int ColumnWidth = SizeOfColumns - _gap;
+            int RowHeight = HeightOfRows - _gap;
 
-            int XOffset = ColumnWidth + Gap;
-            int YOffset = RowHeight + Gap;
+            int XOffset = ColumnWidth + _gap;
+            int YOffset = RowHeight + _gap;
 
             for (int x = 0; x < Items.Columns.Count; x++)
             {
-                Rectangle NewBlock = new Rectangle(GraphRectangle.X + XOffset * x, GraphRectangle.Y, ColumnWidth, RowHeight);
+                Rectangle NewBlock = new Rectangle(_graphRectangle.X + XOffset * x, _graphRectangle.Y, ColumnWidth, RowHeight);
 
                 if (Items.Columns[x].Trim() != "")
                 {
-                    Drawings.Add(new GraphDrawingBlock(NewBlock, ColorToDraw));
+                    _drawings.Add(new GraphDrawingBlock(NewBlock, _colorToDraw, _renderGraphManager));
 
-                    StringsToWrite.Add(new GraphWritingString(Items.Columns[x],
+                    _stringsToWrite.Add(new GraphWritingString(Items.Columns[x],
                         new Vector2(NewBlock.X + NewBlock.Width / 2, NewBlock.Y + NewBlock.Height / 2)));
                 }
             }
@@ -56,13 +63,13 @@ namespace SlaamMono.Library.Graphing
                     {
                         if (Items[x].Details[y].Trim() != "")
                         {
-                            Rectangle NewBlock = new Rectangle(GraphRectangle.X + XOffset * y, GraphRectangle.Y + YOffset * (1 + x), ColumnWidth, RowHeight);
+                            Rectangle NewBlock = new Rectangle(_graphRectangle.X + XOffset * y, _graphRectangle.Y + YOffset * (1 + x), ColumnWidth, RowHeight);
                             if (Items[x].Highlight)
-                                Drawings.Add(new GraphDrawingBlock(NewBlock, new Color((byte)135, (byte)206, (byte)250, ColorToDraw.A)));
+                                _drawings.Add(new GraphDrawingBlock(NewBlock, new Color((byte)135, (byte)206, (byte)250, _colorToDraw.A), _renderGraphManager));
                             else
-                                Drawings.Add(new GraphDrawingBlock(NewBlock, ColorToDraw));
+                                _drawings.Add(new GraphDrawingBlock(NewBlock, _colorToDraw, _renderGraphManager));
 
-                            StringsToWrite.Add(new GraphWritingString(Items[x].Details[y],
+                            _stringsToWrite.Add(new GraphWritingString(Items[x].Details[y],
                                 new Vector2(NewBlock.X + NewBlock.Width / 2, NewBlock.Y + NewBlock.Height / 2)));
                         }
                     }
@@ -80,10 +87,10 @@ namespace SlaamMono.Library.Graphing
 
         public void Draw(SpriteBatch batch)
         {
-            Drawings.Draw(batch);
-            for (int x = 0; x < StringsToWrite.Count; x++)
+            _drawings.Draw(batch);
+            for (int x = 0; x < _stringsToWrite.Count; x++)
             {
-                RenderGraphManager.Instance.RenderText(StringsToWrite[x].Str, StringsToWrite[x].Pos, ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, true);
+                RenderGraphManager.Instance.RenderText(_stringsToWrite[x].Str, _stringsToWrite[x].Pos, _resourceManager.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, true);
             }
         }
     }

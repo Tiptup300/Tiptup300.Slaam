@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace SlaamMono.Library.Rendering
 {
-    public class RenderGraphManager : DrawableGameComponent, IRenderGraphManager
+    public class RenderGraphManager : DrawableGameComponent, IRenderGraph
     {
-        public static IRenderGraphManager Instance;
+        public static IRenderGraph Instance;
 
         private SpriteBatch _batch;
         private List<TextEntry> _textToDraw = new List<TextEntry>();

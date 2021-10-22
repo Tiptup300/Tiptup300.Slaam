@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Graphing;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Resources;
 using System.Collections.Generic;
 
 namespace SlaamMono.StatsBoards
@@ -9,11 +11,11 @@ namespace SlaamMono.StatsBoards
     {
         public SpreePlayerStatsPageListing[] SpreeStatsPage;
 
-        public SpreeStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col)
+        public SpreeStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph)
             : base(scorekeeper)
         {
             SpreeStatsPage = new SpreePlayerStatsPageListing[scorekeeper.ParentGameScreen.Characters.Count];
-            MainBoard = new Graph(rect, 2, col);
+            MainBoard = new Graph(rect, 2, col, resources, renderGraph);
         }
 
         public override void CalculateStats()

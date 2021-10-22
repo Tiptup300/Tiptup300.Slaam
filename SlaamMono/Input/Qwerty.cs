@@ -27,19 +27,19 @@ namespace SlaamMono.Input
 
         public static string EditingString = "";
 
-        private static IRenderGraphManager _renderGraphManager;
+        private static IRenderGraph _renderGraphManager;
 
         private static readonly Rectangle _boxRectangle = new Rectangle(0, 0, 1280, 1024);
         private static readonly Color _boxColor = new Color(0, 0, 0, 200);
 
         static Qwerty()
         {
-            x_init(DiImplementer.Instance.Get<IRenderGraphManager>());
+            x_init(DiImplementer.Instance.Get<IRenderGraph>());
 
             InitKeys();
         }
 
-        private static void x_init(IRenderGraphManager renderGraphManager)
+        private static void x_init(IRenderGraph renderGraphManager)
         {
             _renderGraphManager = renderGraphManager;
         }

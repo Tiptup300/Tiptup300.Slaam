@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Graphing;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Resources;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +12,11 @@ namespace SlaamMono.StatsBoards
     {
         public NormalPlayerStatsPageListing[] NormalStatsPage;
 
-        public NormalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col)
+        public NormalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph)
             : base(scorekeeper)
         {
             NormalStatsPage = new NormalPlayerStatsPageListing[scorekeeper.ParentGameScreen.Characters.Count];
-            MainBoard = new Graph(rect, 2, col);
+            MainBoard = new Graph(rect, 2, col, resources, renderGraph);
         }
 
         public override void CalculateStats()

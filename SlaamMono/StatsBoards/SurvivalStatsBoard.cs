@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Resources;
 using SlaamMono.PlayerProfiles;
 using System;
 using System.Collections.Generic;
@@ -18,12 +20,12 @@ namespace SlaamMono.StatsBoards
         private int RowsToDraw;
 
         private ILogger _logger;
-        public SurvivalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, int rowstodraw, ILogger logger)
+        public SurvivalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, int rowstodraw, ILogger logger, IResources resources, IRenderGraph renderGraph)
             : base(scorekeeper)
         {
             _logger = logger;
 
-            MainBoard = new Graph(rect, 2, col);
+            MainBoard = new Graph(rect, 2, col, resources, renderGraph);
             RowsToDraw = rowstodraw;
         }
 

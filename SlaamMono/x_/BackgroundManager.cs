@@ -12,10 +12,7 @@ namespace SlaamMono.x_
     {
         private static BackgroundType CurrentType = BackgroundType.Normal;
         private static float BGOffset = 0f;
-        private static float Rotation = 0f;
-        private const float RotationSpeed = MathHelper.Pi / 3000f;
-        private static float Multiplier = 1f;
-        //private static TimeSpan TimeElapsed = new TimeSpan();
+        private static float _multiplier = 1f;
 
         public static void Update()
         {
@@ -24,10 +21,6 @@ namespace SlaamMono.x_
                 BGOffset += FrameRateDirector.MovementFactor * (10f / 100f);
                 if (BGOffset >= GameGlobals.DRAWING_GAME_HEIGHT)
                     BGOffset = 0;
-            }
-            else if (CurrentType == BackgroundType.Menu)
-            {
-                Rotation += FrameRateDirector.MovementFactor * RotationSpeed * Multiplier;
             }
         }
 
@@ -72,15 +65,7 @@ namespace SlaamMono.x_
 
         public static void SetRotation(float rotation)
         {
-            Multiplier = rotation;
-        }
-
-        public enum BackgroundType
-        {
-            Normal,
-            Menu,
-            Credits,
-            BattleScreen,
+            _multiplier = rotation;
         }
     }
 }

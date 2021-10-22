@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Resources;
 using SlaamMono.Library.Screens;
 using SlaamMono.StatsBoards;
 using SlaamMono.x_;
@@ -14,20 +16,24 @@ namespace SlaamMono.Menus
         private readonly ILogger _logger;
         private readonly MainMenuScreen _menuScreen;
         private readonly IScreenManager _screenDirector;
+        private readonly IResources _resources;
+        private readonly IRenderGraph _renderGraph;
         private SurvivalStatsBoard _statsboard;
 
-        public HighScoreScreen(ILogger logger, MainMenuScreen menuScreen, IScreenManager screenDirector)
+        public HighScoreScreen(ILogger logger, MainMenuScreen menuScreen, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
         {
             _logger = logger;
             _menuScreen = menuScreen;
             _screenDirector = screenDirector;
+            _resources = resources;
+            _renderGraph = renderGraph;
         }
 
         public void Open()
         {
-            _statsboard = new SurvivalStatsBoard(null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger);
+            _statsboard = new SurvivalStatsBoard(null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderGraph);
             BackgroundManager.SetRotation(.5f);
-            BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
+            BackgroundManager.ChangeBG(BackgroundType.Menu);
             _statsboard.CalculateStats();
             _statsboard.ConstructGraph(25);
         }

@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Resources;
 using System;
 
-namespace SlaamMono.Resources
+namespace SlaamMono.Library.Resources
 {
     public class CachedTexture : IDisposable
     {

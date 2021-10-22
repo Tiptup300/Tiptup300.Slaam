@@ -7,6 +7,7 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.Resources;
 using SlaamMono.Library.Screens;
 using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
@@ -34,20 +35,21 @@ namespace SlaamMono.MatchCreation
         private bool ButtonOnLeft = true;
 #endif
         private bool ViewingSettings = false;
-        public Graph MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150));
+        public Graph MainMenu;
         private IntRange MenuChoice;
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly PlayerColorResolver _playerColorResolver;
 
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver, IResources resourcesManager, IRenderGraph renderGraphManager)
         {
             SetupChars = chars;
             _logger = logger;
             _screenDirector = screenDirector;
             _playerColorResolver = playerColorResolver;
             PlayerAmt = SetupChars.Count;
+            MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Add(true,
@@ -118,7 +120,7 @@ namespace SlaamMono.MatchCreation
 
         public void Open()
         {
-            BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
+            BackgroundManager.ChangeBG(BackgroundType.Menu);
             if (SetupChars.Count == 1)
             {
                 AddComputer();
@@ -176,7 +178,7 @@ namespace SlaamMono.MatchCreation
                         {
                             _screenDirector.ChangeTo(new BoardThumbnailViewer(this));
                         }
-                        BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Menu);
+                        BackgroundManager.ChangeBG(BackgroundType.Menu);
                     }
                 }
             }
@@ -220,7 +222,7 @@ namespace SlaamMono.MatchCreation
                     ViewingSettings = true;
                     ResetZune();
 
-                    BackgroundManager.ChangeBG(BackgroundManager.BackgroundType.Normal);
+                    BackgroundManager.ChangeBG(BackgroundType.Normal);
                 }
 
             }

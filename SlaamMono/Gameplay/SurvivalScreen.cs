@@ -5,6 +5,8 @@ using SlaamMono.GameplayStatistics;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Rendering;
+using SlaamMono.Library.Resources;
 using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.Menus;
@@ -115,7 +117,9 @@ namespace SlaamMono.Gameplay
                     ScoreKeeper,
                     DiImplementer.Instance.Get<ILogger>(),
                     DiImplementer.Instance.Get<MainMenuScreen>(),
-                    DiImplementer.Instance.Get<IScreenManager>()));
+                    DiImplementer.Instance.Get<IScreenManager>(),
+                    DiImplementer.Instance.Get<IResources>(),
+                    DiImplementer.Instance.Get<IRenderGraph>()));
         }
     }
 }
