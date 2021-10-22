@@ -2,19 +2,18 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
-using SlaamMono.Resources;
 using System.Collections.Generic;
 
-namespace SlaamMono.Graphing
+namespace SlaamMono.Library.Graphing
 {
     public class Graph
     {
-        private Rectangle GraphRectangle;
-        private int Gap;
         public GraphItemCollection Items = new GraphItemCollection();
         private GraphDrawingBlockCollection Drawings = new GraphDrawingBlockCollection();
         private List<GraphWritingString> StringsToWrite = new List<GraphWritingString>();
         private Color ColorToDraw;
+        private Rectangle GraphRectangle;
+        private int Gap;
 
         public Graph(Rectangle graphrect, int gap, Color coltodraw)
         {

@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Resources;
 
-namespace SlaamMono.Graphing
+namespace SlaamMono.Library.Graphing
 {
 
     public class GraphDrawingBlock

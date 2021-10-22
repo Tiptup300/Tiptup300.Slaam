@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SlaamMono.Graphing
+namespace SlaamMono.Library.Graphing
 {
     public class GraphItem
     {

@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay;
-using SlaamMono.Graphing;
 using SlaamMono.Library;
+using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;

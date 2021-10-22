@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
-using SlaamMono.Graphing;
+using SlaamMono.Library.Graphing;
 using System.Collections.Generic;
 
 namespace SlaamMono.StatsBoards

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace SlaamMono.Graphing
+namespace SlaamMono.Library.Graphing
 {
     public struct GraphWritingString
     {

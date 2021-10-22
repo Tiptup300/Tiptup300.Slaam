@@ -1,5 +1,5 @@
 using SlaamMono.Gameplay;
-using SlaamMono.Graphing;
+using SlaamMono.Library.Graphing;
 
 namespace SlaamMono.StatsBoards
 {

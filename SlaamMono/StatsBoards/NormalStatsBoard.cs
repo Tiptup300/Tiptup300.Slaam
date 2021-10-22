@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
-using SlaamMono.Graphing;
+using SlaamMono.Library.Graphing;
 using System;
 using System.Collections.Generic;
 
