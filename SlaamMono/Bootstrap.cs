@@ -48,7 +48,7 @@ namespace SlaamMono
 
         private void registerScreens()
         {
-            _container.Register<MainMenuScreen>();
+            _container.Register<IMainMenuScreen, MainMenuScreen>();
             _container.Register<CreditsScreen>();
             _container.Register<HighScoreScreen>();
             _container.Register<ProfileEditScreen>();

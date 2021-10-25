@@ -7,9 +7,11 @@ namespace SlaamMono.Library.Screens
         private IScreen _currentScreen;
         private IScreen _nextScreen;
         private bool _isChangingScreens = false;
+        private readonly IScreenFactory _screenFactory;
 
-        public ScreenManager()
+        public ScreenManager(IScreenFactory screenFactory)
         {
+            _screenFactory = screenFactory;
         }
 
         private bool _hasCurrentScreen => _currentScreen != null;
@@ -53,6 +55,11 @@ namespace SlaamMono.Library.Screens
         {
             _isChangingScreens = true;
             _nextScreen = nextScreen;
+        }
+
+        public void ChangeTo<TScreenType>()
+        {
+            ChangeTo(_screenFactory.GetScreen<TScreenType>());
         }
     }
 }

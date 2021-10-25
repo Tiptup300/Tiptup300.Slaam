@@ -7,7 +7,6 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Resources;
 using SlaamMono.Library.Screens;
-using SlaamMono.Menus;
 using SlaamMono.Resources;
 using SlaamMono.StatsBoards;
 using SlaamMono.x_;
@@ -18,7 +17,6 @@ namespace SlaamMono.GameplayStatistics
     {
         public MatchScoreCollection ScoreCollection;
         private readonly ILogger _logger;
-        private readonly MainMenuScreen _menuScreen;
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraph;
@@ -32,11 +30,10 @@ namespace SlaamMono.GameplayStatistics
         public const int MAX_HIGHSCORES = 5;
         private Color StatsCol = new Color(0, 0, 0, 125);
 
-        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, MainMenuScreen menuScreen, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
+        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
         {
             ScoreCollection = scorecollection;
             _logger = logger;
-            _menuScreen = menuScreen;
             _screenDirector = screenDirector;
             _resources = resources;
             _renderGraph = renderGraph;
@@ -154,7 +151,7 @@ namespace SlaamMono.GameplayStatistics
 
             if (InputComponent.Players[0].PressedAction)
             {
-                _screenDirector.ChangeTo(_menuScreen);
+                _screenDirector.ChangeTo<IMainMenuScreen>();
             }
         }
 

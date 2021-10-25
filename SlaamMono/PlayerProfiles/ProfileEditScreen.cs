@@ -17,7 +17,6 @@ namespace SlaamMono.PlayerProfiles
     {
         public static ProfileEditScreen Instance =
             new ProfileEditScreen(
-                DiImplementer.Instance.Get<MainMenuScreen>(),
                 DiImplementer.Instance.Get<IScreenManager>(),
                 DiImplementer.Instance.Get<IResources>(),
                 DiImplementer.Instance.Get<IRenderGraph>());
@@ -31,12 +30,11 @@ namespace SlaamMono.PlayerProfiles
         private bool WaitingForQwerty = false;
         public bool SetupNewProfile = false;
 
-        private readonly MainMenuScreen _menuScreen;
+
         private readonly IScreenManager _screenDirector;
 
-        public ProfileEditScreen(MainMenuScreen menuScreen, IScreenManager screenDirector, IResources resourcesManager, IRenderGraph renderGraphManager)
+        public ProfileEditScreen(IScreenManager screenDirector, IResources resourcesManager, IRenderGraph renderGraphManager)
         {
-            _menuScreen = menuScreen;
             _screenDirector = screenDirector;
             MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
             SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
@@ -103,7 +101,7 @@ namespace SlaamMono.PlayerProfiles
                     }
                     if (InputComponent.Players[0].PressedAction2)
                     {
-                        _screenDirector.ChangeTo(_menuScreen);
+                        _screenDirector.ChangeTo<IMainMenuScreen>();
                     }
                 }
             }

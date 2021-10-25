@@ -189,7 +189,6 @@ namespace SlaamMono.MatchCreation
                     _screenDirector.ChangeTo(
                         new ClassicCharSelectScreen(
                             DiImplementer.Instance.Get<ILogger>(),
-                            DiImplementer.Instance.Get<MainMenuScreen>(),
                             DiImplementer.Instance.Get<IScreenManager>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();

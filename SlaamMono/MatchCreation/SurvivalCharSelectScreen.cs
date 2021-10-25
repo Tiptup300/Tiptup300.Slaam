@@ -13,8 +13,8 @@ namespace SlaamMono.MatchCreation
     {
         private readonly IScreenManager _screenDirector;
 
-        public SurvivalCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenManager screenDirector)
-            : base(logger, menuScreen, screenDirector)
+        public SurvivalCharSelectScreen(ILogger logger, IScreenManager screenDirector)
+            : base(logger, screenDirector)
         {
             _screenDirector = screenDirector;
         }

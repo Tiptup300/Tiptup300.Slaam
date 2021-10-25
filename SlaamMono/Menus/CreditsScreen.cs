@@ -14,7 +14,7 @@ namespace SlaamMono.Menus
     public class CreditsScreen : IScreen
     {
         private const float MovementSpeed = 3f / 120f;
-        private readonly MainMenuScreen _menuScreen;
+
         private readonly IScreenManager _screenDirector;
         private string[] credits;
         //private int CurrentCredit = 3;
@@ -26,9 +26,8 @@ namespace SlaamMono.Menus
         private bool Active = false;
         private float TextHeight = 0f;
 
-        public CreditsScreen(MainMenuScreen menuScreen, IScreenManager screenDirector)
+        public CreditsScreen(IScreenManager screenDirector)
         {
-            _menuScreen = menuScreen;
             _screenDirector = screenDirector;
         }
 
@@ -68,7 +67,7 @@ namespace SlaamMono.Menus
 
             if (InputComponent.Players[0].PressedAction2)
             {
-                _screenDirector.ChangeTo(_menuScreen);
+                _screenDirector.ChangeTo<IMainMenuScreen>();
             }
         }
 

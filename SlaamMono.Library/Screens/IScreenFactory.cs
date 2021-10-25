@@ -3,5 +3,6 @@
     public interface IScreenFactory
     {
         IScreen Get(string name);
+        IScreen GetScreen<TScreenType>();
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 using SlaamMono.Library.Screens;
-using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,7 +12,7 @@ namespace SlaamMono.Testing
         public void CanUpdateScreen()
         {
             TestScreen screen = new TestScreen();
-            ScreenManager screenDirector = new ScreenManager();
+            ScreenManager screenDirector = new ScreenManager(null);
 
             screenDirector.ChangeTo(screen);
             screenDirector.Update();
@@ -25,7 +24,7 @@ namespace SlaamMono.Testing
         public void CanDrawScreen()
         {
             TestScreen screen = new TestScreen();
-            ScreenManager screenDirector = new ScreenManager();
+            ScreenManager screenDirector = new ScreenManager(null);
 
             screenDirector.ChangeTo(screen);
             screenDirector.Update();
@@ -39,7 +38,7 @@ namespace SlaamMono.Testing
         {
             TestScreen firstScreen = new TestScreen();
             TestScreen secondScreen = new TestScreen();
-            ScreenManager screenDirector = new ScreenManager();
+            ScreenManager screenDirector = new ScreenManager(null);
 
             screenDirector.ChangeTo(firstScreen);
             screenDirector.Update();

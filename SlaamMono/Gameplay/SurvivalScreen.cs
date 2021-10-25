@@ -116,7 +116,6 @@ namespace SlaamMono.Gameplay
                 new StatsScreen(
                     ScoreKeeper,
                     DiImplementer.Instance.Get<ILogger>(),
-                    DiImplementer.Instance.Get<MainMenuScreen>(),
                     DiImplementer.Instance.Get<IScreenManager>(),
                     DiImplementer.Instance.Get<IResources>(),
                     DiImplementer.Instance.Get<IRenderGraph>()));

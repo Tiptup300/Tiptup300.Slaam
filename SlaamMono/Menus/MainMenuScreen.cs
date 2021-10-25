@@ -9,15 +9,13 @@ using ZBlade;
 
 namespace SlaamMono.Menus
 {
-    public class MainMenuScreen : IScreen
+    public class MainMenuScreen : IMainMenuScreen, IScreen
     {
-        private readonly IScreenFactory _screenFactory;
-        private readonly IScreenManager _screenDirector;
+        private readonly IScreenManager _screenManager;
 
-        public MainMenuScreen(IScreenFactory screenFactory, IScreenManager screenDirector)
+        public MainMenuScreen(IScreenManager screenDirector)
         {
-            _screenFactory = screenFactory;
-            _screenDirector = screenDirector;
+            _screenManager = screenDirector;
         }
 
         public void Open()
@@ -46,17 +44,13 @@ namespace SlaamMono.Menus
             });
         }
 
-        private void selectedCredits(object sender, EventArgs e) => changeScreen(nameof(CreditsScreen));
-        private void selectedHighscores(object sender, EventArgs e) => changeScreen(nameof(HighScoreScreen));
-        private void selectedManageProfiles(object sender, EventArgs e) => changeScreen(nameof(ProfileEditScreen));
-        private void selectedSurvival(object sender, EventArgs e) => changeScreen(nameof(SurvivalScreen));
-        private void selectedClassicMode(object sender, EventArgs e) => changeScreen(nameof(ClassicCharSelectScreen));
+        private void selectedCredits(object sender, EventArgs e) => _screenManager.ChangeTo<CreditsScreen>();
+        private void selectedHighscores(object sender, EventArgs e) => _screenManager.ChangeTo<HighScoreScreen>();
+        private void selectedManageProfiles(object sender, EventArgs e) => _screenManager.ChangeTo<ProfileEditScreen>();
+        private void selectedSurvival(object sender, EventArgs e) => _screenManager.ChangeTo<SurvivalScreen>();
+        private void selectedClassicMode(object sender, EventArgs e) => _screenManager.ChangeTo<ClassicCharSelectScreen>();
         private void exitGame(object sender, EventArgs e) => SlaamGame.Instance.Exit();
 
-        private void changeScreen(string screenName)
-        {
-            _screenDirector.ChangeTo(_screenFactory.Get(screenName));
-        }
 
         public void Update() { }
         public void Draw(SpriteBatch batch) { }

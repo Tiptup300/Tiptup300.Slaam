@@ -30,12 +30,11 @@ namespace SlaamMono.MatchCreation
         private const float HOffset = 40f;
 
         private readonly ILogger _logger;
-        private readonly MainMenuScreen _menuScreen;
+
         private readonly IScreenManager _screenDirector;
-        public ClassicCharSelectScreen(ILogger logger, MainMenuScreen menuScreen, IScreenManager screenDirector)
+        public ClassicCharSelectScreen(ILogger logger, IScreenManager screenDirector)
         {
             _logger = logger;
-            _menuScreen = menuScreen;
             _screenDirector = screenDirector;
         }
 
@@ -111,7 +110,7 @@ namespace SlaamMono.MatchCreation
 
         public virtual void GoBack()
         {
-            _screenDirector.ChangeTo(_menuScreen);
+            _screenDirector.ChangeTo<IMainMenuScreen>();
         }
 
         public virtual void GoForward()
