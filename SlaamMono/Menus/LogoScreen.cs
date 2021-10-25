@@ -10,7 +10,7 @@ using System;
 
 namespace SlaamMono.Menus
 {
-    public class LogoScreen : IScreen
+    public class LogoScreen : ILogoScreen, IScreen
     {
         private Timer displaytime = new Timer(new TimeSpan(0, 0, 1));
 

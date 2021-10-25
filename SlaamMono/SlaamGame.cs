@@ -24,30 +24,25 @@ namespace SlaamMono
     {
         private GraphicsDeviceManager graphics;
         new public static ContentManager Content;
-        private SpriteBatch gamebatch;
 
         public static ZuneBlade mainBlade;
         public static SlaamGame Instance { get { return instance; } }
-
         public static GraphicsDeviceManager Graphics { get { return instance.graphics; } }
-
         public static SlaamGame instance;
-
         public static bool ShowFPS = true;
 
         private XnaContentManager _contentManager;
+        private SpriteBatch gamebatch;
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
-        private readonly IFirstScreenResolver _firstScreenResolver;
         private readonly IWhitePixelResolver _whitePixelResolver;
 
-        public SlaamGame(ILogger logger, IScreenManager screenDirector, IFirstScreenResolver firstScreenResolver,
+        public SlaamGame(ILogger logger, IScreenManager screenDirector,
             IWhitePixelResolver whitePixelResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
-            _firstScreenResolver = firstScreenResolver;
             _whitePixelResolver = whitePixelResolver;
             graphics = new GraphicsDeviceManager(this);
             Content = new ContentManager(Services);
@@ -79,7 +74,7 @@ namespace SlaamMono
             _contentManager = new XnaContentManager(DiImplementer.Instance.Get<ILogger>());
 
             GameGlobals.SetupGame();
-            _screenDirector.ChangeTo(_firstScreenResolver.Resolve());
+            _screenDirector.ChangeTo<ILogoScreen>();
         }
 
         public void SetupZuneBlade()

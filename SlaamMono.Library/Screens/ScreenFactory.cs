@@ -1,10 +1,9 @@
-﻿using SlaamMono.Library.Screens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace SlaamMono.Library
+namespace SlaamMono.Library.Screens
 {
     public class ScreenFactory : IScreenFactory
     {

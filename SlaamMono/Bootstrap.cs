@@ -55,8 +55,7 @@ namespace SlaamMono
             _container.Register<SurvivalCharSelectScreen>();
             _container.Register<ClassicCharSelectScreen>();
             _container.Register<IScreenManager, ScreenManager>(Lifestyle.Singleton);
-            _container.Register<IFirstScreenResolver, FirstScreenResolver>(Lifestyle.Singleton);
-            _container.Register<LogoScreen>();
+            _container.Register<ILogoScreen, LogoScreen>();
             _container.Register<IScreenFactory, ScreenFactory>(Lifestyle.Singleton);
         }
 
