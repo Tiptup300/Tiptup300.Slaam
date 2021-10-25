@@ -17,7 +17,6 @@ namespace SlaamMono.Menus
 
         private readonly IScreenManager _screenDirector;
         private string[] credits;
-        //private int CurrentCredit = 3;
         private List<CreditsListing> CreditsListings = new List<CreditsListing>();
 
         private Color MainCreditColor = Color.White;
@@ -73,9 +72,6 @@ namespace SlaamMono.Menus
 
         public void Draw(SpriteBatch batch)
         {
-#if !ZUNE
-            batch.Draw(Resources.CreditsBG.Texture, new Vector2(1200 - Resources.CreditsBG.Width, 512 - Resources.CreditsBG.Height /2), Color.White);
-#endif 
             float Offset = 0;
 
             for (int CurrentCredit = 0; CurrentCredit < CreditsListings.Count; CurrentCredit++)
