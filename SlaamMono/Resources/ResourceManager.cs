@@ -39,11 +39,8 @@ namespace SlaamMono.Resources
             _textLists = loadTextLists();
             _logger.Log("Text Lists Loaded.");
 
-            _textures = loadTextures();
-            _logger.Log("Textures Loaded.");
-
-            _fonts = loadFonts();
-            _logger.Log("Fonts Loaded.");
+            _textures = loadResource<CachedTexture>("Textures");
+            _fonts = loadResource<SpriteFont>("Fonts");
 
             _logger.Log("All Resources Finished Loading;");
         }
@@ -61,29 +58,19 @@ namespace SlaamMono.Resources
             return output;
         }
 
-        private Dictionary<string, CachedTexture> loadTextures()
+        private Dictionary<string, T> loadResource<T>(string listName) where T : class
         {
-            return _textLists["Textures"]
+            dynamic output;
+
+            output = _textLists[listName]
                 .Select(line => line.Split(","))
                 .ToDictionary(
                     x => x[0],
-                    x => _resourceLoader.Load<CachedTexture>(x[1])
+                    x => (T)_resourceLoader.Load<T>(x[1])
                 );
+            _logger.Log($"List \"{listName}\" of type \"{typeof(T).Name}\" Loaded.");
+
+            return output;
         }
-
-        private Dictionary<string, SpriteFont> loadFonts()
-        {
-            return _textLists["Fonts"]
-                .Select(line => line.Split(","))
-                .ToDictionary(
-                    x => x[0],
-                    x => _resourceLoader.Load<SpriteFont>(x[1])
-                );
-        }
-
-
-
-
-
     }
 }
