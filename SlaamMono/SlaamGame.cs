@@ -95,8 +95,6 @@ namespace SlaamMono
         {
             base.Update(gameTime);
 
-            Console.WriteLine("dog");
-
             if (_contentManager.NeedsDevice)
             {
                 _contentManager.Update();
