@@ -61,6 +61,7 @@ namespace SlaamMono
 
         private void registerResources()
         {
+            _container.RegisterInstance(new ResourcesState());
             _container.Register<IResources, ResourceManager>(Lifestyle.Singleton);
             _container.Register<IFileLoader<Texture2D>, Texture2DLoader>(Lifestyle.Singleton);
             _container.Register<IWhitePixelResolver, WhitePixelResolver>(Lifestyle.Singleton);

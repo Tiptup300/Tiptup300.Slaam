@@ -11,36 +11,32 @@ namespace SlaamMono.Resources
     {
         public static ResourceManager Instance;
 
-        private Dictionary<string, CachedTexture> _textures;
-        private Dictionary<string, SpriteFont> _fonts;
-        private Dictionary<string, string[]> _textLists;
-
-        private ILogger _logger;
-        private IResourceLoader _resourceLoader;
+        private readonly ResourcesState _state;
+        private readonly ILogger _logger;
+        private readonly IResourceLoader _resourceLoader;
 
         public ResourceManager(
             ILogger logger,
-            IResourceLoader resourceLoader)
+            IResourceLoader resourceLoader, ResourcesState resourcesState)
         {
             _logger = logger;
             _resourceLoader = resourceLoader;
-
+            _state = resourcesState;
             Instance = this;
         }
-
-        public CachedTexture GetTexture(string textureName) => _textures[textureName];
-        public SpriteFont GetFont(string fontName) => _fonts[fontName];
-        public List<string> GetTextList(string listName) => _textLists[listName].ToList();
 
         public void LoadAll()
         {
             _logger.Log("Resources Loading...");
 
-            _textLists = loadTextLists();
+            _state.TextLists = loadTextLists();
             _logger.Log("Text Lists Loaded.");
 
-            _textures = loadResource<CachedTexture>("Textures");
-            _fonts = loadResource<SpriteFont>("Fonts");
+            _state.Textures = loadResource<CachedTexture>("Textures");
+            _logger.Log($"Textures Loaded.");
+
+            _state.Fonts = loadResource<SpriteFont>("Fonts");
+            _logger.Log($"Fonts Loaded.");
 
             _logger.Log("All Resources Finished Loading;");
         }
@@ -60,17 +56,22 @@ namespace SlaamMono.Resources
 
         private Dictionary<string, T> loadResource<T>(string listName) where T : class
         {
-            dynamic output;
-
-            output = _textLists[listName]
+            return _state.TextLists[listName]
                 .Select(line => line.Split(","))
                 .ToDictionary(
                     x => x[0],
                     x => (T)_resourceLoader.Load<T>(x[1])
                 );
-            _logger.Log($"List \"{listName}\" of type \"{typeof(T).Name}\" Loaded.");
-
-            return output;
         }
+
+        public CachedTexture GetTexture(string textureName)
+            => _state.Textures[textureName];
+
+        public SpriteFont GetFont(string fontName)
+            => _state.Fonts[fontName];
+
+        public List<string> GetTextList(string listName)
+            => _state.TextLists[listName]
+                .ToList();
     }
 }
