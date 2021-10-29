@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 
-namespace SlaamMono.Resources
+namespace SlaamMono.ResourceManagement
 {
     public class WhitePixelResolver : IWhitePixelResolver
     {

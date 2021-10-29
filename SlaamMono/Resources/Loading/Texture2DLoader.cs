@@ -3,7 +3,7 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 using System;
 
-namespace SlaamMono.Resources.Loading
+namespace SlaamMono.ResourceManagement.Loading
 {
     public class Texture2DLoader : IFileLoader<Texture2D>
     {

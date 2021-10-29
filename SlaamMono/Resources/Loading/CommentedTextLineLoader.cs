@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace SlaamMono.Resources.Loading
+namespace SlaamMono.ResourceManagement.Loading
 {
     public class CommentedTextLineLoader : IFileLoader<string[]>
     {

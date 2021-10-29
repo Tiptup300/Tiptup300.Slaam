@@ -1,4 +1,4 @@
-﻿namespace SlaamMono.Resources.Loading
+﻿namespace SlaamMono.ResourceManagement.Loading
 {
     public interface IResourceLoader
     {

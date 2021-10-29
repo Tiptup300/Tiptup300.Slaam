@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
-using SlaamMono.Resources;
+using SlaamMono.ResourceManagement;
 using System;
 
 namespace SlaamMono.Gameplay

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SlaamMono.Resources.Loading
+namespace SlaamMono.ResourceManagement.Loading
 {
     public class ResourceLoader : IResourceLoader
     {

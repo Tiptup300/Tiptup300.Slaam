@@ -10,7 +10,7 @@ using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.Resources;
+using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
 using System;
 using ZBlade;

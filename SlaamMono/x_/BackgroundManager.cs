@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
-using SlaamMono.Resources;
+using SlaamMono.ResourceManagement;
 
 namespace SlaamMono.x_
 {

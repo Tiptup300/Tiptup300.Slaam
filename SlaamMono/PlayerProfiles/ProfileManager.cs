@@ -1,6 +1,6 @@
 using SlaamMono.Library;
 using SlaamMono.Library.Logging;
-using SlaamMono.Resources;
+using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
 using System;
 using System.Collections.Generic;

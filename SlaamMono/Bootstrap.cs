@@ -9,8 +9,8 @@ using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.Resources;
-using SlaamMono.Resources.Loading;
+using SlaamMono.ResourceManagement;
+using SlaamMono.ResourceManagement.Loading;
 using System.Collections.Generic;
 
 namespace SlaamMono

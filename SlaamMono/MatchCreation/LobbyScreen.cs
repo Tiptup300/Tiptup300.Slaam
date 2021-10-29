@@ -11,7 +11,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.Resources;
+using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
 using System.Collections.Generic;
 using System.IO;

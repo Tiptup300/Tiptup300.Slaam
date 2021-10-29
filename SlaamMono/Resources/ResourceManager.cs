@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Resources.Loading;
+using SlaamMono.ResourceManagement.Loading;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlaamMono.Resources
+namespace SlaamMono.ResourceManagement
 {
     public class ResourceManager : IResources
     {

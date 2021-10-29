@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.ResourceManagement;
 
-namespace SlaamMono.Resources.Loading
+namespace SlaamMono.ResourceManagement.Loading
 {
     public class FontLoader : IFileLoader<SpriteFont>
     {

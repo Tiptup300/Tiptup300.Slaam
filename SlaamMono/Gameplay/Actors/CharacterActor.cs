@@ -5,7 +5,7 @@ using SlaamMono.Gameplay.Powerups;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.Resources;
+using SlaamMono.ResourceManagement;
 using SlaamMono.SubClasses;
 using SlaamMono.x_;
 using System;

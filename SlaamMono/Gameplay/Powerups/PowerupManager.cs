@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Resources;
+using SlaamMono.ResourceManagement;
 using System;
 
 namespace SlaamMono.Gameplay.Powerups

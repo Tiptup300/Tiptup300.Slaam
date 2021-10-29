@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Actors;
 using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Resources;
+using SlaamMono.ResourceManagement;
 using System;
 
 namespace SlaamMono.Gameplay.Powerups

@@ -6,7 +6,7 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.Resources;
+using SlaamMono.ResourceManagement;
 using SlaamMono.StatsBoards;
 using System.Collections.Generic;
 
