@@ -10,7 +10,6 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
-using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
 using SlaamMono.SubClasses;
@@ -155,12 +154,12 @@ namespace SlaamMono.Gameplay
             {
                 if (SetupChars[x].Type == PlayerType.Player)
                 {
-                    Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[x].SkinLocation)*/, SetupChars[x].CharProfile, new Vector2(-100, -100), InputComponent.Players[(int)SetupChars[x].PlayerIDX], SetupChars[x].PlayerColor, x));
+                    Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation), SetupChars[x].CharProfile, new Vector2(-100, -100), InputComponent.Players[(int)SetupChars[x].PlayerIDX], SetupChars[x].PlayerColor, x, DiImplementer.Instance.Get<IResources>()));
                 }
                 else
                 {
                     ProfileManager.AllProfiles[SetupChars[x].CharProfile].Skin = SetupChars[x].SkinLocation;
-                    Characters.Add(new BotActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[x].SkinLocation)*/, SetupChars[x].CharProfile, new Vector2(-100, -100), this, SetupChars[x].PlayerColor, Characters.Count));
+                    Characters.Add(new BotActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[x].SkinLocation)*/, SetupChars[x].CharProfile, new Vector2(-100, -100), this, SetupChars[x].PlayerColor, Characters.Count, DiImplementer.Instance.Get<IResources>()));
                 }
 #if !ZUNE
                 Scoreboards.Add(new GameScreenScoreboard(new Vector2(-250, 10 + x * Resources.GameScreenScoreBoard.Height), Characters[Characters.Count - 1], ThisGameType));

@@ -4,6 +4,7 @@ using SlaamMono.Gameplay.Boards;
 using SlaamMono.Gameplay.Powerups;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.SubClasses;
 using SlaamMono.x_;
 using System;
@@ -28,8 +29,8 @@ namespace SlaamMono.Gameplay.Actors
         private readonly Vector2 NullVector2 = new Vector2(-2, -2);
         private BotTarget CurrentTarget;
         private bool SwitchMovements = false;
-        public BotActor(Texture2D skin, int profile, Vector2 pos, GameScreen parentgamescreen, Color markingcolor, int plyeridx) :
-            base(skin, profile, pos, null, markingcolor, plyeridx)
+        public BotActor(Texture2D skin, int profile, Vector2 pos, GameScreen parentgamescreen, Color markingcolor, int plyeridx, IResources resources) :
+            base(skin, profile, pos, null, markingcolor, plyeridx, resources)
         {
             Gamepad = AIInput;
             ParentGameScreen = parentgamescreen;

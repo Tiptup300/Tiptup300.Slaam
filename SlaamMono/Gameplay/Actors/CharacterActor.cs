@@ -4,6 +4,7 @@ using SlaamMono.Gameplay.Boards;
 using SlaamMono.Gameplay.Powerups;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
 using SlaamMono.SubClasses;
@@ -14,45 +15,42 @@ namespace SlaamMono.Gameplay.Actors
 {
     public class CharacterActor
     {
-        public const float CharDrawScale = GameGlobals.TILE_SIZE / 45f;//0.67f;
-
         public bool Drawn = false;
         public int Lives = CurrentMatchSettings.LivesAmt;
         public int Kills = 0;
         public int PowerupsUsed = 0;
         public int Deaths = 0;
-
         public readonly float SpeedOfMovement = GameGlobals.TILE_SIZE / 50f * (5f / 30f) * CurrentMatchSettings.SpeedMultiplyer;
-
         public bool IsBot = false;
         public Texture2D CharacterSkin;
         public int ProfileIndex;
         public Vector2 Position;
         public InputDevice Gamepad;
-
         public Timer WalkingAnimationChange = new Timer(new TimeSpan(0, 0, 0, 0, 60));
         public Timer AttackingAnimationChange = new Timer(new TimeSpan(0, 0, 0, 0, (int)(GameGlobals.TILE_SIZE / 50f * 300)));
-        private Timer ReappearTime = new Timer(CurrentMatchSettings.RespawnTime);
-
         public int Row;
         public SpriteEffects fx = SpriteEffects.None;
         public IntRange currAni = new IntRange(0, 0, 2);
         public bool currentlymoving;
         public Color MarkingColor;
         public CharacterState CurrentState = CharacterState.Normal;
-        private Timer FadeThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 25));
         public Color SpriteColor = Color.White;
-        private float Alpha = 255;
         public int PlayerIndex;
         public float[] SpeedMultiplyer = new float[3];
-
         public TimeSpan TimeAlive = new TimeSpan();
-
         public Tile CurrentTile;
-
         public Powerup CurrentPowerup;
 
-        public CharacterActor(Texture2D skin, int profileidx, Vector2 pos, InputDevice gamepad, Color markingcolor, int idx)
+        private Timer ReappearTime = new Timer(CurrentMatchSettings.RespawnTime);
+        private Timer FadeThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 25));
+        private float Alpha = 255;
+
+        private const float _characterDrawScale = GameGlobals.TILE_SIZE / 45f;
+
+
+        private readonly IResources _resources;
+
+        public CharacterActor(Texture2D skin, int profileidx, Vector2 pos, InputDevice gamepad, Color markingcolor, int idx, IResources resources)
         {
             WalkingAnimationChange.MakeUpTime = false;
             AttackingAnimationChange.MakeUpTime = false;
@@ -63,8 +61,12 @@ namespace SlaamMono.Gameplay.Actors
             Gamepad = gamepad;
             MarkingColor = markingcolor;
             PlayerIndex = idx;
+            _resources = resources;
+
             for (int x = 0; x < SpeedMultiplyer.Length; x++)
+            {
                 SpeedMultiplyer[x] = 1f;
+            }
         }
 
         public virtual void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
@@ -264,12 +266,12 @@ namespace SlaamMono.Gameplay.Actors
             if (Lives == 0)
             {
                 batch.Draw(CharacterSkin, pos, new Rectangle(0, 0, 50, 60), new Color(255, 255, 255, 140), 0f, new Vector2(25, 50), 1f, SpriteEffects.None, 0f);
-                batch.Draw(Resources.Instance.GetTexture("DeadChar").Texture, pos, new Rectangle(0, 0, 50, 60), Color.White, 0f, new Vector2(25, 50), 1f, fx, 0f);
+                batch.Draw(_resources.GetTexture("DeadChar").Texture, pos, new Rectangle(0, 0, 50, 60), Color.White, 0f, new Vector2(25, 50), 1f, fx, 0f);
             }
             else if (CurrentState == CharacterState.Dead)
             {
                 batch.Draw(CharacterSkin, pos, new Rectangle(0, 0, 50, 60), new Color(255, 255, 255, 140), 0f, new Vector2(25, 50), 1f, SpriteEffects.None, 0f);
-                batch.Draw(Resources.Instance.GetTexture("Waiting").Texture, pos, new Rectangle(0, 0, 50, 60), Color.White, 0f, new Vector2(25, 50), 1f, fx, 0f);
+                batch.Draw(_resources.GetTexture("Waiting").Texture, pos, new Rectangle(0, 0, 50, 60), Color.White, 0f, new Vector2(25, 50), 1f, fx, 0f);
             }
             else
                 batch.Draw(CharacterSkin, pos, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), SpriteColor, 0f, new Vector2(25, 50), 1f, fx, 0f);
@@ -277,7 +279,7 @@ namespace SlaamMono.Gameplay.Actors
 
         public virtual void Draw(SpriteBatch batch)
         {
-            batch.Draw(CharacterSkin, Position, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), SpriteColor, 0f, new Vector2(25, 50), CharDrawScale, fx, 0f);
+            batch.Draw(CharacterSkin, Position, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), SpriteColor, 0f, new Vector2(25, 50), _characterDrawScale, fx, 0f);
 
         }
 

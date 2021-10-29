@@ -42,7 +42,7 @@ namespace SlaamMono.Gameplay
             CurrentMatchSettings.LivesAmt = 1;
             Tileset = LobbyScreen.LoadQuickBoard();
 
-            Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupChars[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0));
+            Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupChars[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, DiImplementer.Instance.Get<IResources>()));
             Scoreboards.Add(new GameScreenScoreboard(new Vector2(-250, 10), Characters[0], ThisGameType));
         }
 
@@ -102,7 +102,7 @@ namespace SlaamMono.Gameplay
         {
             Characters.Add(new BotActor(
                 SlaamGame.Content.Load<Texture2D>("content\\skins\\" + ClassicCharSelectScreen.ReturnRandSkin(_logger))//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, CharSelectScreen.Instance.ReturnRandSkin())
-                , ProfileManager.GetBotProfile(), new Vector2(-200, -200), this, Color.Black, Characters.Count));
+                , ProfileManager.GetBotProfile(), new Vector2(-200, -200), this, Color.Black, Characters.Count, DiImplementer.Instance.Get<IResources>()));
             ProfileManager.ResetAllBots();
             RespawnChar(Characters.Count - 1);
         }
