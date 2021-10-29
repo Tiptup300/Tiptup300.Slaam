@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Powerups;
 using SlaamMono.Library;
-using SlaamMono.Library.Resources;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Resources;
 using SlaamMono.SubClasses;
 using SlaamMono.x_;

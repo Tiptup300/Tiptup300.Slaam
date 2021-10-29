@@ -1,4 +1,4 @@
-﻿namespace SlaamMono.Library.Resources
+﻿namespace SlaamMono.Library.ResourceManagement
 {
     public interface IFileLoader
     {

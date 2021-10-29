@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Resources;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.Resources;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace SlaamMono.Library.Resources
+namespace SlaamMono.Library.ResourceManagement
 {
     public interface IWhitePixelResolver
     {

@@ -1,4 +1,4 @@
-﻿using SlaamMono.Library.Resources;
+﻿using SlaamMono.Library.ResourceManagement;
 using System.IO;
 using System.Linq;
 

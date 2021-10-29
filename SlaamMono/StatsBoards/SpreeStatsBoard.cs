@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Resources;
+using SlaamMono.Library.ResourceManagement;
 using System.Collections.Generic;
 
 namespace SlaamMono.StatsBoards

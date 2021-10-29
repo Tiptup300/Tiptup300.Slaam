@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlaamMono.Library.Resources
+namespace SlaamMono.Library.ResourceManagement
 {
     public class ResourcesState
     {

@@ -3,7 +3,7 @@ using SlaamMono.Gameplay;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Resources;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.PlayerProfiles;
 using System;
 using System.Collections.Generic;

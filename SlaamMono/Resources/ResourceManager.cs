@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Resources;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Resources.Loading;
 using System.Collections.Generic;
 using System.Linq;

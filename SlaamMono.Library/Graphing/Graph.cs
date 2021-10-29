@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
-using SlaamMono.Library.Resources;
+using SlaamMono.Library.ResourceManagement;
 using System.Collections.Generic;
 
 namespace SlaamMono.Library.Graphing

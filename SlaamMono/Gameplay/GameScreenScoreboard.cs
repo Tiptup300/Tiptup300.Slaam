@@ -4,7 +4,7 @@ using SlaamMono.Gameplay.Actors;
 using SlaamMono.Library;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
-using SlaamMono.Library.Resources;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Resources;
 using System;
 
