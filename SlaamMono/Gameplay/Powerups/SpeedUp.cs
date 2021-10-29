@@ -17,7 +17,7 @@ namespace SlaamMono.Gameplay.Powerups
         private TimeSpan CurrentTime;
 
         public SpeedUp(CharacterActor parent)
-            : base(DialogStrings.SpeedUpName, new CachedTexture[] { ResourceManager.Instance.GetTexture("SpeedUp"), ResourceManager.Instance.GetTexture("SpeedUp0") }, PowerupUse.Evasion)
+            : base(DialogStrings.SpeedUpName, new CachedTexture[] { Resources.Instance.GetTexture("SpeedUp"), Resources.Instance.GetTexture("SpeedUp0") }, PowerupUse.Evasion)
         {
             ParentCharacter = parent;
         }

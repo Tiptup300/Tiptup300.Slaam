@@ -67,16 +67,16 @@ namespace SlaamMono.Gameplay
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(ResourceManager.Instance.GetTexture("GameScreenScoreBoard").Texture, Position, Color.White);
-            RenderGraphManager.Instance.RenderText(Character.GetProfile().Name, new Vector2(8 + Position.X, 18 + Position.Y), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Default, true);
-            RenderGraphManager.Instance.RenderText(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, true);
+            batch.Draw(Resources.Instance.GetTexture("GameScreenScoreBoard").Texture, Position, Color.White);
+            RenderGraphManager.Instance.RenderText(Character.GetProfile().Name, new Vector2(8 + Position.X, 18 + Position.Y), Resources.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Default, true);
+            RenderGraphManager.Instance.RenderText(Character.Kills.ToString(), new Vector2(35 + Position.X, 68 + Position.Y), Resources.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, true);
             if (CurrentGametype == GameType.Classic || CurrentGametype == GameType.Survival)
             {
-                RenderGraphManager.Instance.RenderText(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, true);
+                RenderGraphManager.Instance.RenderText(Character.Lives.ToString(), new Vector2(73 + Position.X, 68 + Position.Y), Resources.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, true);
             }
             else if (CurrentGametype == GameType.Spree || CurrentGametype == GameType.TimedSpree)
             {
-                RenderGraphManager.Instance.RenderText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, true);
+                RenderGraphManager.Instance.RenderText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), Resources.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, true);
             }
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
             batch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);

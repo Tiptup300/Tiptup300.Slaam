@@ -176,36 +176,36 @@ namespace SlaamMono.Input
         public static void Draw(SpriteBatch batch)
         {
             _renderGraphManager.RenderBox(_boxRectangle, _boxColor);
-            batch.Draw(ResourceManager.Instance.GetTexture("KeyboardBG").Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);
+            batch.Draw(Resources.Instance.GetTexture("KeyboardBG").Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);
             for (int y = 0; y < 4; y++)
             {
                 for (int x = 0; x < 10; x++)
                 {
                     if (Keys[x, y].Type != QwertyKeyType.Space && Keys[x, y].Type != QwertyKeyType.Blank)
-                        batch.Draw(ResourceManager.Instance.GetTexture("Key").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
+                        batch.Draw(Resources.Instance.GetTexture("Key").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
                     else if (Keys[x, y].Type == QwertyKeyType.Space)
-                        batch.Draw(ResourceManager.Instance.GetTexture("Spacebar").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
+                        batch.Draw(Resources.Instance.GetTexture("Spacebar").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
                 }
             }
 
-            batch.Draw(ResourceManager.Instance.GetTexture("Textbox").Texture, new Vector2(BoardPosition.X + 91.5f, BoardPosition.Y - 60f), Color.White);
+            batch.Draw(Resources.Instance.GetTexture("Textbox").Texture, new Vector2(BoardPosition.X + 91.5f, BoardPosition.Y - 60f), Color.White);
 
             for (int y = 0; y < 4; y++)
             {
                 for (int x = 0; x < 10; x++)
                 {
                     if (Keys[x, y].Type == QwertyKeyType.Normal)
-                        RenderGraphManager.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), ResourceManager.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Centered, true);
+                        RenderGraphManager.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), Resources.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Centered, true);
                     else
-                        RenderGraphManager.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, false);
+                        RenderGraphManager.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), Resources.Instance.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, false);
                 }
             }
-            RenderGraphManager.Instance.RenderText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            RenderGraphManager.Instance.RenderText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
 
             if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != QwertyKeyType.Space)
-                batch.Draw(ResourceManager.Instance.GetTexture("KeyHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
+                batch.Draw(Resources.Instance.GetTexture("KeyHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
             else
-                batch.Draw(ResourceManager.Instance.GetTexture("SpaceHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
+                batch.Draw(Resources.Instance.GetTexture("SpaceHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
         }
 
         /// <summary>
@@ -216,8 +216,8 @@ namespace SlaamMono.Input
         public static void DisplayBoard(string str)
         {
             EditingString = str;
-            BoardPosition = new Vector2(640 - ResourceManager.Instance.GetTexture("KeyboardBG").Width / 2, 1024);
-            TargetPosition = new Vector2(640 - ResourceManager.Instance.GetTexture("KeyboardBG").Width / 2, 760);
+            BoardPosition = new Vector2(640 - Resources.Instance.GetTexture("KeyboardBG").Width / 2, 1024);
+            TargetPosition = new Vector2(640 - Resources.Instance.GetTexture("KeyboardBG").Width / 2, 760);
             Active = true;
             Status = QwertyStatus.GoingUp;
         }

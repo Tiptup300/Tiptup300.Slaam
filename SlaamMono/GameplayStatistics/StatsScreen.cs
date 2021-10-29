@@ -109,9 +109,9 @@ namespace SlaamMono.GameplayStatistics
             CachedTexture[] output;
 
             output = new CachedTexture[3];
-            output[0] = ResourceManager.Instance.GetTexture("StatsButton1");
-            output[1] = ResourceManager.Instance.GetTexture("StatsButton2");
-            output[2] = ResourceManager.Instance.GetTexture("StatsButton3");
+            output[0] = Resources.Instance.GetTexture("StatsButton1");
+            output[1] = Resources.Instance.GetTexture("StatsButton2");
+            output[2] = Resources.Instance.GetTexture("StatsButton3");
 
             return output;
         }
@@ -157,13 +157,13 @@ namespace SlaamMono.GameplayStatistics
 
         public void Draw(SpriteBatch batch)
         {
-            Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.Instance.GetTexture("StatsBoard").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.Instance.GetTexture("StatsBoard").Height / 2);
+            Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - Resources.Instance.GetTexture("StatsBoard").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.Instance.GetTexture("StatsBoard").Height / 2);
             //MainBG.Draw(batch);
             for (int x = 0; x < 3; x++)
             {
                 batch.Draw(_statsButtons[x].Texture, Statsboard, x == CurrentPage.Value ? Color.LightSkyBlue : ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
             }
-            batch.Draw(ResourceManager.Instance.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
+            batch.Draw(Resources.Instance.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
             //DrawingButton.Draw(batch);
             if (CurrentPage.Value == 0)
                 PlayerStats.MainBoard.Draw(batch);

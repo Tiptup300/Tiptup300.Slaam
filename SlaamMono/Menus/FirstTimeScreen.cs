@@ -70,13 +70,13 @@ namespace SlaamMono.Menus
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(ResourceManager.Instance.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
+            batch.Draw(Resources.Instance.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
             _controlsgraph.Draw(batch);
         }
 
         public void Close()
         {
-            ResourceManager.Instance.GetTexture("FirstTime").Dispose();
+            Resources.Instance.GetTexture("FirstTime").Dispose();
         }
     }
 }

@@ -193,7 +193,7 @@ namespace SlaamMono.MatchCreation
 
         public void Draw(SpriteBatch batch) // 387
         {
-            batch.Draw(ResourceManager.Instance.GetTexture("ProfileShell").Texture, new Vector2(13, 96), Color.White);
+            batch.Draw(Resources.Instance.GetTexture("ProfileShell").Texture, new Vector2(13, 96), Color.White);
 
             var temp = MsgStrings[1];
 
@@ -203,8 +203,8 @@ namespace SlaamMono.MatchCreation
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
-            RenderGraphManager.Instance.RenderText(temp, new Vector2(31, 141), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
-            RenderGraphManager.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), ResourceManager.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            RenderGraphManager.Instance.RenderText(temp, new Vector2(31, 141), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            RenderGraphManager.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
         }
 
         /// <summary>

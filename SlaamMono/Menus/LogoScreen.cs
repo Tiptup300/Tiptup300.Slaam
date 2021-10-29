@@ -59,14 +59,14 @@ namespace SlaamMono.Menus
         public void Draw(SpriteBatch batch)
         {
             byte alpha = (byte)LogoColor.Position.X;
-            batch.Draw(ResourceManager.Instance.GetTexture("ZibithLogoBG").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(ResourceManager.Instance.GetTexture("ZibithLogo").Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - ResourceManager.Instance.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - ResourceManager.Instance.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
+            batch.Draw(Resources.Instance.GetTexture("ZibithLogoBG").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+            batch.Draw(Resources.Instance.GetTexture("ZibithLogo").Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - Resources.Instance.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.Instance.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
         public void Close()
         {
-            ResourceManager.Instance.GetTexture("ZibithLogo").Dispose();
-            ResourceManager.Instance.GetTexture("ZibithLogoBG").Dispose();
+            Resources.Instance.GetTexture("ZibithLogo").Dispose();
+            Resources.Instance.GetTexture("ZibithLogoBG").Dispose();
         }
     }
 }

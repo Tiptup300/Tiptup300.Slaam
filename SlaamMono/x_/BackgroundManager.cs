@@ -28,12 +28,12 @@ namespace SlaamMono.x_
         {
             if (CurrentType == BackgroundType.Normal)
             {
-                batch.Draw(ResourceManager.Instance.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+                batch.Draw(Resources.Instance.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
             }
             else if (CurrentType == BackgroundType.Menu)
             {
-                batch.Draw(ResourceManager.Instance.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-                batch.Draw(ResourceManager.Instance.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
+                batch.Draw(Resources.Instance.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+                batch.Draw(Resources.Instance.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
             }
             else if (CurrentType == BackgroundType.Credits)
             {
@@ -41,8 +41,8 @@ namespace SlaamMono.x_
             }
             else if (CurrentType == BackgroundType.BattleScreen)
             {
-                batch.Draw(ResourceManager.Instance.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset - ResourceManager.Instance.GetTexture("BattleBG").Height), Color.White);
-                batch.Draw(ResourceManager.Instance.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset), Color.White);
+                batch.Draw(Resources.Instance.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset - Resources.Instance.GetTexture("BattleBG").Height), Color.White);
+                batch.Draw(Resources.Instance.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset), Color.White);
             }
         }
 

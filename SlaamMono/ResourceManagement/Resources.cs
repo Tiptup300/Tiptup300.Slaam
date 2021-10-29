@@ -7,15 +7,15 @@ using System.Linq;
 
 namespace SlaamMono.ResourceManagement
 {
-    public class ResourceManager : IResources
+    public class Resources : IResources
     {
-        public static ResourceManager Instance;
+        public static Resources Instance;
 
         private readonly ResourcesState _state;
         private readonly ILogger _logger;
         private readonly IResourceLoader _resourceLoader;
 
-        public ResourceManager(
+        public Resources(
             ILogger logger,
             IResourceLoader resourceLoader, ResourcesState resourcesState)
         {

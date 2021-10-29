@@ -17,7 +17,7 @@ namespace SlaamMono.Gameplay.Powerups
         private TimeSpan CurrentTime;
 
         public Inversion(GameScreen parentscreen, int charindex)
-            : base(DialogStrings.InversionName, new CachedTexture[] { ResourceManager.Instance.GetTexture("Inversion"), ResourceManager.Instance.GetTexture("Inversion0") }, PowerupUse.Strategy)
+            : base(DialogStrings.InversionName, new CachedTexture[] { Resources.Instance.GetTexture("Inversion"), Resources.Instance.GetTexture("Inversion0") }, PowerupUse.Strategy)
         {
             ParentGameScreen = parentscreen;
             CharacterIndex = charindex;
