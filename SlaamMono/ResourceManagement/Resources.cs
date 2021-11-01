@@ -10,8 +10,6 @@ namespace SlaamMono.ResourceManagement
 {
     public class Resources : IResources
     {
-        public static Resources Instance;
-
         private readonly ILogger _logger;
         private readonly IResourceLoader _resourceLoader;
         private readonly StateChanger<ResourcesState> _state;
@@ -24,8 +22,6 @@ namespace SlaamMono.ResourceManagement
             _logger = logger;
             _resourceLoader = resourceLoader;
             _state = resourcesState;
-
-            Instance = this;
         }
 
         public void LoadAll()

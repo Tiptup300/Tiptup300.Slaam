@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement;
 
 namespace SlaamMono.x_
@@ -13,6 +14,13 @@ namespace SlaamMono.x_
         private static BackgroundType CurrentType = BackgroundType.Normal;
         private static float BGOffset = 0f;
         private static float _multiplier = 1f;
+
+        private static IResources _resources;
+
+        static BackgroundManager()
+        {
+            _resources = Di.Get<IResources>();
+        }
 
         public static void Update()
         {
@@ -28,12 +36,12 @@ namespace SlaamMono.x_
         {
             if (CurrentType == BackgroundType.Normal)
             {
-                batch.Draw(Resources.Instance.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+                batch.Draw(_resources.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
             }
             else if (CurrentType == BackgroundType.Menu)
             {
-                batch.Draw(Resources.Instance.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-                batch.Draw(Resources.Instance.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
+                batch.Draw(_resources.GetTexture("Background").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+                batch.Draw(_resources.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
             }
             else if (CurrentType == BackgroundType.Credits)
             {
@@ -41,8 +49,8 @@ namespace SlaamMono.x_
             }
             else if (CurrentType == BackgroundType.BattleScreen)
             {
-                batch.Draw(Resources.Instance.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset - Resources.Instance.GetTexture("BattleBG").Height), Color.White);
-                batch.Draw(Resources.Instance.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset), Color.White);
+                batch.Draw(_resources.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset - _resources.GetTexture("BattleBG").Height), Color.White);
+                batch.Draw(_resources.GetTexture("BattleBG").Texture, new Vector2(0, BGOffset), Color.White);
             }
         }
 

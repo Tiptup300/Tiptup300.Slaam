@@ -1,5 +1,6 @@
 using SlaamMono.Library;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
 using System;
@@ -20,14 +21,16 @@ namespace SlaamMono.PlayerProfiles
         public static bool FirstTime = false;
 
         private static ILogger _logger;
+        private static IResources _resources;
 
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting
         /// to run.  This is where it can query for any required services and load content.
         /// </summary>
-        public static void Initialize(ILogger logger)
+        public static void Initialize(ILogger logger, IResources resources)
         {
             _logger = logger;
+            _resources = resources;
 
             LoadProfiles();
             FirstTime = !filefound;
@@ -72,7 +75,7 @@ namespace SlaamMono.PlayerProfiles
             }
 
             reader.Close();
-            if (BotProfiles.Count != Resources.Instance.GetTextList("BotNames").Count)
+            if (BotProfiles.Count != _resources.GetTextList("BotNames").Count)
             {
                 for (int x = 0; x < AllProfiles.Count; x++)
                 {
@@ -83,9 +86,9 @@ namespace SlaamMono.PlayerProfiles
                     }
                 }
                 BotProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
-                for (int x = 0; x < Resources.Instance.GetTextList("BotNames").Count; x++)
+                for (int x = 0; x < _resources.GetTextList("BotNames").Count; x++)
                 {
-                    AllProfiles.Add(new PlayerProfile(Resources.Instance.GetTextList("BotNames")[x].Replace("\r", ""), true));
+                    AllProfiles.Add(new PlayerProfile(_resources.GetTextList("BotNames")[x].Replace("\r", ""), true));
                     BotProfiles.Add(AllProfiles.Count - 1);
                 }
             }

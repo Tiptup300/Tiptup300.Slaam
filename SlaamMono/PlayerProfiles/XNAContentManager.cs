@@ -1,4 +1,5 @@
 ﻿using SlaamMono.Library.Logging;
+using SlaamMono.Library.ResourceManagement;
 
 namespace SlaamMono.PlayerProfiles
 {
@@ -18,7 +19,7 @@ namespace SlaamMono.PlayerProfiles
         {
             _needsDevice = false;
 
-            ProfileManager.Initialize(_logger);
+            ProfileManager.Initialize(_logger, Di.Get<IResources>());
             _logger.Log("Profile Manager Created;");
 
         }

@@ -37,13 +37,15 @@ namespace SlaamMono
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IWhitePixelResolver _whitePixelResolver;
+        private readonly IResources _resources;
 
         public SlaamGame(ILogger logger, IScreenManager screenDirector,
-            IWhitePixelResolver whitePixelResolver)
+            IWhitePixelResolver whitePixelResolver, IResources resources)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _whitePixelResolver = whitePixelResolver;
+            _resources = resources;
             graphics = new GraphicsDeviceManager(this);
             Content = new ContentManager(Services);
 
@@ -68,8 +70,8 @@ namespace SlaamMono
 
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             instance = this;
-            Resources.Instance.LoadAll();
-            SlaamGame.mainBlade.CurrentGameInfo.GameIcon = Resources.Instance.GetTexture("ZBladeGameIcon").Texture;
+            _resources.LoadAll();
+            SlaamGame.mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = InputComponent.Players[0];
             _contentManager = new XnaContentManager(Di.Get<ILogger>());
 
@@ -131,9 +133,9 @@ namespace SlaamMono
             if (ShowFPS)
             {
                 string temp = "" + FrameRateDirector.FUPS;
-                Vector2 fpsBack = Resources.Instance.GetFont("SegoeUIx32pt").MeasureString(temp);
+                Vector2 fpsBack = _resources.GetFont("SegoeUIx32pt").MeasureString(temp);
                 gamebatch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
-                RenderGraphManager.Instance.RenderText(temp, new Vector2(5, fpsBack.Y / 2f), Resources.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
+                RenderGraphManager.Instance.RenderText(temp, new Vector2(5, fpsBack.Y / 2f), _resources.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
             }
 
             gamebatch.End();
