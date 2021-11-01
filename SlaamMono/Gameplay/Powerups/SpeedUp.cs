@@ -16,8 +16,8 @@ namespace SlaamMono.Gameplay.Powerups
         private readonly TimeSpan TimeLasting = new TimeSpan(0, 0, 10);
         private TimeSpan CurrentTime;
 
-        public SpeedUp(CharacterActor parent)
-            : base(DialogStrings.SpeedUpName, new CachedTexture[] { Resources.Instance.GetTexture("SpeedUp"), Resources.Instance.GetTexture("SpeedUp0") }, PowerupUse.Evasion)
+        public SpeedUp(CharacterActor parent, IResources resources)
+            : base(DialogStrings.SpeedUpName, new CachedTexture[] { resources.GetTexture("SpeedUp"), resources.GetTexture("SpeedUp0") }, PowerupUse.Evasion)
         {
             ParentCharacter = parent;
         }

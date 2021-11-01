@@ -349,11 +349,11 @@ namespace SlaamMono.Gameplay.Actors
             switch (currtile.CurrentPowerupType)
             {
                 case PowerupType.SpeedUp:
-                    CurrentPowerup = new SpeedUp(this);
+                    CurrentPowerup = new SpeedUp(this, Di.Get<IResources>());
                     break;
 
                 case PowerupType.SpeedDown:
-                    CurrentPowerup = new SpeedDown(GameScreen.Instance, PlayerIndex);
+                    CurrentPowerup = new SpeedDown(GameScreen.Instance, PlayerIndex, Di.Get<IResources>());
                     break;
 
                 case PowerupType.Inversion:
@@ -361,7 +361,7 @@ namespace SlaamMono.Gameplay.Actors
                     break;
 
                 case PowerupType.Slaam:
-                    CurrentPowerup = new SlaamPowerup(GameScreen.Instance, this, PlayerIndex);
+                    CurrentPowerup = new SlaamPowerup(GameScreen.Instance, this, PlayerIndex, Di.Get<IResources>());
                     break;
 
                 default:
