@@ -11,7 +11,6 @@ using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.ResourceManagement;
 using SlaamMono.SubClasses;
 using SlaamMono.x_;
 using System;
@@ -55,6 +54,7 @@ namespace SlaamMono.Gameplay
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
+        private readonly IResources _resources;
 
         public Vector2 FinalBoardPosition
         {
@@ -70,18 +70,19 @@ namespace SlaamMono.Gameplay
         }
 
 
-        public GameScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector)
+        public GameScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, IResources resources)
         {
             SetupChars = chars;
             _logger = logger;
             _screenDirector = screenDirector;
+            _resources = resources;
 
             ThisGameType = CurrentMatchSettings.GameType;
             SetupTheBoard(CurrentMatchSettings.BoardLocation);
             CurrentGameStatus = GameStatus.MovingBoard;
 
-            Resources.Instance.GetTexture("ReadySetGo").Load();
-            Resources.Instance.GetTexture("BattleBG").Load();
+            _resources.GetTexture("ReadySetGo").Load();
+            _resources.GetTexture("BattleBG").Load();
         }
 
         public void Open()
@@ -383,7 +384,7 @@ namespace SlaamMono.Gameplay
 
                 if (CurrentGameStatus == GameStatus.Waiting || CurrentGameStatus == GameStatus.Over)
                 {
-                    batch.Draw(Resources.Instance.GetTexture("ReadySetGo").Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - Resources.Instance.GetTexture("ReadySetGo").Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.Instance.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, ReadySetGoPart * (Resources.Instance.GetTexture("ReadySetGo").Height / 4), Resources.Instance.GetTexture("ReadySetGo").Width, Resources.Instance.GetTexture("ReadySetGo").Height / 4), Color.White);
+                    batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
                 }
 
                 //Timer.Draw(batch);
@@ -393,8 +394,8 @@ namespace SlaamMono.Gameplay
 
         public void Close()
         {
-            Resources.Instance.GetTexture("ReadySetGo").Dispose();
-            Resources.Instance.GetTexture("BattleBG").Dispose();
+            _resources.GetTexture("ReadySetGo").Dispose();
+            _resources.GetTexture("BattleBG").Dispose();
         }
 
         /// <summary>

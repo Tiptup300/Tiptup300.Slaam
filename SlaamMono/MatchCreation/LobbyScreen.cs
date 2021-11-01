@@ -210,7 +210,8 @@ namespace SlaamMono.MatchCreation
                     GameScreen.Instance = new GameScreen(
                         SetupChars,
                         DiImplementer.Instance.Get<ILogger>(),
-                        DiImplementer.Instance.Get<IScreenManager>());
+                        DiImplementer.Instance.Get<IScreenManager>(),
+                        DiImplementer.Instance.Get<IResources>());
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();

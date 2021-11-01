@@ -26,8 +26,8 @@ namespace SlaamMono.Gameplay
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
 
-        public SurvivalScreen(List<CharacterShell> shell, ILogger logger, IScreenManager screenDirector)
-            : base(shell, logger, screenDirector)
+        public SurvivalScreen(List<CharacterShell> shell, ILogger logger, IScreenManager screenDirector, IResources resources)
+            : base(shell, logger, screenDirector, resources)
         {
             _logger = logger;
             _screenDirector = screenDirector;

@@ -2,6 +2,7 @@
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
@@ -38,7 +39,8 @@ namespace SlaamMono.MatchCreation
             GameScreen.Instance = new SurvivalScreen(
                 list,
                 DiImplementer.Instance.Get<ILogger>(),
-                DiImplementer.Instance.Get<IScreenManager>());
+                DiImplementer.Instance.Get<IScreenManager>(),
+                DiImplementer.Instance.Get<IResources>());
             _screenDirector.ChangeTo(GameScreen.Instance);
         }
     }
