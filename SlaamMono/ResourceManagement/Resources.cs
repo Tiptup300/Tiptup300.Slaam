@@ -12,17 +12,19 @@ namespace SlaamMono.ResourceManagement
     {
         public static Resources Instance;
 
-        private readonly StateChanger<ResourcesState> _state;
         private readonly ILogger _logger;
         private readonly IResourceLoader _resourceLoader;
+        private readonly StateChanger<ResourcesState> _state;
 
         public Resources(
             ILogger logger,
-            IResourceLoader resourceLoader, StateChanger<ResourcesState> resourcesState)
+            IResourceLoader resourceLoader,
+            StateChanger<ResourcesState> resourcesState)
         {
             _logger = logger;
             _resourceLoader = resourceLoader;
             _state = resourcesState;
+
             Instance = this;
         }
 
