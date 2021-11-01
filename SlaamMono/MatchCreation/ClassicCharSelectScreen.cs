@@ -192,7 +192,13 @@ namespace SlaamMono.MatchCreation
 
             for (int x = 0; x < InputComponent.Players.Length; x++)
             {
-                SelectBoxes[x] = new CharSelectBox(BoxPositions[x], SkinTexture, (ExtendedPlayerIndex)x, Skins, Di.Get<PlayerColorResolver>());
+                SelectBoxes[x] = new CharSelectBox(
+                    BoxPositions[x],
+                    SkinTexture,
+                    (ExtendedPlayerIndex)x,
+                    Skins,
+                    Di.Get<PlayerColorResolver>(),
+                    Di.Get<IResources>());
             }
 
         }

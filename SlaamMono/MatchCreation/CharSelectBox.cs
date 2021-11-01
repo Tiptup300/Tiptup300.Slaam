@@ -5,6 +5,7 @@ using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
 using SlaamMono.StatsBoards;
@@ -14,36 +15,38 @@ namespace SlaamMono.MatchCreation
 {
     public class CharSelectBox
     {
-        private const float ScrollSpeed = 4f / 35f;
-
-        private List<string> ParentSkinStrings = new List<string>();
-        private readonly PlayerColorResolver _playerColorResolver;
-        private int PlayerIDX;
-        private int SelectedIndex = -1;
-
-        private float Offset;
-
-        private IntRange ChosenSkin = new IntRange(0);
-        private IntRange ChosenProfile;
-
-        private Status CurrentStatus = Status.Stationary;
+        public bool Survival = false;
         public CharSelectBoxState CurrentState = CharSelectBoxState.Computer;
 
+        private const float ScrollSpeed = 4f / 35f;
+        private List<string> ParentSkinStrings = new List<string>();
+        private int PlayerIDX;
+        private int SelectedIndex = -1;
+        private float Offset;
+        private IntRange ChosenSkin = new IntRange(0);
+        private IntRange ChosenProfile;
+        private Status CurrentStatus = Status.Stationary;
         private Texture2D[] DispResources = new Texture2D[3];
         private Texture2D[] ParentCharSkins;
-
         private Vector2[] Positions = new Vector2[10];
         private string[] MsgStrings = new string[6];
 
-        public bool Survival = false;
+        private readonly PlayerColorResolver _playerColorResolver;
+        private readonly IResources _resources;
 
-        public CharSelectBox(Vector2 Position, Texture2D[] parentcharskins, ExtendedPlayerIndex playeridx, List<string> parentskinstrings, PlayerColorResolver playerColorResolver)
+        public CharSelectBox(
+            Vector2 Position,
+            Texture2D[] parentcharskins,
+            ExtendedPlayerIndex playeridx,
+            List<string> parentskinstrings,
+            PlayerColorResolver playerColorResolver,
+            IResources resources)
         {
             PlayerIDX = InputComponent.GetIndex(playeridx);
             ParentCharSkins = parentcharskins;
             ParentSkinStrings = parentskinstrings;
             _playerColorResolver = playerColorResolver;
-
+            _resources = resources;
             RefreshSkins();
 
             Positions[0] = Position;
@@ -193,7 +196,7 @@ namespace SlaamMono.MatchCreation
 
         public void Draw(SpriteBatch batch) // 387
         {
-            batch.Draw(Resources.Instance.GetTexture("ProfileShell").Texture, new Vector2(13, 96), Color.White);
+            batch.Draw(_resources.GetTexture("ProfileShell").Texture, new Vector2(13, 96), Color.White);
 
             var temp = MsgStrings[1];
 
@@ -203,8 +206,8 @@ namespace SlaamMono.MatchCreation
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
-            RenderGraphManager.Instance.RenderText(temp, new Vector2(31, 141), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
-            RenderGraphManager.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            RenderGraphManager.Instance.RenderText(temp, new Vector2(31, 141), _resources.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            RenderGraphManager.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
         }
 
         /// <summary>
