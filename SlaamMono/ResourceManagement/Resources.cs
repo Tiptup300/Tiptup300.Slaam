@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Library;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement.Loading;
@@ -11,13 +12,13 @@ namespace SlaamMono.ResourceManagement
     {
         public static Resources Instance;
 
-        private readonly ResourcesState _state;
+        private readonly StateChanger<ResourcesState> _state;
         private readonly ILogger _logger;
         private readonly IResourceLoader _resourceLoader;
 
         public Resources(
             ILogger logger,
-            IResourceLoader resourceLoader, ResourcesState resourcesState)
+            IResourceLoader resourceLoader, StateChanger<ResourcesState> resourcesState)
         {
             _logger = logger;
             _resourceLoader = resourceLoader;
@@ -29,14 +30,16 @@ namespace SlaamMono.ResourceManagement
         {
             _logger.Log("Resources Loading...");
 
-            _state.TextLists = loadTextLists();
+            var textLists = loadTextLists();
             _logger.Log("Text Lists Loaded.");
 
-            _state.Textures = loadResource<CachedTexture>("Textures");
+            var textures = loadResource<CachedTexture>(textLists["Textures"]);
             _logger.Log($"Textures Loaded.");
 
-            _state.Fonts = loadResource<SpriteFont>("Fonts");
+            var fonts = loadResource<SpriteFont>(textLists["Fonts"]);
             _logger.Log($"Fonts Loaded.");
+
+            _state.ChangeState(new ResourcesState(textLists, textures, fonts));
 
             _logger.Log("All Resources Finished Loading;");
         }
@@ -54,9 +57,9 @@ namespace SlaamMono.ResourceManagement
             return output;
         }
 
-        private Dictionary<string, T> loadResource<T>(string listName) where T : class
+        private Dictionary<string, T> loadResource<T>(string[] textList) where T : class
         {
-            return _state.TextLists[listName]
+            return textList
                 .Select(line => line.Split(","))
                 .ToDictionary(
                     x => x[0],
@@ -65,13 +68,13 @@ namespace SlaamMono.ResourceManagement
         }
 
         public CachedTexture GetTexture(string textureName)
-            => _state.Textures[textureName];
+            => _state.State.Textures[textureName];
 
         public SpriteFont GetFont(string fontName)
-            => _state.Fonts[fontName];
+            => _state.State.Fonts[fontName];
 
         public List<string> GetTextList(string listName)
-            => _state.TextLists[listName]
+            => _state.State.TextLists[listName]
                 .ToList();
     }
 }
