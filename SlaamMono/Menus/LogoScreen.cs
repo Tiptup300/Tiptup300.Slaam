@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.ResourceManagement;
 using SlaamMono.Subclasses;
@@ -18,10 +19,12 @@ namespace SlaamMono.Menus
         private bool hasShown = false;
 
         private readonly IScreenManager _screenDirector;
+        private readonly IResources _resources;
 
-        public LogoScreen(IScreenManager screenDirector)
+        public LogoScreen(IScreenManager screenDirector, IResources resources)
         {
             _screenDirector = screenDirector;
+            _resources = resources;
         }
 
         public void Open() { }
@@ -59,14 +62,14 @@ namespace SlaamMono.Menus
         public void Draw(SpriteBatch batch)
         {
             byte alpha = (byte)LogoColor.Position.X;
-            batch.Draw(Resources.Instance.GetTexture("ZibithLogoBG").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(Resources.Instance.GetTexture("ZibithLogo").Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - Resources.Instance.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - Resources.Instance.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
+            batch.Draw(_resources.GetTexture("ZibithLogoBG").Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+            batch.Draw(_resources.GetTexture("ZibithLogo").Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
         public void Close()
         {
-            Resources.Instance.GetTexture("ZibithLogo").Dispose();
-            Resources.Instance.GetTexture("ZibithLogoBG").Dispose();
+            _resources.GetTexture("ZibithLogo").Dispose();
+            _resources.GetTexture("ZibithLogoBG").Dispose();
         }
     }
 }

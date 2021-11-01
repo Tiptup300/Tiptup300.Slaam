@@ -15,13 +15,13 @@ namespace SlaamMono.Menus
     {
         private Graph _controlsgraph;
         private readonly IScreenManager _screenDirector;
-        private readonly IResources _resourcesManager;
+        private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
 
-        public FirstTimeScreen(IScreenManager screenDirector, IResources resourcesManager, IRenderGraph renderGraphManager)
+        public FirstTimeScreen(IScreenManager screenDirector, IResources resources, IRenderGraph renderGraphManager)
         {
             _screenDirector = screenDirector;
-            _resourcesManager = resourcesManager;
+            _resources = resources;
             _renderGraphManager = renderGraphManager;
         }
 
@@ -40,7 +40,7 @@ namespace SlaamMono.Menus
             output = new Graph(
                 new Rectangle(50, 350, GameGlobals.DRAWING_GAME_WIDTH - 100, 500), 2,
                 new Color(0, 0, 0, 150),
-                _resourcesManager,
+                _resources,
                 _renderGraphManager);
 
             output.Items.Columns.Add("");
@@ -70,13 +70,13 @@ namespace SlaamMono.Menus
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(Resources.Instance.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
+            batch.Draw(_resources.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
             _controlsgraph.Draw(batch);
         }
 
         public void Close()
         {
-            Resources.Instance.GetTexture("FirstTime").Dispose();
+            _resources.GetTexture("FirstTime").Dispose();
         }
     }
 }
