@@ -43,7 +43,13 @@ namespace SlaamMono.Gameplay
             Tileset = LobbyScreen.LoadQuickBoard();
 
             Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupChars[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, DiImplementer.Instance.Get<IResources>()));
-            Scoreboards.Add(new GameScreenScoreboard(new Vector2(-250, 10), Characters[0], ThisGameType));
+            Scoreboards.Add(
+                new GameScreenScoreboard(
+                    new Vector2(-250, 10),
+                    Characters[0],
+                    ThisGameType,
+                    DiImplementer.Instance.Get<IResources>(),
+                    DiImplementer.Instance.Get<IWhitePixelResolver>()));
         }
 
         public override void Update()

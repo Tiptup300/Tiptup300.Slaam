@@ -167,11 +167,15 @@ namespace SlaamMono.Gameplay
                     ProfileManager.AllProfiles[SetupChars[x].CharProfile].Skin = SetupChars[x].SkinLocation;
                     Characters.Add(new BotActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[x].SkinLocation)*/, SetupChars[x].CharProfile, new Vector2(-100, -100), this, SetupChars[x].PlayerColor, Characters.Count, DiImplementer.Instance.Get<IResources>()));
                 }
-#if !ZUNE
-                Scoreboards.Add(new GameScreenScoreboard(new Vector2(-250, 10 + x * Resources.GameScreenScoreBoard.Height), Characters[Characters.Count - 1], ThisGameType));
-#else
-                Scoreboards.Add(new GameScreenScoreboard(Vector2.Zero, Characters[Characters.Count - 1], ThisGameType));
-#endif
+
+                Scoreboards.Add(
+                    new GameScreenScoreboard(
+                        Vector2.Zero,
+                        Characters[Characters.Count - 1],
+                        ThisGameType,
+                        DiImplementer.Instance.Get<IResources>(),
+                        DiImplementer.Instance.Get<IWhitePixelResolver>()));
+
             }
         }
 
