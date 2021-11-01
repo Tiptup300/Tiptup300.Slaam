@@ -68,7 +68,7 @@ namespace SlaamMono.Gameplay.Actors
         private void LogicUpdate(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
         {
             Tile CurrentTile = tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
-            bool Moving = true, Attacking = false, InDanger = CurrentTile.CurrentTileCondition != Tile.TileCondition.Normal && CurrentTile.CurrentTileCondition != Tile.TileCondition.RespawnPoint;
+            bool Moving = true, Attacking = false, InDanger = CurrentTile.CurrentTileCondition != TileCondition.Normal && CurrentTile.CurrentTileCondition != TileCondition.RespawnPoint;
             if (CurrentState == CharacterState.Dead || CurrentState == CharacterState.Dieing)
             {
                 // Dont Do Anything...your dead!
@@ -118,7 +118,7 @@ namespace SlaamMono.Gameplay.Actors
                          ParentGameScreen.Characters[x] != null &&
                          ParentGameScreen.Characters[x].CurrentState != CharacterState.Dead &&
                          ParentGameScreen.Characters[x].CurrentState != CharacterState.Dieing &&
-                         /*( ParentGameScreen.Characters[x].CurrentTile != null && ParentGameScreen.Characters[x].CurrentTile.CurrentTileCondition != Tile.TileCondition.RespawnPoint ) && */
+                         /*( ParentGameScreen.Characters[x].CurrentTile != null && ParentGameScreen.Characters[x].CurrentTile.CurrentTileCondition != TileCondition.RespawnPoint ) && */
                          ParentGameScreen.Characters[x].MarkingColor != MarkingColor)
                     {
                         Vector2 pos = ParentGameScreen.InterpretCoordinates(ParentGameScreen.Characters[x].Position, true);

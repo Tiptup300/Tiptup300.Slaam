@@ -305,9 +305,9 @@ namespace SlaamMono.Gameplay.Actors
 
             Tile tile = GameScreen.Instance.tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
-            if (tile.CurrentTileCondition == Tile.TileCondition.Clear ||
-                tile.CurrentTileCondition == Tile.TileCondition.Clearing ||
-                tile.MarkedColor == MarkingColor && (tile.CurrentTileCondition == Tile.TileCondition.Clear || tile.CurrentTileCondition == Tile.TileCondition.Clearing || tile.CurrentTileCondition == Tile.TileCondition.Marked))
+            if (tile.CurrentTileCondition == TileCondition.Clear ||
+                tile.CurrentTileCondition == TileCondition.Clearing ||
+                tile.MarkedColor == MarkingColor && (tile.CurrentTileCondition == TileCondition.Clear || tile.CurrentTileCondition == TileCondition.Clearing || tile.CurrentTileCondition == TileCondition.Marked))
                 return false;
 
             return true;
@@ -320,7 +320,7 @@ namespace SlaamMono.Gameplay.Actors
 
             Tile tile = GameScreen.Instance.tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
-            if (tile.CurrentTileCondition == Tile.TileCondition.Marked)
+            if (tile.CurrentTileCondition == TileCondition.Marked)
                 return false;
 
             return true;
@@ -333,7 +333,7 @@ namespace SlaamMono.Gameplay.Actors
 
             Tile tile = GameScreen.Instance.tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
-            if (tile.CurrentTileCondition == Tile.TileCondition.Marked)
+            if (tile.CurrentTileCondition == TileCondition.Marked)
                 return false;
 
             return true;
@@ -399,8 +399,8 @@ namespace SlaamMono.Gameplay.Actors
         {
             if (CurrentState != CharacterState.Dieing && CurrentState != CharacterState.Dead)
                 if (
-                    tiles[(int)TileCoor.X, (int)TileCoor.Y].CurrentTileCondition == Tile.TileCondition.Clearing ||
-                    tiles[(int)TileCoor.X, (int)TileCoor.Y].CurrentTileCondition == Tile.TileCondition.Clear
+                    tiles[(int)TileCoor.X, (int)TileCoor.Y].CurrentTileCondition == TileCondition.Clearing ||
+                    tiles[(int)TileCoor.X, (int)TileCoor.Y].CurrentTileCondition == TileCondition.Clear
                     )
                 {
                     CurrentState = CharacterState.Dieing;

@@ -12,54 +12,38 @@ namespace SlaamMono.Gameplay.Boards
 {
     public class Tile
     {
-
-        private Vector2 AbsTileloc;
-        private Vector2 TileCoors;
-        private Texture2D ParentTileTileset;
         public TileCondition CurrentTileCondition = TileCondition.Normal;
-        private static TimeSpan FadeOutTime = new TimeSpan(0, 0, 0, 0, 25);
         public Color TileColor = Color.White;
         public Color MarkedColor;
         public int MarkedIndex;
         public Color TileOverlayColor;
-        private Timer FadeThrottle = new Timer(FadeOutTime);
-        private Timer FallSpeed = new Timer(new TimeSpan(0, 0, 0, 0, 400));
-        private Timer ReappearSpeed = new Timer(new TimeSpan(0, 0, 5));
         public bool Dead = false;
         public PowerupType CurrentPowerupType = PowerupType.None;
 
+        public float TimeTillClearing => (float)FallSpeed.TimeLeft.TotalMilliseconds;
+
+        private static TimeSpan FadeOutTime = new TimeSpan(0, 0, 0, 0, 25);
+
+        private Vector2 AbsTileloc;
+        private Vector2 TileCoors;
+        private Texture2D ParentTileTileset;
+        private Timer FadeThrottle = new Timer(FadeOutTime);
+        private Timer FallSpeed = new Timer(new TimeSpan(0, 0, 0, 0, 400));
+        private Timer ReappearSpeed = new Timer(new TimeSpan(0, 0, 5));
         private float Alpha = 255;
 
-        public float TimeTillClearing
-        {
-            get
-            {
-                return (float)FallSpeed.TimeLeft.TotalMilliseconds;
-            }
-        }
 
-        private IWhitePixelResolver _whitePixelResolver;
+        private readonly IWhitePixelResolver _whitePixelResolver;
+        private readonly IResources _resources;
 
-        public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex)
+        public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, IWhitePixelResolver whitePixelResolver, IResources resources)
         {
             ParentTileTileset = tiletex;
             TileCoors = TileLoc;
             AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
 
-            x_initWhitePixel();
-        }
-
-
-        public Tile(Tile tile, Texture2D parenttiletex)
-        {
-            ParentTileTileset = parenttiletex;
-            AbsTileloc = tile.AbsTileloc;
-
-            x_initWhitePixel();
-        }
-        private void x_initWhitePixel()
-        {
-            _whitePixelResolver = DiImplementer.Instance.Get<IWhitePixelResolver>();
+            _whitePixelResolver = whitePixelResolver;
+            _resources = resources;
         }
 
         public void Update()
@@ -115,9 +99,13 @@ namespace SlaamMono.Gameplay.Boards
 
                 batch.Draw(ParentTileTileset, AbsTileloc, new Rectangle((int)TileCoors.X * GameGlobals.TILE_SIZE, (int)TileCoors.Y * GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileColor);
                 if (CurrentTileCondition != TileCondition.Normal)
-                    batch.Draw(Resources.Instance.GetTexture("TileOverlay").Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileOverlayColor);
+                {
+                    batch.Draw(_resources.GetTexture("TileOverlay").Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileOverlayColor);
+                }
                 if (CurrentTileCondition == TileCondition.RespawnPoint)
-                    batch.Draw(Resources.Instance.GetTexture("RespawnTileOverlay").Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), MarkedColor);
+                {
+                    batch.Draw(_resources.GetTexture("RespawnTileOverlay").Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), MarkedColor);
+                }
                 if (CurrentPowerupType != PowerupType.None)
                 {
                     Texture2D tex = PowerupManager.GetPowerupTexture(CurrentPowerupType);
@@ -205,13 +193,5 @@ namespace SlaamMono.Gameplay.Boards
             ReappearSpeed.Reset();
         }
 
-        public enum TileCondition
-        {
-            Normal,
-            RespawnPoint,
-            Marked,
-            Clearing,
-            Clear
-        }
     }
 }

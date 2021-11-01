@@ -95,7 +95,12 @@ namespace SlaamMono.Gameplay
             {
                 for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    tiles[x, y] = new Tile(_boardpos, new Vector2(x, y), Tileset);
+                    tiles[x, y] = new Tile(
+                        _boardpos,
+                        new Vector2(x, y),
+                        Tileset,
+                        DiImplementer.Instance.Get<IWhitePixelResolver>(),
+                        DiImplementer.Instance.Get<IResources>());
                 }
             }
             ScoreKeeper = new MatchScoreCollection(this);
@@ -289,7 +294,7 @@ namespace SlaamMono.Gameplay
                         int newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
                         int ct = 0;
 
-                        while (tiles[newx, newy].CurrentTileCondition != Tile.TileCondition.Normal)
+                        while (tiles[newx, newy].CurrentTileCondition != TileCondition.Normal)
                         {
                             newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
                             newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
@@ -447,7 +452,7 @@ namespace SlaamMono.Gameplay
             int newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
             int newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
 
-            while (tiles[newx, newy].Dead || tiles[newx, newy].CurrentTileCondition == Tile.TileCondition.RespawnPoint)
+            while (tiles[newx, newy].Dead || tiles[newx, newy].CurrentTileCondition == TileCondition.RespawnPoint)
             {
                 newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
                 newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
