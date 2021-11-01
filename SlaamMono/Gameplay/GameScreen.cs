@@ -90,7 +90,11 @@ namespace SlaamMono.Gameplay
             _boardpos = FinalBoardPosition;
             _boardpos.Y = -Tileset.Height;
 
-            Timer = new GameScreenTimer(new Vector2(1024, 0), this);
+            Timer = new GameScreenTimer(
+                new Vector2(1024, 0),
+                this,
+                DiImplementer.Instance.Get<IResources>());
+
             FeedManager.FeedsActive = false;
             for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
             {

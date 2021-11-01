@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement;
 using System;
 
@@ -16,20 +17,22 @@ namespace SlaamMono.Gameplay
         private Vector2 Position;
         public TimeSpan GameMatchTime;
         public TimeSpan TimeRemaining;
-        public TimeSpan CurrentGameTime;
+        public TimeSpan CurrentGameTime = new TimeSpan();
         public readonly TimeSpan EndingTime = CurrentMatchSettings.TimeOfMatch;
         private const float MovementSpeed = 10f / 10f;
         public bool Moving = false;
         private GameScreen ParentGameScreen;
+        private readonly IResources _resources;
         private float StepSize;
         private float CurrentStep;
 
-        public GameScreenTimer(Vector2 position, GameScreen parentgamescreen)
+        public GameScreenTimer(Vector2 position, GameScreen parentgamescreen, IResources resources)
         {
-            TimeRemaining = EndingTime;
-            CurrentGameTime = new TimeSpan();
             Position = position;
             ParentGameScreen = parentgamescreen;
+            _resources = resources;
+
+            TimeRemaining = EndingTime;
             StepSize = (float)TimeRemaining.TotalMilliseconds / 7f;
             SetGameMatchTime(ParentGameScreen.ThisGameType);
 
@@ -80,17 +83,17 @@ namespace SlaamMono.Gameplay
         /// <param name="batch"></param>
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(Resources.Instance.GetTexture("TopGameBoard").Texture, new Vector2(1280 - Resources.Instance.GetTexture("TopGameBoard").Width + Position.X, 0), Color.White);
-            RenderGraphManager.Instance.RenderText(padNumber(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
-            RenderGraphManager.Instance.RenderText(padNumber(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
-            RenderGraphManager.Instance.RenderText(padNumber(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
+            batch.Draw(_resources.GetTexture("TopGameBoard").Texture, new Vector2(1280 - _resources.GetTexture("TopGameBoard").Width + Position.X, 0), Color.White);
+            RenderGraphManager.Instance.RenderText(padNumber(GameMatchTime.Minutes), new Vector2(1181.5f + Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
+            RenderGraphManager.Instance.RenderText(padNumber(GameMatchTime.Seconds), new Vector2(1219.5f + Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
+            RenderGraphManager.Instance.RenderText(padNumber(GameMatchTime.Milliseconds), new Vector2(1257.5f + Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Centered, false);
             if (ParentGameScreen.ThisGameType == GameType.Classic || ParentGameScreen.ThisGameType == GameType.Spree || ParentGameScreen.ThisGameType == GameType.Survival)
             {
-                RenderGraphManager.Instance.RenderText("Time Elapsed", new Vector2(Position.X + 1270, 30), Resources.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Right, true);
+                RenderGraphManager.Instance.RenderText("Time Elapsed", new Vector2(Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Right, true);
             }
             else if (ParentGameScreen.ThisGameType == GameType.TimedSpree)
             {
-                RenderGraphManager.Instance.RenderText("Time Remaining", new Vector2(Position.X + 1270, 30), Resources.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Right, true);
+                RenderGraphManager.Instance.RenderText("Time Remaining", new Vector2(Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Right, true);
             }
         }
 
