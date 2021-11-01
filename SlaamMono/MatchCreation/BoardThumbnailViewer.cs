@@ -5,6 +5,7 @@ using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
@@ -17,51 +18,38 @@ namespace SlaamMono.MatchCreation
     public class BoardThumbnailViewer : IScreen
     {
         public LobbyScreen ParentScreen;
+        public bool FoundBoard = false;
+        public string ValidBoard;
+        public int DrawSizeWidth = 75;
+        public int DrawSizeHeight = 75;
 
         private List<Texture2D> Boards = new List<Texture2D>();
         private List<string> ValidBoards = new List<string>();
-
         private IntRange DrawingBoardIndex = new IntRange(0, 0, 0);
-
         private float MovementSpeed = 0.50f;
-
         private bool AlphaUp = false;
         private float Alpha = 255f;
-
         private Direction Vertical = Direction.None;
         private Direction Horizontal = Direction.None;
-
         private float VOffset = 0f;
         private float HOffset = 0f;
-
         private bool StillLoadingBoards = true;
-        string[] boards;
+        private string[] boards;
         private int CurrentBoardLoading = 0;
-
         private int save;
-
         private IntRange VBoardOffset;
         private IntRange HBoardOffset;
-
         private bool Chosen = false;
         private float SizeIncrease = 1.00f;
 
-        public bool FoundBoard = false;
-        public string ValidBoard;
+        private readonly IScreenManager _screenManager;
+        private readonly IResources _resources;
 
-#if ZUNE
-        public int DrawSizeWidth = 75;
-        public int DrawSizeHeight = 75;
-#else
-        public int DrawSizeWidth = ((GameGlobals.TILE_SIZE * GameGlobals.BOARD_WIDTH) / 4);
-        public int DrawSizeHeight = ((GameGlobals.TILE_SIZE * GameGlobals.BOARD_HEIGHT) / 4);
-#endif
-        private readonly IScreenManager _screenDirector;
-
-        public BoardThumbnailViewer(LobbyScreen parentscreen)
+        public BoardThumbnailViewer(LobbyScreen parentscreen, IResources resources, IScreenManager screenManager)
         {
             ParentScreen = parentscreen;
-            _screenDirector = Di.Get<IScreenManager>();
+            _resources = resources;
+            _screenManager = screenManager;
         }
 
         public void Open()
@@ -104,7 +92,7 @@ namespace SlaamMono.MatchCreation
                     if (InputComponent.Players[0].PressedAction)
                     {
                         ParentScreen.LoadBoard(ValidBoards[save]);
-                        _screenDirector.ChangeTo(ParentScreen);
+                        _screenManager.ChangeTo(ParentScreen);
                     }
 
                     if (InputComponent.Players[0].PressedAction2)
@@ -213,7 +201,7 @@ namespace SlaamMono.MatchCreation
                         }
                         else
                         {
-                            batch.Draw(Resources.Instance.GetTexture("NowLoading").Texture, Pos, Color.White);
+                            batch.Draw(_resources.GetTexture("NowLoading").Texture, Pos, Color.White);
                         }
                     }
                     if (Pos == new Vector2(CenteredRectangle.X, CenteredRectangle.Y))
@@ -223,7 +211,7 @@ namespace SlaamMono.MatchCreation
                     DrawingBoardIndex.Add(1);
                 }
             }
-            batch.Draw(Resources.Instance.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
+            batch.Draw(_resources.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
             if (!StillLoadingBoards)
             {
                 CenteredRectangle = CenterRectangle(new Rectangle(0, 0, (int)(SizeIncrease * DrawSizeWidth), (int)(SizeIncrease * DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
@@ -231,11 +219,11 @@ namespace SlaamMono.MatchCreation
                 {
                     batch.Draw(Boards[save], CenteredRectangle, Color.White);
                 }
-                batch.Draw(Resources.Instance.GetTexture("BoardSelect").Texture, CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));
+                batch.Draw(_resources.GetTexture("BoardSelect").Texture, CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));
 #if !ZUNE
                 batch.Draw(Resources.BoardSelectTextUnderlay.Texture, new Vector2(0, 175), new Color(255, 255, 255, 100));
 #endif
-                RenderGraphManager.Instance.RenderText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), Resources.Instance.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
+                RenderGraphManager.Instance.RenderText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
             }
         }
 
