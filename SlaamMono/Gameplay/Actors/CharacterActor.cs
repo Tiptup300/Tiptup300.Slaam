@@ -357,7 +357,7 @@ namespace SlaamMono.Gameplay.Actors
                     break;
 
                 case PowerupType.Inversion:
-                    CurrentPowerup = new Inversion(GameScreen.Instance, PlayerIndex);
+                    CurrentPowerup = new Inversion(GameScreen.Instance, PlayerIndex, DiImplementer.Instance.Get<IResources>());
                     break;
 
                 case PowerupType.Slaam:
