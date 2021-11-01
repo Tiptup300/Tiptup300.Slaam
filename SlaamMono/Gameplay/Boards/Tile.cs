@@ -108,7 +108,7 @@ namespace SlaamMono.Gameplay.Boards
                 }
                 if (CurrentPowerupType != PowerupType.None)
                 {
-                    Texture2D tex = PowerupManager.GetPowerupTexture(CurrentPowerupType);
+                    Texture2D tex = PowerupManager.Instance.GetPowerupTexture(CurrentPowerupType);
                     batch.Draw(tex, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), Color.White);
                 }
             }

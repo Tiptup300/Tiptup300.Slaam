@@ -1,33 +1,42 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement;
 using System;
 
 namespace SlaamMono.Gameplay.Powerups
 {
-    public static class PowerupManager
+    public class PowerupManager
     {
-        private static Random rand = new Random();
+        public static PowerupManager Instance { get; private set; } = new PowerupManager(Di.Get<IResources>());
 
-        public static PowerupType GetRandomPowerup()
+        private Random rand = new Random();
+        private readonly IResources _resources;
+
+        public PowerupManager(IResources resources)
+        {
+            _resources = resources;
+        }
+
+        public PowerupType GetRandomPowerup()
         {
             return (PowerupType)rand.Next(1, 5);
         }
 
-        public static Texture2D GetPowerupTexture(PowerupType type)
+        public Texture2D GetPowerupTexture(PowerupType type)
         {
             switch (type)
             {
                 case PowerupType.SpeedUp:
-                    return Resources.Instance.GetTexture("SpeedUp0").Texture;
+                    return _resources.GetTexture("SpeedUp0").Texture;
 
                 case PowerupType.SpeedDown:
-                    return Resources.Instance.GetTexture("SpeedDown0").Texture;
+                    return _resources.GetTexture("SpeedDown0").Texture;
 
                 case PowerupType.Inversion:
-                    return Resources.Instance.GetTexture("Inversion0").Texture;
+                    return _resources.GetTexture("Inversion0").Texture;
 
                 case PowerupType.Slaam:
-                    return Resources.Instance.GetTexture("Slaam0").Texture;
+                    return _resources.GetTexture("Slaam0").Texture;
 
                 default:
                     throw new Exception();

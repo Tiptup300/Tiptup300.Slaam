@@ -316,7 +316,7 @@ namespace SlaamMono.Gameplay
                         }
                         if (found)
                         {
-                            tiles[newx, newy].MarkWithPowerup(PowerupManager.GetRandomPowerup());
+                            tiles[newx, newy].MarkWithPowerup(PowerupManager.Instance.GetRandomPowerup());
                         }
                     }
                 }
