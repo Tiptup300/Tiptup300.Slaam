@@ -9,7 +9,6 @@ using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
-using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
@@ -41,15 +40,18 @@ namespace SlaamMono.MatchCreation
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly PlayerColorResolver _playerColorResolver;
+        private readonly IResources _resources;
 
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver, IResources resourcesManager, IRenderGraph renderGraphManager)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver, IResources resources, IRenderGraph renderGraphManager)
         {
             SetupChars = chars;
             _logger = logger;
             _screenDirector = screenDirector;
             _playerColorResolver = playerColorResolver;
+            _resources = resources;
+
             PlayerAmt = SetupChars.Count;
-            MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
+            MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), resources, renderGraphManager);
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Add(true,
@@ -277,29 +279,29 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                batch.Draw(Resources.Instance.GetTexture("LobbyUnderlay").Texture, Vector2.Zero, Color.White);
+                batch.Draw(_resources.GetTexture("LobbyUnderlay").Texture, Vector2.Zero, Color.White);
                 float YOffset = 75;
 
                 for (int x = 0; x < SetupChars.Count; x++)
                 {
-                    batch.Draw(Resources.Instance.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
-                    batch.Draw(Resources.Instance.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
+                    batch.Draw(_resources.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
+                    batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
                     if (SetupChars[x].Type == PlayerType.Player)
-                        RenderGraphManager.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+                        RenderGraphManager.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
                     else
-                        RenderGraphManager.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), Resources.Instance.GetFont("SegoeUIx14pt"), Color.Red, TextAlignment.Default, false);
+                        RenderGraphManager.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, TextAlignment.Default, false);
                 }
-                batch.Draw(Resources.Instance.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
+                batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
             }
         }
 #endif
         public void Close()
         {
             CurrentBoardTexture = null;
-            Resources.Instance.GetTexture("LobbyUnderlay").Dispose();
-            Resources.Instance.GetTexture("LobbyCharBar").Dispose();
-            Resources.Instance.GetTexture("LobbyColorPreview").Dispose();
-            Resources.Instance.GetTexture("LobbyOverlay").Dispose();
+            _resources.GetTexture("LobbyUnderlay").Dispose();
+            _resources.GetTexture("LobbyCharBar").Dispose();
+            _resources.GetTexture("LobbyColorPreview").Dispose();
+            _resources.GetTexture("LobbyOverlay").Dispose();
         }
 
         /// <summary>
