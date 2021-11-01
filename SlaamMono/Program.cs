@@ -13,7 +13,7 @@ namespace SlaamMono
         /// </summary>
         static void Main(string[] args)
         {
-            DiImplementer.Instance.Get<IApp>()
+            Di.Get<IApp>()
                 .Run();
         }
 

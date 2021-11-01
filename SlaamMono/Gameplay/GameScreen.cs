@@ -93,7 +93,7 @@ namespace SlaamMono.Gameplay
             Timer = new GameScreenTimer(
                 new Vector2(1024, 0),
                 this,
-                DiImplementer.Instance.Get<IResources>());
+                Di.Get<IResources>());
 
             FeedManager.FeedsActive = false;
             for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
@@ -104,8 +104,8 @@ namespace SlaamMono.Gameplay
                         _boardpos,
                         new Vector2(x, y),
                         Tileset,
-                        DiImplementer.Instance.Get<IWhitePixelResolver>(),
-                        DiImplementer.Instance.Get<IResources>());
+                        Di.Get<IWhitePixelResolver>(),
+                        Di.Get<IResources>());
                 }
             }
             ScoreKeeper = new MatchScoreCollection(this);
@@ -164,12 +164,12 @@ namespace SlaamMono.Gameplay
             {
                 if (SetupChars[x].Type == PlayerType.Player)
                 {
-                    Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation), SetupChars[x].CharProfile, new Vector2(-100, -100), InputComponent.Players[(int)SetupChars[x].PlayerIDX], SetupChars[x].PlayerColor, x, DiImplementer.Instance.Get<IResources>()));
+                    Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation), SetupChars[x].CharProfile, new Vector2(-100, -100), InputComponent.Players[(int)SetupChars[x].PlayerIDX], SetupChars[x].PlayerColor, x, Di.Get<IResources>()));
                 }
                 else
                 {
                     ProfileManager.AllProfiles[SetupChars[x].CharProfile].Skin = SetupChars[x].SkinLocation;
-                    Characters.Add(new BotActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[x].SkinLocation)*/, SetupChars[x].CharProfile, new Vector2(-100, -100), this, SetupChars[x].PlayerColor, Characters.Count, DiImplementer.Instance.Get<IResources>()));
+                    Characters.Add(new BotActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[x].SkinLocation)*/, SetupChars[x].CharProfile, new Vector2(-100, -100), this, SetupChars[x].PlayerColor, Characters.Count, Di.Get<IResources>()));
                 }
 
                 Scoreboards.Add(
@@ -177,8 +177,8 @@ namespace SlaamMono.Gameplay
                         Vector2.Zero,
                         Characters[Characters.Count - 1],
                         ThisGameType,
-                        DiImplementer.Instance.Get<IResources>(),
-                        DiImplementer.Instance.Get<IWhitePixelResolver>()));
+                        Di.Get<IResources>(),
+                        Di.Get<IWhitePixelResolver>()));
 
             }
         }
@@ -534,10 +534,10 @@ namespace SlaamMono.Gameplay
             _screenDirector.ChangeTo(
                 new StatsScreen(
                     ScoreKeeper,
-                    DiImplementer.Instance.Get<ILogger>(),
-                    DiImplementer.Instance.Get<IScreenManager>(),
-                    DiImplementer.Instance.Get<IResources>(),
-                    DiImplementer.Instance.Get<IRenderGraph>()));
+                    Di.Get<ILogger>(),
+                    Di.Get<IScreenManager>(),
+                    Di.Get<IResources>(),
+                    Di.Get<IRenderGraph>()));
         }
 
         /// <summary>

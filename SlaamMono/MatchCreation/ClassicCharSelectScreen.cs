@@ -123,11 +123,11 @@ namespace SlaamMono.MatchCreation
             _screenDirector.ChangeTo(
                 new LobbyScreen(
                     characterShells,
-                    DiImplementer.Instance.Get<ILogger>(),
-                    DiImplementer.Instance.Get<IScreenManager>(),
-                    DiImplementer.Instance.Get<PlayerColorResolver>(),
-                    DiImplementer.Instance.Get<IResources>(),
-                    DiImplementer.Instance.Get<IRenderGraph>()));
+                    Di.Get<ILogger>(),
+                    Di.Get<IScreenManager>(),
+                    Di.Get<PlayerColorResolver>(),
+                    Di.Get<IResources>(),
+                    Di.Get<IRenderGraph>()));
         }
 
         public void Draw(SpriteBatch batch)
@@ -192,7 +192,7 @@ namespace SlaamMono.MatchCreation
 
             for (int x = 0; x < InputComponent.Players.Length; x++)
             {
-                SelectBoxes[x] = new CharSelectBox(BoxPositions[x], SkinTexture, (ExtendedPlayerIndex)x, Skins, DiImplementer.Instance.Get<PlayerColorResolver>());
+                SelectBoxes[x] = new CharSelectBox(BoxPositions[x], SkinTexture, (ExtendedPlayerIndex)x, Skins, Di.Get<PlayerColorResolver>());
             }
 
         }

@@ -23,7 +23,7 @@ namespace SlaamMono.MatchCreation
         public override void ResetBoxes()
         {
             SelectBoxes = new CharSelectBox[1];
-            SelectBoxes[0] = new CharSelectBox(new Vector2(340, 427), SkinTexture, ExtendedPlayerIndex.One, Skins, DiImplementer.Instance.Get<PlayerColorResolver>());
+            SelectBoxes[0] = new CharSelectBox(new Vector2(340, 427), SkinTexture, ExtendedPlayerIndex.One, Skins, Di.Get<PlayerColorResolver>());
             SelectBoxes[0].Survival = true;
         }
 
@@ -38,9 +38,9 @@ namespace SlaamMono.MatchCreation
             list.Add(SelectBoxes[0].GetShell());
             GameScreen.Instance = new SurvivalScreen(
                 list,
-                DiImplementer.Instance.Get<ILogger>(),
-                DiImplementer.Instance.Get<IScreenManager>(),
-                DiImplementer.Instance.Get<IResources>());
+                Di.Get<ILogger>(),
+                Di.Get<IScreenManager>(),
+                Di.Get<IResources>());
             _screenDirector.ChangeTo(GameScreen.Instance);
         }
     }

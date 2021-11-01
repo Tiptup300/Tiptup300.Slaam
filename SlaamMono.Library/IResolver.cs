@@ -4,7 +4,7 @@ namespace SlaamMono.Library
 {
     public interface IResolver
     {
-        T Get<T>();
-        object Get(Type type);
+        T x_Get<T>();
+        object x_Get(Type type);
     }
 }

@@ -42,14 +42,14 @@ namespace SlaamMono.Gameplay
             CurrentMatchSettings.LivesAmt = 1;
             Tileset = LobbyScreen.LoadQuickBoard();
 
-            Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupChars[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, DiImplementer.Instance.Get<IResources>()));
+            Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupChars[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, Di.Get<IResources>()));
             Scoreboards.Add(
                 new GameScreenScoreboard(
                     new Vector2(-250, 10),
                     Characters[0],
                     ThisGameType,
-                    DiImplementer.Instance.Get<IResources>(),
-                    DiImplementer.Instance.Get<IWhitePixelResolver>()));
+                    Di.Get<IResources>(),
+                    Di.Get<IWhitePixelResolver>()));
         }
 
         public override void Update()
@@ -108,7 +108,7 @@ namespace SlaamMono.Gameplay
         {
             Characters.Add(new BotActor(
                 SlaamGame.Content.Load<Texture2D>("content\\skins\\" + ClassicCharSelectScreen.ReturnRandSkin(_logger))//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, CharSelectScreen.Instance.ReturnRandSkin())
-                , ProfileManager.GetBotProfile(), new Vector2(-200, -200), this, Color.Black, Characters.Count, DiImplementer.Instance.Get<IResources>()));
+                , ProfileManager.GetBotProfile(), new Vector2(-200, -200), this, Color.Black, Characters.Count, Di.Get<IResources>()));
             ProfileManager.ResetAllBots();
             RespawnChar(Characters.Count - 1);
         }
@@ -121,10 +121,10 @@ namespace SlaamMono.Gameplay
             _screenDirector.ChangeTo(
                 new StatsScreen(
                     ScoreKeeper,
-                    DiImplementer.Instance.Get<ILogger>(),
-                    DiImplementer.Instance.Get<IScreenManager>(),
-                    DiImplementer.Instance.Get<IResources>(),
-                    DiImplementer.Instance.Get<IRenderGraph>()));
+                    Di.Get<ILogger>(),
+                    Di.Get<IScreenManager>(),
+                    Di.Get<IResources>(),
+                    Di.Get<IRenderGraph>()));
         }
     }
 }

@@ -188,8 +188,8 @@ namespace SlaamMono.MatchCreation
                 {
                     _screenDirector.ChangeTo(
                         new ClassicCharSelectScreen(
-                            DiImplementer.Instance.Get<ILogger>(),
-                            DiImplementer.Instance.Get<IScreenManager>()));
+                            Di.Get<ILogger>(),
+                            Di.Get<IScreenManager>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }
@@ -209,9 +209,9 @@ namespace SlaamMono.MatchCreation
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
                     GameScreen.Instance = new GameScreen(
                         SetupChars,
-                        DiImplementer.Instance.Get<ILogger>(),
-                        DiImplementer.Instance.Get<IScreenManager>(),
-                        DiImplementer.Instance.Get<IResources>());
+                        Di.Get<ILogger>(),
+                        Di.Get<IScreenManager>(),
+                        Di.Get<IResources>());
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();

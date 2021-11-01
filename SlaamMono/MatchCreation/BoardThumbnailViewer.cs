@@ -61,7 +61,7 @@ namespace SlaamMono.MatchCreation
         public BoardThumbnailViewer(LobbyScreen parentscreen)
         {
             ParentScreen = parentscreen;
-            _screenDirector = DiImplementer.Instance.Get<IScreenManager>();
+            _screenDirector = Di.Get<IScreenManager>();
         }
 
         public void Open()

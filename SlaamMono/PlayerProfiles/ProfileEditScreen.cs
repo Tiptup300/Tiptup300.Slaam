@@ -17,9 +17,9 @@ namespace SlaamMono.PlayerProfiles
     {
         public static ProfileEditScreen Instance =
             new ProfileEditScreen(
-                DiImplementer.Instance.Get<IScreenManager>(),
-                DiImplementer.Instance.Get<IResources>(),
-                DiImplementer.Instance.Get<IRenderGraph>());
+                Di.Get<IScreenManager>(),
+                Di.Get<IResources>(),
+                Di.Get<IRenderGraph>());
 
         private const float RotationSpeed = MathHelper.Pi / 3000f;
         private Graph MainMenu;
