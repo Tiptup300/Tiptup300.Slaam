@@ -15,22 +15,22 @@ namespace SlaamMono.Library.Rendering
         private readonly Color _shadowColor = new Color(0, 0, 0, 127);
         private readonly Vector2 _shadowOffset1 = new Vector2(1, 2);
         private readonly Vector2 _shadowOffset2 = new Vector2(2, 1);
+        private readonly ISlaamGame _slaamGame;
         private readonly IWhitePixelResolver _whitePixelResolver;
 
         public RenderGraph(ISlaamGame slaamGame, IWhitePixelResolver whitePixelResolver)
-            : base(slaamGame.Game)
+            : base(null)
         {
+            _slaamGame = slaamGame;
             _whitePixelResolver = whitePixelResolver;
 
-
             Instance = this;
-            LoadContent();
             slaamGame.Game.Components.Add(this);
         }
 
         protected override void LoadContent()
         {
-            _batch = new SpriteBatch(Game.GraphicsDevice);
+            _batch = new SpriteBatch(_slaamGame.Game.GraphicsDevice);
 
             base.LoadContent();
         }

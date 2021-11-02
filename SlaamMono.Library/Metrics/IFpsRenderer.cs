@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SlaamMono.Library.Metrics
 {
-    public interface IFpsWidget : IGameWidget
+    public interface IFpsRenderer : IGameWidget
     {
 
     }

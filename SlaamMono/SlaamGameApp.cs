@@ -1,5 +1,6 @@
 ﻿using SlaamMono.Library;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Metrics;
 using System;
 
 namespace SlaamMono
@@ -7,12 +8,14 @@ namespace SlaamMono
     public class SlaamGameApp : IApp
     {
         private readonly ILogger _logger;
+        private readonly IFpsRenderer _fpsRenderer;
         private readonly ISlaamGame _slaamGame;
 
-        public SlaamGameApp(ISlaamGame slaamGame, ILogger logger)
+        public SlaamGameApp(ISlaamGame slaamGame, ILogger logger, IFpsRenderer fpsRenderer)
         {
             _slaamGame = slaamGame;
             _logger = logger;
+            _fpsRenderer = fpsRenderer;
         }
 
         public void Run()

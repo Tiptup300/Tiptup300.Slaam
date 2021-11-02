@@ -35,20 +35,17 @@ namespace SlaamMono
         private readonly IScreenManager _screenDirector;
         private readonly IWhitePixelResolver _whitePixelResolver;
         private readonly IResources _resources;
-        private readonly IFpsWidget _fpsWidget;
 
         public SlaamGame(
             ILogger logger,
             IScreenManager screenDirector,
             IWhitePixelResolver whitePixelResolver,
-            IResources resources,
-            IFpsWidget fpsWidget)
+            IResources resources)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _whitePixelResolver = whitePixelResolver;
             _resources = resources;
-            _fpsWidget = fpsWidget;
             graphics = new GraphicsDeviceManager(this);
             Content = new ContentManager(Services);
 
@@ -66,20 +63,22 @@ namespace SlaamMono
             Components.Insert(0, new FrameRateDirector(this));
             Components.Add(new InputComponent(this));
             SetupZuneBlade();
-            _logger.Log("Creating SpriteBatch...");
             gamebatch = new SpriteBatch(graphics.GraphicsDevice);
-            _logger.Log("Created SpriteBatch;");
-            base.Initialize();
             instance = this;
+            _screenDirector.ChangeTo<ILogoScreen>();
 
+            base.Initialize();
+        }
+
+        protected override void LoadContent()
+        {
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             _resources.LoadAll();
-            _fpsWidget.Load();
             SlaamGame.mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = InputComponent.Players[0];
             _contentManager = new XnaContentManager(Di.Get<ILogger>());
 
-            _screenDirector.ChangeTo<ILogoScreen>();
+            base.LoadContent();
         }
 
         public void SetupZuneBlade()
@@ -98,8 +97,6 @@ namespace SlaamMono
         }
         protected override void Update(GameTime gameTime)
         {
-            _fpsWidget.Update(gameTime);
-            base.Update(gameTime);
 
             if (_contentManager.NeedsDevice)
             {
@@ -120,6 +117,7 @@ namespace SlaamMono
                 }
             }
 
+            base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -135,7 +133,6 @@ namespace SlaamMono
             }
 
             gamebatch.End();
-            _fpsWidget.Draw();
 
             base.Draw(gameTime);
         }

@@ -47,7 +47,7 @@ namespace SlaamMono
         public void registerComponents()
         {
             _container.Register<IRenderGraph, RenderGraph>(Lifestyle.Singleton);
-            _container.Register<IFpsWidget, FpsRenderer>(Lifestyle.Singleton);
+            _container.Register<IFpsRenderer, FpsRenderer>(Lifestyle.Singleton);
         }
 
         private void registerScreens()

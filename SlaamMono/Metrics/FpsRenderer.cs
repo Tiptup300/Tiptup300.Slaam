@@ -8,7 +8,7 @@ using SlaamMono.Library.ResourceManagement;
 
 namespace SlaamMono.Metrics
 {
-    public class FpsRenderer : IFpsWidget
+    public class FpsRenderer : IFpsRenderer
     {
         private bool _loaded = false;
         private string _fpsText;
