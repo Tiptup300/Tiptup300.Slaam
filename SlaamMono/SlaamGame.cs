@@ -19,12 +19,11 @@ namespace SlaamMono
     /// </summary>
     public class SlaamGame : Game, ISlaamGame
     {
-        private GraphicsDeviceManager graphics;
+        private GraphicsDeviceManager _graphics;
         new public static ContentManager Content;
 
         public static ZuneBlade mainBlade;
         public static SlaamGame Instance { get { return instance; } }
-        public static GraphicsDeviceManager Graphics { get { return instance.graphics; } }
         public static SlaamGame instance;
         public static bool ShowFPS = true;
 
@@ -40,22 +39,18 @@ namespace SlaamMono
             ILogger logger,
             IScreenManager screenDirector,
             IWhitePixelResolver whitePixelResolver,
-            IResources resources)
+            IResources resources,
+            StateReference<GraphicsDeviceManager> graphics)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _whitePixelResolver = whitePixelResolver;
             _resources = resources;
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
+            graphics.Change(_graphics);
             Content = new ContentManager(Services);
 
-            graphics.IsFullScreen = false;
-            graphics.PreferredBackBufferWidth = GameGlobals.DRAWING_GAME_WIDTH;
-            graphics.PreferredBackBufferHeight = GameGlobals.DRAWING_GAME_HEIGHT;
             this.IsFixedTimeStep = false;
-
-            graphics.PreferMultiSampling = false;
-            graphics.ApplyChanges();
         }
 
         protected override void Initialize()
@@ -63,7 +58,7 @@ namespace SlaamMono
             Components.Insert(0, new FrameRateDirector(this));
             Components.Add(new InputComponent(this));
             SetupZuneBlade();
-            gamebatch = new SpriteBatch(graphics.GraphicsDevice);
+            gamebatch = new SpriteBatch(_graphics.GraphicsDevice);
             instance = this;
             _screenDirector.ChangeTo<ILogoScreen>();
 

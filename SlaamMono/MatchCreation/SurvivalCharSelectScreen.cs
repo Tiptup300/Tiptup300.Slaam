@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
+using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
-using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
 using System.Collections.Generic;
 
@@ -46,7 +46,8 @@ namespace SlaamMono.MatchCreation
                 list,
                 Di.Get<ILogger>(),
                 Di.Get<IScreenManager>(),
-                Di.Get<IResources>());
+                Di.Get<IResources>(),
+                Di.Get<StateReference<GraphicsDeviceManager>>());
             _screenDirector.ChangeTo(GameScreen.Instance);
         }
     }

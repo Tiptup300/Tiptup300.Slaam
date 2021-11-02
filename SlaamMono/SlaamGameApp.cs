@@ -1,28 +1,46 @@
-﻿using SlaamMono.Library;
+﻿using Microsoft.Xna.Framework;
+using SlaamMono.Library;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Metrics;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SlaamMono
 {
     public class SlaamGameApp : IApp
     {
         private readonly ILogger _logger;
-        private readonly IFpsRenderer _fpsRenderer;
+        private readonly GraphicsConfigurer _graphicsConfigurer;
         private readonly ISlaamGame _slaamGame;
 
-        public SlaamGameApp(ISlaamGame slaamGame, ILogger logger, IFpsRenderer fpsRenderer)
+        public SlaamGameApp(ISlaamGame slaamGame, ILogger logger, GraphicsConfigurer graphicsConfigurer)
         {
             _slaamGame = slaamGame;
             _logger = logger;
-            _fpsRenderer = fpsRenderer;
+            _graphicsConfigurer = graphicsConfigurer;
         }
 
         public void Run()
         {
+            startLog();
+            configureGraphics();
+            addComponentsToGame();
+            runGame();
+        }
+
+        private void configureGraphics()
+        {
+            _graphicsConfigurer.ConfigureGraphics();
+        }
+
+        private void addComponentsToGame()
+        {
+        }
+
+        private void runGame()
+        {
             try
             {
-                startLog();
                 _slaamGame.Run();
             }
             catch (Exception e)

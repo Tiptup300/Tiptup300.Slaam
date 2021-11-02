@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SimpleInjector;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
@@ -14,6 +15,7 @@ using SlaamMono.Metrics;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
 using SlaamMono.ResourceManagement.Loading;
+using SlaamMono.x_;
 
 namespace SlaamMono
 {
@@ -40,6 +42,9 @@ namespace SlaamMono
             _container.RegisterInstance(new GameConfiguration(true));
             _container.Register<IApp, SlaamGameApp>(Lifestyle.Singleton);
             _container.Register<ISlaamGame, SlaamGame>(Lifestyle.Singleton);
+            _container.RegisterInstance(new StateReference<GraphicsDeviceManager>());
+            _container.RegisterInstance(new GraphicsConfiguration(GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT, false, false));
+            _container.Register<GraphicsConfigurer>(Lifestyle.Singleton);
             _container.Register<ILoggingDevice, TextFileLoggingDevice>(Lifestyle.Singleton);
             _container.Register<ILogger, Logger>(Lifestyle.Singleton);
         }
@@ -65,7 +70,7 @@ namespace SlaamMono
 
         private void registerResources()
         {
-            _container.RegisterInstance(new State<ResourcesState>());
+            _container.RegisterInstance(new StateReference<ResourcesState>());
             _container.Register<IResources, Resources>(Lifestyle.Singleton);
             _container.Register<IFileLoader<Texture2D>, Texture2DLoader>(Lifestyle.Singleton);
             _container.Register<IWhitePixelResolver, WhitePixelResolver>(Lifestyle.Singleton);

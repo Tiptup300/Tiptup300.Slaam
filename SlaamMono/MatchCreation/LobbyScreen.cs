@@ -211,7 +211,8 @@ namespace SlaamMono.MatchCreation
                         SetupChars,
                         Di.Get<ILogger>(),
                         Di.Get<IScreenManager>(),
-                        Di.Get<IResources>());
+                        Di.Get<IResources>(),
+                        Di.Get<StateReference<GraphicsDeviceManager>>());
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();

@@ -12,12 +12,12 @@ namespace SlaamMono.ResourceManagement
     {
         private readonly ILogger _logger;
         private readonly IResourceLoader _resourceLoader;
-        private readonly State<ResourcesState> _state;
+        private readonly StateReference<ResourcesState> _state;
 
         public Resources(
             ILogger logger,
             IResourceLoader resourceLoader,
-            State<ResourcesState> resourcesState)
+            StateReference<ResourcesState> resourcesState)
         {
             _logger = logger;
             _resourceLoader = resourceLoader;
@@ -37,7 +37,7 @@ namespace SlaamMono.ResourceManagement
             var fonts = loadResource<SpriteFont>(textLists["Fonts"]);
             _logger.Log($"Fonts Loaded.");
 
-            _state.ChangeState(new ResourcesState(textLists, textures, fonts));
+            _state.Change(new ResourcesState(textLists, textures, fonts));
 
             _logger.Log("All Resources Finished Loading;");
         }
@@ -66,13 +66,13 @@ namespace SlaamMono.ResourceManagement
         }
 
         public CachedTexture GetTexture(string textureName)
-            => _state.Value.Textures[textureName];
+            => _state.State.Textures[textureName];
 
         public SpriteFont GetFont(string fontName)
-            => _state.Value.Fonts[fontName];
+            => _state.State.Fonts[fontName];
 
         public List<string> GetTextList(string listName)
-            => _state.Value.TextLists[listName]
+            => _state.State.TextLists[listName]
                 .ToList();
     }
 }

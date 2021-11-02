@@ -55,13 +55,14 @@ namespace SlaamMono.Gameplay
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
+        private readonly StateReference<GraphicsDeviceManager> _graphics;
 
         public Vector2 FinalBoardPosition
         {
             get
             {
-                int width = (int)(SlaamGame.Graphics.PreferredBackBufferWidth / 2f);
-                int height = (int)(SlaamGame.Graphics.PreferredBackBufferHeight / 2f);
+                int width = (int)(_graphics.State.PreferredBackBufferWidth / 2f);
+                int height = (int)(_graphics.State.PreferredBackBufferHeight / 2f);
                 int boardWidth = GameGlobals.BOARD_WIDTH * GameGlobals.TILE_SIZE;
                 int boardHeight = GameGlobals.BOARD_HEIGHT * GameGlobals.TILE_SIZE;
 
@@ -70,13 +71,13 @@ namespace SlaamMono.Gameplay
         }
 
 
-        public GameScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, IResources resources)
+        public GameScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, IResources resources, StateReference<GraphicsDeviceManager> graphics)
         {
             SetupChars = chars;
             _logger = logger;
             _screenDirector = screenDirector;
             _resources = resources;
-
+            _graphics = graphics;
             ThisGameType = CurrentMatchSettings.GameType;
             SetupTheBoard(CurrentMatchSettings.BoardLocation);
             CurrentGameStatus = GameStatus.MovingBoard;
