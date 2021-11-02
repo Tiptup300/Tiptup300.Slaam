@@ -104,8 +104,8 @@ namespace SlaamMono.Gameplay
                         _boardpos,
                         new Vector2(x, y),
                         Tileset,
-                        Di.Get<IWhitePixelResolver>(),
-                        Di.Get<IResources>());
+                        Di.Get<IResources>(),
+                        Di.Get<IRenderGraph>());
                 }
             }
             ScoreKeeper = new MatchScoreCollection(this);

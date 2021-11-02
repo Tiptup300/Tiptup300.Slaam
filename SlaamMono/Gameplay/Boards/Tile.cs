@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Powerups;
 using SlaamMono.Library;
+using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement;
 using SlaamMono.SubClasses;
@@ -33,17 +34,17 @@ namespace SlaamMono.Gameplay.Boards
         private float Alpha = 255;
 
 
-        private readonly IWhitePixelResolver _whitePixelResolver;
         private readonly IResources _resources;
+        private readonly IRenderGraph _renderGraph;
 
-        public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, IWhitePixelResolver whitePixelResolver, IResources resources)
+        public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, IResources resources, IRenderGraph renderGraph)
         {
             ParentTileTileset = tiletex;
             TileCoors = TileLoc;
             AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
 
-            _whitePixelResolver = whitePixelResolver;
             _resources = resources;
+            _renderGraph = renderGraph;
         }
 
         public void Update()
@@ -118,7 +119,9 @@ namespace SlaamMono.Gameplay.Boards
         {
             if (CurrentTileCondition != TileCondition.Clear)
             {
-                batch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), new Color(0, 0, 0, 50));
+                _renderGraph.RenderBox(
+                    destinationRectangle: new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE),
+                    color: new Color(0, 0, 0, 50));
             }
         }
 
