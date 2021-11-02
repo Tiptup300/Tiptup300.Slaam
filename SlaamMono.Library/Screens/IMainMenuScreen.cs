@@ -1,6 +1,6 @@
 ﻿namespace SlaamMono.Library.Screens
 {
-    public interface IMainMenuScreen
+    public interface IMainMenuScreen : IScreen
     {
     }
 }

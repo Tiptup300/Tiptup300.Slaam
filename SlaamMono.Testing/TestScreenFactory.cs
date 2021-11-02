@@ -18,7 +18,7 @@ namespace SlaamMono.Testing
         public bool __GetScreen__Ran { get; private set; }
         public Type __GetScreen__param__TScreenType { get; private set; }
         public IScreen __GetScreen__output { get; set; }
-        public IScreen GetScreen<TScreenType>()
+        public IScreen GetScreen<TScreenType>() where TScreenType : IScreen
         {
             __GetScreen__Ran = true;
             __GetScreen__param__TScreenType = typeof(TScreenType);

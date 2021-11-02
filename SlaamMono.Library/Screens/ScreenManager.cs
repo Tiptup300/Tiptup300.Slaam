@@ -57,7 +57,7 @@ namespace SlaamMono.Library.Screens
             _nextScreen = nextScreen;
         }
 
-        public void ChangeTo<TScreenType>()
+        public void ChangeTo<TScreenType>() where TScreenType : IScreen
         {
             ChangeTo(_screenFactory.GetScreen<TScreenType>());
         }

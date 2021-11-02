@@ -27,7 +27,7 @@ namespace SlaamMono.Library.Screens
         public IScreen Get(string screenName)
             => (IScreen)_resolver.x_Get(_screens[screenName]);
 
-        public IScreen GetScreen<TScreenType>()
-            => (IScreen)_resolver.x_Get<TScreenType>();
+        public IScreen GetScreen<TScreenType>() where TScreenType : IScreen
+            => _resolver.x_Get<TScreenType>();
     }
 }
