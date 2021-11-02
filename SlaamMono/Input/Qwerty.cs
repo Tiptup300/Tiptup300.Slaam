@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.ResourceManagement;
 
 namespace SlaamMono.Input
 {
@@ -199,12 +197,12 @@ namespace SlaamMono.Input
                 for (int x = 0; x < 10; x++)
                 {
                     if (Keys[x, y].Type == QwertyKeyType.Normal)
-                        RenderGraphManager.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), _resources.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Centered, true);
+                        RenderGraph.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), _resources.GetFont("SegoeUIx32pt"), Color.White, RenderAlignment.Centered, true);
                     else
-                        RenderGraphManager.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), _resources.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, false);
+                        RenderGraph.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), _resources.GetFont("SegoeUIx14pt"), Color.White, RenderAlignment.Centered, false);
                 }
             }
-            RenderGraphManager.Instance.RenderText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), _resources.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            RenderGraph.Instance.RenderText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), _resources.GetFont("SegoeUIx14pt"), Color.Black, RenderAlignment.Default, false);
 
             if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != QwertyKeyType.Space)
                 batch.Draw(_resources.GetTexture("KeyHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);

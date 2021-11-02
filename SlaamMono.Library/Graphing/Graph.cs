@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Library.ResourceManagement;
 using System.Collections.Generic;
 
@@ -90,7 +89,7 @@ namespace SlaamMono.Library.Graphing
             _drawings.Draw(batch);
             for (int x = 0; x < _stringsToWrite.Count; x++)
             {
-                RenderGraphManager.Instance.RenderText(_stringsToWrite[x].Str, _stringsToWrite[x].Pos, _resourceManager.GetFont("SegoeUIx14pt"), Color.White, TextAlignment.Centered, true);
+                RenderGraph.Instance.RenderText(_stringsToWrite[x].Str, _stringsToWrite[x].Pos, _resourceManager.GetFont("SegoeUIx14pt"), Color.White, RenderAlignment.Centered, true);
             }
         }
     }

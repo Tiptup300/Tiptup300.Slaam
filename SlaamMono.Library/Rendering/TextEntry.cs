@@ -1,17 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SlaamMono.Library.Rendering.Text
+namespace SlaamMono.Library.Rendering
 {
     internal struct TextEntry
     {
         public SpriteFont Fnt;
         public Vector2 Pos;
         public string Str;
-        public TextAlignment Alignment;
+        public RenderAlignment Alignment;
         public Color Col;
 
-        public TextEntry(SpriteFont fnt, Vector2 pos, string str, TextAlignment alignment, Color col)
+        public TextEntry(SpriteFont fnt, Vector2 pos, string str, RenderAlignment alignment, Color col)
         {
             Fnt = fnt;
             Pos = pos;
@@ -24,11 +24,11 @@ namespace SlaamMono.Library.Rendering.Text
 
             switch (alignment)
             {
-                case TextAlignment.Centered:
+                case RenderAlignment.Centered:
                     Pos.X -= size.X / 2f;
                     break;
 
-                case TextAlignment.Right:
+                case RenderAlignment.Right:
                     Pos.X -= size.X;
                     break;
             }

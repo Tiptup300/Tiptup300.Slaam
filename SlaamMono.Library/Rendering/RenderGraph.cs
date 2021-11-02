@@ -1,12 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Library.ResourceManagement;
 using System.Collections.Generic;
 
 namespace SlaamMono.Library.Rendering
 {
-    public class RenderGraphManager : DrawableGameComponent, IRenderGraph
+    public class RenderGraph : DrawableGameComponent, IRenderGraph
     {
         public static IRenderGraph Instance;
 
@@ -18,7 +17,7 @@ namespace SlaamMono.Library.Rendering
         private readonly Vector2 _shadowOffset2 = new Vector2(2, 1);
         private readonly IWhitePixelResolver _whitePixelResolver;
 
-        public RenderGraphManager(ISlaamGame slaamGame, IWhitePixelResolver whitePixelResolver)
+        public RenderGraph(ISlaamGame slaamGame, IWhitePixelResolver whitePixelResolver)
             : base(slaamGame.Game)
         {
             _whitePixelResolver = whitePixelResolver;
@@ -41,16 +40,16 @@ namespace SlaamMono.Library.Rendering
             _batch.Draw(_whitePixelResolver.GetWhitePixel(), destinationRectangle, color.HasValue ? color.Value : Color.White);
         }
 
-        public void RenderText(string text, Vector2 position, SpriteFont font, Color color, TextAlignment alignment = TextAlignment.Default, bool addShadow = false)
+        public void RenderText(string text, Vector2 position, SpriteFont font, Color? color = null, RenderAlignment alignment = RenderAlignment.Default, bool addShadow = false)
         {
             if (addShadow)
             {
                 drawShadow(text, position, font, alignment);
             }
-            _textToDraw.Add(new TextEntry(font, position, text, alignment, color));
+            _textToDraw.Add(new TextEntry(font, position, text, alignment, color.HasValue ? color.Value : Color.White));
         }
 
-        private void drawShadow(string text, Vector2 position, SpriteFont font, TextAlignment alignment)
+        private void drawShadow(string text, Vector2 position, SpriteFont font, RenderAlignment alignment)
         {
             _textToDraw.Add(new TextEntry(font, position + _shadowOffset1, text, alignment, _shadowColor));
             _textToDraw.Add(new TextEntry(font, position + _shadowOffset2, text, alignment, _shadowColor));

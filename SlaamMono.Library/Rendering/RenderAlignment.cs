@@ -1,6 +1,6 @@
-﻿namespace SlaamMono.Library.Rendering.Text
+﻿namespace SlaamMono.Library.Rendering
 {
-    public enum TextAlignment
+    public enum RenderAlignment
     {
         VerticallyCentered,
         Top,

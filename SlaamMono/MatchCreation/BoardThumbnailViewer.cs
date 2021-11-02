@@ -4,10 +4,8 @@ using SlaamMono.Gameplay.Actors;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
-using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
 using System;
 using System.Collections.Generic;
@@ -223,7 +221,7 @@ namespace SlaamMono.MatchCreation
 #if !ZUNE
                 batch.Draw(Resources.BoardSelectTextUnderlay.Texture, new Vector2(0, 175), new Color(255, 255, 255, 100));
 #endif
-                RenderGraphManager.Instance.RenderText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
+                RenderGraph.Instance.RenderText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, RenderAlignment.Default, true);
             }
         }
 

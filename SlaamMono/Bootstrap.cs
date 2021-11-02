@@ -2,16 +2,18 @@
 using SimpleInjector;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
+using SlaamMono.Library.Configurations;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Metrics;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.Menus;
+using SlaamMono.Metrics;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
 using SlaamMono.ResourceManagement.Loading;
-using System.Collections.Generic;
 
 namespace SlaamMono
 {
@@ -23,7 +25,7 @@ namespace SlaamMono
         {
             _container = new Container();
 
-            _container.RegisterInstance<IResolver>(resolver);
+            _container.RegisterInstance(resolver);
             register();
             registerComponents();
             registerScreens();
@@ -35,6 +37,7 @@ namespace SlaamMono
 
         private void register()
         {
+            _container.RegisterInstance(new GameConfiguration(true));
             _container.Register<IApp, SlaamGameApp>(Lifestyle.Singleton);
             _container.Register<ISlaamGame, SlaamGame>(Lifestyle.Singleton);
             _container.Register<ILoggingDevice, TextFileLoggingDevice>(Lifestyle.Singleton);
@@ -43,7 +46,8 @@ namespace SlaamMono
 
         public void registerComponents()
         {
-            _container.Register<IRenderGraph, RenderGraphManager>(Lifestyle.Singleton);
+            _container.Register<IRenderGraph, RenderGraph>(Lifestyle.Singleton);
+            _container.Register<IFpsWidget, FpsRenderer>(Lifestyle.Singleton);
         }
 
         private void registerScreens()
@@ -61,7 +65,7 @@ namespace SlaamMono
 
         private void registerResources()
         {
-            _container.RegisterInstance(new StateChanger<ResourcesState>());
+            _container.RegisterInstance(new State<ResourcesState>());
             _container.Register<IResources, Resources>(Lifestyle.Singleton);
             _container.Register<IFileLoader<Texture2D>, Texture2DLoader>(Lifestyle.Singleton);
             _container.Register<IWhitePixelResolver, WhitePixelResolver>(Lifestyle.Singleton);

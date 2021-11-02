@@ -4,10 +4,8 @@ using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Rendering.Text;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.ResourceManagement;
 using SlaamMono.StatsBoards;
 using System.Collections.Generic;
 
@@ -206,8 +204,8 @@ namespace SlaamMono.MatchCreation
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
-            RenderGraphManager.Instance.RenderText(temp, new Vector2(31, 141), _resources.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
-            RenderGraphManager.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, TextAlignment.Default, false);
+            RenderGraph.Instance.RenderText(temp, new Vector2(31, 141), _resources.GetFont("SegoeUIx14pt"), Color.Black, RenderAlignment.Default, false);
+            RenderGraph.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, RenderAlignment.Default, false);
         }
 
         /// <summary>

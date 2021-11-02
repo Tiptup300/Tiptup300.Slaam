@@ -5,14 +5,11 @@ using SlaamMono.Input;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Rendering.Text;
+using SlaamMono.Library.Metrics;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
-using System;
 using ZBlade;
 
 namespace SlaamMono
@@ -38,14 +35,20 @@ namespace SlaamMono
         private readonly IScreenManager _screenDirector;
         private readonly IWhitePixelResolver _whitePixelResolver;
         private readonly IResources _resources;
+        private readonly IFpsWidget _fpsWidget;
 
-        public SlaamGame(ILogger logger, IScreenManager screenDirector,
-            IWhitePixelResolver whitePixelResolver, IResources resources)
+        public SlaamGame(
+            ILogger logger,
+            IScreenManager screenDirector,
+            IWhitePixelResolver whitePixelResolver,
+            IResources resources,
+            IFpsWidget fpsWidget)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _whitePixelResolver = whitePixelResolver;
             _resources = resources;
+            _fpsWidget = fpsWidget;
             graphics = new GraphicsDeviceManager(this);
             Content = new ContentManager(Services);
 
@@ -67,15 +70,15 @@ namespace SlaamMono
             gamebatch = new SpriteBatch(graphics.GraphicsDevice);
             _logger.Log("Created SpriteBatch;");
             base.Initialize();
+            instance = this;
 
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
-            instance = this;
             _resources.LoadAll();
+            _fpsWidget.Load();
             SlaamGame.mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = InputComponent.Players[0];
             _contentManager = new XnaContentManager(Di.Get<ILogger>());
 
-            GameGlobals.SetupGame();
             _screenDirector.ChangeTo<ILogoScreen>();
         }
 
@@ -95,6 +98,7 @@ namespace SlaamMono
         }
         protected override void Update(GameTime gameTime)
         {
+            _fpsWidget.Update(gameTime);
             base.Update(gameTime);
 
             if (_contentManager.NeedsDevice)
@@ -130,15 +134,8 @@ namespace SlaamMono
                 Qwerty.Draw(gamebatch);
             }
 
-            if (ShowFPS)
-            {
-                string temp = "" + FrameRateDirector.FUPS;
-                Vector2 fpsBack = _resources.GetFont("SegoeUIx32pt").MeasureString(temp);
-                gamebatch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle(0, 0, (int)fpsBack.X + 10, (int)fpsBack.Y), new Color(0, 0, 0, 100));
-                RenderGraphManager.Instance.RenderText(temp, new Vector2(5, fpsBack.Y / 2f), _resources.GetFont("SegoeUIx32pt"), Color.White, TextAlignment.Default, true);
-            }
-
             gamebatch.End();
+            _fpsWidget.Draw();
 
             base.Draw(gameTime);
         }
