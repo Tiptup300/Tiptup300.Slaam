@@ -39,11 +39,11 @@ namespace SlaamMono.Composition
 
         private void register()
         {
-            _container.RegisterInstance(new GameConfiguration(true));
+            _container.RegisterInstance(new GameConfig(true));
             _container.Register<IApp, SlaamGameApp>(Lifestyle.Singleton);
             _container.Register<ISlaamGame, SlaamGame>(Lifestyle.Singleton);
             _container.Register<IGraphicsState, GraphicsState>(Lifestyle.Singleton);
-            _container.RegisterInstance(new GraphicsConfiguration(GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT, false, false));
+            _container.RegisterInstance(new GraphicsConfig(GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT, false, false));
             _container.Register<IGraphicsConfigurer, GraphicsConfigurer>(Lifestyle.Singleton);
             _container.Register<ILoggingDevice, TextFileLoggingDevice>(Lifestyle.Singleton);
             _container.Register<ILogger, Logger>(Lifestyle.Singleton);

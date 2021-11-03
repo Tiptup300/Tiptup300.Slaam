@@ -1,4 +1,5 @@
 ﻿using SlaamMono.Library;
+using SlaamMono.Library.Configurations;
 using SlaamMono.x_;
 
 namespace SlaamMono
@@ -6,9 +7,9 @@ namespace SlaamMono
     public class GraphicsConfigurer : IGraphicsConfigurer
     {
         private readonly IGraphicsState _state;
-        private readonly GraphicsConfiguration _config;
+        private readonly GraphicsConfig _config;
 
-        public GraphicsConfigurer(IGraphicsState graphicsState, GraphicsConfiguration graphicsConfiguration)
+        public GraphicsConfigurer(IGraphicsState graphicsState, GraphicsConfig graphicsConfiguration)
         {
             _state = graphicsState;
             _config = graphicsConfiguration;

@@ -19,9 +19,9 @@ namespace SlaamMono.Metrics
         private readonly Color _backBoxColor = new Color(0, 0, 0, 100);
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraph;
-        private readonly GameConfiguration _gameConfig;
+        private readonly GameConfig _gameConfig;
 
-        public FpsRenderer(IResources resources, IRenderGraph renderGraph, GameConfiguration gameConfiguration)
+        public FpsRenderer(IResources resources, IRenderGraph renderGraph, GameConfig gameConfiguration)
         {
             _resources = resources;
             _renderGraph = renderGraph;

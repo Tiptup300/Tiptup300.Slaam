@@ -1,8 +1,8 @@
 ﻿namespace SlaamMono.Library.Configurations
 {
-    public class GameConfiguration
+    public class GameConfig
     {
-        public GameConfiguration(bool showFPS)
+        public GameConfig(bool showFPS)
         {
             ShowFPS = showFPS;
         }
