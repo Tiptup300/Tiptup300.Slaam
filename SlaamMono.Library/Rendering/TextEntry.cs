@@ -3,35 +3,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SlaamMono.Library.Rendering
 {
-    internal struct TextEntry
+    internal class TextEntry
     {
-        public SpriteFont Fnt;
-        public Vector2 Pos;
-        public string Str;
-        public RenderAlignment Alignment;
-        public Color Col;
+        public SpriteFont Font { get; private set; }
+        public Vector2 Position { get; private set; }
+        public string Text { get; private set; }
+        public Alignment Alignment { get; private set; }
+        public Color Color { get; private set; }
 
-        public TextEntry(SpriteFont fnt, Vector2 pos, string str, RenderAlignment alignment, Color col)
+        public TextEntry(SpriteFont font, Vector2 position, string text, Alignment alignment, Color color)
         {
-            Fnt = fnt;
-            Pos = pos;
-            Str = str;
+            Font = font;
+            Position = position;
+            Text = text;
             Alignment = alignment;
-            Col = col;
-
-            Vector2 size = fnt.MeasureString(str);
-            Pos.Y -= size.Y / 2f;
-
-            switch (alignment)
-            {
-                case RenderAlignment.Centered:
-                    Pos.X -= size.X / 2f;
-                    break;
-
-                case RenderAlignment.Right:
-                    Pos.X -= size.X;
-                    break;
-            }
+            Color = color;
         }
     }
 }

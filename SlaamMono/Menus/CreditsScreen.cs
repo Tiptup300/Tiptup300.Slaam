@@ -79,14 +79,14 @@ namespace SlaamMono.Menus
             {
                 if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y)
                 {
-                    RenderGraph.Instance.RenderText(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), _resources.GetFont("SegoeUIx32pt"), MainCreditColor, RenderAlignment.Default, false);
+                    RenderGraph.Instance.RenderText(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), _resources.GetFont("SegoeUIx32pt"), MainCreditColor, Alignment.TopLeft, false);
                 }
                 Offset += _resources.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
                 for (int x = 0; x < CreditsListings[CurrentCredit].Credits.Count; x++)
                 {
                     if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
                     {
-                        RenderGraph.Instance.RenderText(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), _resources.GetFont("SegoeUIx14pt"), SubCreditColor, RenderAlignment.Default, false);
+                        RenderGraph.Instance.RenderText(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), _resources.GetFont("SegoeUIx14pt"), SubCreditColor, Alignment.TopLeft, false);
                     }
                     Offset += (int)_resources.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
                 }

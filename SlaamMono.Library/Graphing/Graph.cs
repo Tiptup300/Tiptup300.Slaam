@@ -89,7 +89,7 @@ namespace SlaamMono.Library.Graphing
             _drawings.Draw(batch);
             for (int x = 0; x < _stringsToWrite.Count; x++)
             {
-                RenderGraph.Instance.RenderText(_stringsToWrite[x].Str, _stringsToWrite[x].Pos, _resourceManager.GetFont("SegoeUIx14pt"), Color.White, RenderAlignment.Centered, true);
+                RenderGraph.Instance.RenderText(_stringsToWrite[x].Str, _stringsToWrite[x].Pos, _resourceManager.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, true);
             }
         }
     }

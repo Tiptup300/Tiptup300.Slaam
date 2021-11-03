@@ -64,7 +64,7 @@ namespace SlaamMono.Metrics
                 RenderGraph.Instance.RenderText(
                     text: _fpsText,
                     position: _textPosition,
-                    alignment: RenderAlignment.Top,
+                    alignment: Alignment.TopLeft,
                     font: _font,
                     addShadow: true);
             }

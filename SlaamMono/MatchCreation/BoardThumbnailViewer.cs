@@ -221,7 +221,7 @@ namespace SlaamMono.MatchCreation
 #if !ZUNE
                 batch.Draw(Resources.BoardSelectTextUnderlay.Texture, new Vector2(0, 175), new Color(255, 255, 255, 100));
 #endif
-                RenderGraph.Instance.RenderText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, RenderAlignment.Default, true);
+                RenderGraph.Instance.RenderText(DialogStrings.CleanMapName(ValidBoards[save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
             }
         }
 

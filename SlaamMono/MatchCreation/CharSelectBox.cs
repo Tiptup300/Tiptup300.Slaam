@@ -204,8 +204,8 @@ namespace SlaamMono.MatchCreation
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
-            RenderGraph.Instance.RenderText(temp, new Vector2(31, 141), _resources.GetFont("SegoeUIx14pt"), Color.Black, RenderAlignment.Default, false);
-            RenderGraph.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, RenderAlignment.Default, false);
+            RenderGraph.Instance.RenderText(temp, new Vector2(31, 141), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+            RenderGraph.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
         }
 
         /// <summary>

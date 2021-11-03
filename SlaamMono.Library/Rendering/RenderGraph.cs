@@ -35,15 +35,16 @@ namespace SlaamMono.Library.Rendering
             _batch = new SpriteBatch(_graphicsState.Get().GraphicsDevice);
         }
 
-        public void RenderBox(Rectangle destinationRectangle, Color? color = null)
+        public void RenderBox(Rectangle destinationRectangle, Color? color = null, Alignment alignment = Alignment.TopLeft)
         {
             _boxesToDraw.Add(
                 new Box(
                     destination: destinationRectangle,
-                    color: color.HasValue ? color.Value : Color.White));
+                    color: color.HasValue ? color.Value : Color.White,
+                    alignment: alignment));
         }
 
-        public void RenderText(string text, Vector2 position, SpriteFont font, Color? color = null, RenderAlignment alignment = RenderAlignment.Default, bool addShadow = false)
+        public void RenderText(string text, Vector2 position, SpriteFont font, Color? color = null, Alignment alignment = Alignment.TopLeft, bool addShadow = false)
         {
             if (addShadow)
             {
@@ -52,7 +53,7 @@ namespace SlaamMono.Library.Rendering
             _textToDraw.Add(new TextEntry(font, position, text, alignment, color.HasValue ? color.Value : Color.White));
         }
 
-        private void drawShadow(string text, Vector2 position, SpriteFont font, RenderAlignment alignment)
+        private void drawShadow(string text, Vector2 position, SpriteFont font, Alignment alignment)
         {
             _textToDraw.Add(new TextEntry(font, position + _shadowOffset1, text, alignment, _shadowColor));
             _textToDraw.Add(new TextEntry(font, position + _shadowOffset2, text, alignment, _shadowColor));
@@ -86,7 +87,7 @@ namespace SlaamMono.Library.Rendering
 
         private void drawTextLine(TextEntry textLine)
         {
-            _batch.DrawString(textLine.Fnt, textLine.Str, textLine.Pos, textLine.Col);
+            _batch.DrawString(textLine.Font, textLine.Text, textLine.Position, textLine.Color);
         }
 
         public void LoadContent() { }
