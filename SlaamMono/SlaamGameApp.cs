@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using SlaamMono.Library;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,11 @@ namespace SlaamMono
     {
         private readonly ILogger _logger;
         private readonly IGraphicsConfigurer _graphicsConfigurer;
-        private readonly ISlaamGame _slaamGame;
+        private readonly ISlaamGame _game;
 
-        public SlaamGameApp(ISlaamGame slaamGame, ILogger logger, IGraphicsConfigurer graphicsConfigurer)
+        public SlaamGameApp(ISlaamGame game, ILogger logger, IGraphicsConfigurer graphicsConfigurer)
         {
-            _slaamGame = slaamGame;
+            _game = game;
             _logger = logger;
             _graphicsConfigurer = graphicsConfigurer;
         }
@@ -24,7 +25,6 @@ namespace SlaamMono
         {
             startLog();
             configureGraphics();
-            addComponentsToGame();
             runGame();
         }
 
@@ -33,15 +33,11 @@ namespace SlaamMono
             _graphicsConfigurer.ConfigureGraphics();
         }
 
-        private void addComponentsToGame()
-        {
-        }
-
         private void runGame()
         {
             try
             {
-                _slaamGame.Run();
+                _game.Run();
             }
             catch (Exception e)
             {

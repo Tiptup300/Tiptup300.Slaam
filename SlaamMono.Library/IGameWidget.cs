@@ -4,8 +4,9 @@ namespace SlaamMono.Library
 {
     public interface IGameWidget
     {
-        void Load();
-        void Unload();
+        void Initialize();
+        void LoadContent();
+        void UnloadContent();
         void Update(GameTime gameTime);
         void Draw();
     }

@@ -6,6 +6,7 @@ using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Metrics;
+using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
@@ -32,24 +33,28 @@ namespace SlaamMono
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
-        private readonly IWhitePixelResolver _whitePixelResolver;
         private readonly IResources _resources;
+        private readonly IRenderGraph _renderGraph;
+        private readonly IFpsRenderer _fpsRenderer;
 
         public SlaamGame(
             ILogger logger,
             IScreenManager screenDirector,
             IWhitePixelResolver whitePixelResolver,
             IResources resources,
-            IGraphicsState graphicsState)
+            IGraphicsState graphicsState,
+            IRenderGraph renderGraph,
+            IFpsRenderer fpsRenderer)
         {
             _logger = logger;
             _screenDirector = screenDirector;
-            _whitePixelResolver = whitePixelResolver;
             _resources = resources;
+            _renderGraph = renderGraph;
+            _fpsRenderer = fpsRenderer;
+
             _graphics = new GraphicsDeviceManager(this);
             graphicsState.Set(_graphics);
             Content = new ContentManager(Services);
-
             this.IsFixedTimeStep = false;
         }
 
@@ -57,6 +62,8 @@ namespace SlaamMono
         {
             Components.Insert(0, new FrameRateDirector(this));
             Components.Add(new InputComponent(this));
+            _renderGraph.Initialize();
+            _fpsRenderer.Initialize();
             SetupZuneBlade();
             gamebatch = new SpriteBatch(_graphics.GraphicsDevice);
             instance = this;
@@ -72,6 +79,8 @@ namespace SlaamMono
             SlaamGame.mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = InputComponent.Players[0];
             _contentManager = new XnaContentManager(Di.Get<ILogger>());
+            _renderGraph.LoadContent();
+            _fpsRenderer.LoadContent();
 
             base.LoadContent();
         }
@@ -101,6 +110,8 @@ namespace SlaamMono
             {
                 BackgroundManager.Update();
                 FeedManager.Update();
+                _renderGraph.Update(gameTime);
+                _fpsRenderer.Update(gameTime);
 
                 if (Qwerty.Active)
                 {
@@ -128,6 +139,8 @@ namespace SlaamMono
             }
 
             gamebatch.End();
+            _renderGraph.Draw();
+            _fpsRenderer.Draw();
 
             base.Draw(gameTime);
         }

@@ -1,43 +1,46 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.ResourceManagement;
+using System;
 using System.Collections.Generic;
 
 namespace SlaamMono.Library.Rendering
 {
-    public class RenderGraph : DrawableGameComponent, IRenderGraph
+    public class RenderGraph : IRenderGraph
     {
         public static IRenderGraph Instance;
 
         private SpriteBatch _batch;
         private List<TextEntry> _textToDraw = new List<TextEntry>();
+        private List<Box> _boxesToDraw = new List<Box>();
 
         private readonly Color _shadowColor = new Color(0, 0, 0, 127);
         private readonly Vector2 _shadowOffset1 = new Vector2(1, 2);
         private readonly Vector2 _shadowOffset2 = new Vector2(2, 1);
-        private readonly ISlaamGame _slaamGame;
+
         private readonly IWhitePixelResolver _whitePixelResolver;
+        private readonly IGraphicsState _graphicsState;
 
-        public RenderGraph(ISlaamGame slaamGame, IWhitePixelResolver whitePixelResolver)
-            : base(null)
+        public RenderGraph(
+            IWhitePixelResolver whitePixelResolver,
+            IGraphicsState graphicsState)
         {
-            _slaamGame = slaamGame;
             _whitePixelResolver = whitePixelResolver;
-
+            _graphicsState = graphicsState;
             Instance = this;
-            slaamGame.Game.Components.Add(this);
         }
 
-        protected override void LoadContent()
+        public void Initialize()
         {
-            _batch = new SpriteBatch(_slaamGame.Game.GraphicsDevice);
-
-            base.LoadContent();
+            _batch = new SpriteBatch(_graphicsState.Get().GraphicsDevice);
         }
 
         public void RenderBox(Rectangle destinationRectangle, Color? color = null)
         {
-            _batch.Draw(_whitePixelResolver.GetWhitePixel(), destinationRectangle, color.HasValue ? color.Value : Color.White);
+            _boxesToDraw.Add(
+                new Box(
+                    destination: destinationRectangle,
+                    color: color.HasValue ? color.Value : Color.White));
         }
 
         public void RenderText(string text, Vector2 position, SpriteFont font, Color? color = null, RenderAlignment alignment = RenderAlignment.Default, bool addShadow = false)
@@ -55,23 +58,39 @@ namespace SlaamMono.Library.Rendering
             _textToDraw.Add(new TextEntry(font, position + _shadowOffset2, text, alignment, _shadowColor));
         }
 
-        public override void Draw(GameTime gameTime)
+        public void Update(GameTime gameTime)
+        {
+            _batch = new SpriteBatch(_graphicsState.Get().GraphicsDevice);
+        }
+
+        public void Draw()
         {
             _batch.Begin(
                 sortMode: SpriteSortMode.Immediate,
                 blendState: BlendState.AlphaBlend,
                 transformMatrix: Matrix.Identity);
-
+            _boxesToDraw.ForEach(box => drawBox(box));
             _textToDraw.ForEach(textLine => drawTextLine(textLine));
             _batch.End();
             _textToDraw.Clear();
+            _boxesToDraw.Clear();
+        }
 
-            base.Draw(gameTime);
+        private void drawBox(Box box)
+        {
+            _batch.Draw(
+                texture: _whitePixelResolver.GetWhitePixel(),
+                destinationRectangle: box.Destination,
+                color: box.Color);
         }
 
         private void drawTextLine(TextEntry textLine)
         {
             _batch.DrawString(textLine.Fnt, textLine.Str, textLine.Pos, textLine.Col);
         }
+
+        public void LoadContent() { }
+        public void UnloadContent() { }
+
     }
 }

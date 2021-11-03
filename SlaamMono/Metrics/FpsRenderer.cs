@@ -28,12 +28,30 @@ namespace SlaamMono.Metrics
             _gameConfig = gameConfiguration;
         }
 
+        public void Initialize()
+        {
+
+        }
+
+        public void LoadContent()
+        {
+            if (_loaded)
+            {
+                return;
+            }
+            _font = _resources.GetFont("SegoeUIx32pt");
+        }
+
+        public void UnloadContent()
+        {
+        }
+
         public void Update(GameTime gameTime)
         {
             _fpsText = FrameRateDirector.FUPS.ToString();
             Vector2 textSize = _font.MeasureString(_fpsText);
             _boxDestination = new Rectangle(0, 0, (int)textSize.X + 10, (int)textSize.Y);
-            _textPosition = new Vector2(5, _boxDestination.Y / 2f);
+            _textPosition = new Vector2(5, _boxDestination.Height / 2f);
         }
         public void Draw()
         {
@@ -46,22 +64,10 @@ namespace SlaamMono.Metrics
                 RenderGraph.Instance.RenderText(
                     text: _fpsText,
                     position: _textPosition,
+                    alignment: RenderAlignment.Top,
                     font: _font,
                     addShadow: true);
             }
-        }
-
-        public void Load()
-        {
-            if (_loaded)
-            {
-                return;
-            }
-            _font = _resources.GetFont("SegoeUIx32pt");
-        }
-
-        public void Unload()
-        {
         }
     }
 }
