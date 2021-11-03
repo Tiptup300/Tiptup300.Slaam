@@ -40,14 +40,14 @@ namespace SlaamMono
             IScreenManager screenDirector,
             IWhitePixelResolver whitePixelResolver,
             IResources resources,
-            StateReference<GraphicsDeviceManager> graphics)
+            IGraphicsState graphicsState)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _whitePixelResolver = whitePixelResolver;
             _resources = resources;
             _graphics = new GraphicsDeviceManager(this);
-            graphics.Change(_graphics);
+            graphicsState.Set(_graphics);
             Content = new ContentManager(Services);
 
             this.IsFixedTimeStep = false;

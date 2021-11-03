@@ -1,4 +1,5 @@
 ﻿using SimpleInjector;
+using SlaamMono.Composition;
 using SlaamMono.Library;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace SlaamMono
 
         public Di()
         {
-            _container = new Bootstrap().BuildContainer(this);
+            _container = new Composer().BuildContainer(this);
         }
 
         public T x_Get<T>() => (T)x_Get(typeof(T));

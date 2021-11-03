@@ -10,10 +10,10 @@ namespace SlaamMono
     public class SlaamGameApp : IApp
     {
         private readonly ILogger _logger;
-        private readonly GraphicsConfigurer _graphicsConfigurer;
+        private readonly IGraphicsConfigurer _graphicsConfigurer;
         private readonly ISlaamGame _slaamGame;
 
-        public SlaamGameApp(ISlaamGame slaamGame, ILogger logger, GraphicsConfigurer graphicsConfigurer)
+        public SlaamGameApp(ISlaamGame slaamGame, ILogger logger, IGraphicsConfigurer graphicsConfigurer)
         {
             _slaamGame = slaamGame;
             _logger = logger;

@@ -8,7 +8,7 @@ namespace SlaamMono.ResourceManagement
 {
     public class WhitePixelResolver : IWhitePixelResolver
     {
-        public WhitePixelResolver(ILogger logger, StateReference<GraphicsDeviceManager> graphics)
+        public WhitePixelResolver(ILogger logger, IGraphicsState graphics)
         {
             _logger = logger;
             _graphics = graphics;
@@ -16,7 +16,7 @@ namespace SlaamMono.ResourceManagement
 
         private Texture2D _whitePixel;
         private readonly ILogger _logger;
-        private readonly StateReference<GraphicsDeviceManager> _graphics;
+        private readonly IGraphicsState _graphics;
 
         public Texture2D GetWhitePixel()
         {
@@ -32,7 +32,7 @@ namespace SlaamMono.ResourceManagement
         {
             Texture2D output;
 
-            output = new Texture2D(_graphics.State.GraphicsDevice, 1, 1);
+            output = new Texture2D(_graphics.Get().GraphicsDevice, 1, 1);
             output.SetData(new Color[] { Color.White });
 
             return output;
