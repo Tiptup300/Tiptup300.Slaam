@@ -40,7 +40,6 @@ namespace SlaamMono
         public SlaamGame(
             ILogger logger,
             IScreenManager screenDirector,
-            IWhitePixelResolver whitePixelResolver,
             IResources resources,
             IGraphicsState graphicsState,
             IRenderGraph renderGraph,
