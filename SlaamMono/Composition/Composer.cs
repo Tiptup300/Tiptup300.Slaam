@@ -79,6 +79,7 @@ namespace SlaamMono.Composition
             _container.Register<IFileLoader<SpriteFont>, FontLoader>(Lifestyle.Singleton);
             _container.Register<IFileLoader<CachedTexture>, CachedTextureLoader>(Lifestyle.Singleton);
             _container.Register<IResourceLoader, ResourceLoader>(Lifestyle.Singleton);
+            _container.Register<IRequest<TextureRequest, CachedTexture>, CachedTextureRequestHandler>(Lifestyle.Singleton);
         }
 
         private void registerGameplay()
