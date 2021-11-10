@@ -15,6 +15,7 @@ using SlaamMono.SubClasses;
 using SlaamMono.x_;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ZBlade;
 
 namespace SlaamMono.Gameplay
@@ -349,72 +350,60 @@ namespace SlaamMono.Gameplay
 
         public void Draw(SpriteBatch batch)
         {
-            //batch.Draw(Resources.TileUnderlay, Boardpos, Color.White);
             if (_paused)
             {
-#if !ZUNE
-                batch.Draw(Resources.Dot, new Rectangle(0, 0, 1280, 1024), new Color(0, 0, 0, 100));
-                batch.Draw(Resources.PauseScreen.Texture, new Vector2(640 - Resources.PauseScreen.Width / 2, 512 - Resources.PauseScreen.Height / 2), Color.White);
-                Resources.DrawString(PauseStrings[0], new Vector2(640, 512 + 20), Resources.SegoeUIx32pt, TextAlignment.CompletelyCentered, Color.Black, false);
-                Resources.DrawString(PauseStrings[1], new Vector2(640, 512 + 60), Resources.SegoeUIx32pt, TextAlignment.CompletelyCentered, Color.Black, false);
-#else
-
-#endif
+                return;
             }
-            else
+            for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
             {
-                /*for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
+                for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
-                    {
-                        tiles[x, y].DrawShadow(batch);
-                    }
-                }*/
-
-                for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
-                {
-                    for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
-                    {
-                        Tiles[x, y].Draw(batch);
-                    }
+                    Tiles[x, y].Draw(batch);
                 }
-
-                float PlayersDrawn = 0, CurrY = 0;
-
-                int CurrPlayer = -1;
-
-                while (PlayersDrawn < Characters.Count - NullChars)
-                {
-                    CurrY = 1280;
-                    CurrPlayer = -1;
-                    for (int x = 0; x < Characters.Count; x++)
-                    {
-                        if (Characters[x] != null && !Characters[x].Drawn && Characters[x].Position.Y <= CurrY)
-                        {
-                            CurrY = Characters[x].Position.Y;
-                            CurrPlayer = x;
-                        }
-                    }
-                    Characters[CurrPlayer].Drawn = true;
-                    Characters[CurrPlayer].Draw(batch);
-                    PlayersDrawn++;
-                }
-
-                for (int x = 0; x < Characters.Count; x++)
-                    if (Characters[x] != null)
-                        Characters[x].Drawn = false;
-
-                //for (int x = 0; x < Scoreboards.Count; x++)
-                //Scoreboards[x].Draw(batch);
-
-                if (CurrentGameStatus == GameStatus.Waiting || CurrentGameStatus == GameStatus.Over)
-                {
-                    batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)Rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)Rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
-                }
-
-                //Timer.Draw(batch);
             }
 
+            float PlayersDrawn = 0, CurrY = 0;
+
+            int CurrPlayer = -1;
+
+            while (PlayersDrawn < Characters.Count - NullChars)
+            {
+                CurrY = 1280;
+                CurrPlayer = -1;
+                for (int x = 0; x < Characters.Count; x++)
+                {
+                    if (Characters[x] != null && !Characters[x].Drawn && Characters[x].Position.Y <= CurrY)
+                    {
+                        CurrY = Characters[x].Position.Y;
+                        CurrPlayer = x;
+                    }
+                }
+                Characters[CurrPlayer].Drawn = true;
+                Characters[CurrPlayer].Draw(batch);
+                PlayersDrawn++;
+            }
+
+            resetCharactersDrawnStatus();
+
+            for (int x = 0; x < Characters.Count; x++)
+            {
+                if (Characters[x] != null)
+                {
+                    Characters[x].Drawn = false;
+                }
+            }
+            if (CurrentGameStatus == GameStatus.Waiting || CurrentGameStatus == GameStatus.Over)
+            {
+                batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)Rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)Rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
+            }
+        }
+
+        private void resetCharactersDrawnStatus()
+        {
+            Characters
+                            .Where(character => character != null)
+                            .ToList()
+                            .ForEach(character => character.Drawn = false);
         }
 
         public void Close()
