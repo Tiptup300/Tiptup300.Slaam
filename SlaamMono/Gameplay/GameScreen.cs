@@ -24,7 +24,7 @@ namespace SlaamMono.Gameplay
         public static GameScreen Instance;
 
         // board
-        public Tile[,] tiles;
+        public Tile[,] Tiles;
         protected Texture2D Tileset;
         private Vector2 _boardpos;
 
@@ -35,7 +35,7 @@ namespace SlaamMono.Gameplay
         protected List<CharacterShell> SetupChars;
         protected int NullChars = 0;
         protected List<GameScreenScoreboard> Scoreboards;
-        protected Random rand = new Random();
+        protected Random Rand = new Random();
         protected GameStatus CurrentGameStatus;
         protected int ReadySetGoPart = 0;
         protected Timer ReadySetGoThrottle;
@@ -77,23 +77,24 @@ namespace SlaamMono.Gameplay
             _screenDirector = screenDirector;
             _resources = resources;
             _graphics = graphicsState;
-            ThisGameType = CurrentMatchSettings.GameType;
-            SetupTheBoard(CurrentMatchSettings.BoardLocation);
-            CurrentGameStatus = GameStatus.MovingBoard;
 
-            _resources.GetTexture("ReadySetGo").Load();
-            _resources.GetTexture("BattleBG").Load();
+            initialize();
         }
 
-        private void initializeVariables()
+        private void initialize()
         {
             _powerupTime = new Timer(new TimeSpan(0, 0, 0, 15));
             ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
             Scoreboards = new List<GameScreenScoreboard>();
             SetupChars = new List<CharacterShell>();
             Characters = new List<CharacterActor>();
-            tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
+            Tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
             CurrentGameStatus = GameStatus.Waiting;
+            ThisGameType = CurrentMatchSettings.GameType;
+            SetupTheBoard(CurrentMatchSettings.BoardLocation);
+            CurrentGameStatus = GameStatus.MovingBoard;
+            _resources.GetTexture("ReadySetGo").Load();
+            _resources.GetTexture("BattleBG").Load();
         }
 
         public void Open()
@@ -111,7 +112,7 @@ namespace SlaamMono.Gameplay
             {
                 for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    tiles[x, y] = new Tile(
+                    Tiles[x, y] = new Tile(
                         _boardpos,
                         new Vector2(x, y),
                         Tileset,
@@ -247,7 +248,7 @@ namespace SlaamMono.Gameplay
                     int Y1 = (int)((Characters[x].Position.Y - _boardpos.Y) % GameGlobals.TILE_SIZE);
                     int X = (int)((Characters[x].Position.X - _boardpos.X - X1) / GameGlobals.TILE_SIZE);
                     int Y = (int)((Characters[x].Position.Y - _boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
-                    Characters[x].Update(tiles, new Vector2(X, Y), new Vector2(X1, Y1));
+                    Characters[x].Update(Tiles, new Vector2(X, Y), new Vector2(X1, Y1));
                     if (Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
                     {
                         RespawnChar(x);
@@ -258,21 +259,21 @@ namespace SlaamMono.Gameplay
             {
                 for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    tiles[x, y].Update();
+                    Tiles[x, y].Update();
                 }
             }
             _powerupTime.Update(FrameRateDirector.MovementFactorTimeSpan);
             if (_powerupTime.Active)
             {
                 bool found = true;
-                int newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
-                int newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
+                int newx = Rand.Next(0, GameGlobals.BOARD_WIDTH);
+                int newy = Rand.Next(0, GameGlobals.BOARD_HEIGHT);
                 int ct = 0;
 
-                while (tiles[newx, newy].CurrentTileCondition != TileCondition.Normal)
+                while (Tiles[newx, newy].CurrentTileCondition != TileCondition.Normal)
                 {
-                    newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
-                    newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
+                    newx = Rand.Next(0, GameGlobals.BOARD_WIDTH);
+                    newy = Rand.Next(0, GameGlobals.BOARD_HEIGHT);
                     ct++;
                     if (ct > 100)
                     {
@@ -282,7 +283,7 @@ namespace SlaamMono.Gameplay
                 }
                 if (found)
                 {
-                    tiles[newx, newy].MarkWithPowerup(PowerupManager.Instance.GetRandomPowerup());
+                    Tiles[newx, newy].MarkWithPowerup(PowerupManager.Instance.GetRandomPowerup());
                 }
             }
         }
@@ -335,7 +336,7 @@ namespace SlaamMono.Gameplay
             {
                 for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    tiles[x, y].ResetTileLoc(_boardpos, new Vector2(x, y));
+                    Tiles[x, y].ResetTileLoc(_boardpos, new Vector2(x, y));
                 }
             }
         }
@@ -376,7 +377,7 @@ namespace SlaamMono.Gameplay
                 {
                     for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                     {
-                        tiles[x, y].Draw(batch);
+                        Tiles[x, y].Draw(batch);
                     }
                 }
 
@@ -410,7 +411,7 @@ namespace SlaamMono.Gameplay
 
                 if (CurrentGameStatus == GameStatus.Waiting || CurrentGameStatus == GameStatus.Over)
                 {
-                    batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
+                    batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)Rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)Rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
                 }
 
                 //Timer.Draw(batch);
@@ -476,13 +477,13 @@ namespace SlaamMono.Gameplay
         /// <param name="x">Character's Index</param>
         public void RespawnChar(int x)
         {
-            int newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
-            int newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
+            int newx = Rand.Next(0, GameGlobals.BOARD_WIDTH);
+            int newy = Rand.Next(0, GameGlobals.BOARD_HEIGHT);
 
-            while (tiles[newx, newy].Dead || tiles[newx, newy].CurrentTileCondition == TileCondition.RespawnPoint)
+            while (Tiles[newx, newy].Dead || Tiles[newx, newy].CurrentTileCondition == TileCondition.RespawnPoint)
             {
-                newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
-                newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
+                newx = Rand.Next(0, GameGlobals.BOARD_WIDTH);
+                newy = Rand.Next(0, GameGlobals.BOARD_HEIGHT);
             }
             Vector2 newCharPos = InterpretCoordinates(new Vector2(newx, newy), false);
             Characters[x].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy));

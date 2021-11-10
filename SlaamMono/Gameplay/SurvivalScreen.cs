@@ -64,7 +64,7 @@ namespace SlaamMono.Gameplay
                         AddNewBot();
                         _botsAdded++;
 
-                        if (rand.Next(0, _botsAdded - 1) == _botsAdded)
+                        if (Rand.Next(0, _botsAdded - 1) == _botsAdded)
                         {
                             _botsToAdd++;
                         }

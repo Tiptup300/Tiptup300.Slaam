@@ -303,7 +303,7 @@ namespace SlaamMono.Gameplay.Actors
             if (TilePosition.X < 0 || TilePosition.Y < 0 || TilePosition.X >= GameGlobals.BOARD_WIDTH || TilePosition.Y >= GameGlobals.BOARD_HEIGHT)
                 return false;
 
-            Tile tile = GameScreen.Instance.tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = GameScreen.Instance.Tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Clear ||
                 tile.CurrentTileCondition == TileCondition.Clearing ||
@@ -318,7 +318,7 @@ namespace SlaamMono.Gameplay.Actors
             if (!IsClear(TilePosition))
                 return false;
 
-            Tile tile = GameScreen.Instance.tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = GameScreen.Instance.Tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Marked)
                 return false;
@@ -331,7 +331,7 @@ namespace SlaamMono.Gameplay.Actors
             if (TilePosition.X < 0 || TilePosition.Y < 0 || TilePosition.X >= GameGlobals.BOARD_WIDTH || TilePosition.Y >= GameGlobals.BOARD_HEIGHT)
                 return false;
 
-            Tile tile = GameScreen.Instance.tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = GameScreen.Instance.Tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Marked)
                 return false;
@@ -441,7 +441,7 @@ namespace SlaamMono.Gameplay.Actors
             CurrentState = CharacterState.Normal;
             Alpha = 255;
             SpriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
-            GameScreen.Instance.tiles[(int)other.X, (int)other.Y].MarkTileForRespawn(MarkingColor, new TimeSpan(0, 0, 0, 8), PlayerIndex);
+            GameScreen.Instance.Tiles[(int)other.X, (int)other.Y].MarkTileForRespawn(MarkingColor, new TimeSpan(0, 0, 0, 8), PlayerIndex);
         }
 
         public enum CharacterState

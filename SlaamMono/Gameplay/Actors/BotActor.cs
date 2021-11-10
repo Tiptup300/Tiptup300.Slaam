@@ -226,11 +226,11 @@ namespace SlaamMono.Gameplay.Actors
                 //CurrentDirection = Direction.None;
                 if (CurrentCoordinates.X != CurrentTarget.Position.X)
                 {
-                    if (CurrentCoordinates.X > CurrentTarget.Position.X && IsSafe(ParentGameScreen.tiles, CurrentCoordinates, -1, 0))
+                    if (CurrentCoordinates.X > CurrentTarget.Position.X && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, -1, 0))
                     {
                         CurrentDirection = Direction.Left;
                     }
-                    else if (CurrentCoordinates.X < CurrentTarget.Position.X && IsSafe(ParentGameScreen.tiles, CurrentCoordinates, 1, 0))
+                    else if (CurrentCoordinates.X < CurrentTarget.Position.X && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 1, 0))
                     {
                         CurrentDirection = Direction.Right;
                     }
@@ -240,20 +240,20 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     if (CurrentCoordinates.Y > CurrentTarget.Position.Y - 1)
                     {
-                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.tiles, CurrentCoordinates, -1, -1))
+                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, -1, -1))
                             CurrentDirection = Direction.UpperLeft;
-                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.tiles, CurrentCoordinates, 1, -1))
+                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 1, -1))
                             CurrentDirection = Direction.UpperRight;
-                        else if (IsSafe(ParentGameScreen.tiles, CurrentCoordinates, 0, -1))
+                        else if (IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 0, -1))
                             CurrentDirection = Direction.Up;
                     }
                     else if (CurrentCoordinates.Y < CurrentTarget.Position.Y + 1)
                     {
-                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.tiles, CurrentCoordinates, -1, 1))
+                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, -1, 1))
                             CurrentDirection = Direction.LowerLeft;
-                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.tiles, CurrentCoordinates, 1, 1))
+                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 1, 1))
                             CurrentDirection = Direction.LowerRight;
-                        else if (IsSafe(ParentGameScreen.tiles, CurrentCoordinates, 0, 1))
+                        else if (IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 0, 1))
                             CurrentDirection = Direction.Down;
                     }
                 }
@@ -301,14 +301,14 @@ namespace SlaamMono.Gameplay.Actors
             }
             else
             {
-                float Highest = ParentGameScreen.tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
+                float Highest = ParentGameScreen.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
 
                 for (int x = 0; x < PlacesToGo.Count; x++)
                 {
                     Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + PlacesToGo[x][0], CurrentCoordinates.Y + PlacesToGo[x][1]);
                     if (IsClear(CurrentTileLocation))
                     {
-                        float temp = ParentGameScreen.tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
+                        float temp = ParentGameScreen.Tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
 
                         if (temp > Highest)
                         {
