@@ -12,9 +12,10 @@ namespace SlaamMono.Gameplay.Powerups
     {
         private int PowerupIndex = 1;
         private CharacterActor ParentCharacter;
+        private TimeSpan CurrentTime;
+
         private const float Multiplyer = 1.5f;
         private readonly TimeSpan TimeLasting = new TimeSpan(0, 0, 10);
-        private TimeSpan CurrentTime;
 
         public SpeedUp(CharacterActor parent, IResources resources)
             : base(DialogStrings.SpeedUpName, new CachedTexture[] { resources.GetTexture("SpeedUp"), resources.GetTexture("SpeedUp0") }, PowerupUse.Evasion)

@@ -24,29 +24,28 @@ namespace SlaamMono.Gameplay
         public static GameScreen Instance;
 
         // board
-        public Tile[,] tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
+        public Tile[,] tiles;
         protected Texture2D Tileset;
         private Vector2 _boardpos;
 
         public GameType ThisGameType;
-        public List<CharacterActor> Characters = new List<CharacterActor>();
+        public List<CharacterActor> Characters;
 
         protected GameScreenTimer Timer;
-        protected List<CharacterShell> SetupChars = new List<CharacterShell>();
+        protected List<CharacterShell> SetupChars;
         protected int NullChars = 0;
-        protected List<GameScreenScoreboard> Scoreboards = new List<GameScreenScoreboard>();
+        protected List<GameScreenScoreboard> Scoreboards;
         protected Random rand = new Random();
-        protected GameStatus CurrentGameStatus = GameStatus.Waiting;
+        protected GameStatus CurrentGameStatus;
         protected int ReadySetGoPart = 0;
-        protected Timer ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
+        protected Timer ReadySetGoThrottle;
         protected MatchScoreCollection ScoreKeeper;
 
         private int _boardsize = 0;
         private bool _timing = false;
         private bool _paused = false;
-        private string[] _pauseStrings = new string[2];
         private int _killsToWin = 0;
-        private Timer _powerupTime = new Timer(new TimeSpan(0, 0, 0, 15));
+        private Timer _powerupTime;
         private float _spreeStepSize;
         private float _spreeCurrentStep;
         private int _spreeHighestKillCount;
@@ -84,6 +83,17 @@ namespace SlaamMono.Gameplay
 
             _resources.GetTexture("ReadySetGo").Load();
             _resources.GetTexture("BattleBG").Load();
+        }
+
+        private void initializeVariables()
+        {
+            _powerupTime = new Timer(new TimeSpan(0, 0, 0, 15));
+            ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
+            Scoreboards = new List<GameScreenScoreboard>();
+            SetupChars = new List<CharacterShell>();
+            Characters = new List<CharacterActor>();
+            tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
+            CurrentGameStatus = GameStatus.Waiting;
         }
 
         public void Open()
@@ -186,148 +196,155 @@ namespace SlaamMono.Gameplay
 
         public virtual void Update()
         {
-            //if (Input.GetKeyboard().PressedKey(Microsoft.Xna.Framework.Input.Keys.E))
-            //  Characters[0].CurrentPowerup = new SlaamPowerup(this, Characters[0], 0);
-
             if (_paused)
             {
-#if !ZUNE
-                if (InputComponent.Players[0].PressedUp || InputComponent.Players[0].PressedDown)
-                    PauseChoice = !PauseChoice;
-
-                if (PauseChoice && InputComponent.Players[0].PressedAction)
-                {
-                    BackgroundManager.ChangeBG(BackgroundType.BattleScreen);
-                    Paused = false;
-                }
-
-                if (!PauseChoice && InputComponent.Players[0].PressedAction)
-                    EndGame();
-
-                if (PauseChoice)
-                {
-                    PauseStrings[0] = DialogStrings.ContinueSelected;
-                    PauseStrings[1] = DialogStrings.Quit;
-                }
-                else
-                {
-                    PauseStrings[0] = DialogStrings.Continue;
-                    PauseStrings[1] = DialogStrings.QuitSelected;
-                }
-#endif
+                return;
             }
-            else
+
+            Timer.Update(_timing);
+            updateScoreBoards();
+
+            if (CurrentGameStatus == GameStatus.MovingBoard)
             {
-                Timer.Update(_timing);
-                for (int x = 0; x < Scoreboards.Count; x++)
-                    Scoreboards[x].Update();
+                updateMovingBoardState();
+            }
+            else if (CurrentGameStatus == GameStatus.Respawning)
+            {
+                updateRespawningGameState();
+            }
+            else if (CurrentGameStatus == GameStatus.Waiting)
+            {
+                updateWaitingGameState();
+            }
+            else if (CurrentGameStatus == GameStatus.Playing)
+            {
+                updatePlayingGameState();
+            }
+            else if (CurrentGameStatus == GameStatus.Over)
+            {
+                updateOverGameState();
+            }
 
-                if (CurrentGameStatus == GameStatus.MovingBoard)
-                {
-                    _boardpos.Y += FrameRateDirector.MovementFactor * (10f / 100f);
+        }
 
-                    if (_boardpos.Y >= FinalBoardPosition.Y)
-                    {
-                        _boardpos = FinalBoardPosition;
-                        CurrentGameStatus = GameStatus.Respawning;
-                    }
-                    for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
-                    {
-                        for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
-                        {
-                            tiles[x, y].ResetTileLoc(_boardpos, new Vector2(x, y));
-                        }
-                    }
-                }
-                else if (CurrentGameStatus == GameStatus.Respawning)
-                {
-                    ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-                    if (ReadySetGoThrottle.Active)
-                    {
-                        Scoreboards[ReadySetGoPart].Moving = true;
-                        RespawnChar(ReadySetGoPart++);
-                        if (ReadySetGoPart == Characters.Count)
-                        {
-                            CurrentGameStatus = GameStatus.Waiting;
-                            ReadySetGoThrottle.Threshold = new TimeSpan(0, 0, 0, 1, 300);
-                            ReadySetGoThrottle.Reset();
-                            ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-                            ReadySetGoPart = 0;
-                            Timer.Moving = true;
-                        }
-                    }
-                }
-                else if (CurrentGameStatus == GameStatus.Waiting)
-                {
-                    ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-                    if (ReadySetGoThrottle.Active)
-                    {
-                        ReadySetGoPart++;
-                        if (ReadySetGoPart > 2)
-                        {
-                            CurrentGameStatus = GameStatus.Playing;
-                            ReadySetGoPart = 2;
-                            ReadySetGoThrottle.Reset();
-                            _timing = true;
-                        }
-                    }
-                }
-                else if (CurrentGameStatus == GameStatus.Playing)
-                {
-                    for (int x = 0; x < Characters.Count; x++)
-                    {
-                        if (Characters[x] != null)
-                        {
-                            int X1 = (int)((Characters[x].Position.X - _boardpos.X) % GameGlobals.TILE_SIZE);
-                            int Y1 = (int)((Characters[x].Position.Y - _boardpos.Y) % GameGlobals.TILE_SIZE);
-                            int X = (int)((Characters[x].Position.X - _boardpos.X - X1) / GameGlobals.TILE_SIZE);
-                            int Y = (int)((Characters[x].Position.Y - _boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
-                            Characters[x].Update(tiles, new Vector2(X, Y), new Vector2(X1, Y1));
-                            if (Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
-                            {
-                                RespawnChar(x);
-                            }
-                        }
-                    }
-                    for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
-                    {
-                        for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
-                        {
-                            tiles[x, y].Update();
-                        }
-                    }
-                    _powerupTime.Update(FrameRateDirector.MovementFactorTimeSpan);
-                    if (_powerupTime.Active)
-                    {
-                        bool found = true;
-                        int newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
-                        int newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
-                        int ct = 0;
+        private void updateOverGameState()
+        {
+            _timing = false;
+            ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+            if (ReadySetGoThrottle.Active)
+            {
+                EndGame();
+            }
+        }
 
-                        while (tiles[newx, newy].CurrentTileCondition != TileCondition.Normal)
-                        {
-                            newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
-                            newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
-                            ct++;
-                            if (ct > 100)
-                            {
-                                found = false;
-                                break;
-                            }
-                        }
-                        if (found)
-                        {
-                            tiles[newx, newy].MarkWithPowerup(PowerupManager.Instance.GetRandomPowerup());
-                        }
+        private void updatePlayingGameState()
+        {
+            for (int x = 0; x < Characters.Count; x++)
+            {
+                if (Characters[x] != null)
+                {
+                    int X1 = (int)((Characters[x].Position.X - _boardpos.X) % GameGlobals.TILE_SIZE);
+                    int Y1 = (int)((Characters[x].Position.Y - _boardpos.Y) % GameGlobals.TILE_SIZE);
+                    int X = (int)((Characters[x].Position.X - _boardpos.X - X1) / GameGlobals.TILE_SIZE);
+                    int Y = (int)((Characters[x].Position.Y - _boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
+                    Characters[x].Update(tiles, new Vector2(X, Y), new Vector2(X1, Y1));
+                    if (Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
+                    {
+                        RespawnChar(x);
                     }
                 }
-                else if (CurrentGameStatus == GameStatus.Over)
+            }
+            for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
+            {
+                for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    _timing = false;
-                    ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-                    if (ReadySetGoThrottle.Active)
-                        EndGame();
+                    tiles[x, y].Update();
                 }
+            }
+            _powerupTime.Update(FrameRateDirector.MovementFactorTimeSpan);
+            if (_powerupTime.Active)
+            {
+                bool found = true;
+                int newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
+                int newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
+                int ct = 0;
+
+                while (tiles[newx, newy].CurrentTileCondition != TileCondition.Normal)
+                {
+                    newx = rand.Next(0, GameGlobals.BOARD_WIDTH);
+                    newy = rand.Next(0, GameGlobals.BOARD_HEIGHT);
+                    ct++;
+                    if (ct > 100)
+                    {
+                        found = false;
+                        break;
+                    }
+                }
+                if (found)
+                {
+                    tiles[newx, newy].MarkWithPowerup(PowerupManager.Instance.GetRandomPowerup());
+                }
+            }
+        }
+
+        private void updateWaitingGameState()
+        {
+            ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+            if (ReadySetGoThrottle.Active)
+            {
+                ReadySetGoPart++;
+                if (ReadySetGoPart > 2)
+                {
+                    CurrentGameStatus = GameStatus.Playing;
+                    ReadySetGoPart = 2;
+                    ReadySetGoThrottle.Reset();
+                    _timing = true;
+                }
+            }
+        }
+
+        private void updateRespawningGameState()
+        {
+            ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+            if (ReadySetGoThrottle.Active)
+            {
+                Scoreboards[ReadySetGoPart].Moving = true;
+                RespawnChar(ReadySetGoPart++);
+                if (ReadySetGoPart == Characters.Count)
+                {
+                    CurrentGameStatus = GameStatus.Waiting;
+                    ReadySetGoThrottle.Threshold = new TimeSpan(0, 0, 0, 1, 300);
+                    ReadySetGoThrottle.Reset();
+                    ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+                    ReadySetGoPart = 0;
+                    Timer.Moving = true;
+                }
+            }
+        }
+
+        private void updateMovingBoardState()
+        {
+            _boardpos.Y += FrameRateDirector.MovementFactor * (10f / 100f);
+
+            if (_boardpos.Y >= FinalBoardPosition.Y)
+            {
+                _boardpos = FinalBoardPosition;
+                CurrentGameStatus = GameStatus.Respawning;
+            }
+            for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
+            {
+                for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
+                {
+                    tiles[x, y].ResetTileLoc(_boardpos, new Vector2(x, y));
+                }
+            }
+        }
+
+        private void updateScoreBoards()
+        {
+            for (int x = 0; x < Scoreboards.Count; x++)
+            {
+                Scoreboards[x].Update();
             }
         }
 

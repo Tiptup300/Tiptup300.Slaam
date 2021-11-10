@@ -1,4 +1,5 @@
-﻿using SlaamMono.Library.Logging;
+﻿using SlaamMono.Composition;
+using SlaamMono.Library.Logging;
 using System.IO;
 
 namespace SlaamMono.PlayerProfiles
@@ -10,18 +11,22 @@ namespace SlaamMono.PlayerProfiles
         private BinaryReader _reader;
 
         private readonly ILogger _logger;
+        private readonly ProfileFileVersion _profileFileVersion;
 
         public XnaContentReader(
             ILogger logger,
-            string filename
+            ProfileFileVersion profileFileVersion
             )
         {
             _logger = logger;
+            _profileFileVersion = profileFileVersion;
 
-            filename = Path.Combine(Directory.GetCurrentDirectory(), filename);
+        }
 
+        public void Initialize(string filename)
+        {
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), filename);
             WasNotFound = !File.Exists(filename);
-
             _reader = new BinaryReader(File.Open(filename, FileMode.OpenOrCreate));
         }
 
@@ -52,7 +57,7 @@ namespace SlaamMono.PlayerProfiles
 
             for (int x = 0; x < 4; x++)
             {
-                if (filever.Length == 0 || filever[x] != Program.Version[x])
+                if (filever.Length == 0 || filever[x] != _profileFileVersion.Version[x])
                 {
                     wrongversion = true;
                     break;

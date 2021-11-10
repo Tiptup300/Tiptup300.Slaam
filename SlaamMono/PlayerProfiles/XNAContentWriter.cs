@@ -4,36 +4,41 @@ namespace SlaamMono.PlayerProfiles
 {
     public class XnaContentWriter
     {
-        BinaryWriter writer;
+        private BinaryWriter _writer;
 
-        public XnaContentWriter(string filename)
+        private readonly ProfileFileVersion _profileFileVersion;
+
+        public XnaContentWriter(ProfileFileVersion profileFileVersion)
         {
+            _profileFileVersion = profileFileVersion;
 
-            filename = Path.Combine(Directory.GetCurrentDirectory(), filename);
+        }
 
-            writer = new BinaryWriter(File.Create(filename));
-
-            writer.Write(Program.Version);
+        public void Initialize(string filename)
+        {
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), filename);
+            _writer = new BinaryWriter(File.Create(filePath));
+            _writer.Write(_profileFileVersion.Version);
         }
 
         public void Write(string str)
         {
-            writer.Write(str);
+            _writer.Write(str);
         }
 
         public void Write(int val)
         {
-            writer.Write(val);
+            _writer.Write(val);
         }
 
         public void Write(bool val)
         {
-            writer.Write(val);
+            _writer.Write(val);
         }
 
         public void Close()
         {
-            writer.Close();
+            _writer.Close();
         }
     }
 }

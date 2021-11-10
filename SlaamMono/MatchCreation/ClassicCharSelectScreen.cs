@@ -175,7 +175,6 @@ namespace SlaamMono.MatchCreation
                 for (int y = 0; y < Skins.Count; y++)
                 {
                     SkinTexture[y] = SlaamGame.Content.Load<Texture2D>("content\\skins\\" + Skins[y]);
-                    //SkinTexture[y] = Texture2D.FromFile(Game1.Graphics.GraphicsDevice, Skins[y]);
                     if (!(SkinTexture[y].Width == 250 && SkinTexture[y].Height == 180))
                     {
                         Skins.RemoveAt(y);

@@ -162,7 +162,8 @@ namespace SlaamMono.Gameplay
 
             BoardLocation = boardloc;
 
-            XnaContentWriter writer = new XnaContentWriter(DialogStrings.MatchSettingsFilename);
+            XnaContentWriter writer = new XnaContentWriter(Di.Get<ProfileFileVersion>());
+            writer.Initialize(DialogStrings.MatchSettingsFilename);
 
             for (int x = 0; x < 6; x++)
             {
@@ -187,7 +188,8 @@ namespace SlaamMono.Gameplay
             try
             {
 
-                reader = new XnaContentReader(_logger, DialogStrings.MatchSettingsFilename);
+                reader = new XnaContentReader(_logger, Di.Get<ProfileFileVersion>());
+                reader.Initialize(DialogStrings.MatchSettingsFilename);
 
                 if (reader.IsWrongVersion())
                 {

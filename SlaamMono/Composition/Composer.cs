@@ -39,6 +39,7 @@ namespace SlaamMono.Composition
 
         private void register()
         {
+            _container.RegisterInstance(new ProfileFileVersion(new byte[] { 000, 000, 000, 002, }));
             _container.RegisterInstance(new GameConfig(true));
             _container.Register<IApp, SlaamGameApp>(Lifestyle.Singleton);
             _container.Register<ISlaamGame, SlaamGame>(Lifestyle.Singleton);
