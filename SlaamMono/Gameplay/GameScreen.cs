@@ -51,7 +51,6 @@ namespace SlaamMono.Gameplay
         private int _spreeHighestKillCount;
         private int _stepsRemaining;
 
-        private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
@@ -70,10 +69,9 @@ namespace SlaamMono.Gameplay
         }
 
 
-        public GameScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, IResources resources, IGraphicsState graphicsState)
+        public GameScreen(List<CharacterShell> chars, IScreenManager screenDirector, IResources resources, IGraphicsState graphicsState)
         {
             SetupChars = chars;
-            _logger = logger;
             _screenDirector = screenDirector;
             _resources = resources;
             _graphics = graphicsState;

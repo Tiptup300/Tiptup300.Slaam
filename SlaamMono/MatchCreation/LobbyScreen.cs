@@ -209,7 +209,6 @@ namespace SlaamMono.MatchCreation
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
                     GameScreen.Instance = new GameScreen(
                         SetupChars,
-                        Di.Get<ILogger>(),
                         Di.Get<IScreenManager>(),
                         Di.Get<IResources>(),
                         Di.Get<IGraphicsState>());
