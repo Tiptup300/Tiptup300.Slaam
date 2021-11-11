@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace SlaamMono.Library.Screens
 {
@@ -9,6 +10,10 @@ namespace SlaamMono.Library.Screens
 
         public ScreenChangeRequest(Type screenType, object data)
         {
+            if (screenType.GetInterfaces().Contains(typeof(IScreen)) == false)
+            {
+                throw new Exception("Cannot change to non IScreen Type");
+            }
             ScreenType = screenType;
             Data = data;
         }
