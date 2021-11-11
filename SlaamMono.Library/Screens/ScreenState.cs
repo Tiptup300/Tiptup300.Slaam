@@ -6,7 +6,7 @@
         public IScreen NextScreen { get; private set; }
         public bool IsChangingScreens { get; private set; }
 
-        public ScreenState(IScreen currentScreen, IScreen nextScreen, bool isChangingScreens)
+        public ScreenState(IScreen currentScreen, IScreen nextScreen, bool isChangingScreens = false)
         {
             CurrentScreen = currentScreen;
             NextScreen = nextScreen;

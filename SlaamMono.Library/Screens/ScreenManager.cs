@@ -4,25 +4,27 @@ namespace SlaamMono.Library.Screens
 {
     public class ScreenManager : IScreenManager
     {
-        private ScreenState screenState = new ScreenState(null, null, false);
-
+        private readonly Mut<ScreenState> _screenState;
         private readonly IResolver<ScreenRequest, IScreen> _screenResolver;
 
-        public ScreenManager(IResolver<ScreenRequest, IScreen> screenResolver)
+        public ScreenManager(
+            Mut<ScreenState> screenState,
+            IResolver<ScreenRequest, IScreen> screenResolver)
         {
+            _screenState = screenState;
             _screenResolver = screenResolver;
         }
 
-        private bool _hasCurrentScreen => screenState.CurrentScreen != null;
+        private bool _hasCurrentScreen => _screenState.Get().CurrentScreen != null;
 
         public void Update()
         {
             if (_hasCurrentScreen)
             {
-                screenState.CurrentScreen.Update();
+                _screenState.Get().CurrentScreen.Update();
             }
 
-            if (screenState.IsChangingScreens)
+            if (_screenState.Get().IsChangingScreens)
             {
                 changeScreen();
             }
@@ -32,24 +34,24 @@ namespace SlaamMono.Library.Screens
         {
             if (_hasCurrentScreen)
             {
-                screenState.CurrentScreen.Close();
+                _screenState.Get().CurrentScreen.Close();
             }
-            screenState = new ScreenState(screenState.NextScreen, null, false);
-            screenState.CurrentScreen.Open();
-            screenState.CurrentScreen.Update();
+            _screenState.Mutate(new ScreenState(_screenState.Get().NextScreen, null, false));
+            _screenState.Get().CurrentScreen.Open();
+            _screenState.Get().CurrentScreen.Update();
         }
 
         public void Draw(SpriteBatch batch)
         {
             if (_hasCurrentScreen)
             {
-                screenState.CurrentScreen.Draw(batch);
+                _screenState.Get().CurrentScreen.Draw(batch);
             }
         }
 
         public void ChangeTo(IScreen nextScreen)
         {
-            screenState = new ScreenState(screenState.CurrentScreen, nextScreen, true);
+            _screenState.Mutate(new ScreenState(_screenState.Get().CurrentScreen, nextScreen, true));
         }
 
         public void ChangeTo<TScreenType>() where TScreenType : IScreen
