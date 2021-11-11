@@ -15,11 +15,9 @@ namespace SlaamMono.Library.Screens
             _screenResolver = screenResolver;
         }
 
-        private bool _hasCurrentScreen => _screenState.Get().CurrentScreen != null;
-
         public void Update()
         {
-            if (_hasCurrentScreen)
+            if (_screenState.Get().HasCurrentScreen)
             {
                 _screenState.Get().CurrentScreen.Update();
             }
@@ -32,18 +30,18 @@ namespace SlaamMono.Library.Screens
 
         private void changeScreen()
         {
-            if (_hasCurrentScreen)
+            if (_screenState.Get().HasCurrentScreen)
             {
                 _screenState.Get().CurrentScreen.Close();
             }
-            _screenState.Mutate(new ScreenState(_screenState.Get().NextScreen, null, false));
+            _screenState.Mutate(_screenState.Get().CompleteTransition());
             _screenState.Get().CurrentScreen.Open();
             _screenState.Get().CurrentScreen.Update();
         }
 
         public void Draw(SpriteBatch batch)
         {
-            if (_hasCurrentScreen)
+            if (_screenState.Get().HasCurrentScreen)
             {
                 _screenState.Get().CurrentScreen.Draw(batch);
             }
@@ -51,7 +49,8 @@ namespace SlaamMono.Library.Screens
 
         public void ChangeTo(IScreen nextScreen)
         {
-            _screenState.Mutate(new ScreenState(_screenState.Get().CurrentScreen, nextScreen, true));
+            var newState = _screenState.Get().BeginTransition(nextScreen);
+            _screenState.Mutate(newState);
         }
 
         public void ChangeTo<TScreenType>() where TScreenType : IScreen
