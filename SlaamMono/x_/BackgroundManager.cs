@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Composition;
+using SlaamMono.Composition.x_;
 using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement;

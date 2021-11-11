@@ -4,7 +4,7 @@ namespace SlaamMono.Library
 {
     public class Mut<TStateType>
     {
-        public event EventHandler StateChanged;
+        public event EventHandler Mutated;
 
         private TStateType _state;
 
@@ -26,7 +26,7 @@ namespace SlaamMono.Library
 
         public void MarkAsMutated()
         {
-            StateChanged?.Invoke(this, null);
+            Mutated?.Invoke(this, null);
         }
 
         public TStateType Get()

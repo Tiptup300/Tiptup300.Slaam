@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SimpleInjector;
+using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Configurations;

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using SlaamMono.Composition;
+using SlaamMono.Composition.x_;
 using SlaamMono.Library;
 
 namespace SlaamMono.Testing

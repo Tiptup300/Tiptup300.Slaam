@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SlaamMono.Composition
+namespace SlaamMono.Composition.x_
 {
     public class x_Di
     {
