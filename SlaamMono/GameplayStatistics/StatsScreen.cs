@@ -14,11 +14,9 @@ namespace SlaamMono.GameplayStatistics
 {
     public class StatsScreen : IScreen
     {
+        public const int MAX_HIGHSCORES = 5;
         public MatchScoreCollection ScoreCollection;
-        private readonly ILogger _logger;
-        private readonly IScreenManager _screenDirector;
-        private readonly IResources _resources;
-        private readonly IRenderGraph _renderGraph;
+
         private IntRange CurrentPage = new IntRange(0, 0, 2);
         private IntRange CurrentChar;
         private StatsBoard PlayerStats;
@@ -26,8 +24,12 @@ namespace SlaamMono.GameplayStatistics
         private StatsBoard PvP;
         private CachedTexture[] _statsButtons = new CachedTexture[3];
         private Rectangle StatsRect = new Rectangle(20, 110, GameGlobals.DRAWING_GAME_WIDTH - 40, GameGlobals.DRAWING_GAME_HEIGHT);
-        public const int MAX_HIGHSCORES = 5;
         private Color StatsCol = new Color(0, 0, 0, 125);
+
+        private readonly ILogger _logger;
+        private readonly IScreenManager _screenDirector;
+        private readonly IResources _resources;
+        private readonly IRenderGraph _renderGraph;
 
         public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
         {
