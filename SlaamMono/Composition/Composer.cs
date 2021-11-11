@@ -73,7 +73,7 @@ namespace SlaamMono.Composition
 
         private void registerResources()
         {
-            _container.RegisterInstance(new State<ResourcesState>());
+            _container.RegisterInstance(new Mut<ResourcesState>());
             _container.Register<IResources, Resources>(Lifestyle.Singleton);
             _container.Register<IFileLoader<Texture2D>, Texture2DLoader>(Lifestyle.Singleton);
             _container.Register<IFileLoader<string[]>, CommentedTextLineLoader>(Lifestyle.Singleton);

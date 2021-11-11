@@ -2,9 +2,9 @@
 {
     public class CachedTextureRequestHandler : IResolver<TextureRequest, CachedTexture>
     {
-        private readonly State<ResourcesState> _resourcesState;
+        private readonly Mut<ResourcesState> _resourcesState;
 
-        public CachedTextureRequestHandler(State<ResourcesState> resourcesState)
+        public CachedTextureRequestHandler(Mut<ResourcesState> resourcesState)
         {
             _resourcesState = resourcesState;
         }

@@ -6,13 +6,13 @@ namespace SlaamMono.Composition
 {
     public class GraphicsState : IGraphicsState
     {
-        private State<GraphicsDeviceManager> _graphicsState = new State<GraphicsDeviceManager>();
+        private Mut<GraphicsDeviceManager> _graphicsState = new Mut<GraphicsDeviceManager>();
 
         public GraphicsDeviceManager Get()
             => _graphicsState.Get();
 
         public void Set(GraphicsDeviceManager graphicsDeviceManager)
-            => _graphicsState.Change(graphicsDeviceManager);
+            => _graphicsState.Mutate(graphicsDeviceManager);
 
         public void ApplyChanges(Action<GraphicsDeviceManager> graphicsStateChanges)
         {

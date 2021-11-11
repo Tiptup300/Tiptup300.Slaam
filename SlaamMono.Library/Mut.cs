@@ -2,29 +2,29 @@
 
 namespace SlaamMono.Library
 {
-    public class State<TStateType>
+    public class Mut<TStateType>
     {
         public event EventHandler StateChanged;
 
         private TStateType _state;
 
-        public State(TStateType state = default(TStateType))
+        public Mut(TStateType state = default(TStateType))
         {
             _state = state;
         }
 
-        public void Change(TStateType newState)
+        public void Mutate(TStateType newState)
         {
             _state = newState;
-            MarkAsChanged();
+            MarkAsMutated();
         }
 
-        public static implicit operator TStateType(State<TStateType> value)
+        public static implicit operator TStateType(Mut<TStateType> value)
         {
             return value._state;
         }
 
-        public void MarkAsChanged()
+        public void MarkAsMutated()
         {
             StateChanged?.Invoke(this, null);
         }
