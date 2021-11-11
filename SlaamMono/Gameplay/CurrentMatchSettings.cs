@@ -1,3 +1,4 @@
+using SlaamMono.Composition;
 using SlaamMono.Library.Logging;
 using SlaamMono.MatchCreation;
 using SlaamMono.PlayerProfiles;

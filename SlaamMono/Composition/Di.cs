@@ -1,10 +1,9 @@
 ﻿using SimpleInjector;
-using SlaamMono.Composition;
 using SlaamMono.Library;
 using System;
 using System.Collections.Generic;
 
-namespace SlaamMono
+namespace SlaamMono.Composition
 {
     public class Di : IResolver
     {

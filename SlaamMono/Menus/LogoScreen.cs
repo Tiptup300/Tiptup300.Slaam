@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
-using SlaamMono.ResourceManagement;
 using SlaamMono.Subclasses;
 using SlaamMono.SubClasses;
 using SlaamMono.x_;

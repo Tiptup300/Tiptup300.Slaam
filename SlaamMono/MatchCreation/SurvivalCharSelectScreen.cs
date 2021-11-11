@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using SlaamMono.Composition;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;

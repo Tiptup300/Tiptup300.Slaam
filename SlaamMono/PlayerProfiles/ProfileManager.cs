@@ -1,3 +1,4 @@
+using SlaamMono.Composition;
 using SlaamMono.Library;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
