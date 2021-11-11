@@ -22,10 +22,10 @@ namespace SlaamMono.Gameplay
         private bool AlphaUp = false;
         private float Alpha = 255f;
 
-        private readonly IWhitePixelResolver _whitePixelResolver;
+        private readonly IRequest<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IResources _resources;
 
-        public GameScreenScoreboard(Vector2 position, CharacterActor character, GameType type, IResources resources, IWhitePixelResolver whitePixelResolver)
+        public GameScreenScoreboard(Vector2 position, CharacterActor character, GameType type, IResources resources, IRequest<WhitePixelRequest, Texture2D> whitePixelResolver)
         {
             Position = position;
             Character = character;
@@ -79,7 +79,10 @@ namespace SlaamMono.Gameplay
                 RenderGraph.Instance.RenderText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), _resources.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, true);
             }
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
-            batch.Draw(_whitePixelResolver.GetWhitePixel(), new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33), Character.MarkingColor);
+            batch.Draw(
+                _whitePixelResolver.Execute(new WhitePixelRequest()),
+                new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33),
+                Character.MarkingColor);
             if (Character.CurrentPowerup != null && !Character.CurrentPowerup.Used)
             {
                 batch.Draw(Character.CurrentPowerup.SmallTex, new Vector2(125 + Position.X - Character.CurrentPowerup.SmallTex.Width / 2, 42 + Position.Y - Character.CurrentPowerup.SmallTex.Height / 2), new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));

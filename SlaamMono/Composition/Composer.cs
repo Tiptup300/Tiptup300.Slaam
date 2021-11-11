@@ -77,7 +77,7 @@ namespace SlaamMono.Composition
             _container.RegisterInstance(new State<ResourcesState>());
             _container.Register<IResources, Resources>(Lifestyle.Singleton);
             _container.Register<IFileLoader<Texture2D>, Texture2DLoader>(Lifestyle.Singleton);
-            _container.Register<IWhitePixelResolver, WhitePixelResolver>(Lifestyle.Singleton);
+            _container.Register<IRequest<WhitePixelRequest, Texture2D>, WhitePixelResolver>(Lifestyle.Singleton);
             _container.Register<IFileLoader<string[]>, CommentedTextLineLoader>(Lifestyle.Singleton);
             _container.Register<IFileLoader<SpriteFont>, FontLoader>(Lifestyle.Singleton);
             _container.Register<IFileLoader<CachedTexture>, CachedTextureLoader>(Lifestyle.Singleton);

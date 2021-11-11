@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Library;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 using System;
@@ -8,9 +9,9 @@ namespace SlaamMono.ResourceManagement.Loading
     public class Texture2DLoader : IFileLoader<Texture2D>
     {
         private readonly ILogger _logger;
-        private readonly IWhitePixelResolver _pixelFactory;
+        private readonly IRequest<WhitePixelRequest, Texture2D> _pixelFactory;
 
-        public Texture2DLoader(ILogger logger, IWhitePixelResolver pixelFactory)
+        public Texture2DLoader(ILogger logger, IRequest<WhitePixelRequest, Texture2D> pixelFactory)
         {
             _logger = logger;
             _pixelFactory = pixelFactory;
@@ -27,7 +28,7 @@ namespace SlaamMono.ResourceManagement.Loading
             }
             catch (Exception ex)
             {
-                output = _pixelFactory.GetWhitePixel();
+                output = _pixelFactory.Execute(new WhitePixelRequest());
                 _logger.Log($"Texture \"{filePath}\" failed to load. Replaced with a blank pixel. Error: {ex.Message}");
             }
             return output;

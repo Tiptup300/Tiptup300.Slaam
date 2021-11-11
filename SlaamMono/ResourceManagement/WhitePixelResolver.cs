@@ -6,19 +6,20 @@ using SlaamMono.Library.ResourceManagement;
 
 namespace SlaamMono.ResourceManagement
 {
-    public class WhitePixelResolver : IWhitePixelResolver
+    public class WhitePixelResolver : IRequest<WhitePixelRequest, Texture2D>
     {
+        private Texture2D _whitePixel;
+
+        private readonly ILogger _logger;
+        private readonly IGraphicsState _graphics;
+
         public WhitePixelResolver(ILogger logger, IGraphicsState graphics)
         {
             _logger = logger;
             _graphics = graphics;
         }
 
-        private Texture2D _whitePixel;
-        private readonly ILogger _logger;
-        private readonly IGraphicsState _graphics;
-
-        public Texture2D GetWhitePixel()
+        public Texture2D Execute(WhitePixelRequest request)
         {
             if (_whitePixel is null)
             {
@@ -37,6 +38,5 @@ namespace SlaamMono.ResourceManagement
 
             return output;
         }
-
     }
 }

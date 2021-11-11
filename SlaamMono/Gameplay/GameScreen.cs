@@ -244,7 +244,7 @@ namespace SlaamMono.Gameplay
                         Characters[Characters.Count - 1],
                         ThisGameType,
                         x_Di.Get<IResources>(),
-                        x_Di.Get<IWhitePixelResolver>()));
+                        x_Di.Get<IRequest<WhitePixelRequest, Texture2D>>()));
 
             }
         }

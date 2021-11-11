@@ -18,11 +18,11 @@ namespace SlaamMono.Library.Rendering
         private readonly Vector2 _shadowOffset1 = new Vector2(1, 2);
         private readonly Vector2 _shadowOffset2 = new Vector2(2, 1);
 
-        private readonly IWhitePixelResolver _whitePixelResolver;
+        private readonly IRequest<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IGraphicsState _graphicsState;
 
         public RenderGraph(
-            IWhitePixelResolver whitePixelResolver,
+            IRequest<WhitePixelRequest, Texture2D> whitePixelResolver,
             IGraphicsState graphicsState)
         {
             _whitePixelResolver = whitePixelResolver;
@@ -80,7 +80,7 @@ namespace SlaamMono.Library.Rendering
         private void drawBox(Box box)
         {
             _batch.Draw(
-                texture: _whitePixelResolver.GetWhitePixel(),
+                texture: _whitePixelResolver.Execute(new WhitePixelRequest()),
                 destinationRectangle: box.Destination,
                 color: box.Color);
         }

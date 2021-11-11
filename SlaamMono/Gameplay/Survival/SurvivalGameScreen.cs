@@ -48,7 +48,7 @@ namespace SlaamMono.Gameplay
                     Characters[0],
                     ThisGameType,
                     x_Di.Get<IResources>(),
-                    x_Di.Get<IWhitePixelResolver>()));
+                    x_Di.Get<IRequest<WhitePixelRequest, Texture2D>>()));
         }
 
         public override void Update()
