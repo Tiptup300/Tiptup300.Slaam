@@ -8,7 +8,7 @@ namespace SlaamMono.Composition
 {
     public class ScreenNameLookupResolver : IResolver<ScreenNameLookup>
     {
-        public ScreenNameLookup Execute()
+        public ScreenNameLookup Resolve()
         {
             ScreenNameLookup output;
 

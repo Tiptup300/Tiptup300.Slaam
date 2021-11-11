@@ -28,7 +28,7 @@ namespace SlaamMono.ResourceManagement.Loading
             }
             catch (Exception ex)
             {
-                output = _pixelFactory.Execute(new WhitePixelRequest());
+                output = _pixelFactory.Resolve(new WhitePixelRequest());
                 _logger.Log($"Texture \"{filePath}\" failed to load. Replaced with a blank pixel. Error: {ex.Message}");
             }
             return output;

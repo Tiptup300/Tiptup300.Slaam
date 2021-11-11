@@ -9,7 +9,7 @@
             _resourcesState = resourcesState;
         }
 
-        public CachedTexture Execute(TextureRequest request)
+        public CachedTexture Resolve(TextureRequest request)
         {
             return _resourcesState.Get().Textures[request.TextureName];
         }

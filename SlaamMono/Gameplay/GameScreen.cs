@@ -245,7 +245,7 @@ namespace SlaamMono.Gameplay
                 }
 
                 Scoreboards.Add(
-                    _gameScreenScoreBoardResolver.Execute(
+                    _gameScreenScoreBoardResolver.Resolve(
                         new ScoreboardRequest(
                             Vector2.Zero,
                             Characters[Characters.Count - 1],

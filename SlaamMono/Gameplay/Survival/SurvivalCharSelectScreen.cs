@@ -45,7 +45,7 @@ namespace SlaamMono.MatchCreation
         {
             List<CharacterShell> list = new List<CharacterShell>();
             list.Add(SelectBoxes[0].GetShell());
-            GameScreen.Instance = _survivalGameScreenRequest.Execute(new GameScreenRequest(list));
+            GameScreen.Instance = _survivalGameScreenRequest.Resolve(new GameScreenRequest(list));
             _screenDirector.ChangeTo(GameScreen.Instance);
         }
     }

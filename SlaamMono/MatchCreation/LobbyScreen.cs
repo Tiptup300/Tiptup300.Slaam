@@ -216,7 +216,7 @@ namespace SlaamMono.MatchCreation
                 if (InputComponent.Players[0].PressedStart)
                 {
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
-                    GameScreen.Instance = _gameScreenRequest.Execute(new GameScreenRequest(SetupCharacters));
+                    GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequest(SetupCharacters));
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();

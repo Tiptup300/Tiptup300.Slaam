@@ -16,7 +16,7 @@ namespace SlaamMono.Composition.x_
             _resources = resources;
         }
 
-        public Scoreboard Execute(ScoreboardRequest request)
+        public Scoreboard Resolve(ScoreboardRequest request)
         {
             Scoreboard output;
 

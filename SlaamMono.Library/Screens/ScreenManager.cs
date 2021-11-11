@@ -59,7 +59,7 @@ namespace SlaamMono.Library.Screens
 
         public void ChangeTo<TScreenType>() where TScreenType : IScreen
         {
-            ChangeTo(_screenResolver.Execute(new ScreenRequest(nameof(TScreenType))));
+            ChangeTo(_screenResolver.Resolve(new ScreenRequest(nameof(TScreenType))));
         }
     }
 }

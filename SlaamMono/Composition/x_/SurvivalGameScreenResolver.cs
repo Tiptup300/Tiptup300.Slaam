@@ -28,7 +28,7 @@ namespace SlaamMono.Composition.x_
             _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
         }
 
-        public SurvivalGameScreen Execute(GameScreenRequest request)
+        public SurvivalGameScreen Resolve(GameScreenRequest request)
         {
             SurvivalGameScreen output;
 

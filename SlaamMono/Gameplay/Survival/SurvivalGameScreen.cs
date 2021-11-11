@@ -50,7 +50,7 @@ namespace SlaamMono.Gameplay
 
             Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupCharacters[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
             Scoreboards.Add(
-                _gameScreenScoreBoardResolver.Execute(
+                _gameScreenScoreBoardResolver.Resolve(
                     new ScoreboardRequest(
                         new Vector2(-250, 10),
                         Characters[0],

@@ -19,7 +19,7 @@ namespace SlaamMono.ResourceManagement
             _graphics = graphics;
         }
 
-        public Texture2D Execute(WhitePixelRequest request)
+        public Texture2D Resolve(WhitePixelRequest request)
         {
             if (_whitePixel is null)
             {

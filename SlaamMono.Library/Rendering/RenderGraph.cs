@@ -80,7 +80,7 @@ namespace SlaamMono.Library.Rendering
         private void drawBox(Box box)
         {
             _batch.Draw(
-                texture: _whitePixelResolver.Execute(new WhitePixelRequest()),
+                texture: _whitePixelResolver.Resolve(new WhitePixelRequest()),
                 destinationRectangle: box.Destination,
                 color: box.Color);
         }

@@ -34,8 +34,8 @@ namespace SlaamMono.Menus
             _logoColor = new Transition(null, new Vector2(0), new Vector2(255), TimeSpan.FromSeconds(1));
             _displaytime = new Timer(new TimeSpan(0, 0, 1));
 
-            _backgroundTexture = _textureRequest.Execute(new TextureRequest("ZibithLogoBG"));
-            _logoTexture = _textureRequest.Execute(new TextureRequest("ZibithLogo"));
+            _backgroundTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogoBG"));
+            _logoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"));
         }
 
         public void Update()

@@ -14,7 +14,7 @@ namespace SlaamMono.Composition.x_
             _screenNameLookupResolver = screenNameLookupResolver;
         }
 
-        public IScreen Execute(ScreenRequest request)
-            => (IScreen)_resolver.x_Get(_screenNameLookupResolver.Execute().ScreenNames[request.Name]);
+        public IScreen Resolve(ScreenRequest request)
+            => (IScreen)_resolver.x_Get(_screenNameLookupResolver.Resolve().ScreenNames[request.Name]);
     }
 }

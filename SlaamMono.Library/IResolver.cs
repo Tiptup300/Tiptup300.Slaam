@@ -2,11 +2,11 @@
 {
     public interface IResolver<TInputRequest, TOutputResponse>
     {
-        TOutputResponse Execute(TInputRequest request);
+        TOutputResponse Resolve(TInputRequest request);
     }
 
     public interface IResolver<TOutputResponse>
     {
-        TOutputResponse Execute();
+        TOutputResponse Resolve();
     }
 }

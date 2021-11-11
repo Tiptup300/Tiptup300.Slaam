@@ -24,7 +24,7 @@ namespace SlaamMono.Composition.x_
             _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
         }
 
-        public GameScreen Execute(GameScreenRequest request)
+        public GameScreen Resolve(GameScreenRequest request)
         {
             GameScreen output;
 

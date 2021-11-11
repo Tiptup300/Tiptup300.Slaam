@@ -84,7 +84,7 @@ namespace SlaamMono.Gameplay
             }
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
             batch.Draw(
-                _whitePixelResolver.Execute(new WhitePixelRequest()),
+                _whitePixelResolver.Resolve(new WhitePixelRequest()),
                 new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33),
                 Character.MarkingColor);
             if (Character.CurrentPowerup != null && !Character.CurrentPowerup.Used)
