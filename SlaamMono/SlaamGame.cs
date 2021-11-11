@@ -78,7 +78,7 @@ namespace SlaamMono
             _resources.LoadAll();
             SlaamGame.mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = InputComponent.Players[0];
-            _contentManager = new XnaContentManager(Di.Get<ILogger>());
+            _contentManager = new XnaContentManager(x_Di.Get<ILogger>());
             _renderGraph.LoadContent();
             _fpsRenderer.LoadContent();
 

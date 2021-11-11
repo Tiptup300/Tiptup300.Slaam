@@ -74,7 +74,7 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                BoardThumbnailViewer viewer = new BoardThumbnailViewer(this, Di.Get<IResources>(), Di.Get<IScreenManager>());
+                BoardThumbnailViewer viewer = new BoardThumbnailViewer(this, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>());
                 viewer.Open();
                 while (!viewer.FoundBoard)
                 {
@@ -106,7 +106,7 @@ namespace SlaamMono.MatchCreation
         {
             if (DefaultBoard == null)
             {
-                BoardThumbnailViewer viewer = new BoardThumbnailViewer(null, Di.Get<IResources>(), Di.Get<IScreenManager>());
+                BoardThumbnailViewer viewer = new BoardThumbnailViewer(null, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>());
                 viewer.Open();
                 while (!viewer.FoundBoard)
                 {
@@ -177,7 +177,7 @@ namespace SlaamMono.MatchCreation
                         }
                         else
                         {
-                            _screenDirector.ChangeTo(new BoardThumbnailViewer(this, Di.Get<IResources>(), Di.Get<IScreenManager>()));
+                            _screenDirector.ChangeTo(new BoardThumbnailViewer(this, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>()));
                         }
                         BackgroundManager.ChangeBG(BackgroundType.Menu);
                     }
@@ -189,8 +189,8 @@ namespace SlaamMono.MatchCreation
                 {
                     _screenDirector.ChangeTo(
                         new ClassicCharSelectScreen(
-                            Di.Get<ILogger>(),
-                            Di.Get<IScreenManager>()));
+                            x_Di.Get<ILogger>(),
+                            x_Di.Get<IScreenManager>()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }
@@ -210,9 +210,9 @@ namespace SlaamMono.MatchCreation
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
                     GameScreen.Instance = new GameScreen(
                         SetupChars,
-                        Di.Get<IScreenManager>(),
-                        Di.Get<IResources>(),
-                        Di.Get<IGraphicsState>());
+                        x_Di.Get<IScreenManager>(),
+                        x_Di.Get<IResources>(),
+                        x_Di.Get<IGraphicsState>());
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();

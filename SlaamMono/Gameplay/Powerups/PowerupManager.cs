@@ -8,7 +8,7 @@ namespace SlaamMono.Gameplay.Powerups
 {
     public class PowerupManager
     {
-        public static PowerupManager Instance { get; private set; } = new PowerupManager(Di.Get<IResources>());
+        public static PowerupManager Instance { get; private set; } = new PowerupManager(x_Di.Get<IResources>());
 
         private Random rand = new Random();
         private readonly IResources _resources;

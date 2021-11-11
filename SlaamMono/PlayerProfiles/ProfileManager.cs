@@ -39,7 +39,7 @@ namespace SlaamMono.PlayerProfiles
 
         public static void LoadProfiles()
         {
-            XnaContentReader reader = new XnaContentReader(_logger, Di.Get<ProfileFileVersion>());
+            XnaContentReader reader = new XnaContentReader(_logger, x_Di.Get<ProfileFileVersion>());
             reader.Initialize(DialogStrings.ProfileFilename);
 
             filefound = !reader.WasNotFound;
@@ -100,7 +100,7 @@ namespace SlaamMono.PlayerProfiles
 
         public static void SaveProfiles()
         {
-            XnaContentWriter writer = new XnaContentWriter(Di.Get<ProfileFileVersion>());
+            XnaContentWriter writer = new XnaContentWriter(x_Di.Get<ProfileFileVersion>());
             writer.Initialize(DialogStrings.ProfileFilename);
 
             writer.Write(AllProfiles.Count - 1);

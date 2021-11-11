@@ -20,7 +20,7 @@ namespace SlaamMono.PlayerProfiles
         {
             _needsDevice = false;
 
-            ProfileManager.Initialize(_logger, Di.Get<IResources>());
+            ProfileManager.Initialize(_logger, x_Di.Get<IResources>());
             _logger.Log("Profile Manager Created;");
 
         }

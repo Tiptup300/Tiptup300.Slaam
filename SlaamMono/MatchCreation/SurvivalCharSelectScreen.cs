@@ -29,8 +29,8 @@ namespace SlaamMono.MatchCreation
                 SkinTexture,
                 ExtendedPlayerIndex.One,
                 Skins,
-                Di.Get<PlayerColorResolver>(),
-                Di.Get<IResources>());
+                x_Di.Get<PlayerColorResolver>(),
+                x_Di.Get<IResources>());
             SelectBoxes[0].Survival = true;
         }
 
@@ -45,10 +45,10 @@ namespace SlaamMono.MatchCreation
             list.Add(SelectBoxes[0].GetShell());
             GameScreen.Instance = new SurvivalScreen(
                 list,
-                Di.Get<ILogger>(),
-                Di.Get<IScreenManager>(),
-                Di.Get<IResources>(),
-                Di.Get<IGraphicsState>());
+                x_Di.Get<ILogger>(),
+                x_Di.Get<IScreenManager>(),
+                x_Di.Get<IResources>(),
+                x_Di.Get<IGraphicsState>());
             _screenDirector.ChangeTo(GameScreen.Instance);
         }
     }

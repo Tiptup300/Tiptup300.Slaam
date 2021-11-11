@@ -105,7 +105,7 @@ namespace SlaamMono.Gameplay
             Timer = new GameScreenTimer(
                 new Vector2(1024, 0),
                 this,
-                Di.Get<IResources>());
+                x_Di.Get<IResources>());
 
             FeedManager.FeedsActive = false;
             for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
@@ -116,8 +116,8 @@ namespace SlaamMono.Gameplay
                         _boardpos,
                         new Vector2(x, y),
                         Tileset,
-                        Di.Get<IResources>(),
-                        Di.Get<IRenderGraph>());
+                        x_Di.Get<IResources>(),
+                        x_Di.Get<IRenderGraph>());
                 }
             }
             ScoreKeeper = new MatchScoreCollection(this);
@@ -176,12 +176,12 @@ namespace SlaamMono.Gameplay
             {
                 if (SetupChars[x].Type == PlayerType.Player)
                 {
-                    Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation), SetupChars[x].CharProfile, new Vector2(-100, -100), InputComponent.Players[(int)SetupChars[x].PlayerIDX], SetupChars[x].PlayerColor, x, Di.Get<IResources>()));
+                    Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation), SetupChars[x].CharProfile, new Vector2(-100, -100), InputComponent.Players[(int)SetupChars[x].PlayerIDX], SetupChars[x].PlayerColor, x, x_Di.Get<IResources>()));
                 }
                 else
                 {
                     ProfileManager.AllProfiles[SetupChars[x].CharProfile].Skin = SetupChars[x].SkinLocation;
-                    Characters.Add(new BotActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[x].SkinLocation)*/, SetupChars[x].CharProfile, new Vector2(-100, -100), this, SetupChars[x].PlayerColor, Characters.Count, Di.Get<IResources>()));
+                    Characters.Add(new BotActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[x].SkinLocation)*/, SetupChars[x].CharProfile, new Vector2(-100, -100), this, SetupChars[x].PlayerColor, Characters.Count, x_Di.Get<IResources>()));
                 }
 
                 Scoreboards.Add(
@@ -189,8 +189,8 @@ namespace SlaamMono.Gameplay
                         Vector2.Zero,
                         Characters[Characters.Count - 1],
                         ThisGameType,
-                        Di.Get<IResources>(),
-                        Di.Get<IWhitePixelResolver>()));
+                        x_Di.Get<IResources>(),
+                        x_Di.Get<IWhitePixelResolver>()));
 
             }
         }
@@ -507,15 +507,7 @@ namespace SlaamMono.Gameplay
             TimeSpan ShortenTime = new TimeSpan(0, 0, 0, 2);
             if (_boardsize < 6)
             {
-                for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
-                {
-                    // TODO FIX LOGIC!
-                    /*tiles[x, 0 + Boardsize].MarkTile(Color.Black, ShortenTime, true, -2);
-                    tiles[x, 15 - Boardsize].MarkTile(Color.Black, ShortenTime, true, -2);
-                    tiles[0 + Boardsize, x].MarkTile(Color.Black, ShortenTime, true, -2);
-                    tiles[15 - Boardsize, x].MarkTile(Color.Black, ShortenTime, true, -2);*/
-                }
-
+                markBoardOutline();
                 _boardsize++;
             }
             _stepsRemaining--;
@@ -524,6 +516,18 @@ namespace SlaamMono.Gameplay
                 CurrentGameStatus = GameStatus.Over;
                 ReadySetGoPart = 3;
                 ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+            }
+        }
+
+        private static void markBoardOutline()
+        {
+            for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
+            {
+                // TODO FIX LOGIC!
+                /*tiles[x, 0 + Boardsize].MarkTile(Color.Black, ShortenTime, true, -2);
+                tiles[x, 15 - Boardsize].MarkTile(Color.Black, ShortenTime, true, -2);
+                tiles[0 + Boardsize, x].MarkTile(Color.Black, ShortenTime, true, -2);
+                tiles[15 - Boardsize, x].MarkTile(Color.Black, ShortenTime, true, -2);*/
             }
         }
 
@@ -541,10 +545,10 @@ namespace SlaamMono.Gameplay
             _screenDirector.ChangeTo(
                 new StatsScreen(
                     ScoreKeeper,
-                    Di.Get<ILogger>(),
-                    Di.Get<IScreenManager>(),
-                    Di.Get<IResources>(),
-                    Di.Get<IRenderGraph>()));
+                    x_Di.Get<ILogger>(),
+                    x_Di.Get<IScreenManager>(),
+                    x_Di.Get<IResources>(),
+                    x_Di.Get<IRenderGraph>()));
         }
 
         /// <summary>

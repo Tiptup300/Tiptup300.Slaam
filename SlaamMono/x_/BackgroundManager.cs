@@ -20,7 +20,7 @@ namespace SlaamMono.x_
 
         static BackgroundManager()
         {
-            _resources = Di.Get<IResources>();
+            _resources = x_Di.Get<IResources>();
         }
 
         public static void Update()

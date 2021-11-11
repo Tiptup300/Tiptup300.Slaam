@@ -10,7 +10,7 @@ namespace SlaamMono.Composition
         /// </summary>
         static void Main(string[] args)
         {
-            Di.Get<IApp>().Run();
+            x_Di.Get<IApp>().Run();
         }
 
     }

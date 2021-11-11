@@ -35,8 +35,8 @@ namespace SlaamMono.Input
         static Qwerty()
         {
             x_init(
-                Di.Get<IRenderGraph>(),
-                Di.Get<IResources>());
+                x_Di.Get<IRenderGraph>(),
+                x_Di.Get<IResources>());
 
             InitKeys();
         }

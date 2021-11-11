@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace SlaamMono.Composition
 {
-    public class Di : IResolver
+    public class x_Di : IResolver
     {
-        public static IResolver Instance = new Di();
+        public static IResolver Instance = new x_Di();
 
         private Dictionary<Type, object> _instances = new Dictionary<Type, object>();
         private Container _container;
 
-        public Di()
+        public x_Di()
         {
             _container = new Composer().BuildContainer(this);
         }

@@ -124,11 +124,11 @@ namespace SlaamMono.MatchCreation
             _screenDirector.ChangeTo(
                 new LobbyScreen(
                     characterShells,
-                    Di.Get<ILogger>(),
-                    Di.Get<IScreenManager>(),
-                    Di.Get<PlayerColorResolver>(),
-                    Di.Get<IResources>(),
-                    Di.Get<IRenderGraph>()));
+                    x_Di.Get<ILogger>(),
+                    x_Di.Get<IScreenManager>(),
+                    x_Di.Get<PlayerColorResolver>(),
+                    x_Di.Get<IResources>(),
+                    x_Di.Get<IRenderGraph>()));
         }
 
         public void Draw(SpriteBatch batch)
@@ -197,8 +197,8 @@ namespace SlaamMono.MatchCreation
                     SkinTexture,
                     (ExtendedPlayerIndex)x,
                     Skins,
-                    Di.Get<PlayerColorResolver>(),
-                    Di.Get<IResources>());
+                    x_Di.Get<PlayerColorResolver>(),
+                    x_Di.Get<IResources>());
             }
 
         }
