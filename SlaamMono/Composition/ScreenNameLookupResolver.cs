@@ -21,8 +21,27 @@ namespace SlaamMono.Composition
         {
             return typeof(SlaamGameApp).Assembly
                 .GetTypes()
-                .Where(t => t.GetInterfaces().Contains(typeof(IScreen)))
-                .ToDictionary(t => t.Name);
+                .Where(isIScreen())
+                .Where(isMoreThanJustIScreen())
+                .ToDictionary(
+                    t => getNonIScreenInterface(t).Name,
+                    t => getNonIScreenInterface(t)
+                );
+        }
+
+        private static Func<Type, bool> isIScreen()
+        {
+            return t => t.GetInterfaces().Contains(typeof(IScreen));
+        }
+
+        private static Func<Type, bool> isMoreThanJustIScreen()
+        {
+            return t => t.GetInterfaces().Count() > 1;
+        }
+
+        private static Type getNonIScreenInterface(Type t)
+        {
+            return t.GetInterfaces().Where(ifce => ifce != typeof(IScreen)).Single();
         }
     }
 }

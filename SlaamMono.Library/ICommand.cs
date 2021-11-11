@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SlaamMono.Library
+﻿namespace SlaamMono.Library
 {
     public interface ICommand<TInputRequest>
     {
