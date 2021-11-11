@@ -248,8 +248,8 @@ namespace SlaamMono.Gameplay
                     _gameScreenScoreBoardResolver.Execute(
                         new ScoreboardRequest(
                             Vector2.Zero,
-                        Characters[Characters.Count - 1],
-                        ThisGameType)));
+                            Characters[Characters.Count - 1],
+                            ThisGameType)));
 
             }
         }

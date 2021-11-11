@@ -87,17 +87,19 @@ namespace SlaamMono.Gameplay
             }
 
             bool temp = CurrentGameStatus == GameStatus.Waiting;
-
-            base.Update();
-
             if (CurrentGameStatus == GameStatus.Playing && temp)
+            {
                 AddNewBot();
+            }
+            base.Update();
         }
 
         public override void ReportKilling(int Killer, int Killee)
         {
             if (Killer == 0)
+            {
                 Characters[Killer].Kills++;
+            }
 
             if (Killee == 0)
             {
@@ -105,15 +107,20 @@ namespace SlaamMono.Gameplay
                 ReadySetGoPart = 3;
                 ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             }
-
-            //base.ReportKilling(Killer, Killee);
         }
 
         private void AddNewBot()
         {
-            Characters.Add(new BotActor(
-                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + ClassicCharSelectScreen.ReturnRandSkin(_logger))//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, CharSelectScreen.Instance.ReturnRandSkin())
-                , ProfileManager.GetBotProfile(), new Vector2(-200, -200), this, Color.Black, Characters.Count, x_Di.Get<IResources>()));
+            Characters.Add(
+                new BotActor(
+                    SlaamGame.Content.Load<Texture2D>("content\\skins\\" + ClassicCharSelectScreen.ReturnRandSkin(_logger)),
+                    ProfileManager.GetBotProfile(),
+                    new Vector2(-200, -200),
+                    this,
+                    Color.Black,
+                    Characters.Count,
+                    x_Di.Get<IResources>()));
+
             ProfileManager.ResetAllBots();
             RespawnChar(Characters.Count - 1);
         }
@@ -121,7 +128,9 @@ namespace SlaamMono.Gameplay
         public override void EndGame()
         {
             if (ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame < Timer.CurrentGameTime)
+            {
                 ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame = Timer.CurrentGameTime;
+            }
             ProfileManager.SaveProfiles();
             _screenDirector.ChangeTo(
                 new StatsScreen(
