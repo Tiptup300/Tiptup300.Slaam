@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using SimpleInjector;
-using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Configurations;
@@ -67,9 +65,9 @@ namespace SlaamMono.Composition
             _container.Register<ClassicCharSelectScreen>();
             _container.Register<IScreenManager, ScreenManager>(Lifestyle.Singleton);
             _container.Register<ILogoScreen, LogoScreen>();
-            _container.Register<IScreenFactory, ScreenFactory>(Lifestyle.Singleton);
 
             // Register all IRequests
+            _container.RegisterSingleton(typeof(IRequest<>), typeof(SlaamGameApp).Assembly);
             _container.RegisterSingleton(typeof(IRequest<,>), typeof(SlaamGameApp).Assembly);
         }
 
