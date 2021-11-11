@@ -6,20 +6,20 @@ using SlaamMono.Library.Screens;
 
 namespace SlaamMono.Composition.x_
 {
-    public class SurvivalGameScreenResolver : IRequest<GameScreenRequest, SurvivalGameScreen>
+    public class SurvivalGameScreenResolver : IResolver<GameScreenRequest, SurvivalGameScreen>
     {
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
-        private readonly IRequest<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
+        private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
 
         public SurvivalGameScreenResolver(
             ILogger logger,
             IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphics,
-            IRequest<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
+            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;

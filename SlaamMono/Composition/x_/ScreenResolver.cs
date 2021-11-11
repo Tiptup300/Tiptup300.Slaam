@@ -3,12 +3,12 @@ using SlaamMono.Library.Screens;
 
 namespace SlaamMono.Composition.x_
 {
-    public class ScreenResolver : IRequest<ScreenRequest, IScreen>
+    public class ScreenResolver : IResolver<ScreenRequest, IScreen>
     {
         private readonly x_Di _resolver;
-        private readonly IRequest<ScreenNameLookup> _screenNameLookupResolver;
+        private readonly IResolver<ScreenNameLookup> _screenNameLookupResolver;
 
-        public ScreenResolver(x_Di resolver, IRequest<ScreenNameLookup> screenNameLookupResolver)
+        public ScreenResolver(x_Di resolver, IResolver<ScreenNameLookup> screenNameLookupResolver)
         {
             _resolver = resolver;
             _screenNameLookupResolver = screenNameLookupResolver;

@@ -20,9 +20,9 @@ namespace SlaamMono.Menus
 
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
-        private readonly IRequest<TextureRequest, CachedTexture> _textureRequest;
+        private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
 
-        public LogoScreen(IScreenManager screenDirector, IResources resources, IRequest<TextureRequest, CachedTexture> textureRequest)
+        public LogoScreen(IScreenManager screenDirector, IResources resources, IResolver<TextureRequest, CachedTexture> textureRequest)
         {
             _screenDirector = screenDirector;
             _resources = resources;

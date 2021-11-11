@@ -37,9 +37,9 @@ namespace SlaamMono.MatchCreation
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
-        private readonly IRequest<GameScreenRequest, GameScreen> _gameScreenRequest;
+        private readonly IResolver<GameScreenRequest, GameScreen> _gameScreenRequest;
 
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver, IResources resources, IRenderGraph renderGraphManager, IRequest<GameScreenRequest, GameScreen> gameScreenRequest)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver, IResources resources, IRenderGraph renderGraphManager, IResolver<GameScreenRequest, GameScreen> gameScreenRequest)
         {
             SetupCharacters = chars;
             _logger = logger;

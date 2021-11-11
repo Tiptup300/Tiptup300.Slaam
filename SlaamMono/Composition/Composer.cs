@@ -67,8 +67,8 @@ namespace SlaamMono.Composition
             _container.Register<ILogoScreen, LogoScreen>();
 
             // Register all IRequests
-            _container.RegisterSingleton(typeof(IRequest<>), typeof(SlaamGameApp).Assembly);
-            _container.RegisterSingleton(typeof(IRequest<,>), typeof(SlaamGameApp).Assembly);
+            _container.RegisterSingleton(typeof(IResolver<>), typeof(SlaamGameApp).Assembly);
+            _container.RegisterSingleton(typeof(IResolver<,>), typeof(SlaamGameApp).Assembly);
         }
 
         private void registerResources()
@@ -80,7 +80,7 @@ namespace SlaamMono.Composition
             _container.Register<IFileLoader<SpriteFont>, FontLoader>(Lifestyle.Singleton);
             _container.Register<IFileLoader<CachedTexture>, CachedTextureLoader>(Lifestyle.Singleton);
             _container.Register<IResourceLoader, ResourceLoader>(Lifestyle.Singleton);
-            _container.Register<IRequest<TextureRequest, CachedTexture>, CachedTextureRequestHandler>(Lifestyle.Singleton);
+            _container.Register<IResolver<TextureRequest, CachedTexture>, CachedTextureRequestHandler>(Lifestyle.Singleton);
         }
 
         private void registerGameplay()

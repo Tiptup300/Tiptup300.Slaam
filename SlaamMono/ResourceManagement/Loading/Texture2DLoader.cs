@@ -9,9 +9,9 @@ namespace SlaamMono.ResourceManagement.Loading
     public class Texture2DLoader : IFileLoader<Texture2D>
     {
         private readonly ILogger _logger;
-        private readonly IRequest<WhitePixelRequest, Texture2D> _pixelFactory;
+        private readonly IResolver<WhitePixelRequest, Texture2D> _pixelFactory;
 
-        public Texture2DLoader(ILogger logger, IRequest<WhitePixelRequest, Texture2D> pixelFactory)
+        public Texture2DLoader(ILogger logger, IResolver<WhitePixelRequest, Texture2D> pixelFactory)
         {
             _logger = logger;
             _pixelFactory = pixelFactory;

@@ -14,9 +14,9 @@ namespace SlaamMono.MatchCreation
     public class SurvivalCharSelectScreen : ClassicCharSelectScreen
     {
         private readonly IScreenManager _screenDirector;
-        private readonly IRequest<GameScreenRequest, SurvivalGameScreen> _survivalGameScreenRequest;
+        private readonly IResolver<GameScreenRequest, SurvivalGameScreen> _survivalGameScreenRequest;
 
-        public SurvivalCharSelectScreen(ILogger logger, IScreenManager screenDirector, IRequest<GameScreenRequest, SurvivalGameScreen> survivalGameScreenRequest)
+        public SurvivalCharSelectScreen(ILogger logger, IScreenManager screenDirector, IResolver<GameScreenRequest, SurvivalGameScreen> survivalGameScreenRequest)
             : base(logger, screenDirector)
         {
             _screenDirector = screenDirector;

@@ -1,6 +1,6 @@
 ﻿namespace SlaamMono.Library.ResourceManagement
 {
-    public class CachedTextureRequestHandler : IRequest<TextureRequest, CachedTexture>
+    public class CachedTextureRequestHandler : IResolver<TextureRequest, CachedTexture>
     {
         private readonly State<ResourcesState> _resourcesState;
 

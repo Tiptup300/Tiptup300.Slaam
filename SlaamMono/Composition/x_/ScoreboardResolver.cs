@@ -5,12 +5,12 @@ using SlaamMono.Library.ResourceManagement;
 
 namespace SlaamMono.Composition.x_
 {
-    public class ScoreboardResolver : IRequest<ScoreboardRequest, Scoreboard>
+    public class ScoreboardResolver : IResolver<ScoreboardRequest, Scoreboard>
     {
-        private readonly IRequest<WhitePixelRequest, Texture2D> _whitePixelResolver;
+        private readonly IResolver<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IResources _resources;
 
-        public ScoreboardResolver(IRequest<WhitePixelRequest, Texture2D> whitePixelResolver, IResources resources)
+        public ScoreboardResolver(IResolver<WhitePixelRequest, Texture2D> whitePixelResolver, IResources resources)
         {
             _whitePixelResolver = whitePixelResolver;
             _resources = resources;

@@ -5,18 +5,18 @@ using SlaamMono.Library.Screens;
 
 namespace SlaamMono.Composition.x_
 {
-    public class GameScreenResolver : IRequest<GameScreenRequest, GameScreen>
+    public class GameScreenResolver : IResolver<GameScreenRequest, GameScreen>
     {
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
-        private readonly IRequest<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
+        private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
 
         public GameScreenResolver(
             IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphics,
-            IRequest<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
+            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
         {
             _screenDirector = screenDirector;
             _resources = resources;

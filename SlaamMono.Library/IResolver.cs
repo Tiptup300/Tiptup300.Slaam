@@ -1,11 +1,11 @@
 ﻿namespace SlaamMono.Library
 {
-    public interface IRequest<TInputRequest, TOutputResponse>
+    public interface IResolver<TInputRequest, TOutputResponse>
     {
         TOutputResponse Execute(TInputRequest request);
     }
 
-    public interface IRequest<TOutputResponse>
+    public interface IResolver<TOutputResponse>
     {
         TOutputResponse Execute();
     }

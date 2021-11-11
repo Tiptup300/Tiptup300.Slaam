@@ -6,7 +6,7 @@ using SlaamMono.Library.ResourceManagement;
 
 namespace SlaamMono.ResourceManagement
 {
-    public class WhitePixelResolver : IRequest<WhitePixelRequest, Texture2D>
+    public class WhitePixelResolver : IResolver<WhitePixelRequest, Texture2D>
     {
         private Texture2D _whitePixel;
 

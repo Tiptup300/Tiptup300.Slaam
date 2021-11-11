@@ -18,11 +18,11 @@ namespace SlaamMono.Library.Rendering
         private readonly Vector2 _shadowOffset1 = new Vector2(1, 2);
         private readonly Vector2 _shadowOffset2 = new Vector2(2, 1);
 
-        private readonly IRequest<WhitePixelRequest, Texture2D> _whitePixelResolver;
+        private readonly IResolver<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IGraphicsState _graphicsState;
 
         public RenderGraph(
-            IRequest<WhitePixelRequest, Texture2D> whitePixelResolver,
+            IResolver<WhitePixelRequest, Texture2D> whitePixelResolver,
             IGraphicsState graphicsState)
         {
             _whitePixelResolver = whitePixelResolver;

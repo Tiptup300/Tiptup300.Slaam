@@ -22,10 +22,10 @@ namespace SlaamMono.Gameplay
         private bool AlphaUp = false;
         private float Alpha = 255f;
 
-        private readonly IRequest<WhitePixelRequest, Texture2D> _whitePixelResolver;
+        private readonly IResolver<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IResources _resources;
 
-        public Scoreboard(IResources resources, IRequest<WhitePixelRequest, Texture2D> whitePixelResolver)
+        public Scoreboard(IResources resources, IResolver<WhitePixelRequest, Texture2D> whitePixelResolver)
         {
             _resources = resources;
             _whitePixelResolver = whitePixelResolver;

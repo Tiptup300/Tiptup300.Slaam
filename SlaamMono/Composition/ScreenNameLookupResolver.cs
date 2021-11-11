@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SlaamMono.Composition
 {
-    public class ScreenNameLookupResolver : IRequest<ScreenNameLookup>
+    public class ScreenNameLookupResolver : IResolver<ScreenNameLookup>
     {
         public ScreenNameLookup Execute()
         {

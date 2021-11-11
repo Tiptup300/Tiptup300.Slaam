@@ -24,14 +24,14 @@ namespace SlaamMono.Gameplay
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
-        private readonly IRequest<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
+        private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
 
         public SurvivalGameScreen(
             ILogger logger,
             IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphics,
-            IRequest<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
+            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
             : base(screenDirector, resources, graphics, gameScreenScoreBoardResolver)
         {
             _logger = logger;
