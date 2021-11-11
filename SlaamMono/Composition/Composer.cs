@@ -22,7 +22,7 @@ namespace SlaamMono.Composition
     {
         private Container _container;
 
-        public Container BuildContainer(IResolver resolver)
+        public Container BuildContainer(x_Di resolver)
         {
             _container = new Container();
 

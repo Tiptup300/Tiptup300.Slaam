@@ -1,13 +1,12 @@
 ﻿using SimpleInjector;
-using SlaamMono.Library;
 using System;
 using System.Collections.Generic;
 
 namespace SlaamMono.Composition
 {
-    public class x_Di : IResolver
+    public class x_Di
     {
-        public static IResolver Instance = new x_Di();
+        public static x_Di Instance = new x_Di();
 
         private Dictionary<Type, object> _instances = new Dictionary<Type, object>();
         private Container _container;

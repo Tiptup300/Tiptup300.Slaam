@@ -5,10 +5,10 @@ namespace SlaamMono.Composition.x_
 {
     public class ScreenResolver : IRequest<ScreenRequest, IScreen>
     {
-        private readonly IResolver _resolver;
+        private readonly x_Di _resolver;
         private readonly IRequest<ScreenNameLookup> _screenNameLookupResolver;
 
-        public ScreenResolver(IResolver resolver, IRequest<ScreenNameLookup> screenNameLookupResolver)
+        public ScreenResolver(x_Di resolver, IRequest<ScreenNameLookup> screenNameLookupResolver)
         {
             _resolver = resolver;
             _screenNameLookupResolver = screenNameLookupResolver;
