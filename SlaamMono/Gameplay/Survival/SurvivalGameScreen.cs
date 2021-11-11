@@ -24,14 +24,14 @@ namespace SlaamMono.Gameplay
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
-        private readonly IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> _gameScreenScoreBoardResolver;
+        private readonly IRequest<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
 
         public SurvivalGameScreen(
             ILogger logger,
             IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphics,
-            IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> gameScreenScoreBoardResolver)
+            IRequest<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
             : base(screenDirector, resources, graphics, gameScreenScoreBoardResolver)
         {
             _logger = logger;
@@ -51,7 +51,7 @@ namespace SlaamMono.Gameplay
             Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupCharacters[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
             Scoreboards.Add(
                 _gameScreenScoreBoardResolver.Execute(
-                    new GameScreenScoreboardRequest(
+                    new ScoreboardRequest(
                         new Vector2(-250, 10),
                         Characters[0],
                         ThisGameType)));

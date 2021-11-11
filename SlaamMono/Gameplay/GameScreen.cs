@@ -90,7 +90,7 @@ namespace SlaamMono.Gameplay
         protected GameScreenTimer Timer;
         protected List<CharacterShell> SetupCharacters;
         protected int NullChars = 0;
-        protected List<GameScreenScoreboard> Scoreboards;
+        protected List<Scoreboard> Scoreboards;
         protected Random Rand = new Random();
         protected GameStatus CurrentGameStatus;
         protected int ReadySetGoPart = 0;
@@ -109,13 +109,13 @@ namespace SlaamMono.Gameplay
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
-        private readonly IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> _gameScreenScoreBoardResolver;
+        private readonly IRequest<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
 
         public GameScreen(
             IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphicsState,
-            IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> gameScreenScoreBoardResolver)
+            IRequest<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
         {
             _screenDirector = screenDirector;
             _resources = resources;
@@ -129,7 +129,7 @@ namespace SlaamMono.Gameplay
 
             _powerupTime = new Timer(new TimeSpan(0, 0, 0, 15));
             ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
-            Scoreboards = new List<GameScreenScoreboard>();
+            Scoreboards = new List<Scoreboard>();
             SetupCharacters = new List<CharacterShell>();
             Characters = new List<CharacterActor>();
             Tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
@@ -246,7 +246,7 @@ namespace SlaamMono.Gameplay
 
                 Scoreboards.Add(
                     _gameScreenScoreBoardResolver.Execute(
-                        new GameScreenScoreboardRequest(
+                        new ScoreboardRequest(
                             Vector2.Zero,
                         Characters[Characters.Count - 1],
                         ThisGameType)));

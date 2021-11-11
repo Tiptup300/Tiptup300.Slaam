@@ -11,7 +11,7 @@ namespace SlaamMono.Gameplay
     /// <summary>
     /// Scoreboards for the players in a game.
     /// </summary>
-    public class GameScreenScoreboard
+    public class Scoreboard
     {
         public bool Moving = false;
 
@@ -25,13 +25,13 @@ namespace SlaamMono.Gameplay
         private readonly IRequest<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IResources _resources;
 
-        public GameScreenScoreboard(IResources resources, IRequest<WhitePixelRequest, Texture2D> whitePixelResolver)
+        public Scoreboard(IResources resources, IRequest<WhitePixelRequest, Texture2D> whitePixelResolver)
         {
             _resources = resources;
             _whitePixelResolver = whitePixelResolver;
         }
 
-        public void Initialize(GameScreenScoreboardRequest request)
+        public void Initialize(ScoreboardRequest request)
         {
             Position = request.Position;
             Character = request.Character;

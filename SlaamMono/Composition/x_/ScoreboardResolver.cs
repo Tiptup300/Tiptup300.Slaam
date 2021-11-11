@@ -5,22 +5,22 @@ using SlaamMono.Library.ResourceManagement;
 
 namespace SlaamMono.Composition.x_
 {
-    public class GameScreenScoreboardResolver : IRequest<GameScreenScoreboardRequest, GameScreenScoreboard>
+    public class ScoreboardResolver : IRequest<ScoreboardRequest, Scoreboard>
     {
         private readonly IRequest<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IResources _resources;
 
-        public GameScreenScoreboardResolver(IRequest<WhitePixelRequest, Texture2D> whitePixelResolver, IResources resources)
+        public ScoreboardResolver(IRequest<WhitePixelRequest, Texture2D> whitePixelResolver, IResources resources)
         {
             _whitePixelResolver = whitePixelResolver;
             _resources = resources;
         }
 
-        public GameScreenScoreboard Execute(GameScreenScoreboardRequest request)
+        public Scoreboard Execute(ScoreboardRequest request)
         {
-            GameScreenScoreboard output;
+            Scoreboard output;
 
-            output = new GameScreenScoreboard(_resources, _whitePixelResolver);
+            output = new Scoreboard(_resources, _whitePixelResolver);
             output.Initialize(request);
 
             return output;
