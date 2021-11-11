@@ -70,6 +70,7 @@ namespace SlaamMono.Composition
             _container.Register<IScreenFactory, ScreenFactory>(Lifestyle.Singleton);
             _container.Register<IRequest<GameScreenRequest, GameScreen>, GameScreenResolver>(Lifestyle.Singleton);
             _container.Register<IRequest<GameScreenRequest, SurvivalGameScreen>, SurvivalGameScreenResolver>(Lifestyle.Singleton);
+            _container.Register<IRequest<GameScreenScoreboardRequest, GameScreenScoreboard>, GameScreenScoreboardResolver>(Lifestyle.Singleton);
         }
 
         private void registerResources()

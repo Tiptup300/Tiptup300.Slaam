@@ -109,12 +109,18 @@ namespace SlaamMono.Gameplay
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
+        private readonly IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> _gameScreenScoreBoardResolver;
 
-        public GameScreen(IScreenManager screenDirector, IResources resources, IGraphicsState graphicsState)
+        public GameScreen(
+            IScreenManager screenDirector,
+            IResources resources,
+            IGraphicsState graphicsState,
+            IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> gameScreenScoreBoardResolver)
         {
             _screenDirector = screenDirector;
             _resources = resources;
             _graphics = graphicsState;
+            _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
         }
 
         public void Initialize(GameScreenRequest gameScreenRequest)
@@ -239,12 +245,11 @@ namespace SlaamMono.Gameplay
                 }
 
                 Scoreboards.Add(
-                    new GameScreenScoreboard(
-                        Vector2.Zero,
+                    _gameScreenScoreBoardResolver.Execute(
+                        new GameScreenScoreboardRequest(
+                            Vector2.Zero,
                         Characters[Characters.Count - 1],
-                        ThisGameType,
-                        x_Di.Get<IResources>(),
-                        x_Di.Get<IRequest<WhitePixelRequest, Texture2D>>()));
+                        ThisGameType)));
 
             }
         }

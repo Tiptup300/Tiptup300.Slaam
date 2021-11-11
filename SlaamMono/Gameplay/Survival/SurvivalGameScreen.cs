@@ -24,12 +24,19 @@ namespace SlaamMono.Gameplay
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
+        private readonly IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> _gameScreenScoreBoardResolver;
 
-        public SurvivalGameScreen(ILogger logger, IScreenManager screenDirector, IResources resources, IGraphicsState graphics)
-            : base(screenDirector, resources, graphics)
+        public SurvivalGameScreen(
+            ILogger logger,
+            IScreenManager screenDirector,
+            IResources resources,
+            IGraphicsState graphics,
+            IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> gameScreenScoreBoardResolver)
+            : base(screenDirector, resources, graphics, gameScreenScoreBoardResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
+            _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
         }
 
         public override void SetupTheBoard(string BoardLoc)
@@ -43,12 +50,11 @@ namespace SlaamMono.Gameplay
 
             Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupCharacters[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
             Scoreboards.Add(
-                new GameScreenScoreboard(
-                    new Vector2(-250, 10),
-                    Characters[0],
-                    ThisGameType,
-                    x_Di.Get<IResources>(),
-                    x_Di.Get<IRequest<WhitePixelRequest, Texture2D>>()));
+                _gameScreenScoreBoardResolver.Execute(
+                    new GameScreenScoreboardRequest(
+                        new Vector2(-250, 10),
+                        Characters[0],
+                        ThisGameType)));
         }
 
         public override void Update()

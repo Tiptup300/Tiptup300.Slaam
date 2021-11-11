@@ -12,20 +12,27 @@ namespace SlaamMono.Composition.x_
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
+        private readonly IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> _gameScreenScoreBoardResolver;
 
-        public SurvivalGameScreenResolver(ILogger logger, IScreenManager screenDirector, IResources resources, IGraphicsState graphics)
+        public SurvivalGameScreenResolver(
+            ILogger logger,
+            IScreenManager screenDirector,
+            IResources resources,
+            IGraphicsState graphics,
+            IRequest<GameScreenScoreboardRequest, GameScreenScoreboard> gameScreenScoreBoardResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _resources = resources;
             _graphics = graphics;
+            _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
         }
 
         public SurvivalGameScreen Execute(GameScreenRequest request)
         {
             SurvivalGameScreen output;
 
-            output = new SurvivalGameScreen(_logger, _screenDirector, _resources, _graphics);
+            output = new SurvivalGameScreen(_logger, _screenDirector, _resources, _graphics, _gameScreenScoreBoardResolver);
             output.Initialize(request);
 
             return output;

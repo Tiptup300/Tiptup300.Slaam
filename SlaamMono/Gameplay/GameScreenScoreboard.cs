@@ -25,13 +25,17 @@ namespace SlaamMono.Gameplay
         private readonly IRequest<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IResources _resources;
 
-        public GameScreenScoreboard(Vector2 position, CharacterActor character, GameType type, IResources resources, IRequest<WhitePixelRequest, Texture2D> whitePixelResolver)
+        public GameScreenScoreboard(IResources resources, IRequest<WhitePixelRequest, Texture2D> whitePixelResolver)
         {
-            Position = position;
-            Character = character;
-            CurrentGametype = type;
             _resources = resources;
             _whitePixelResolver = whitePixelResolver;
+        }
+
+        public void Initialize(GameScreenScoreboardRequest request)
+        {
+            Position = request.Position;
+            Character = request.Character;
+            CurrentGametype = request.GameType;
         }
 
         public void Update()
