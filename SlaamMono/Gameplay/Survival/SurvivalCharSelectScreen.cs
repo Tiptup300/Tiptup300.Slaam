@@ -14,11 +14,13 @@ namespace SlaamMono.MatchCreation
     public class SurvivalCharSelectScreen : ClassicCharSelectScreen
     {
         private readonly IScreenManager _screenDirector;
+        private readonly IRequest<GameScreenRequest, SurvivalGameScreen> _survivalGameScreenRequest;
 
-        public SurvivalCharSelectScreen(ILogger logger, IScreenManager screenDirector)
+        public SurvivalCharSelectScreen(ILogger logger, IScreenManager screenDirector, IRequest<GameScreenRequest, SurvivalGameScreen> survivalGameScreenRequest)
             : base(logger, screenDirector)
         {
             _screenDirector = screenDirector;
+            _survivalGameScreenRequest = survivalGameScreenRequest;
         }
 
         public override void ResetBoxes()
@@ -43,12 +45,7 @@ namespace SlaamMono.MatchCreation
         {
             List<CharacterShell> list = new List<CharacterShell>();
             list.Add(SelectBoxes[0].GetShell());
-            GameScreen.Instance = new SurvivalScreen(
-                list,
-                x_Di.Get<ILogger>(),
-                x_Di.Get<IScreenManager>(),
-                x_Di.Get<IResources>(),
-                x_Di.Get<IGraphicsState>());
+            GameScreen.Instance = _survivalGameScreenRequest.Execute(new GameScreenRequest(list));
             _screenDirector.ChangeTo(GameScreen.Instance);
         }
     }

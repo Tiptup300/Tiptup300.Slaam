@@ -23,18 +23,72 @@ namespace SlaamMono.Gameplay
 {
     public class GameScreen : IScreen
     {
-        public static GameScreen Instance;
-
+        #region BOARD_STUFF
         // board
         public Tile[,] Tiles;
         protected Texture2D Tileset;
         private Vector2 _boardpos;
 
+        private Vector2 calcFinalBoardPosition()
+        {
+            int width = (int)(_graphics.Get().PreferredBackBufferWidth / 2f);
+            int height = (int)(_graphics.Get().PreferredBackBufferHeight / 2f);
+            int boardWidth = GameGlobals.BOARD_WIDTH * GameGlobals.TILE_SIZE;
+            int boardHeight = GameGlobals.BOARD_HEIGHT * GameGlobals.TILE_SIZE;
+
+            return new Vector2(width - boardWidth / 2f, height - boardHeight / 2f);
+        }
+        public void ShortenBoard()
+        {
+            TimeSpan ShortenTime = new TimeSpan(0, 0, 0, 2);
+            if (_boardsize < 6)
+            {
+                markBoardOutline();
+                _boardsize++;
+            }
+            _stepsRemaining--;
+            if (_stepsRemaining == 0)
+            {
+                CurrentGameStatus = GameStatus.Over;
+                ReadySetGoPart = 3;
+                ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+            }
+        }
+        public Vector2 InterpretCoordinates(Vector2 pos, bool flip)
+        {
+            if (!flip)
+                return new Vector2(_boardpos.X + pos.X * GameGlobals.TILE_SIZE, _boardpos.Y + pos.Y * GameGlobals.TILE_SIZE);
+            else
+            {
+
+                int X1 = (int)((pos.X - _boardpos.X) % GameGlobals.TILE_SIZE);
+                int Y1 = (int)((pos.Y - _boardpos.Y) % GameGlobals.TILE_SIZE);
+                int X = (int)((pos.X - _boardpos.X - X1) / GameGlobals.TILE_SIZE);
+                int Y = (int)((pos.Y - _boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
+
+                if (pos.X < _boardpos.X)
+                    X = -1;
+                if (pos.Y < _boardpos.Y)
+                    Y = -1;
+
+                return new Vector2(X, Y);
+            }
+        }
+        private int _boardsize = 0;
+
+        #endregion
+
+        public static GameScreen Instance;
+
+
+        public MenuItemTree main = new MenuItemTree();
+
+
         public GameType ThisGameType;
         public List<CharacterActor> Characters;
 
         protected GameScreenTimer Timer;
-        protected List<CharacterShell> SetupChars;
+        protected List<CharacterShell> SetupCharacters;
         protected int NullChars = 0;
         protected List<GameScreenScoreboard> Scoreboards;
         protected Random Rand = new Random();
@@ -43,7 +97,6 @@ namespace SlaamMono.Gameplay
         protected Timer ReadySetGoThrottle;
         protected MatchScoreCollection ScoreKeeper;
 
-        private int _boardsize = 0;
         private bool _timing = false;
         private bool _paused = false;
         private int _killsToWin = 0;
@@ -57,36 +110,21 @@ namespace SlaamMono.Gameplay
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
 
-        public Vector2 FinalBoardPosition
+        public GameScreen(IScreenManager screenDirector, IResources resources, IGraphicsState graphicsState)
         {
-            get
-            {
-                int width = (int)(_graphics.Get().PreferredBackBufferWidth / 2f);
-                int height = (int)(_graphics.Get().PreferredBackBufferHeight / 2f);
-                int boardWidth = GameGlobals.BOARD_WIDTH * GameGlobals.TILE_SIZE;
-                int boardHeight = GameGlobals.BOARD_HEIGHT * GameGlobals.TILE_SIZE;
-
-                return new Vector2(width - boardWidth / 2f, height - boardHeight / 2f);
-            }
-        }
-
-
-        public GameScreen(List<CharacterShell> chars, IScreenManager screenDirector, IResources resources, IGraphicsState graphicsState)
-        {
-            SetupChars = chars;
             _screenDirector = screenDirector;
             _resources = resources;
             _graphics = graphicsState;
-
-            initialize();
         }
 
-        private void initialize()
+        public void Initialize(GameScreenRequest gameScreenRequest)
         {
+            SetupCharacters = gameScreenRequest.SetupCharacters;
+
             _powerupTime = new Timer(new TimeSpan(0, 0, 0, 15));
             ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
             Scoreboards = new List<GameScreenScoreboard>();
-            SetupChars = new List<CharacterShell>();
+            SetupCharacters = new List<CharacterShell>();
             Characters = new List<CharacterActor>();
             Tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
             CurrentGameStatus = GameStatus.Waiting;
@@ -99,7 +137,7 @@ namespace SlaamMono.Gameplay
 
         public void Open()
         {
-            _boardpos = FinalBoardPosition;
+            _boardpos = calcFinalBoardPosition();
             _boardpos.Y = -Tileset.Height;
 
             Timer = new GameScreenTimer(
@@ -125,7 +163,7 @@ namespace SlaamMono.Gameplay
             BackgroundManager.ChangeBG(BackgroundType.BattleScreen);
             if (ThisGameType == GameType.Classic)
             {
-                _stepsRemaining = SetupChars.Count - 1;
+                _stepsRemaining = SetupCharacters.Count - 1;
             }
             else if (ThisGameType == GameType.TimedSpree)
             {
@@ -140,10 +178,10 @@ namespace SlaamMono.Gameplay
                 _spreeCurrentStep = 0;
             }
 
-            SetupPauseMenu();
+            setupPauseMenu();
         }
-        public MenuItemTree main = new MenuItemTree();
-        public void SetupPauseMenu()
+
+        private void setupPauseMenu()
         {
             SlaamGame.mainBlade.UserCanNavigateMenu = true;
             SlaamGame.mainBlade.UserCanCloseMenu = false;
@@ -170,18 +208,34 @@ namespace SlaamMono.Gameplay
 
         public virtual void SetupTheBoard(string BoardLoc)
         {
-            Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, BoardLoc);
+            Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);
 
-            for (int x = 0; x < SetupChars.Count; x++)
+            for (int x = 0; x < SetupCharacters.Count; x++)
             {
-                if (SetupChars[x].Type == PlayerType.Player)
+                if (SetupCharacters[x].Type == PlayerType.Player)
                 {
-                    Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation), SetupChars[x].CharProfile, new Vector2(-100, -100), InputComponent.Players[(int)SetupChars[x].PlayerIDX], SetupChars[x].PlayerColor, x, x_Di.Get<IResources>()));
+                    Characters.Add(
+                        new CharacterActor(
+                            SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupCharacters[x].SkinLocation),
+                            SetupCharacters[x].CharProfile,
+                            new Vector2(-100, -100),
+                            InputComponent.Players[(int)SetupCharacters[x].PlayerIDX],
+                            SetupCharacters[x].PlayerColor,
+                            x,
+                            x_Di.Get<IResources>()));
                 }
                 else
                 {
-                    ProfileManager.AllProfiles[SetupChars[x].CharProfile].Skin = SetupChars[x].SkinLocation;
-                    Characters.Add(new BotActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[x].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[x].SkinLocation)*/, SetupChars[x].CharProfile, new Vector2(-100, -100), this, SetupChars[x].PlayerColor, Characters.Count, x_Di.Get<IResources>()));
+                    ProfileManager.AllProfiles[SetupCharacters[x].CharProfile].Skin = SetupCharacters[x].SkinLocation;
+                    Characters.Add(
+                        new BotActor(
+                            SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupCharacters[x].SkinLocation),
+                            SetupCharacters[x].CharProfile,
+                            new Vector2(-100, -100),
+                            this,
+                            SetupCharacters[x].PlayerColor,
+                            Characters.Count,
+                            x_Di.Get<IResources>()));
                 }
 
                 Scoreboards.Add(
@@ -227,7 +281,6 @@ namespace SlaamMono.Gameplay
             }
 
         }
-
         private void updateOverGameState()
         {
             _timing = false;
@@ -237,7 +290,6 @@ namespace SlaamMono.Gameplay
                 EndGame();
             }
         }
-
         private void updatePlayingGameState()
         {
             for (int x = 0; x < Characters.Count; x++)
@@ -287,7 +339,6 @@ namespace SlaamMono.Gameplay
                 }
             }
         }
-
         private void updateWaitingGameState()
         {
             ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
@@ -303,7 +354,6 @@ namespace SlaamMono.Gameplay
                 }
             }
         }
-
         private void updateRespawningGameState()
         {
             ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
@@ -322,14 +372,13 @@ namespace SlaamMono.Gameplay
                 }
             }
         }
-
         private void updateMovingBoardState()
         {
             _boardpos.Y += FrameRateDirector.MovementFactor * (10f / 100f);
 
-            if (_boardpos.Y >= FinalBoardPosition.Y)
+            if (_boardpos.Y >= calcFinalBoardPosition().Y)
             {
-                _boardpos = FinalBoardPosition;
+                _boardpos = calcFinalBoardPosition();
                 CurrentGameStatus = GameStatus.Respawning;
             }
             for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
@@ -340,7 +389,6 @@ namespace SlaamMono.Gameplay
                 }
             }
         }
-
         private void updateScoreBoards()
         {
             for (int x = 0; x < Scoreboards.Count; x++)
@@ -398,7 +446,6 @@ namespace SlaamMono.Gameplay
                 batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)Rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)Rand.NextDouble() * (1 + ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
             }
         }
-
         private void resetCharactersDrawnStatus()
         {
             Characters
@@ -413,11 +460,6 @@ namespace SlaamMono.Gameplay
             _resources.GetTexture("BattleBG").Dispose();
         }
 
-        /// <summary>
-        /// Update the kill tables for final scoring.
-        /// </summary>
-        /// <param name="Killer">Index of who killed.</param>
-        /// <param name="Killee">Index of who was killed.</param>
         public virtual void ReportKilling(int Killer, int Killee)
         {
             if (Characters[Killee].Lives == 0 && ThisGameType == GameType.Classic)
@@ -459,10 +501,6 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        /// <summary>
-        /// Select a new location for a dead char. coming back and setup the tile for respawn.
-        /// </summary>
-        /// <param name="x">Character's Index</param>
         public void RespawnChar(int x)
         {
             int newx = Rand.Next(0, GameGlobals.BOARD_WIDTH);
@@ -499,25 +537,6 @@ namespace SlaamMono.Gameplay
 #endif
         }
 
-        /// <summary>
-        /// Marks the board outer edges for falling.
-        /// </summary>
-        public void ShortenBoard()
-        {
-            TimeSpan ShortenTime = new TimeSpan(0, 0, 0, 2);
-            if (_boardsize < 6)
-            {
-                markBoardOutline();
-                _boardsize++;
-            }
-            _stepsRemaining--;
-            if (_stepsRemaining == 0)
-            {
-                CurrentGameStatus = GameStatus.Over;
-                ReadySetGoPart = 3;
-                ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-            }
-        }
 
         private static void markBoardOutline()
         {
@@ -531,9 +550,6 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        /// <summary>
-        /// Saves all profile information and goes to the stats screen.
-        /// </summary>
         public virtual void EndGame()
         {
             ScoreKeeper.CalcTotals();
@@ -550,33 +566,5 @@ namespace SlaamMono.Gameplay
                     x_Di.Get<IResources>(),
                     x_Di.Get<IRenderGraph>()));
         }
-
-        /// <summary>
-        /// Converts the real postion for the onboard positioning.
-        /// </summary>
-        /// <param name="pos">Coordinates to convert.</param>
-        /// <param name="flip">Real->Board?</param>
-        /// <returns></returns>
-        public Vector2 InterpretCoordinates(Vector2 pos, bool flip)
-        {
-            if (!flip)
-                return new Vector2(_boardpos.X + pos.X * GameGlobals.TILE_SIZE, _boardpos.Y + pos.Y * GameGlobals.TILE_SIZE);
-            else
-            {
-
-                int X1 = (int)((pos.X - _boardpos.X) % GameGlobals.TILE_SIZE);
-                int Y1 = (int)((pos.Y - _boardpos.Y) % GameGlobals.TILE_SIZE);
-                int X = (int)((pos.X - _boardpos.X - X1) / GameGlobals.TILE_SIZE);
-                int Y = (int)((pos.Y - _boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
-
-                if (pos.X < _boardpos.X)
-                    X = -1;
-                if (pos.Y < _boardpos.Y)
-                    Y = -1;
-
-                return new Vector2(X, Y);
-            }
-        }
-
     }
 }

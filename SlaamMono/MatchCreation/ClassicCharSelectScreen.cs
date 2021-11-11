@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Composition;
 using SlaamMono.Gameplay;
+using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
@@ -128,7 +129,8 @@ namespace SlaamMono.MatchCreation
                     x_Di.Get<IScreenManager>(),
                     x_Di.Get<PlayerColorResolver>(),
                     x_Di.Get<IResources>(),
-                    x_Di.Get<IRenderGraph>()));
+                    x_Di.Get<IRenderGraph>(),
+                    x_Di.Get<IRequest<GameScreenRequest, GameScreen>>()));
         }
 
         public void Draw(SpriteBatch batch)

@@ -10,15 +10,13 @@ using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
-using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.SubClasses;
 using System;
-using System.Collections.Generic;
 
 namespace SlaamMono.Gameplay
 {
-    class SurvivalScreen : GameScreen
+    public class SurvivalGameScreen : GameScreen
     {
         private Timer _timeToAddBot = new Timer(new TimeSpan(0, 0, 10));
         private int _botsToAdd = 1;
@@ -27,8 +25,8 @@ namespace SlaamMono.Gameplay
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
 
-        public SurvivalScreen(List<CharacterShell> shell, ILogger logger, IScreenManager screenDirector, IResources resources, IGraphicsState graphics)
-            : base(shell, screenDirector, resources, graphics)
+        public SurvivalGameScreen(ILogger logger, IScreenManager screenDirector, IResources resources, IGraphicsState graphics)
+            : base(screenDirector, resources, graphics)
         {
             _logger = logger;
             _screenDirector = screenDirector;
@@ -43,7 +41,7 @@ namespace SlaamMono.Gameplay
             CurrentMatchSettings.LivesAmt = 1;
             Tileset = LobbyScreen.LoadQuickBoard();
 
-            Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupChars[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupChars[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
+            Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupCharacters[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
             Scoreboards.Add(
                 new GameScreenScoreboard(
                     new Vector2(-250, 10),

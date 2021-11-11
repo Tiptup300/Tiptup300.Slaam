@@ -19,38 +19,46 @@ namespace SlaamMono.MatchCreation
     public class LobbyScreen : IScreen
     {
         public static Texture2D DefaultBoard;
-#if !ZUNE
-        private const int MAX_PLAYERS = 8;
-#else
+
+        public Graph MainMenu;
+        public List<CharacterShell> SetupCharacters;
+
         private const int MAX_PLAYERS = 4;
-#endif
-        public List<CharacterShell> SetupChars;
+
         private Texture2D CurrentBoardTexture;
         private int PlayerAmt;
-        private string[] Dialogs = new string[2];
+        private string[] Dialogs;
         private string CurrentBoardLocation;
-#if !ZUNE
-        private bool ButtonOnLeft = true;
-#endif
-        private bool ViewingSettings = false;
-        public Graph MainMenu;
+        private bool ViewingSettings;
         private IntRange MenuChoice;
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
+        private readonly IRenderGraph _renderGraphManager;
+        private readonly IRequest<GameScreenRequest, GameScreen> _gameScreenRequest;
 
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver, IResources resources, IRenderGraph renderGraphManager)
+        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver, IResources resources, IRenderGraph renderGraphManager, IRequest<GameScreenRequest, GameScreen> gameScreenRequest)
         {
-            SetupChars = chars;
+            SetupCharacters = chars;
             _logger = logger;
             _screenDirector = screenDirector;
             _playerColorResolver = playerColorResolver;
             _resources = resources;
+            _renderGraphManager = renderGraphManager;
+            _gameScreenRequest = gameScreenRequest;
 
-            PlayerAmt = SetupChars.Count;
-            MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), resources, renderGraphManager);
+            initialize();
+        }
+
+        private void initialize()
+        {
+            Dialogs = new string[2];
+            ViewingSettings = false;
+
+            PlayerAmt = SetupCharacters.Count;
+            MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), _resources, _renderGraphManager);
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Add(true,
@@ -122,7 +130,7 @@ namespace SlaamMono.MatchCreation
         public void Open()
         {
             BackgroundManager.ChangeBG(BackgroundType.Menu);
-            if (SetupChars.Count == 1)
+            if (SetupCharacters.Count == 1)
             {
                 AddComputer();
                 PlayerAmt++;
@@ -195,24 +203,20 @@ namespace SlaamMono.MatchCreation
                     ResetZune();
                 }
 
-                if (InputComponent.Players[0].PressedUp && SetupChars.Count < MAX_PLAYERS)
+                if (InputComponent.Players[0].PressedUp && SetupCharacters.Count < MAX_PLAYERS)
                 {
                     AddComputer();
                 }
-                if (InputComponent.Players[0].PressedDown && SetupChars.Count > PlayerAmt)
+                if (InputComponent.Players[0].PressedDown && SetupCharacters.Count > PlayerAmt)
                 {
-                    ProfileManager.ResetBot(SetupChars[SetupChars.Count - 1].CharProfile);
-                    SetupChars.RemoveAt(SetupChars.Count - 1);
+                    ProfileManager.ResetBot(SetupCharacters[SetupCharacters.Count - 1].CharProfile);
+                    SetupCharacters.RemoveAt(SetupCharacters.Count - 1);
                 }
 
                 if (InputComponent.Players[0].PressedStart)
                 {
                     CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
-                    GameScreen.Instance = new GameScreen(
-                        SetupChars,
-                        x_Di.Get<IScreenManager>(),
-                        x_Di.Get<IResources>(),
-                        x_Di.Get<IGraphicsState>());
+                    GameScreen.Instance = _gameScreenRequest.Execute(new GameScreenRequest(SetupCharacters));
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();
@@ -228,48 +232,7 @@ namespace SlaamMono.MatchCreation
 
             }
         }
-#if !ZUNE
-        public void Draw(SpriteBatch batch)
-        {
-            if (ViewingSettings)
-            {
-                MainMenu.Draw(batch);
-            }
-            else
-            {
-                if (CurrentBoardTexture != null)
-                    batch.Draw(CurrentBoardTexture, new Rectangle((int)(640 - Resources.LobbyUnderlay.Width / 2) + 17, (int)(512 - Resources.LobbyUnderlay.Height / 2) + 21, 400, 400), Color.White);
-                batch.Draw(Resources.LobbyInfoOverlay.Texture, new Vector2((int)(640 - Resources.LobbyUnderlay.Width / 2) + 17, (int)(512 - Resources.LobbyUnderlay.Height / 2) + 21 + 400 - Resources.LobbyInfoOverlay.Height), Color.White);
-               
-                Resources.DrawString(DialogStrings.GetDescMsg(), new Vector2((int)(640 - Resources.LobbyUnderlay.Width / 2) + 17 + 9, (int)(512 - Resources.LobbyUnderlay.Height / 2) + 21 + 400 - Resources.LobbyInfoOverlay.Height + 22), Resources.SegoeUIx14pt, TextAlignment.Default, Color.White, true);
 
-                batch.Draw(Resources.LobbyUnderlay.Texture, new Vector2(640 - Resources.LobbyUnderlay.Width / 2, 512 - Resources.LobbyUnderlay.Height / 2), Color.White);
-
-                float YOffset = 330;
-
-                for (int x = 0; x < SetupChars.Count; x++)
-                {
-                    batch.Draw(Resources.LobbyCharBar.Texture, new Vector2(689, YOffset + 30 * x), Color.White);
-                    batch.Draw(Resources.LobbyColorPreview.Texture, new Vector2(689, YOffset + 30 * x), SetupChars[x].PlayerColor);
-                    if (SetupChars[x].Type == PlayerType.Player)
-                        Resources.DrawString(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(725, YOffset + 18 + 30 * x), Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black, false);
-                    else
-                        Resources.DrawString(DialogStrings.Player + (x + 1) + ": BOT [ " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + " ]", new Vector2(725, YOffset + 18 + 30 * x), Resources.SegoeUIx14pt, TextAlignment.Default, Color.Red, false);
-                }
-
-                batch.Draw(Resources.LobbyOverlay.Texture, new Vector2(640 - Resources.LobbyUnderlay.Width / 2, 512 - Resources.LobbyUnderlay.Height / 2), Color.White);
-                batch.Draw(Resources.CPU.Texture, new Vector2(640 - Resources.LobbyUnderlay.Width / 2, 512 - Resources.LobbyUnderlay.Height / 2), Color.White);
-
-                batch.Draw(Resources.LButton.Texture, new Vector2(700, 673), Color.White);
-                batch.Draw(Resources.LButton.Texture, new Vector2(845, 673), Color.White);
-                Resources.DrawString("Start", new Vector2(700 + 145 / 2, 673 + 18), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
-                Resources.DrawString("Settings", new Vector2(845 + 145 / 2, 673 + 18), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
-                batch.Draw(Resources.LButtonHT.Texture, new Vector2((ButtonOnLeft ? 700 : 845), 673), Color.White);
-                //Resources.DrawString(Dialogs[0], new Vector2(700, 336), Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black,false);
-                //Resources.DrawString(Dialogs[1], new Vector2(700, 698), Resources.SegoeUIx14pt, TextAlignment.Default, Color.Black,false);
-            }
-        }
-#else
         public void Draw(SpriteBatch batch)
         {
             if (ViewingSettings)
@@ -281,19 +244,19 @@ namespace SlaamMono.MatchCreation
                 batch.Draw(_resources.GetTexture("LobbyUnderlay").Texture, Vector2.Zero, Color.White);
                 float YOffset = 75;
 
-                for (int x = 0; x < SetupChars.Count; x++)
+                for (int x = 0; x < SetupCharacters.Count; x++)
                 {
                     batch.Draw(_resources.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
-                    batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), SetupChars[x].PlayerColor);
-                    if (SetupChars[x].Type == PlayerType.Player)
-                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+                    batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), SetupCharacters[x].PlayerColor);
+                    if (SetupCharacters[x].Type == PlayerType.Player)
+                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupCharacters[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
                     else
-                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupChars[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
+                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupCharacters[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
                 }
                 batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
             }
         }
-#endif
+
         public void Close()
         {
             CurrentBoardTexture = null;
@@ -338,7 +301,7 @@ namespace SlaamMono.MatchCreation
         /// </summary>
         private void AddComputer()
         {
-            SetupChars.Add(new CharacterShell(ClassicCharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupChars.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(SetupChars.Count)));
+            SetupCharacters.Add(new CharacterShell(ClassicCharSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupCharacters.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(SetupCharacters.Count)));
         }
     }
 }

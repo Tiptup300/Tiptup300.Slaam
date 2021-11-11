@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SimpleInjector;
+using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Configurations;
@@ -67,6 +68,8 @@ namespace SlaamMono.Composition
             _container.Register<IScreenManager, ScreenManager>(Lifestyle.Singleton);
             _container.Register<ILogoScreen, LogoScreen>();
             _container.Register<IScreenFactory, ScreenFactory>(Lifestyle.Singleton);
+            _container.Register<IRequest<GameScreenRequest, GameScreen>, GameScreenResolver>(Lifestyle.Singleton);
+            _container.Register<IRequest<GameScreenRequest, SurvivalGameScreen>, SurvivalGameScreenResolver>(Lifestyle.Singleton);
         }
 
         private void registerResources()
