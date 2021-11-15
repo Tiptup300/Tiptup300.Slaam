@@ -58,7 +58,7 @@ namespace SlaamMono.Composition
 
         private void registerScreens()
         {
-            _container.RegisterInstance(new Mut<ScreenState>(new ScreenState(null, null, false)));
+            _container.RegisterInstance(new Mut<ScreenTransitionState>(new ScreenTransitionState(null, null, false)));
             _container.Register<IMainMenuScreen, MainMenuScreen>();
             _container.Register<CreditsScreen>();
             _container.Register<HighScoreScreen>();

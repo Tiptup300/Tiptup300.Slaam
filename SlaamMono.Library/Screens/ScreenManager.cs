@@ -4,11 +4,11 @@ namespace SlaamMono.Library.Screens
 {
     public class ScreenManager : IScreenManager
     {
-        private readonly Mut<ScreenState> _screenState;
+        private readonly Mut<ScreenTransitionState> _screenState;
         private readonly IResolver<ScreenRequest, IScreen> _screenResolver;
 
         public ScreenManager(
-            Mut<ScreenState> screenState,
+            Mut<ScreenTransitionState> screenState,
             IResolver<ScreenRequest, IScreen> screenResolver)
         {
             _screenState = screenState;
