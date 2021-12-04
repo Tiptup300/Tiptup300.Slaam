@@ -23,26 +23,26 @@ namespace SlaamMono.Gameplay.Statistics
         private StatsBoard Kills;
         private StatsBoard PvP;
         private CachedTexture[] _statsButtons = new CachedTexture[3];
-        private Rectangle StatsRect = new Rectangle(20, 110, GameGlobals.DRAWING_GAME_WIDTH - 40, GameGlobals.DRAWING_GAME_HEIGHT);
-        private Color StatsCol = new Color(0, 0, 0, 125);
+        private readonly Rectangle _statsRectangle = new Rectangle(20, 110, GameGlobals.DRAWING_GAME_WIDTH - 40, GameGlobals.DRAWING_GAME_HEIGHT);
+
+        private readonly Color _statsColor = new Color(0, 0, 0, 125);
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraph;
 
-        public StatsScreen(MatchScoreCollection scorecollection, ILogger logger, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
+        public StatsScreen(ILogger logger, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
         {
-            ScoreCollection = scorecollection;
             _logger = logger;
             _screenDirector = screenDirector;
             _resources = resources;
             _renderGraph = renderGraph;
         }
 
-        public void Initialize()
+        public void Initialize(StatsScreenRequest statsScreenRequest)
         {
-
+            ScoreCollection = statsScreenRequest.ScoreCollection;
         }
 
         public void Open()
@@ -51,15 +51,15 @@ namespace SlaamMono.Gameplay.Statistics
             BackgroundManager.ChangeBG(BackgroundType.Menu);
             if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Classic)
             {
-                PlayerStats = new NormalStatsBoard(ScoreCollection, StatsRect, StatsCol, _resources, _renderGraph);
+                PlayerStats = new NormalStatsBoard(ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
             }
             else if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Spree || ScoreCollection.ParentGameScreen.ThisGameType == GameType.TimedSpree)
             {
-                PlayerStats = new SpreeStatsBoard(ScoreCollection, StatsRect, StatsCol, _resources, _renderGraph);
+                PlayerStats = new SpreeStatsBoard(ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
             }
             else if (ScoreCollection.ParentGameScreen.ThisGameType == GameType.Survival)
             {
-                PlayerStats = new SurvivalStatsBoard(ScoreCollection, StatsRect, StatsCol, MAX_HIGHSCORES, _logger, _resources, _renderGraph);
+                PlayerStats = new SurvivalStatsBoard(ScoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderGraph);
             }
 
             PlayerStats.CalculateStats();
@@ -68,11 +68,11 @@ namespace SlaamMono.Gameplay.Statistics
             if (ScoreCollection.ParentGameScreen.ThisGameType != GameType.Survival)
             {
 
-                Kills = new KillsStatsBoard(ScoreCollection, StatsRect, StatsCol, _resources, _renderGraph);
+                Kills = new KillsStatsBoard(ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
                 Kills.CalculateStats();
                 Kills.ConstructGraph(0);
 
-                PvP = new PvPStatsBoard(ScoreCollection, StatsRect, StatsCol, _resources, _renderGraph);
+                PvP = new PvPStatsBoard(ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
                 PvP.CalculateStats();
                 PvP.ConstructGraph(0);
 

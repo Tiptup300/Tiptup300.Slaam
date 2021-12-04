@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Gameplay.Actors;
-using SlaamMono.GameplayStatistics;
+using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
@@ -26,18 +26,21 @@ namespace SlaamMono.Survival
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
+        private readonly IResolver<StatsScreenRequest, StatsScreen> _statsScreenResolver;
 
         public SurvivalGameScreen(
             ILogger logger,
             IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphics,
-            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
-            : base(screenDirector, resources, graphics, gameScreenScoreBoardResolver)
+            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver,
+            IResolver<StatsScreenRequest, StatsScreen> statsScreenResolver)
+            : base(screenDirector, resources, graphics, gameScreenScoreBoardResolver, statsScreenResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
+            _statsScreenResolver = statsScreenResolver;
         }
 
         public override void SetupTheBoard(string BoardLoc)
@@ -134,12 +137,7 @@ namespace SlaamMono.Survival
             }
             ProfileManager.SaveProfiles();
             _screenDirector.ChangeTo(
-                new StatsScreen(
-                    ScoreKeeper,
-                    x_Di.Get<ILogger>(),
-                    x_Di.Get<IScreenManager>(),
-                    x_Di.Get<IResources>(),
-                    x_Di.Get<IRenderGraph>()));
+                _statsScreenResolver.Resolve(new StatsScreenRequest(ScoreKeeper)));
         }
     }
 }

@@ -4,7 +4,7 @@ using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay.Actors;
 using SlaamMono.Gameplay.Boards;
 using SlaamMono.Gameplay.Powerups;
-using SlaamMono.GameplayStatistics;
+using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
@@ -110,17 +110,20 @@ namespace SlaamMono.Gameplay
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
         private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
+        private readonly IResolver<StatsScreenRequest, StatsScreen> _statsScreenRequest;
 
         public GameScreen(
             IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphicsState,
-            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
+            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver,
+            IResolver<StatsScreenRequest, StatsScreen> statsScreenRequest)
         {
             _screenDirector = screenDirector;
             _resources = resources;
             _graphics = graphicsState;
             _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
+            _statsScreenRequest = statsScreenRequest;
         }
 
         public void Initialize(GameScreenRequest gameScreenRequest)
@@ -564,12 +567,7 @@ namespace SlaamMono.Gameplay
             }
             ProfileManager.SaveProfiles();
             _screenDirector.ChangeTo(
-                new StatsScreen(
-                    ScoreKeeper,
-                    x_Di.Get<ILogger>(),
-                    x_Di.Get<IScreenManager>(),
-                    x_Di.Get<IResources>(),
-                    x_Di.Get<IRenderGraph>()));
+                _statsScreenRequest.Resolve(new StatsScreenRequest(ScoreKeeper)));
         }
     }
 }
