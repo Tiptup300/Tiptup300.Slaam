@@ -13,7 +13,7 @@ using System.IO;
 
 namespace SlaamMono.MatchCreation
 {
-    public class BoardThumbnailViewer : IScreen
+    public class BoardSelectionScreen : IScreen
     {
         public LobbyScreen ParentScreen;
         public bool FoundBoard = false;
@@ -43,7 +43,7 @@ namespace SlaamMono.MatchCreation
         private readonly IScreenManager _screenManager;
         private readonly IResources _resources;
 
-        public BoardThumbnailViewer(LobbyScreen parentscreen, IResources resources, IScreenManager screenManager)
+        public BoardSelectionScreen(LobbyScreen parentscreen, IResources resources, IScreenManager screenManager)
         {
             ParentScreen = parentscreen;
             _resources = resources;

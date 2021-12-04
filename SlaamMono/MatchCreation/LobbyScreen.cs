@@ -82,7 +82,7 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                BoardThumbnailViewer viewer = new BoardThumbnailViewer(this, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>());
+                BoardSelectionScreen viewer = new BoardSelectionScreen(this, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>());
                 viewer.Open();
                 while (!viewer.FoundBoard)
                 {
@@ -114,7 +114,7 @@ namespace SlaamMono.MatchCreation
         {
             if (DefaultBoard == null)
             {
-                BoardThumbnailViewer viewer = new BoardThumbnailViewer(null, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>());
+                BoardSelectionScreen viewer = new BoardSelectionScreen(null, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>());
                 viewer.Open();
                 while (!viewer.FoundBoard)
                 {
@@ -185,7 +185,7 @@ namespace SlaamMono.MatchCreation
                         }
                         else
                         {
-                            _screenDirector.ChangeTo(new BoardThumbnailViewer(this, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>()));
+                            _screenDirector.ChangeTo(new BoardSelectionScreen(this, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>()));
                         }
                         BackgroundManager.ChangeBG(BackgroundType.Menu);
                     }
