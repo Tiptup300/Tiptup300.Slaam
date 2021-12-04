@@ -3,6 +3,7 @@ using SlaamMono.Library;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
+using SlaamMono.Survival;
 
 namespace SlaamMono.Composition.x_
 {

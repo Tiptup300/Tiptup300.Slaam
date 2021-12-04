@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Composition.x_;
+using SlaamMono.Gameplay;
 using SlaamMono.Gameplay.Actors;
 using SlaamMono.GameplayStatistics;
 using SlaamMono.Library;
@@ -14,7 +15,7 @@ using SlaamMono.PlayerProfiles;
 using SlaamMono.SubClasses;
 using System;
 
-namespace SlaamMono.Gameplay
+namespace SlaamMono.Survival
 {
     public class SurvivalGameScreen : GameScreen
     {
