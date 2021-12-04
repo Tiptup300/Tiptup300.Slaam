@@ -8,7 +8,6 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
-using SlaamMono.Menus;
 using SlaamMono.x_;
 using System;
 using System.Collections.Generic;
@@ -17,24 +16,40 @@ using System.Linq;
 
 namespace SlaamMono.MatchCreation
 {
-    public class ClassicCharSelectScreen : IScreen
+    public class CharacterSelectScreen : IScreen
     {
         public static Texture2D[] SkinTexture;
 
         private static Random rand = new Random();
 
-        private int Peopledone = 0;
-        private int PeopleIn = 0;
+        private int _peopleDone = 0;
+        private int _peopleIn = 0;
 
-        public CharSelectBox[] SelectBoxes;
+        protected CharSelectBox[] SelectBoxes;
 
         private const float VOffset = 195f;
         private const float HOffset = 40f;
 
+        public static List<string> Skins = new List<string>();
+        public static bool SkinsLoaded = false;
+
+
+
+        public Vector2[] BoxPositions = new Vector2[]
+        {
+            new Vector2(HOffset + 0, VOffset + 0),
+            new Vector2(HOffset + 0, VOffset + 256),
+            new Vector2(HOffset + 600, VOffset + 0),
+            new Vector2(HOffset + 600, VOffset + 256),
+            new Vector2(HOffset + 600, VOffset + 512),
+            new Vector2(600, 768),
+
+        };
+
         private readonly ILogger _logger;
 
         private readonly IScreenManager _screenDirector;
-        public ClassicCharSelectScreen(ILogger logger, IScreenManager screenDirector)
+        public CharacterSelectScreen(ILogger logger, IScreenManager screenDirector)
         {
             _logger = logger;
             _screenDirector = screenDirector;
@@ -80,11 +95,11 @@ namespace SlaamMono.MatchCreation
         public void Update()
         {
             BackgroundManager.SetRotation(1f);
-            Peopledone = 0;
-            PeopleIn = 0;
+            _peopleDone = 0;
+            _peopleIn = 0;
 
             if (
-                PeopleIn == 0 &&
+                _peopleIn == 0 &&
                 InputComponent.Players[0].PressedAction2 &&
                 SelectBoxes[0].CurrentState == CharSelectBoxState.Computer)
             {
@@ -96,15 +111,15 @@ namespace SlaamMono.MatchCreation
                 SelectBoxes[idx].Update();
                 if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
                 {
-                    Peopledone++;
+                    _peopleDone++;
                 }
 
                 if (SelectBoxes[idx].CurrentState != CharSelectBoxState.Computer)
                 {
-                    PeopleIn++;
+                    _peopleIn++;
                 }
             }
-            if (PeopleIn > 0 && Peopledone == PeopleIn)
+            if (_peopleIn > 0 && _peopleDone == _peopleIn)
             {
                 GoForward();
             }
@@ -144,9 +159,6 @@ namespace SlaamMono.MatchCreation
         {
             SelectBoxes = null;
         }
-
-        public static List<string> Skins = new List<string>();
-        public static bool SkinsLoaded = false;
 
         /// <summary>
         /// Returns a random skin string.
@@ -204,16 +216,5 @@ namespace SlaamMono.MatchCreation
             }
 
         }
-
-        public Vector2[] BoxPositions = new Vector2[]
-        {
-            new Vector2(HOffset + 0, VOffset + 0),
-            new Vector2(HOffset + 0, VOffset + 256),
-            new Vector2(HOffset + 600, VOffset + 0),
-            new Vector2(HOffset + 600, VOffset + 256),
-            new Vector2(HOffset + 600, VOffset + 512),
-            new Vector2(600, 768),
-
-        };
     }
 }
