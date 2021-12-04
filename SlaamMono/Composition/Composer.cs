@@ -65,7 +65,7 @@ namespace SlaamMono.Composition
             _container.Register<HighScoreScreen>();
             _container.Register<ProfileEditScreen>();
             _container.Register<SurvivalCharSelectScreen>();
-            _container.Register<ClassicCharSelectScreen>();
+            _container.Register<CharacterSelectScreen>();
             _container.Register<IScreenManager, ScreenManager>(Lifestyle.Singleton);
             _container.Register<ILogoScreen, LogoScreen>();
 

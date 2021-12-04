@@ -8,7 +8,6 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
-using SlaamMono.Menus;
 using SlaamMono.x_;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ using System.Linq;
 
 namespace SlaamMono.MatchCreation
 {
-    public class ClassicCharSelectScreen : IScreen
+    public class CharacterSelectScreen : IScreen
     {
         public static Texture2D[] SkinTexture;
 
@@ -31,10 +30,26 @@ namespace SlaamMono.MatchCreation
         private const float VOffset = 195f;
         private const float HOffset = 40f;
 
+        public static List<string> Skins = new List<string>();
+        public static bool SkinsLoaded = false;
+
+
+
+        public Vector2[] BoxPositions = new Vector2[]
+        {
+            new Vector2(HOffset + 0, VOffset + 0),
+            new Vector2(HOffset + 0, VOffset + 256),
+            new Vector2(HOffset + 600, VOffset + 0),
+            new Vector2(HOffset + 600, VOffset + 256),
+            new Vector2(HOffset + 600, VOffset + 512),
+            new Vector2(600, 768),
+
+        };
+
         private readonly ILogger _logger;
 
         private readonly IScreenManager _screenDirector;
-        public ClassicCharSelectScreen(ILogger logger, IScreenManager screenDirector)
+        public CharacterSelectScreen(ILogger logger, IScreenManager screenDirector)
         {
             _logger = logger;
             _screenDirector = screenDirector;
@@ -145,9 +160,6 @@ namespace SlaamMono.MatchCreation
             SelectBoxes = null;
         }
 
-        public static List<string> Skins = new List<string>();
-        public static bool SkinsLoaded = false;
-
         /// <summary>
         /// Returns a random skin string.
         /// </summary>
@@ -204,16 +216,5 @@ namespace SlaamMono.MatchCreation
             }
 
         }
-
-        public Vector2[] BoxPositions = new Vector2[]
-        {
-            new Vector2(HOffset + 0, VOffset + 0),
-            new Vector2(HOffset + 0, VOffset + 256),
-            new Vector2(HOffset + 600, VOffset + 0),
-            new Vector2(HOffset + 600, VOffset + 256),
-            new Vector2(HOffset + 600, VOffset + 512),
-            new Vector2(600, 768),
-
-        };
     }
 }

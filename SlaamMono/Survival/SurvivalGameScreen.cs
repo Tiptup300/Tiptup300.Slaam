@@ -114,7 +114,7 @@ namespace SlaamMono.Survival
         {
             Characters.Add(
                 new BotActor(
-                    SlaamGame.Content.Load<Texture2D>("content\\skins\\" + ClassicCharSelectScreen.ReturnRandSkin(_logger)),
+                    SlaamGame.Content.Load<Texture2D>("content\\skins\\" + CharacterSelectScreen.ReturnRandSkin(_logger)),
                     ProfileManager.GetBotProfile(),
                     new Vector2(-200, -200),
                     this,
