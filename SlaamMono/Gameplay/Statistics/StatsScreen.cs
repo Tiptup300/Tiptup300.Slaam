@@ -10,7 +10,7 @@ using SlaamMono.Library.Screens;
 using SlaamMono.StatsBoards;
 using SlaamMono.x_;
 
-namespace SlaamMono.GameplayStatistics
+namespace SlaamMono.Gameplay.Statistics
 {
     public class StatsScreen : IScreen
     {
@@ -38,6 +38,11 @@ namespace SlaamMono.GameplayStatistics
             _screenDirector = screenDirector;
             _resources = resources;
             _renderGraph = renderGraph;
+        }
+
+        public void Initialize()
+        {
+
         }
 
         public void Open()
