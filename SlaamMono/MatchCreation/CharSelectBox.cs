@@ -19,7 +19,6 @@ namespace SlaamMono.MatchCreation
         private const float ScrollSpeed = 4f / 35f;
         private List<string> ParentSkinStrings = new List<string>();
         private int PlayerIDX;
-        private int SelectedIndex = -1;
         private float Offset;
         private IntRange ChosenSkin = new IntRange(0);
         private IntRange ChosenProfile;
@@ -146,7 +145,6 @@ namespace SlaamMono.MatchCreation
                         {
                             ProfileManager.PlayableProfiles[ChosenProfile.Value].Skin = ParentSkinStrings[ChosenSkin.Value];
                             ProfileManager.SaveProfiles();
-                            SelectedIndex = ChosenSkin.Value;
                             CurrentState = CharSelectBoxState.Done;
                         }
 
