@@ -38,8 +38,17 @@ namespace SlaamMono.MatchCreation
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
         private readonly IResolver<GameScreenRequest, GameScreen> _gameScreenRequest;
+        private readonly IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> _boardSelectionScreenResolver;
 
-        public LobbyScreen(List<CharacterShell> chars, ILogger logger, IScreenManager screenDirector, PlayerColorResolver playerColorResolver, IResources resources, IRenderGraph renderGraphManager, IResolver<GameScreenRequest, GameScreen> gameScreenRequest)
+        public LobbyScreen(
+            List<CharacterShell> chars,
+            ILogger logger,
+            IScreenManager screenDirector,
+            PlayerColorResolver playerColorResolver,
+            IResources resources,
+            IRenderGraph renderGraphManager,
+            IResolver<GameScreenRequest, GameScreen> gameScreenRequest,
+            IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> boardSelectionScreenResolver)
         {
             SetupCharacters = chars;
             _logger = logger;
@@ -48,6 +57,7 @@ namespace SlaamMono.MatchCreation
             _resources = resources;
             _renderGraphManager = renderGraphManager;
             _gameScreenRequest = gameScreenRequest;
+            _boardSelectionScreenResolver = boardSelectionScreenResolver;
 
             initialize();
         }
@@ -82,7 +92,7 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                BoardSelectionScreen viewer = new BoardSelectionScreen(this, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>());
+                BoardSelectionScreen viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequest(this));
                 viewer.Open();
                 while (!viewer.FoundBoard)
                 {
@@ -114,7 +124,8 @@ namespace SlaamMono.MatchCreation
         {
             if (DefaultBoard == null)
             {
-                BoardSelectionScreen viewer = new BoardSelectionScreen(null, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>());
+                // todo: this will need fixed.
+                BoardSelectionScreen viewer = new BoardSelectionScreen(null, null);
                 viewer.Open();
                 while (!viewer.FoundBoard)
                 {
@@ -185,7 +196,7 @@ namespace SlaamMono.MatchCreation
                         }
                         else
                         {
-                            _screenDirector.ChangeTo(new BoardSelectionScreen(this, x_Di.Get<IResources>(), x_Di.Get<IScreenManager>()));
+                            _screenDirector.ChangeTo(_boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequest(this)));
                         }
                         BackgroundManager.ChangeBG(BackgroundType.Menu);
                     }

@@ -43,11 +43,15 @@ namespace SlaamMono.MatchCreation
         private readonly IScreenManager _screenManager;
         private readonly IResources _resources;
 
-        public BoardSelectionScreen(LobbyScreen parentscreen, IResources resources, IScreenManager screenManager)
+        public BoardSelectionScreen(IResources resources, IScreenManager screenManager)
         {
-            ParentScreen = parentscreen;
             _resources = resources;
             _screenManager = screenManager;
+        }
+
+        public void Initialize(BoardSelectionScreenRequest request)
+        {
+            ParentScreen = request.ParentScreen;
         }
 
         public void Open()

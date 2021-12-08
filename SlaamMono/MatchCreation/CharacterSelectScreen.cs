@@ -145,7 +145,8 @@ namespace SlaamMono.MatchCreation
                     x_Di.Get<PlayerColorResolver>(),
                     x_Di.Get<IResources>(),
                     x_Di.Get<IRenderGraph>(),
-                    x_Di.Get<IResolver<GameScreenRequest, GameScreen>>()));
+                    x_Di.Get<IResolver<GameScreenRequest, GameScreen>>(),
+                    x_Di.Get<IResolver<BoardSelectionScreenRequest, BoardSelectionScreen>>()));
         }
 
         public void Draw(SpriteBatch batch)
