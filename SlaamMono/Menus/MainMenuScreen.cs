@@ -47,7 +47,7 @@ namespace SlaamMono.Menus
         private void selectedCredits(object sender, EventArgs e) => _screenManager.ChangeTo<CreditsScreen>();
         private void selectedHighscores(object sender, EventArgs e) => _screenManager.ChangeTo<HighScoreScreen>();
         private void selectedManageProfiles(object sender, EventArgs e) => _screenManager.ChangeTo<ProfileEditScreen>();
-        private void selectedSurvival(object sender, EventArgs e) => _screenManager.ChangeTo<SurvivalGameScreen>();
+        private void selectedSurvival(object sender, EventArgs e) => _screenManager.ChangeTo<SurvivalCharacterSelectionScreen>();
         private void selectedClassicMode(object sender, EventArgs e) => _screenManager.ChangeTo<CharacterSelectionScreen>();
         private void exitGame(object sender, EventArgs e) => SlaamGame.Instance.Exit();
 

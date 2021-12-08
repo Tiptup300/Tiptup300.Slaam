@@ -47,12 +47,17 @@ namespace SlaamMono.MatchCreation
         };
 
         private readonly ILogger _logger;
-
         private readonly IScreenManager _screenDirector;
+
         public CharacterSelectionScreen(ILogger logger, IScreenManager screenDirector)
         {
             _logger = logger;
             _screenDirector = screenDirector;
+        }
+
+        public void Initialize(CharacterSelectionScreenRequest request)
+        {
+            // do nothing
         }
 
         public void Open()
@@ -146,7 +151,8 @@ namespace SlaamMono.MatchCreation
                     x_Di.Get<IResources>(),
                     x_Di.Get<IRenderGraph>(),
                     x_Di.Get<IResolver<GameScreenRequest, GameScreen>>(),
-                    x_Di.Get<IResolver<BoardSelectionScreenRequest, BoardSelectionScreen>>()));
+                    x_Di.Get<IResolver<BoardSelectionScreenRequest, BoardSelectionScreen>>(),
+                    x_Di.Get<IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen>>()));
         }
 
         public void Draw(SpriteBatch batch)

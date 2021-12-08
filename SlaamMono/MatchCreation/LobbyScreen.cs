@@ -39,6 +39,7 @@ namespace SlaamMono.MatchCreation
         private readonly IRenderGraph _renderGraphManager;
         private readonly IResolver<GameScreenRequest, GameScreen> _gameScreenRequest;
         private readonly IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> _boardSelectionScreenResolver;
+        private readonly IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen> _characterSelectionScreenResolver;
 
         public LobbyScreen(
             List<CharacterShell> chars,
@@ -48,7 +49,8 @@ namespace SlaamMono.MatchCreation
             IResources resources,
             IRenderGraph renderGraphManager,
             IResolver<GameScreenRequest, GameScreen> gameScreenRequest,
-            IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> boardSelectionScreenResolver)
+            IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> boardSelectionScreenResolver,
+            IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen> characterSelectionScreenResolver)
         {
             SetupCharacters = chars;
             _logger = logger;
@@ -58,7 +60,7 @@ namespace SlaamMono.MatchCreation
             _renderGraphManager = renderGraphManager;
             _gameScreenRequest = gameScreenRequest;
             _boardSelectionScreenResolver = boardSelectionScreenResolver;
-
+            _characterSelectionScreenResolver = characterSelectionScreenResolver;
             initialize();
         }
 
@@ -206,10 +208,7 @@ namespace SlaamMono.MatchCreation
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    _screenDirector.ChangeTo(
-                        new CharacterSelectionScreen(
-                            x_Di.Get<ILogger>(),
-                            x_Di.Get<IScreenManager>()));
+                    _screenDirector.ChangeTo(_characterSelectionScreenResolver.Resolve(new CharacterSelectionScreenRequest()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }

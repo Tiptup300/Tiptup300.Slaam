@@ -12,12 +12,12 @@ using System.Collections.Generic;
 
 namespace SlaamMono.Survival
 {
-    public class SurvivalCharSelectScreen : CharacterSelectionScreen
+    public class SurvivalCharacterSelectionScreen : CharacterSelectionScreen
     {
         private readonly IScreenManager _screenDirector;
         private readonly IResolver<GameScreenRequest, SurvivalGameScreen> _survivalGameScreenRequest;
 
-        public SurvivalCharSelectScreen(ILogger logger, IScreenManager screenDirector, IResolver<GameScreenRequest, SurvivalGameScreen> survivalGameScreenRequest)
+        public SurvivalCharacterSelectionScreen(ILogger logger, IScreenManager screenDirector, IResolver<GameScreenRequest, SurvivalGameScreen> survivalGameScreenRequest)
             : base(logger, screenDirector)
         {
             _screenDirector = screenDirector;
