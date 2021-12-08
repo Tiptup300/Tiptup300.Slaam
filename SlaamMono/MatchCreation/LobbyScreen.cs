@@ -207,7 +207,7 @@ namespace SlaamMono.MatchCreation
                 if (InputComponent.Players[0].PressedAction2)
                 {
                     _screenDirector.ChangeTo(
-                        new CharacterSelectScreen(
+                        new CharacterSelectionScreen(
                             x_Di.Get<ILogger>(),
                             x_Di.Get<IScreenManager>()));
                     ProfileManager.ResetAllBots();
@@ -312,7 +312,7 @@ namespace SlaamMono.MatchCreation
         /// </summary>
         private void AddComputer()
         {
-            SetupCharacters.Add(new CharacterShell(CharacterSelectScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupCharacters.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(SetupCharacters.Count)));
+            SetupCharacters.Add(new CharacterShell(CharacterSelectionScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupCharacters.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(SetupCharacters.Count)));
         }
     }
 }

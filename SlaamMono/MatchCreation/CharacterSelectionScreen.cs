@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace SlaamMono.MatchCreation
 {
-    public class CharacterSelectScreen : IScreen
+    public class CharacterSelectionScreen : IScreen
     {
         public static Texture2D[] SkinTexture;
 
@@ -49,7 +49,7 @@ namespace SlaamMono.MatchCreation
         private readonly ILogger _logger;
 
         private readonly IScreenManager _screenDirector;
-        public CharacterSelectScreen(ILogger logger, IScreenManager screenDirector)
+        public CharacterSelectionScreen(ILogger logger, IScreenManager screenDirector)
         {
             _logger = logger;
             _screenDirector = screenDirector;

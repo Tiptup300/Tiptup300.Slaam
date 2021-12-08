@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace SlaamMono.Survival
 {
-    public class SurvivalCharSelectScreen : CharacterSelectScreen
+    public class SurvivalCharSelectScreen : CharacterSelectionScreen
     {
         private readonly IScreenManager _screenDirector;
         private readonly IResolver<GameScreenRequest, SurvivalGameScreen> _survivalGameScreenRequest;
