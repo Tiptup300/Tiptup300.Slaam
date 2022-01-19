@@ -13,15 +13,18 @@ namespace SlaamMono.ResourceManagement
         private readonly ILogger _logger;
         private readonly IResourceLoader _resourceLoader;
         private readonly Mut<ResourcesState> _state;
+        private readonly ResourcesListsToLoad _resourcesListsToLoad;
 
         public Resources(
             ILogger logger,
             IResourceLoader resourceLoader,
-            Mut<ResourcesState> resourcesState)
+            Mut<ResourcesState> resourcesState,
+            ResourcesListsToLoad resourcesListsToLoad)
         {
             _logger = logger;
             _resourceLoader = resourceLoader;
             _state = resourcesState;
+            _resourcesListsToLoad = resourcesListsToLoad;
         }
 
         public void LoadAll()
@@ -46,11 +49,9 @@ namespace SlaamMono.ResourceManagement
         {
             Dictionary<string, string[]> output;
 
-            output = new Dictionary<string, string[]>();
-            output["BotNames"] = _resourceLoader.Load<string[]>("BotNames.txt");
-            output["Credits"] = _resourceLoader.Load<string[]>("Credits.txt");
-            output["Textures"] = _resourceLoader.Load<string[]>("Textures.txt");
-            output["Fonts"] = _resourceLoader.Load<string[]>("Fonts.txt");
+            output = _resourcesListsToLoad.TextLists.ToDictionary(
+                listName => listName,
+                listName => _resourceLoader.Load<string[]>($"{listName}.txt"));
 
             return output;
         }
