@@ -95,11 +95,11 @@ namespace SlaamMono.MatchCreation
             {
                 BoardSelectionScreen viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequest(this));
                 viewer.Open();
-                while (!viewer.FoundBoard)
+                while (!viewer.HasFoundBoard)
                 {
                     viewer.Update();
                 }
-                LoadBoard(viewer.ValidBoard);
+                LoadBoard(viewer.IsValidBoard);
                 viewer.Close();
             }
 
@@ -128,11 +128,11 @@ namespace SlaamMono.MatchCreation
                 // todo: this will need fixed.
                 BoardSelectionScreen viewer = new BoardSelectionScreen(null, null);
                 viewer.Open();
-                while (!viewer.FoundBoard)
+                while (!viewer.HasFoundBoard)
                 {
                     viewer.Update();
                 }
-                DefaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.ValidBoard);
+                DefaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.IsValidBoard);
                 viewer.Close();
             }
 

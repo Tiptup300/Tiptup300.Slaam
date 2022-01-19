@@ -9,19 +9,17 @@ using SlaamMono.Library.Screens;
 using SlaamMono.x_;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace SlaamMono.MatchCreation
 {
     public class BoardSelectionScreen : IScreen
     {
-        public LobbyScreen ParentScreen;
-        public bool FoundBoard = false;
-        public string ValidBoard;
+        public bool HasFoundBoard = false;
+        public string IsValidBoard;
+
+        private LobbyScreen _parentLobbyScreen;
         private int _drawSizeWidth = 75;
         private int _drawSizeHeight = 75;
-
         private List<Texture2D> _boardTextures = new List<Texture2D>();
         private List<string> _validBoards = new List<string>();
         private IntRange _drawingBoardIndex = new IntRange(0, 0, 0);
@@ -33,13 +31,14 @@ namespace SlaamMono.MatchCreation
         private float _verticalOffset = 0f;
         private float _horizontalOffset = 0f;
         private bool _isStillLoadingBoards = true;
-        private string[] _boardNames;
+        private List<string> _boardNames;
         private int _currentBoardLoading = 0;
         private int _save;
         private IntRange _verticalBoardOffset;
         private IntRange _horizontalBoardOffset;
         private bool _wasChosen = false;
         private float _scale = 1.00f;
+        private Rectangle centeredRectangle;
 
         private readonly IScreenManager _screenManager;
         private readonly IResources _resources;
@@ -52,8 +51,8 @@ namespace SlaamMono.MatchCreation
 
         public void Initialize(BoardSelectionScreenRequest request)
         {
-            ParentScreen = request.ParentScreen;
-            _boardNames = _resources.GetTextList("Boards").ToArray();
+            _parentLobbyScreen = request.ParentScreen;
+            _boardNames = _resources.GetTextList("Boards");
         }
 
         public void Open()
@@ -65,9 +64,9 @@ namespace SlaamMono.MatchCreation
 
         private void setBoardIndexs()
         {
-            _drawingBoardIndex = new IntRange(0, 0, _boardNames.Length - 1);
+            _drawingBoardIndex = new IntRange(0, 0, _boardNames.Count - 1);
             _verticalBoardOffset = new IntRange(0);
-            _horizontalBoardOffset = new IntRange(-_boardNames.Length);
+            _horizontalBoardOffset = new IntRange(-_boardNames.Count);
         }
 
         public void Update()
@@ -102,8 +101,8 @@ namespace SlaamMono.MatchCreation
 
                     if (InputComponent.Players[0].PressedAction)
                     {
-                        ParentScreen.LoadBoard(_validBoards[_save]);
-                        _screenManager.ChangeTo(ParentScreen);
+                        _parentLobbyScreen.LoadBoard(_validBoards[_save]);
+                        _screenManager.ChangeTo(_parentLobbyScreen);
                     }
 
                     if (InputComponent.Players[0].PressedAction2)
@@ -194,7 +193,6 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public Rectangle CenteredRectangle;
 
         public void Draw(SpriteBatch batch)
         {
@@ -215,7 +213,7 @@ namespace SlaamMono.MatchCreation
                             batch.Draw(_resources.GetTexture("NowLoading").Texture, Pos, Color.White);
                         }
                     }
-                    if (Pos == new Vector2(CenteredRectangle.X, CenteredRectangle.Y))
+                    if (Pos == new Vector2(centeredRectangle.X, centeredRectangle.Y))
                     {
                         _save = _drawingBoardIndex.Value;
                     }
@@ -225,15 +223,12 @@ namespace SlaamMono.MatchCreation
             batch.Draw(_resources.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
             if (!_isStillLoadingBoards)
             {
-                CenteredRectangle = CenterRectangle(new Rectangle(0, 0, (int)(_scale * _drawSizeWidth), (int)(_scale * _drawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
+                centeredRectangle = CenterRectangle(new Rectangle(0, 0, (int)(_scale * _drawSizeWidth), (int)(_scale * _drawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
                 if (_wasChosen)
                 {
-                    batch.Draw(_boardTextures[_save], CenteredRectangle, Color.White);
+                    batch.Draw(_boardTextures[_save], centeredRectangle, Color.White);
                 }
-                batch.Draw(_resources.GetTexture("BoardSelect").Texture, CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)_alpha));
-#if !ZUNE
-                batch.Draw(Resources.BoardSelectTextUnderlay.Texture, new Vector2(0, 175), new Color(255, 255, 255, 100));
-#endif
+                batch.Draw(_resources.GetTexture("BoardSelect").Texture, centeredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)_alpha));
                 RenderGraph.Instance.RenderText(DialogStrings.CleanMapName(_validBoards[_save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
             }
         }
@@ -252,8 +247,8 @@ namespace SlaamMono.MatchCreation
             {
                 Texture2D temp = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + _boardNames[_currentBoardLoading]);
 
-                FoundBoard = true;
-                ValidBoard = _boardNames[_currentBoardLoading];
+                HasFoundBoard = true;
+                IsValidBoard = _boardNames[_currentBoardLoading];
                 _boardTextures.Add(temp);
                 _validBoards.Add(_boardNames[_currentBoardLoading]);
 
@@ -265,7 +260,7 @@ namespace SlaamMono.MatchCreation
 
 
             _currentBoardLoading++;
-            if (_currentBoardLoading == _boardNames.Length)
+            if (_currentBoardLoading == _boardNames.Count)
             {
                 FinishLoadingBoards();
             }
