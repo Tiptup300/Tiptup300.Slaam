@@ -248,27 +248,23 @@ namespace SlaamMono.MatchCreation
 
         private void ContinueLoadingBoards()
         {
-            //if (boards[CurrentBoardLoading].EndsWith(".png"))
+            try
             {
-                try
-                {
-                    Texture2D temp = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + _boardNames[_currentBoardLoading]);//Texture2D.FromFile(Game1.Graphics.GraphicsDevice, boards[CurrentBoardLoading]);
-                    //if ((temp.Width == 800 && temp.Height == 800))
-                    {
-                        FoundBoard = true;
-                        ValidBoard = _boardNames[_currentBoardLoading];
-                        _boardTextures.Add(temp);
-                        _validBoards.Add(_boardNames[_currentBoardLoading]);
-                    }
-                }
-                catch (InvalidOperationException)
-                {
-                    // Found a .png that is either corrupt or not really a .png, lets just skip it!
-                }
+                Texture2D temp = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + _boardNames[_currentBoardLoading]);
+
+                FoundBoard = true;
+                ValidBoard = _boardNames[_currentBoardLoading];
+                _boardTextures.Add(temp);
+                _validBoards.Add(_boardNames[_currentBoardLoading]);
+
+            }
+            catch (InvalidOperationException)
+            {
+                // Found a .png that is either corrupt or not really a .png, lets just skip it!
             }
 
-            _currentBoardLoading++;
 
+            _currentBoardLoading++;
             if (_currentBoardLoading == _boardNames.Length)
             {
                 FinishLoadingBoards();
