@@ -10,6 +10,7 @@ using SlaamMono.x_;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SlaamMono.MatchCreation
 {
@@ -231,11 +232,6 @@ namespace SlaamMono.MatchCreation
 
         public void Close()
         {
-            /*for (int x = 0; x < Boards.Count; x++)
-            {
-                if(x != save)
-                    Boards[x].Dispose();
-            }*/
             _boardTextures = null;
             _validBoards = null;
             GC.Collect();
@@ -243,23 +239,18 @@ namespace SlaamMono.MatchCreation
 
         public void LoadAllBoards()
         {
-            //boards = Directory.GetFiles("boards");
-            _boardNames = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\Content\\BoardList.txt");// Game1.Content.Load<List<String>>(Directory.GetCurrentDirectory() + "\\content\\BoardList").ToArray();
-            List<string> strs = new List<string>();
-            for (int x = 0; x < _boardNames.Length; x++)
-            {
-                //if (boards[x].EndsWith(".png"))
-                strs.Add(_boardNames[x]);
-            }
-            _boardNames = new string[strs.Count];
-            for (int x = 0; x < strs.Count; x++)
-            {
-                _boardNames[x] = strs[x];
-            }
+            _boardNames = _loadAllBoards();
+
             _drawingBoardIndex = new IntRange(0, 0, _boardNames.Length - 1);
             _verticalBoardOffset = new IntRange(0);
             _horizontalBoardOffset = new IntRange(-_boardNames.Length);
         }
+
+        private string[] _loadAllBoards()
+        {
+            return File.ReadAllLines(Directory.GetCurrentDirectory() + "\\Content\\BoardList.txt");
+        }
+
 
         private void ContinueLoadingBoards()
         {
