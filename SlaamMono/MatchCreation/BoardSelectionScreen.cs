@@ -53,13 +53,21 @@ namespace SlaamMono.MatchCreation
         public void Initialize(BoardSelectionScreenRequest request)
         {
             ParentScreen = request.ParentScreen;
+            _boardNames = _resources.GetTextList("Boards").ToArray();
         }
 
         public void Open()
         {
-            LoadAllBoards();
+            setBoardIndexs();
             FeedManager.InitializeFeeds(DialogStrings.BoardSelectScreenFeed);
             BackgroundManager.ChangeBG(BackgroundType.Normal);
+        }
+
+        private void setBoardIndexs()
+        {
+            _drawingBoardIndex = new IntRange(0, 0, _boardNames.Length - 1);
+            _verticalBoardOffset = new IntRange(0);
+            _horizontalBoardOffset = new IntRange(-_boardNames.Length);
         }
 
         public void Update()
@@ -235,20 +243,6 @@ namespace SlaamMono.MatchCreation
             _boardTextures = null;
             _validBoards = null;
             GC.Collect();
-        }
-
-        public void LoadAllBoards()
-        {
-            _boardNames = _loadAllBoards();
-
-            _drawingBoardIndex = new IntRange(0, 0, _boardNames.Length - 1);
-            _verticalBoardOffset = new IntRange(0);
-            _horizontalBoardOffset = new IntRange(-_boardNames.Length);
-        }
-
-        private string[] _loadAllBoards()
-        {
-            return File.ReadAllLines(Directory.GetCurrentDirectory() + "\\Content\\BoardList.txt");
         }
 
 

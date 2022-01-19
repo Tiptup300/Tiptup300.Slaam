@@ -8,12 +8,14 @@ namespace SlaamMono.Library.ResourceManagement
         public Dictionary<string, string[]> TextLists { get; private set; }
         public Dictionary<string, CachedTexture> Textures { get; private set; }
         public Dictionary<string, SpriteFont> Fonts { get; private set; }
+        public string[] Boards { get; private set; }
 
-        public ResourcesState(Dictionary<string, string[]> textLists, Dictionary<string, CachedTexture> textures, Dictionary<string, SpriteFont> fonts)
+        public ResourcesState(Dictionary<string, string[]> textLists, Dictionary<string, CachedTexture> textures, Dictionary<string, SpriteFont> fonts, string[] boards)
         {
             TextLists = textLists;
             Textures = textures;
             Fonts = fonts;
+            Boards = boards;
         }
     }
 }
