@@ -118,8 +118,8 @@ namespace SlaamMono.Menus
 
         public void Close()
         {
-            _state.BackgroundTexture.Dispose();
-            _state.LogoTexture.Dispose();
+            _state.BackgroundTexture.Unload();
+            _state.LogoTexture.Unload();
         }
     }
 }

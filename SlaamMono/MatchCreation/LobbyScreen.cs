@@ -269,10 +269,10 @@ namespace SlaamMono.MatchCreation
         public void Close()
         {
             CurrentBoardTexture = null;
-            _resources.GetTexture("LobbyUnderlay").Dispose();
-            _resources.GetTexture("LobbyCharBar").Dispose();
-            _resources.GetTexture("LobbyColorPreview").Dispose();
-            _resources.GetTexture("LobbyOverlay").Dispose();
+            _resources.GetTexture("LobbyUnderlay").Unload();
+            _resources.GetTexture("LobbyCharBar").Unload();
+            _resources.GetTexture("LobbyColorPreview").Unload();
+            _resources.GetTexture("LobbyOverlay").Unload();
         }
 
         /// <summary>

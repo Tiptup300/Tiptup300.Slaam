@@ -464,8 +464,8 @@ namespace SlaamMono.Gameplay
 
         public void Close()
         {
-            _resources.GetTexture("ReadySetGo").Dispose();
-            _resources.GetTexture("BattleBG").Dispose();
+            _resources.GetTexture("ReadySetGo").Unload();
+            _resources.GetTexture("BattleBG").Unload();
         }
 
         public virtual void ReportKilling(int Killer, int Killee)

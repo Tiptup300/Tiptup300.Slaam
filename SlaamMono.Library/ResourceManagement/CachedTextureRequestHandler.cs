@@ -11,7 +11,12 @@
 
         public CachedTexture Resolve(TextureRequest request)
         {
-            return _resourcesState.Get().Textures[request.TextureName];
+            CachedTexture output;
+
+            output = _resourcesState.Get().Textures[request.TextureName];
+            output.Load();
+
+            return output;
         }
     }
 }

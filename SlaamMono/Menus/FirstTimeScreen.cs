@@ -76,7 +76,7 @@ namespace SlaamMono.Menus
 
         public void Close()
         {
-            _resources.GetTexture("FirstTime").Dispose();
+            _resources.GetTexture("FirstTime").Unload();
         }
     }
 }

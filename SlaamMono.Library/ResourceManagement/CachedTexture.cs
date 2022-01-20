@@ -1,27 +1,18 @@
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using SlaamMono.Library.Logging;
 
 namespace SlaamMono.Library.ResourceManagement
 {
-    public class CachedTexture : IDisposable
+    public class CachedTexture
     {
-        private string _filePath;
-        private readonly IFileLoader<Texture2D> _textureLoader;
-        private Texture2D _texture;
-
-        public CachedTexture(string filePath, IFileLoader<Texture2D> textureLoader)
-        {
-            _filePath = filePath;
-            _textureLoader = textureLoader;
-        }
-
         public Texture2D Texture
         {
             get
             {
-                if (_texture == null)
+                if (_isUnloaded)
                 {
-                    _texture = (Texture2D)_textureLoader.Load(_filePath);
+                    _logger.Log($"Texture was accessed without preloading. Possible performance issue. (Filepath: {_filePath})");
+                    loadTexture();
                 }
                 return _texture;
             }
@@ -30,10 +21,29 @@ namespace SlaamMono.Library.ResourceManagement
                 _texture = value;
             }
         }
+        public int Height { get { return Texture.Height; } }
+        public int Width { get { return Texture.Width; } }
 
-        public void Dispose()
+        private string _filePath;
+        private Texture2D _texture;
+
+        private readonly IFileLoader<Texture2D> _textureLoader;
+        private readonly ILogger _logger;
+
+
+        public CachedTexture(string filePath, IFileLoader<Texture2D> textureLoader, ILogger logger)
         {
-            if (_texture == null)
+            _filePath = filePath;
+            _textureLoader = textureLoader;
+            _logger = logger;
+        }
+
+        private bool _isUnloaded => _texture == null;
+
+
+        public void Unload()
+        {
+            if (_isUnloaded)
             {
                 return;
             }
@@ -44,10 +54,13 @@ namespace SlaamMono.Library.ResourceManagement
 
         public void Load()
         {
-            Texture.ToString();
+            loadTexture();
         }
 
-        public int Height { get { return Texture.Height; } }
-        public int Width { get { return Texture.Width; } }
+        private void loadTexture()
+        {
+            _texture = (Texture2D)_textureLoader.Load(_filePath);
+        }
+
     }
 }
