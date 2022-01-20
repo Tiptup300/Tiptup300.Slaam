@@ -4,7 +4,6 @@ using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.Subclasses;
-using SlaamMono.SubClasses;
 using SlaamMono.x_;
 using System;
 
@@ -14,9 +13,9 @@ namespace SlaamMono.Menus
     {
         private LogoScreenState _state;
 
-        private const int _fadeInSeconds = 3;
-        private const int _holdSeconds = 3;
-        private const int _fadeOutSeconds = 3;
+        private const float _fadeInSeconds = 1f;
+        private const float _holdSeconds = 3f;
+        private const float _fadeOutSeconds = 0.5f;
 
 
         private readonly IScreenManager _screenDirector;
