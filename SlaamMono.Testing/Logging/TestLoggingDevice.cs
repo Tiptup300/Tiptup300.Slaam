@@ -1,6 +1,6 @@
 ﻿using SlaamMono.Library.Logging;
 
-namespace SlaamMono.Testing
+namespace SlaamMono.Testing.Logging
 {
     public class TestLoggingDevice : ILoggingDevice
     {
