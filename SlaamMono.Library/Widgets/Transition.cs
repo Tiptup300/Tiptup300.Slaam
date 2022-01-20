@@ -1,36 +1,23 @@
-using Microsoft.Xna.Framework;
 using System;
 
 namespace SlaamMono.Subclasses
 {
     public class Transition
     {
-        public Vector2 Position;
-        public Vector2 Goal;
-        public Vector2 StartingValue;
-        public TimeSpan Length;
-        public TimeSpan Elapsed;
+        public TimeSpan Length { get; private set; }
+        public TimeSpan Elapsed { get; private set; }
 
-        public Transition(Vector2 startingValue, Vector2 goal, TimeSpan length)
+        public Transition(TimeSpan length)
         {
-            Position = startingValue;
-            StartingValue = startingValue;
-            Goal = goal;
             Length = length;
         }
 
-        public bool IsFinished()
-        {
-            return
-                (Math.Round(Position.X) == Math.Round(Goal.X) &&
-                 Math.Round(Position.Y) == Math.Round(Goal.Y));
-        }
+        public float Position => Math.Min((float)Elapsed.TotalMilliseconds / (float)this.Length.TotalMilliseconds, 1f);
+        public bool IsFinished => Elapsed >= Length;
 
-        public void Update(TimeSpan elapsed)
+        public void AddProgress(TimeSpan elapsed)
         {
             Elapsed += elapsed;
-            double amount = Elapsed.TotalSeconds / this.Length.TotalSeconds;
-            Position = Vector2.SmoothStep(StartingValue, Goal, (float)amount);
         }
 
         public void Reset()
@@ -38,15 +25,9 @@ namespace SlaamMono.Subclasses
             Elapsed = TimeSpan.Zero;
         }
 
-        public void Reverse(TimeSpan? timespan)
+        public void Reset(TimeSpan newLength)
         {
-            Vector2 oldGoal = Goal;
-            Vector2 oldStartingValue = StartingValue;
-            Goal = oldStartingValue;
-            StartingValue = oldGoal;
-            if (timespan.HasValue)
-                Length = timespan.Value;
-
+            Length = newLength;
             Reset();
         }
     }
