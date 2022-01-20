@@ -14,6 +14,11 @@ namespace SlaamMono.Menus
     {
         private LogoScreenState _state;
 
+        private const int _fadeInSeconds = 3;
+        private const int _holdSeconds = 3;
+        private const int _fadeOutSeconds = 3;
+
+
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
@@ -27,48 +32,88 @@ namespace SlaamMono.Menus
 
         public void Open()
         {
-            initState();
+            _state = new LogoScreenState();
+            loadTextures();
         }
 
-        private void initState()
+        private void loadTextures()
         {
-            _state = new LogoScreenState()
-            {
-                LogoColorTransition = new Transition(new Vector2(0), new Vector2(255), TimeSpan.FromSeconds(1)),
-                DisplayTime = new Timer(new TimeSpan(0, 0, 1)),
-                BackgroundTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogoBG")),
-                LogoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"))
-            };
+            _state.BackgroundTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogoBG"));
+            _state.LogoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"));
         }
 
         public void Update()
         {
-            _state.LogoColorTransition.Update(FrameRateDirector.MovementFactorTimeSpan);
-            if (!_state.HasShown && _state.LogoColorTransition.IsFinished())
+            switch (_state.StateIndex)
             {
-                _state.HasShown = true;
-                _state.DisplayTime.Reset();
-
+                case 0:
+                    initFadeInState();
+                    break;
+                case 1:
+                    fadeInState();
+                    break;
+                case 2:
+                    holdState();
+                    break;
+                case 3:
+                    fadeOutState();
+                    break;
             }
-            else
+        }
+
+        private void initFadeInState()
+        {
+            _state.StateIndex = 1;
+            _state.StateTransition = new Transition(TimeSpan.FromSeconds(_fadeInSeconds));
+            _state.LogoColor = new Color(Color.White, 0);
+        }
+
+        private void fadeInState()
+        {
+            _state.StateTransition.AddProgress(FrameRateDirector.MovementFactorTimeSpan);
+            _state.LogoColor = new Color(Color.White, MathHelper.SmoothStep(0f, 1f, _state.StateTransition.Position));
+            if (_state.StateTransition.IsFinished)
             {
-                _state.DisplayTime.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (_state.DisplayTime.Active)
-                {
-                    _state.LogoColorTransition.Reverse(null);
-                }
-                if (_state.LogoColorTransition.Goal.X == 0 && _state.LogoColorTransition.IsFinished())
-                {
-                    _screenDirector.ChangeTo<IMainMenuScreen>();
-                }
+                initHoldState();
+            }
+        }
+
+        private void initHoldState()
+        {
+            _state.StateIndex = 2;
+            _state.LogoColor = Color.White;
+            _state.StateTransition.Reset(TimeSpan.FromSeconds(_holdSeconds));
+        }
+
+        private void holdState()
+        {
+            _state.StateTransition.AddProgress(FrameRateDirector.MovementFactorTimeSpan);
+            if (_state.StateTransition.IsFinished)
+            {
+                initFadeOutState();
+            }
+        }
+
+        private void initFadeOutState()
+        {
+            _state.StateIndex = 3;
+            _state.StateTransition.Reset(TimeSpan.FromSeconds(_fadeOutSeconds));
+        }
+
+        private void fadeOutState()
+        {
+            _state.StateTransition.AddProgress(FrameRateDirector.MovementFactorTimeSpan);
+            _state.LogoColor = new Color(Color.White, MathHelper.SmoothStep(1f, 0f, _state.StateTransition.Position));
+            if (_state.StateTransition.IsFinished)
+            {
+                _screenDirector.ChangeTo<IMainMenuScreen>();
             }
         }
 
         public void Draw(SpriteBatch batch)
         {
-            byte alpha = (byte)_state.LogoColorTransition.Position.X;
             batch.Draw(_state.BackgroundTexture.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(_state.LogoTexture.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
+            batch.Draw(_state.LogoTexture.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), _state.LogoColor);
         }
 
         public void Close()
