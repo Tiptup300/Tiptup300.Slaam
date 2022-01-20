@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SlaamMono.Gameplay
 {
-    public class CurrentMatchSettings
+    public static class CurrentMatchSettings
     {
 
         public static int LivesAmt;
