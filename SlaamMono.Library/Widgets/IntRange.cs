@@ -1,3 +1,5 @@
+using System;
+
 namespace SlaamMono.Library
 {
     public class IntRange
@@ -19,7 +21,9 @@ namespace SlaamMono.Library
             Max = max;
 
             if (Min > Max)
-                throw new System.Exception("Minimum is greater than maximum, WTF WERE YOU THINKING!?!?");
+            {
+                throw new ArgumentException("Minimum cannot be greater than maximum.");
+            }
         }
 
         /// <summary>

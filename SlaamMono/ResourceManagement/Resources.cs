@@ -40,7 +40,7 @@ namespace SlaamMono.ResourceManagement
             var fonts = loadResource<SpriteFont>(textLists["Fonts"]);
             _logger.Log($"Fonts Loaded.");
 
-            var boards = textLists["Boards"];
+            var boards = textLists["BoardList"];
 
             _state.Mutate(new ResourcesState(textLists, textures, fonts, boards));
 

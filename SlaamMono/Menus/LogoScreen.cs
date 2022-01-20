@@ -12,11 +12,7 @@ namespace SlaamMono.Menus
 {
     public class LogoScreen : ILogoScreen, IScreen
     {
-        private Timer _displaytime;
-        private Transition _logoColor;
-        private bool hasShown = false;
-        private CachedTexture _backgroundTexture;
-        private CachedTexture _logoTexture;
+        private LogoScreenState _state;
 
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
@@ -31,33 +27,37 @@ namespace SlaamMono.Menus
 
         public void Open()
         {
-            _logoColor = new Transition(null, new Vector2(0), new Vector2(255), TimeSpan.FromSeconds(1));
-            _displaytime = new Timer(new TimeSpan(0, 0, 1));
+            initState();
+        }
 
-            _backgroundTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogoBG"));
-            _logoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"));
+        private void initState()
+        {
+            _state = new LogoScreenState()
+            {
+                LogoColorTransition = new Transition(new Vector2(0), new Vector2(255), TimeSpan.FromSeconds(1)),
+                DisplayTime = new Timer(new TimeSpan(0, 0, 1)),
+                BackgroundTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogoBG")),
+                LogoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"))
+            };
         }
 
         public void Update()
         {
-            if (!hasShown)
+            _state.LogoColorTransition.Update(FrameRateDirector.MovementFactorTimeSpan);
+            if (!_state.HasShown && _state.LogoColorTransition.IsFinished())
             {
-                _logoColor.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (_logoColor.IsFinished())
-                {
-                    hasShown = true;
-                    _displaytime.Reset();
-                }
+                _state.HasShown = true;
+                _state.DisplayTime.Reset();
+
             }
             else
             {
-                _displaytime.Update(FrameRateDirector.MovementFactorTimeSpan);
-                _logoColor.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (_displaytime.Active)
+                _state.DisplayTime.Update(FrameRateDirector.MovementFactorTimeSpan);
+                if (_state.DisplayTime.Active)
                 {
-                    _logoColor.Reverse(null);
+                    _state.LogoColorTransition.Reverse(null);
                 }
-                if (_logoColor.Goal.X == 0 && _logoColor.IsFinished())
+                if (_state.LogoColorTransition.Goal.X == 0 && _state.LogoColorTransition.IsFinished())
                 {
                     _screenDirector.ChangeTo<IMainMenuScreen>();
                 }
@@ -66,15 +66,15 @@ namespace SlaamMono.Menus
 
         public void Draw(SpriteBatch batch)
         {
-            byte alpha = (byte)_logoColor.Position.X;
-            batch.Draw(_backgroundTexture.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(_logoTexture.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
+            byte alpha = (byte)_state.LogoColorTransition.Position.X;
+            batch.Draw(_state.BackgroundTexture.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+            batch.Draw(_state.LogoTexture.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), new Color((byte)255, (byte)255, (byte)255, alpha));
         }
 
         public void Close()
         {
-            _backgroundTexture.Dispose();
-            _logoTexture.Dispose();
+            _state.BackgroundTexture.Dispose();
+            _state.LogoTexture.Dispose();
         }
     }
 }
