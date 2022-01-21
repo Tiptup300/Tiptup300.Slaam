@@ -17,19 +17,17 @@ namespace SlaamMono.MatchCreation
 {
     public class LobbyScreen : IScreen
     {
-        public static Texture2D DefaultBoard;
 
         public Graph MainMenu;
         public List<CharacterShell> SetupCharacters;
 
+
+        private static Texture2D _defaultBoard;
+
         private const int MAX_PLAYERS = 4;
 
-        private Texture2D CurrentBoardTexture;
-        private int PlayerAmt;
-        private string[] Dialogs;
-        private string CurrentBoardLocation;
-        private bool ViewingSettings;
-        private IntRange MenuChoice;
+        private LobbyScreenState _state = new LobbyScreenState();
+
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
@@ -65,10 +63,10 @@ namespace SlaamMono.MatchCreation
 
         private void initialize()
         {
-            Dialogs = new string[2];
-            ViewingSettings = false;
+            _state.Dialogs = new string[2];
+            _state.ViewingSettings = false;
 
-            PlayerAmt = SetupCharacters.Count;
+            _state.PlayerAmt = SetupCharacters.Count;
             MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), _resources, _renderGraphManager);
             MainMenu.Items.Columns.Add("SETTING");
             MainMenu.Items.Columns.Add("SETTING");
@@ -83,9 +81,9 @@ namespace SlaamMono.MatchCreation
                 new GraphItem("", "Save"),
                 new GraphItem("", "Cancel")
             );
-            MenuChoice = new IntRange(0, 0, MainMenu.Items.Count - 1);
+            _state.MenuChoice = new IntRange(0, 0, MainMenu.Items.Count - 1);
             CurrentMatchSettings.ReadValues(this);
-            MainMenu.SetHighlight(MenuChoice.Value);
+            MainMenu.SetHighlight(_state.MenuChoice.Value);
 
             if (CurrentMatchSettings.BoardLocation != null && CurrentMatchSettings.BoardLocation.Trim() != "" && File.Exists(CurrentMatchSettings.BoardLocation))
             {
@@ -123,7 +121,7 @@ namespace SlaamMono.MatchCreation
 
         public static Texture2D LoadQuickBoard()
         {
-            if (DefaultBoard == null)
+            if (_defaultBoard == null)
             {
                 // todo: this will need fixed.
                 BoardSelectionScreen viewer = new BoardSelectionScreen(null, null);
@@ -132,11 +130,11 @@ namespace SlaamMono.MatchCreation
                 {
                     viewer.Update();
                 }
-                DefaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.IsValidBoard);
+                _defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.IsValidBoard);
                 viewer.Close();
             }
 
-            return DefaultBoard;
+            return _defaultBoard;
         }
 
         public void Open()
@@ -145,7 +143,7 @@ namespace SlaamMono.MatchCreation
             if (SetupCharacters.Count == 1)
             {
                 AddComputer();
-                PlayerAmt++;
+                _state.PlayerAmt++;
             }
             FeedManager.InitializeFeeds(DialogStrings.LobbyScreenFeed);
         }
@@ -153,29 +151,29 @@ namespace SlaamMono.MatchCreation
         public void Update()
         {
             BackgroundManager.SetRotation(1f);
-            if (ViewingSettings)
+            if (_state.ViewingSettings)
             {
                 if (InputComponent.Players[0].PressedDown)
                 {
-                    MenuChoice.Add(1);
-                    MainMenu.SetHighlight(MenuChoice.Value);
+                    _state.MenuChoice.Add(1);
+                    MainMenu.SetHighlight(_state.MenuChoice.Value);
                 }
                 if (InputComponent.Players[0].PressedUp)
                 {
-                    MenuChoice.Sub(1);
-                    MainMenu.SetHighlight(MenuChoice.Value);
+                    _state.MenuChoice.Sub(1);
+                    MainMenu.SetHighlight(_state.MenuChoice.Value);
                 }
 
-                if (MainMenu.Items[MenuChoice.Value].GetType() == typeof(GraphItemSetting))
+                if (MainMenu.Items[_state.MenuChoice.Value].GetType() == typeof(GraphItemSetting))
                 {
                     if (InputComponent.Players[0].PressedLeft)
                     {
-                        MainMenu.Items[MenuChoice.Value].ToSetting().ChangeValue(false);
+                        MainMenu.Items[_state.MenuChoice.Value].ToSetting().ChangeValue(false);
                         MainMenu.CalculateBlocks();
                     }
                     else if (InputComponent.Players[0].PressedRight)
                     {
-                        MainMenu.Items[MenuChoice.Value].ToSetting().ChangeValue(true);
+                        MainMenu.Items[_state.MenuChoice.Value].ToSetting().ChangeValue(true);
                         MainMenu.CalculateBlocks();
                     }
                 }
@@ -183,16 +181,16 @@ namespace SlaamMono.MatchCreation
                 {
                     if (InputComponent.Players[0].PressedAction)
                     {
-                        if (MainMenu.Items[MenuChoice.Value].Details[1] == "Save")
+                        if (MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Save")
                         {
-                            CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
-                            ViewingSettings = false;
+                            CurrentMatchSettings.SaveValues(this, _state.CurrentBoardLocation);
+                            _state.ViewingSettings = false;
                             SetupZune();
                         }
-                        else if (MainMenu.Items[MenuChoice.Value].Details[1] == "Cancel")
+                        else if (MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Cancel")
                         {
                             CurrentMatchSettings.ReadValues(this);
-                            ViewingSettings = false;
+                            _state.ViewingSettings = false;
                             SetupZune();
                         }
                         else
@@ -216,7 +214,7 @@ namespace SlaamMono.MatchCreation
                 {
                     AddComputer();
                 }
-                if (InputComponent.Players[0].PressedDown && SetupCharacters.Count > PlayerAmt)
+                if (InputComponent.Players[0].PressedDown && SetupCharacters.Count > _state.PlayerAmt)
                 {
                     ProfileManager.ResetBot(SetupCharacters[SetupCharacters.Count - 1].CharProfile);
                     SetupCharacters.RemoveAt(SetupCharacters.Count - 1);
@@ -224,7 +222,7 @@ namespace SlaamMono.MatchCreation
 
                 if (InputComponent.Players[0].PressedStart)
                 {
-                    CurrentMatchSettings.SaveValues(this, CurrentBoardLocation);
+                    CurrentMatchSettings.SaveValues(this, _state.CurrentBoardLocation);
                     GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequest(SetupCharacters));
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
@@ -233,7 +231,7 @@ namespace SlaamMono.MatchCreation
 
                 if (InputComponent.Players[0].PressedAction)
                 {
-                    ViewingSettings = true;
+                    _state.ViewingSettings = true;
                     ResetZune();
 
                     BackgroundManager.ChangeBG(BackgroundType.Normal);
@@ -244,7 +242,7 @@ namespace SlaamMono.MatchCreation
 
         public void Draw(SpriteBatch batch)
         {
-            if (ViewingSettings)
+            if (_state.ViewingSettings)
             {
                 MainMenu.Draw(batch);
             }
@@ -268,7 +266,7 @@ namespace SlaamMono.MatchCreation
 
         public void Close()
         {
-            CurrentBoardTexture = null;
+            _state.CurrentBoardTexture = null;
             _resources.GetTexture("LobbyUnderlay").Unload();
             _resources.GetTexture("LobbyCharBar").Unload();
             _resources.GetTexture("LobbyColorPreview").Unload();
@@ -278,31 +276,34 @@ namespace SlaamMono.MatchCreation
         /// <summary>
         /// Loads the new Board Texture and loads its name/creator.
         /// </summary>
-        public void LoadBoard(string brdloc)
+        public void LoadBoard(string boardLocation)
         {
-            if (CurrentBoardTexture != null && CurrentBoardLocation == brdloc)
+            if (_state.CurrentBoardTexture != null && _state.CurrentBoardLocation == boardLocation)
+            {
+                return;
+            }
+
+            try
+            {
+                _state.CurrentBoardTexture = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + boardLocation);
+                _state.CurrentBoardLocation = boardLocation;
+            }
+            catch (FileNotFoundException)
             {
 
+            }
+            _state.Dialogs[0] = DialogStrings.CurrentBoard + _state.CurrentBoardLocation.Substring(_state.CurrentBoardLocation.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\", "");
+            if (_state.CurrentBoardLocation.IndexOf('_') >= 0)
+            {
+                _state.Dialogs[1] = DialogStrings.CreatedBy + _state.CurrentBoardLocation.Substring(0, _state.CurrentBoardLocation.IndexOf('_')).Replace(".png", "").Replace("boards\\", "");
             }
             else
             {
-                try
-                {
-                    CurrentBoardTexture = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + brdloc);
-                    CurrentBoardLocation = brdloc;
-                }
-                catch (FileNotFoundException)
-                {
-
-                }
-                Dialogs[0] = DialogStrings.CurrentBoard + CurrentBoardLocation.Substring(CurrentBoardLocation.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\", "");
-                if (CurrentBoardLocation.IndexOf('_') >= 0)
-                    Dialogs[1] = DialogStrings.CreatedBy + CurrentBoardLocation.Substring(0, CurrentBoardLocation.IndexOf('_')).Replace(".png", "").Replace("boards\\", "");
-                else
-                    Dialogs[1] = "";
-
-                DefaultBoard = CurrentBoardTexture;
+                _state.Dialogs[1] = "";
             }
+
+            _defaultBoard = _state.CurrentBoardTexture;
+
         }
 
         /// <summary>
