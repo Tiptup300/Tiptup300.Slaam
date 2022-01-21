@@ -183,7 +183,7 @@ namespace SlaamMono.MatchCreation
                     {
                         if (MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Save")
                         {
-                            CurrentMatchSettings.SaveValues(this, _state.CurrentBoardLocation);
+                            CurrentMatchSettings.SaveValues(this, _state.BoardLocation);
                             _state.ViewingSettings = false;
                             SetupZune();
                         }
@@ -222,7 +222,7 @@ namespace SlaamMono.MatchCreation
 
                 if (InputComponent.Players[0].PressedStart)
                 {
-                    CurrentMatchSettings.SaveValues(this, _state.CurrentBoardLocation);
+                    CurrentMatchSettings.SaveValues(this, _state.BoardLocation);
                     GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequest(SetupCharacters));
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
@@ -278,7 +278,7 @@ namespace SlaamMono.MatchCreation
         /// </summary>
         public void LoadBoard(string boardLocation)
         {
-            if (_state.CurrentBoardTexture != null && _state.CurrentBoardLocation == boardLocation)
+            if (_state.CurrentBoardTexture != null && _state.BoardLocation == boardLocation)
             {
                 return;
             }
@@ -286,16 +286,16 @@ namespace SlaamMono.MatchCreation
             try
             {
                 _state.CurrentBoardTexture = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + boardLocation);
-                _state.CurrentBoardLocation = boardLocation;
+                _state.BoardLocation = boardLocation;
             }
             catch (FileNotFoundException)
             {
 
             }
-            _state.Dialogs[0] = DialogStrings.CurrentBoard + _state.CurrentBoardLocation.Substring(_state.CurrentBoardLocation.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\", "");
-            if (_state.CurrentBoardLocation.IndexOf('_') >= 0)
+            _state.Dialogs[0] = DialogStrings.CurrentBoard + _state.BoardLocation.Substring(_state.BoardLocation.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\", "");
+            if (_state.BoardLocation.IndexOf('_') >= 0)
             {
-                _state.Dialogs[1] = DialogStrings.CreatedBy + _state.CurrentBoardLocation.Substring(0, _state.CurrentBoardLocation.IndexOf('_')).Replace(".png", "").Replace("boards\\", "");
+                _state.Dialogs[1] = DialogStrings.CreatedBy + _state.BoardLocation.Substring(0, _state.BoardLocation.IndexOf('_')).Replace(".png", "").Replace("boards\\", "");
             }
             else
             {
