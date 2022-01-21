@@ -17,7 +17,6 @@ namespace SlaamMono.Menus
         private const float _holdSeconds = 3f;
         private const float _fadeOutSeconds = 0.5f;
 
-
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
