@@ -19,7 +19,7 @@ namespace SlaamMono.Library.Screens
         {
             if (_screenState.Get().HasCurrentScreen)
             {
-                _screenState.Get().CurrentScreen.Update();
+                _screenState.Get().CurrentScreen.UpdateState();
             }
 
             if (_screenState.Get().IsChangingScreens)
@@ -36,7 +36,7 @@ namespace SlaamMono.Library.Screens
             }
             _screenState.Mutate(_screenState.Get().CompleteTransition());
             _screenState.Get().CurrentScreen.Open();
-            _screenState.Get().CurrentScreen.Update();
+            _screenState.Get().CurrentScreen.UpdateState();
         }
 
         public void Draw(SpriteBatch batch)

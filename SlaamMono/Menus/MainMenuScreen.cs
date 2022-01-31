@@ -52,7 +52,7 @@ namespace SlaamMono.Menus
         private void exitGame(object sender, EventArgs e) => SlaamGame.Instance.Exit();
 
 
-        public void Update() { }
+        public void UpdateState() { }
         public void Draw(SpriteBatch batch) { }
 
         public void Close()

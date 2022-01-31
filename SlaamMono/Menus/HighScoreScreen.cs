@@ -37,7 +37,7 @@ namespace SlaamMono.Menus
             _statsboard.ConstructGraph(25);
         }
 
-        public void Update()
+        public void UpdateState()
         {
             if (InputComponent.Players[0].PressedAction2)
             {

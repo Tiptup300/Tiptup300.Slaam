@@ -97,7 +97,7 @@ namespace SlaamMono.MatchCreation
 
         }
 
-        public void Update()
+        public void UpdateState()
         {
             BackgroundManager.SetRotation(1f);
             _peopleDone = 0;

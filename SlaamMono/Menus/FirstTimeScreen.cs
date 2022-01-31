@@ -59,7 +59,7 @@ namespace SlaamMono.Menus
             return _controlsgraph;
         }
 
-        public void Update()
+        public void UpdateState()
         {
             if (InputComponent.Players[0].PressedAction)
             {

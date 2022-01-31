@@ -56,7 +56,7 @@ namespace SlaamMono.PlayerProfiles
             }
         }
 
-        public void Update()
+        public void UpdateState()
         {
             BackgroundManager.SetRotation(1f);
 

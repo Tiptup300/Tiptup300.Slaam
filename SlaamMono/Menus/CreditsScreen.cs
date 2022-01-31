@@ -48,7 +48,7 @@ namespace SlaamMono.Menus
             }
             FeedManager.FeedsActive = false;
         }
-        public void Update()
+        public void UpdateState()
         {
             if (InputComponent.Players[0].PressedAction)
             {

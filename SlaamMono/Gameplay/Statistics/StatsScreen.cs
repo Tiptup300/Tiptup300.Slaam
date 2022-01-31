@@ -122,7 +122,7 @@ namespace SlaamMono.Gameplay.Statistics
             return output;
         }
 
-        public void Update()
+        public void UpdateState()
         {
             BackgroundManager.SetRotation(1f);
 

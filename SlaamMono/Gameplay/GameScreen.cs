@@ -257,7 +257,7 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public virtual void Update()
+        public virtual void UpdateState()
         {
             if (_paused)
             {

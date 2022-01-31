@@ -40,7 +40,7 @@ namespace SlaamMono.Menus
             _state.LogoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"));
         }
 
-        public void Update()
+        public void UpdateState()
         {
             switch (_state.StateIndex)
             {

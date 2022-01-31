@@ -95,7 +95,7 @@ namespace SlaamMono.MatchCreation
                 viewer.Open();
                 while (!viewer.HasFoundBoard)
                 {
-                    viewer.Update();
+                    viewer.UpdateState();
                 }
                 LoadBoard(viewer.IsValidBoard);
                 viewer.Close();
@@ -128,7 +128,7 @@ namespace SlaamMono.MatchCreation
                 viewer.Open();
                 while (!viewer.HasFoundBoard)
                 {
-                    viewer.Update();
+                    viewer.UpdateState();
                 }
                 _defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.IsValidBoard);
                 viewer.Close();
@@ -148,7 +148,7 @@ namespace SlaamMono.MatchCreation
             FeedManager.InitializeFeeds(DialogStrings.LobbyScreenFeed);
         }
 
-        public void Update()
+        public void UpdateState()
         {
             BackgroundManager.SetRotation(1f);
             if (_state.ViewingSettings)

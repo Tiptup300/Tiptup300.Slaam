@@ -6,7 +6,7 @@ namespace SlaamMono.Library.Screens
     {
         void Open();
 
-        void Update();
+        void UpdateState();
 
         void Draw(SpriteBatch batch);
 

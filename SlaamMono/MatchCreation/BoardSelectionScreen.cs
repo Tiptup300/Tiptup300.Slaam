@@ -69,7 +69,7 @@ namespace SlaamMono.MatchCreation
             _horizontalBoardOffset = new IntRange(-_boardNames.Count);
         }
 
-        public void Update()
+        public void UpdateState()
         {
             if (_isStillLoadingBoards)
             {
