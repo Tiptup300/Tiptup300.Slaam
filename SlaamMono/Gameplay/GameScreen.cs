@@ -144,7 +144,7 @@ namespace SlaamMono.Gameplay
             _resources.GetTexture("BattleBG").Load();
         }
 
-        public void Open()
+        public void InitializeState()
         {
             _boardpos = calcFinalBoardPosition();
             _boardpos.Y = -Tileset.Height;

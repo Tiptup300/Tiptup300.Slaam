@@ -60,7 +60,7 @@ namespace SlaamMono.MatchCreation
             // do nothing
         }
 
-        public void Open()
+        public void InitializeState()
         {
             _logger.Log("----------------------------------");
             _logger.Log("     Character Select Screen      ");

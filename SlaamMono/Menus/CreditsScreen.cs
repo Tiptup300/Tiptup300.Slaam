@@ -31,7 +31,7 @@ namespace SlaamMono.Menus
             _resources = resources;
         }
 
-        public void Open()
+        public void InitializeState()
         {
             credits = _resources.GetTextList("Credits").ToArray();
             BackgroundManager.ChangeBG(BackgroundType.Credits);

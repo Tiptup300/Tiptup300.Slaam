@@ -92,7 +92,7 @@ namespace SlaamMono.MatchCreation
             else
             {
                 BoardSelectionScreen viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequest(this));
-                viewer.Open();
+                viewer.InitializeState();
                 while (!viewer.HasFoundBoard)
                 {
                     viewer.UpdateState();
@@ -125,7 +125,7 @@ namespace SlaamMono.MatchCreation
             {
                 // todo: this will need fixed.
                 BoardSelectionScreen viewer = new BoardSelectionScreen(null, null);
-                viewer.Open();
+                viewer.InitializeState();
                 while (!viewer.HasFoundBoard)
                 {
                     viewer.UpdateState();
@@ -137,7 +137,7 @@ namespace SlaamMono.MatchCreation
             return _defaultBoard;
         }
 
-        public void Open()
+        public void InitializeState()
         {
             BackgroundManager.ChangeBG(BackgroundType.Menu);
             if (SetupCharacters.Count == 1)

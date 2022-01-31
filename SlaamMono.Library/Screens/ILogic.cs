@@ -4,7 +4,7 @@ namespace SlaamMono.Library.Screens
 {
     public interface ILogic
     {
-        void Open();
+        void InitializeState();
 
         void UpdateState();
 

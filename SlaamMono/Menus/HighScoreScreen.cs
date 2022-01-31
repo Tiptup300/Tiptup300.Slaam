@@ -28,7 +28,7 @@ namespace SlaamMono.Menus
             _renderGraph = renderGraph;
         }
 
-        public void Open()
+        public void InitializeState()
         {
             _statsboard = new SurvivalStatsBoard(null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderGraph);
             BackgroundManager.SetRotation(.5f);

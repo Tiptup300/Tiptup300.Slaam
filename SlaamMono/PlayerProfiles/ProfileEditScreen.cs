@@ -41,7 +41,7 @@ namespace SlaamMono.PlayerProfiles
             SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
         }
 
-        public void Open()
+        public void InitializeState()
         {
             BackgroundManager.ChangeBG(BackgroundType.Menu);
 

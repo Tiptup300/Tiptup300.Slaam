@@ -18,7 +18,7 @@ namespace SlaamMono.Menus
             _screenManager = screenDirector;
         }
 
-        public void Open()
+        public void InitializeState()
         {
             SlaamGame.mainBlade.Status = BladeStatus.Out;
             SlaamGame.mainBlade.TopMenu = buildMainMenu();

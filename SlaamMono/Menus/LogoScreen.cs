@@ -28,7 +28,7 @@ namespace SlaamMono.Menus
             _textureRequest = textureRequest;
         }
 
-        public void Open()
+        public void InitializeState()
         {
             _state = new LogoScreenState();
             loadTextures();

@@ -35,7 +35,7 @@ namespace SlaamMono.Library.Screens
                 _screenState.Get().CurrentScreen.Close();
             }
             _screenState.Mutate(_screenState.Get().CompleteTransition());
-            _screenState.Get().CurrentScreen.Open();
+            _screenState.Get().CurrentScreen.InitializeState();
             _screenState.Get().CurrentScreen.UpdateState();
         }
 

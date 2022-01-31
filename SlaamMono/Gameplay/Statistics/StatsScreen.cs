@@ -45,7 +45,7 @@ namespace SlaamMono.Gameplay.Statistics
             ScoreCollection = statsScreenRequest.ScoreCollection;
         }
 
-        public void Open()
+        public void InitializeState()
         {
             _statsButtons = setStatsButtons();
             BackgroundManager.ChangeBG(BackgroundType.Menu);

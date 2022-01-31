@@ -55,7 +55,7 @@ namespace SlaamMono.MatchCreation
             _boardNames = _resources.GetTextList("Boards");
         }
 
-        public void Open()
+        public void InitializeState()
         {
             setBoardIndexs();
             FeedManager.InitializeFeeds(DialogStrings.BoardSelectScreenFeed);

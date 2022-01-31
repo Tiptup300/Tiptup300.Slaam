@@ -25,7 +25,7 @@ namespace SlaamMono.Menus
             _renderGraphManager = renderGraphManager;
         }
 
-        public void Open()
+        public void InitializeState()
         {
             BackgroundManager.ChangeBG(BackgroundType.Menu);
             FeedManager.InitializeFeeds("");
