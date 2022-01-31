@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SlaamMono.Library.ResourceManagement
 {
-    public class WhitePixelRequest
+    public class WhitePixelRequest : IRequest
     {
     }
 }

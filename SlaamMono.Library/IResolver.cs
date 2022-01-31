@@ -1,6 +1,6 @@
 ﻿namespace SlaamMono.Library
 {
-    public interface IResolver<TInputRequest, TOutputResponse>
+    public interface IResolver<TInputRequest, TOutputResponse> where TInputRequest : IRequest
     {
         TOutputResponse Resolve(TInputRequest request);
     }

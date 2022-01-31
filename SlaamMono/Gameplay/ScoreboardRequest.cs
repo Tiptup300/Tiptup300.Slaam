@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay.Actors;
+using SlaamMono.Library;
 
 namespace SlaamMono.Gameplay
 {
-    public class ScoreboardRequest
+    public class ScoreboardRequest : IRequest
     {
         public Vector2 Position { get; private set; }
         public CharacterActor Character { get; private set; }

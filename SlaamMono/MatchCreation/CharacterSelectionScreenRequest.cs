@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SlaamMono.Library;
 
 namespace SlaamMono.MatchCreation
 {
-    public class CharacterSelectionScreenRequest
+    public class CharacterSelectionScreenRequest : IRequest
     {
         public CharacterSelectionScreenRequest()
         {

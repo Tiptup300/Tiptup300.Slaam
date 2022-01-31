@@ -1,6 +1,6 @@
 ﻿namespace SlaamMono.Library.ResourceManagement
 {
-    public class TextureRequest
+    public class TextureRequest : IRequest
     {
         public string TextureName { get; private set; }
 

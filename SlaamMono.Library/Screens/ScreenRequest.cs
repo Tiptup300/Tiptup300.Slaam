@@ -1,6 +1,6 @@
 ﻿namespace SlaamMono.Library.Screens
 {
-    public class ScreenRequest
+    public class ScreenRequest : IRequest
     {
         public string Name { get; private set; }
 

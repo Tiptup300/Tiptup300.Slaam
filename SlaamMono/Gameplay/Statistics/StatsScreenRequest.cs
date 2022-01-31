@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SlaamMono.Library;
 
 namespace SlaamMono.Gameplay.Statistics
 {
-    public class StatsScreenRequest
+    public class StatsScreenRequest : IRequest
     {
         public MatchScoreCollection ScoreCollection;
 

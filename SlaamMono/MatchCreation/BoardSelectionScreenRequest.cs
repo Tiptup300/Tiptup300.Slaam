@@ -1,6 +1,8 @@
-﻿namespace SlaamMono.MatchCreation
+﻿using SlaamMono.Library;
+
+namespace SlaamMono.MatchCreation
 {
-    public class BoardSelectionScreenRequest
+    public class BoardSelectionScreenRequest : IRequest
     {
         public LobbyScreen ParentScreen { get; private set; }
 
