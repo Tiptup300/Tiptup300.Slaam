@@ -9,7 +9,7 @@ using System;
 
 namespace SlaamMono.Menus
 {
-    public class LogoScreen : ILogoScreen, IScreen
+    public class LogoScreen : ILogoScreen, ILogic
     {
         private LogoScreenState _state;
 

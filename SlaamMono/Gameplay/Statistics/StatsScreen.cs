@@ -12,7 +12,7 @@ using SlaamMono.x_;
 
 namespace SlaamMono.Gameplay.Statistics
 {
-    public class StatsScreen : IScreen
+    public class StatsScreen : ILogic
     {
         public const int MAX_HIGHSCORES = 5;
         public MatchScoreCollection ScoreCollection;

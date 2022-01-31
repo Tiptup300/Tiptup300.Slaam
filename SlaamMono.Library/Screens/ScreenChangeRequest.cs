@@ -10,7 +10,7 @@ namespace SlaamMono.Library.Screens
 
         public ScreenChangeRequest(Type screenType, object data)
         {
-            if (screenType.GetInterfaces().Contains(typeof(IScreen)) == false)
+            if (screenType.GetInterfaces().Contains(typeof(ILogic)) == false)
             {
                 throw new Exception("Cannot change to non IScreen Type");
             }

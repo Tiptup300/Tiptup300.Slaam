@@ -1,6 +1,6 @@
 ﻿namespace SlaamMono.Library.Screens
 {
-    public interface ILogoScreen : IScreen
+    public interface ILogoScreen : ILogic
     {
     }
 }

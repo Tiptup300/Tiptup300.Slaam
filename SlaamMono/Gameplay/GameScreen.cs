@@ -21,7 +21,7 @@ using ZBlade;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreen : IScreen
+    public class GameScreen : ILogic
     {
         #region BOARD_STUFF
         // board

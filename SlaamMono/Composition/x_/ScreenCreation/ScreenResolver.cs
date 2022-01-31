@@ -3,7 +3,7 @@ using SlaamMono.Library.Screens;
 
 namespace SlaamMono.Composition.x_
 {
-    public class ScreenResolver : IResolver<ScreenRequest, IScreen>
+    public class ScreenResolver : IResolver<ScreenRequest, ILogic>
     {
         private readonly x_Di _resolver;
         private readonly IResolver<ScreenNameLookup> _screenNameLookupResolver;
@@ -14,10 +14,10 @@ namespace SlaamMono.Composition.x_
             _screenNameLookupResolver = screenNameLookupResolver;
         }
 
-        public IScreen Resolve(ScreenRequest request)
+        public ILogic Resolve(ScreenRequest request)
         {
             var screenLookups = _screenNameLookupResolver.Resolve();
-            return (IScreen)_resolver.x_Get(screenLookups.ScreenNames[request.Name]);
+            return (ILogic)_resolver.x_Get(screenLookups.ScreenNames[request.Name]);
         }
     }
 }

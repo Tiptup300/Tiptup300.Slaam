@@ -10,7 +10,7 @@ using SlaamMono.x_;
 
 namespace SlaamMono.Menus
 {
-    public class HighScoreScreen : IScreen
+    public class HighScoreScreen : ILogic
     {
         public const int MAX_HIGHSCORES = 7;
         private readonly ILogger _logger;

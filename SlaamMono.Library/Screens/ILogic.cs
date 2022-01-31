@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SlaamMono.Library.Screens
 {
-    public interface IScreen
+    public interface ILogic
     {
         void Open();
 

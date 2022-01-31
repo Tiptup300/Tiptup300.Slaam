@@ -5,11 +5,11 @@ namespace SlaamMono.Library.Screens
     public class ScreenManager : IScreenManager
     {
         private readonly Mut<ScreenTransitionState> _screenState;
-        private readonly IResolver<ScreenRequest, IScreen> _screenResolver;
+        private readonly IResolver<ScreenRequest, ILogic> _screenResolver;
 
         public ScreenManager(
             Mut<ScreenTransitionState> screenState,
-            IResolver<ScreenRequest, IScreen> screenResolver)
+            IResolver<ScreenRequest, ILogic> screenResolver)
         {
             _screenState = screenState;
             _screenResolver = screenResolver;
@@ -47,13 +47,13 @@ namespace SlaamMono.Library.Screens
             }
         }
 
-        public void ChangeTo(IScreen nextScreen)
+        public void ChangeTo(ILogic nextScreen)
         {
             var newState = _screenState.Get().BeginTransition(nextScreen);
             _screenState.Mutate(newState);
         }
 
-        public void ChangeTo<TScreenType>() where TScreenType : IScreen
+        public void ChangeTo<TScreenType>() where TScreenType : ILogic
         {
             ChangeTo(_screenResolver.Resolve(new ScreenRequest(typeof(TScreenType).Name)));
         }

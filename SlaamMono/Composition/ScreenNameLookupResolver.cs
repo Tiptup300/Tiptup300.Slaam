@@ -31,7 +31,7 @@ namespace SlaamMono.Composition
 
         private static Func<Type, bool> isIScreen()
         {
-            return t => t.GetInterfaces().Contains(typeof(IScreen));
+            return t => t.GetInterfaces().Contains(typeof(ILogic));
         }
 
         private static Func<Type, bool> isMoreThanJustIScreen()
@@ -41,7 +41,7 @@ namespace SlaamMono.Composition
 
         private static Type getNonIScreenInterface(Type t)
         {
-            return t.GetInterfaces().Where(ifce => ifce != typeof(IScreen)).Single();
+            return t.GetInterfaces().Where(ifce => ifce != typeof(ILogic)).Single();
         }
     }
 }

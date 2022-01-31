@@ -11,7 +11,7 @@ using SlaamMono.x_;
 
 namespace SlaamMono.Menus
 {
-    public class FirstTimeScreen : IScreen
+    public class FirstTimeScreen : ILogic
     {
         private Graph _controlsgraph;
         private readonly IScreenManager _screenDirector;

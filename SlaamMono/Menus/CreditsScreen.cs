@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace SlaamMono.Menus
 {
-    public class CreditsScreen : IScreen
+    public class CreditsScreen : ILogic
     {
         private const float MovementSpeed = 3f / 120f;
 

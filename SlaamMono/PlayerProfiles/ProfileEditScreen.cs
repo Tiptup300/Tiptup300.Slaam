@@ -14,7 +14,7 @@ using System;
 
 namespace SlaamMono.PlayerProfiles
 {
-    class ProfileEditScreen : IScreen
+    class ProfileEditScreen : ILogic
     {
         public static ProfileEditScreen Instance =
             new ProfileEditScreen(

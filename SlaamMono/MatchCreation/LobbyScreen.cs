@@ -15,7 +15,7 @@ using System.IO;
 
 namespace SlaamMono.MatchCreation
 {
-    public class LobbyScreen : IScreen
+    public class LobbyScreen : ILogic
     {
 
         public Graph MainMenu;

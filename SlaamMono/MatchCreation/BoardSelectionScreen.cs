@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace SlaamMono.MatchCreation
 {
-    public class BoardSelectionScreen : IScreen
+    public class BoardSelectionScreen : ILogic
     {
         public bool HasFoundBoard = false;
         public string IsValidBoard;

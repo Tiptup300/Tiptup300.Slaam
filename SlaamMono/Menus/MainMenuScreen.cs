@@ -9,7 +9,7 @@ using ZBlade;
 
 namespace SlaamMono.Menus
 {
-    public class MainMenuScreen : IMainMenuScreen, IScreen
+    public class MainMenuScreen : IMainMenuScreen, ILogic
     {
         private readonly IScreenManager _screenManager;
 
