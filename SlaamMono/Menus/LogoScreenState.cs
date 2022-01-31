@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Subclasses;
 
 namespace SlaamMono.Menus
 {
-    public class LogoScreenState
+    public class LogoScreenState : IState
     {
         public int StateIndex { get; set; }
         public Transition StateTransition { get; set; }

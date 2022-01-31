@@ -3,7 +3,7 @@ using SlaamMono.Library;
 
 namespace SlaamMono.MatchCreation
 {
-    public class LobbyScreenState
+    public class LobbyScreenState : IState
     {
         public Texture2D CurrentBoardTexture { get; set; }
         public int PlayerAmt { get; set; }
