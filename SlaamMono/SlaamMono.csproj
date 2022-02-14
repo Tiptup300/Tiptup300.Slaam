@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SlaamMono.Library\SlaamMono.Library.csproj" />
     <ProjectReference Include="..\ZBlade\ZBlade.csproj" />
+    <ProjectReference Include="..\ZzziveGameEngine\ZzziveGameEngine.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Content\bin\DesktopGL\Content\Boards\MOBILE\0_Classic.xnb">

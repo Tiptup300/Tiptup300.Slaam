@@ -16,4 +16,8 @@
     <Folder Include="Rendering\Textures\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ZzziveGameEngine\ZzziveGameEngine.csproj" />
+  </ItemGroup>
+
 </Project>

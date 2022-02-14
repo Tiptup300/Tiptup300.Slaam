@@ -1,4 +1,4 @@
-﻿namespace SlaamMono.Library
+﻿namespace ZzziveGameEngine
 {
     public interface IState
     {
