@@ -10,20 +10,14 @@ using System.Collections.Generic;
 
 namespace SlaamMono.Menus
 {
-    public class CreditsScreen : ILogic
+    public partial class CreditsScreen : ILogic
     {
+        private CreditsState _state = new CreditsState();
+
         private const float MovementSpeed = 3f / 120f;
 
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
-        private string[] credits;
-        private List<CreditsListing> CreditsListings = new List<CreditsListing>();
-
-        private Color MainCreditColor = Color.White;
-        private Color SubCreditColor = Color.White;
-        private Vector2 TextCoords = new Vector2(5, GameGlobals.DRAWING_GAME_HEIGHT);
-        private bool Active = false;
-        private float TextHeight = 0f;
 
         public CreditsScreen(IScreenManager screenDirector, IResources resources)
         {
@@ -33,18 +27,18 @@ namespace SlaamMono.Menus
 
         public void InitializeState()
         {
-            credits = _resources.GetTextList("Credits").ToArray();
+            _state.credits = _resources.GetTextList("Credits").ToArray();
             BackgroundManager.ChangeBG(BackgroundType.Credits);
-            for (int x = 0; x < credits.Length; x++)
+            for (int x = 0; x < _state.credits.Length; x++)
             {
-                string[] credinfo = credits[x].Replace("\r", "").Split("|".ToCharArray());
+                string[] credinfo = _state.credits[x].Replace("\r", "").Split("|".ToCharArray());
                 string credname = credinfo[0];
                 List<string> credcreds = new List<string>();
                 for (int y = 1; y < credinfo.Length; y++)
                 {
                     credcreds.Add(credinfo[y]);
                 }
-                CreditsListings.Add(new CreditsListing(credname, credcreds));
+                _state.CreditsListings.Add(new CreditsListing(credname, credcreds));
             }
             FeedManager.FeedsActive = false;
         }
@@ -52,17 +46,17 @@ namespace SlaamMono.Menus
         {
             if (InputComponent.Players[0].PressedAction)
             {
-                Active = !Active;
+                _state.Active = !_state.Active;
             }
 
-            if (Active)
+            if (_state.Active)
             {
-                TextCoords.Y -= MovementSpeed * FrameRateDirector.MovementFactor;
+                _state.TextCoords = new Vector2(_state.TextCoords.X, _state.TextCoords.Y - MovementSpeed * FrameRateDirector.MovementFactor);
             }
 
-            if (TextCoords.Y < -TextHeight - 50)
+            if (_state.TextCoords.Y < -_state.TextHeight - 50)
             {
-                TextCoords.Y = GameGlobals.DRAWING_GAME_HEIGHT;
+                _state.TextCoords = new Vector2(_state.TextCoords.X, GameGlobals.DRAWING_GAME_HEIGHT);
             }
 
             if (InputComponent.Players[0].PressedAction2)
@@ -75,41 +69,30 @@ namespace SlaamMono.Menus
         {
             float Offset = 0;
 
-            for (int CurrentCredit = 0; CurrentCredit < CreditsListings.Count; CurrentCredit++)
+            for (int CurrentCredit = 0; CurrentCredit < _state.CreditsListings.Count; CurrentCredit++)
             {
-                if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y)
+                if (_state.TextCoords.Y + Offset > 0 && _state.TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx32pt").MeasureString(_state.CreditsListings[CurrentCredit].Name).Y)
                 {
-                    RenderGraph.Instance.RenderText(CreditsListings[CurrentCredit].Name, new Vector2(TextCoords.X, TextCoords.Y + Offset), _resources.GetFont("SegoeUIx32pt"), MainCreditColor, Alignment.TopLeft, false);
+                    RenderGraph.Instance.RenderText(_state.CreditsListings[CurrentCredit].Name, new Vector2(_state.TextCoords.X, _state.TextCoords.Y + Offset), _resources.GetFont("SegoeUIx32pt"), _state.MainCreditColor, Alignment.TopLeft, false);
                 }
-                Offset += _resources.GetFont("SegoeUIx32pt").MeasureString(CreditsListings[CurrentCredit].Name).Y / 1.5f;
-                for (int x = 0; x < CreditsListings[CurrentCredit].Credits.Count; x++)
+                Offset += _resources.GetFont("SegoeUIx32pt").MeasureString(_state.CreditsListings[CurrentCredit].Name).Y / 1.5f;
+                for (int x = 0; x < _state.CreditsListings[CurrentCredit].Credits.Count; x++)
                 {
-                    if (TextCoords.Y + Offset > 0 && TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y)
+                    if (_state.TextCoords.Y + Offset > 0 && _state.TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx14pt").MeasureString(_state.CreditsListings[CurrentCredit].Credits[x]).Y)
                     {
-                        RenderGraph.Instance.RenderText(CreditsListings[CurrentCredit].Credits[x], new Vector2(TextCoords.X + 10, TextCoords.Y + Offset), _resources.GetFont("SegoeUIx14pt"), SubCreditColor, Alignment.TopLeft, false);
+                        RenderGraph.Instance.RenderText(_state.CreditsListings[CurrentCredit].Credits[x], new Vector2(_state.TextCoords.X + 10, _state.TextCoords.Y + Offset), _resources.GetFont("SegoeUIx14pt"), _state.SubCreditColor, Alignment.TopLeft, false);
                     }
-                    Offset += (int)_resources.GetFont("SegoeUIx14pt").MeasureString(CreditsListings[CurrentCredit].Credits[x]).Y;
+                    Offset += (int)_resources.GetFont("SegoeUIx14pt").MeasureString(_state.CreditsListings[CurrentCredit].Credits[x]).Y;
                 }
                 Offset += 20;
             }
 
-            TextHeight = Offset;
+            _state.TextHeight = Offset;
         }
 
         public void Close()
         {
 
-        }
-
-        private struct CreditsListing
-        {
-            public string Name;
-            public List<string> Credits;
-            public CreditsListing(string name, List<string> credits)
-            {
-                Name = name;
-                Credits = credits;
-            }
         }
     }
 }
