@@ -10,20 +10,20 @@ namespace SlaamMono.Gameplay
         {
             ParentGameScreen = parentgamecreen;
 
-            Kills = new int[ParentGameScreen.Characters.Count][];
-            BestSprees = new int[ParentGameScreen.Characters.Count];
-            Sprees = new int[ParentGameScreen.Characters.Count];
+            Kills = new int[ParentGameScreen.x_ToRemove__Characters.Count][];
+            BestSprees = new int[ParentGameScreen.x_ToRemove__Characters.Count];
+            Sprees = new int[ParentGameScreen.x_ToRemove__Characters.Count];
             for (int x = 0; x < Kills.Length; x++)
             {
-                Kills[x] = new int[ParentGameScreen.Characters.Count];
+                Kills[x] = new int[ParentGameScreen.x_ToRemove__Characters.Count];
             }
         }
 
         public void CalcTotals()
         {
-            if (ParentGameScreen.ThisGameType != GameType.Survival)
+            if (ParentGameScreen.x_ToRemove__ThisGameType != GameType.Survival)
             {
-                for (int x = 0; x < ParentGameScreen.Characters.Count; x++)
+                for (int x = 0; x < ParentGameScreen.x_ToRemove__Characters.Count; x++)
                     ResetSpree(x);
             }
 
@@ -36,14 +36,14 @@ namespace SlaamMono.Gameplay
         /// <param name="Killee">Index of who was killed.</param>
         public void ReportKilling(int Killer, int Killee)
         {
-            if (ParentGameScreen.ThisGameType == GameType.Survival)
+            if (ParentGameScreen.x_ToRemove__ThisGameType == GameType.Survival)
             {
                 if (Killer == 0)
                     Kills[0][0]++;
             }
             else
             {
-                if (Killer != -2 && Killer < ParentGameScreen.Characters.Count)
+                if (Killer != -2 && Killer < ParentGameScreen.x_ToRemove__Characters.Count)
                 {
                     Kills[Killer][Killee]++;
                     Sprees[Killer]++;

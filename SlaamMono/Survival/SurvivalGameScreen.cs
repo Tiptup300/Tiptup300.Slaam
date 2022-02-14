@@ -45,25 +45,25 @@ namespace SlaamMono.Survival
 
         public override void SetupTheBoard(string BoardLoc)
         {
-            ThisGameType = GameType.Survival;
+            _state.ThisGameType = GameType.Survival;
             CurrentMatchSettings.GameType = GameType.Survival;
             CurrentMatchSettings.SpeedMultiplyer = 1f;
             CurrentMatchSettings.RespawnTime = new TimeSpan(0, 0, 8);
             CurrentMatchSettings.LivesAmt = 1;
-            Tileset = LobbyScreen.LoadQuickBoard();
+            _state.Tileset = LobbyScreen.LoadQuickBoard();
 
-            Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, SetupCharacters[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
-            Scoreboards.Add(
+            _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, _state.SetupCharacters[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
+            _state.Scoreboards.Add(
                 _gameScreenScoreBoardResolver.Resolve(
                     new ScoreboardRequest(
                         new Vector2(-250, 10),
-                        Characters[0],
-                        ThisGameType)));
+                        _state.Characters[0],
+                        _state.ThisGameType)));
         }
 
         public override void UpdateState()
         {
-            if (CurrentGameStatus == GameStatus.Playing)
+            if (_state.CurrentGameStatus == GameStatus.Playing)
             {
                 _timeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
                 if (_timeToAddBot.Active)
@@ -73,25 +73,25 @@ namespace SlaamMono.Survival
                         AddNewBot();
                         _botsAdded++;
 
-                        if (Rand.Next(0, _botsAdded - 1) == _botsAdded)
+                        if (_state.Rand.Next(0, _botsAdded - 1) == _botsAdded)
                         {
                             _botsToAdd++;
                         }
                     }
                 }
 
-                for (int x = 0; x < Characters.Count; x++)
+                for (int x = 0; x < _state.Characters.Count; x++)
                 {
-                    if (Characters[x] != null && Characters[x].Lives == 0)
+                    if (_state.Characters[x] != null && _state.Characters[x].Lives == 0)
                     {
-                        Characters[x] = null;
-                        NullChars++;
+                        _state.Characters[x] = null;
+                        _state.NullChars++;
                     }
                 }
             }
 
-            bool temp = CurrentGameStatus == GameStatus.Waiting;
-            if (CurrentGameStatus == GameStatus.Playing && temp)
+            bool temp = _state.CurrentGameStatus == GameStatus.Waiting;
+            if (_state.CurrentGameStatus == GameStatus.Playing && temp)
             {
                 AddNewBot();
             }
@@ -102,42 +102,42 @@ namespace SlaamMono.Survival
         {
             if (Killer == 0)
             {
-                Characters[Killer].Kills++;
+                _state.Characters[Killer].Kills++;
             }
 
             if (Killee == 0)
             {
-                CurrentGameStatus = GameStatus.Over;
-                ReadySetGoPart = 3;
-                ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+                _state.CurrentGameStatus = GameStatus.Over;
+                _state.ReadySetGoPart = 3;
+                _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             }
         }
 
         private void AddNewBot()
         {
-            Characters.Add(
+            _state.Characters.Add(
                 new BotActor(
                     SlaamGame.Content.Load<Texture2D>("content\\skins\\" + CharacterSelectionScreen.ReturnRandSkin(_logger)),
                     ProfileManager.GetBotProfile(),
                     new Vector2(-200, -200),
                     this,
                     Color.Black,
-                    Characters.Count,
+                    _state.Characters.Count,
                     x_Di.Get<IResources>()));
 
             ProfileManager.ResetAllBots();
-            RespawnChar(Characters.Count - 1);
+            RespawnChar(_state.Characters.Count - 1);
         }
 
         public override void EndGame()
         {
-            if (ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame < Timer.CurrentGameTime)
+            if (ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame < _state.Timer.CurrentGameTime)
             {
-                ProfileManager.AllProfiles[Characters[0].ProfileIndex].BestGame = Timer.CurrentGameTime;
+                ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame = _state.Timer.CurrentGameTime;
             }
             ProfileManager.SaveProfiles();
             _screenDirector.ChangeTo(
-                _statsScreenResolver.Resolve(new StatsScreenRequest(ScoreKeeper)));
+                _statsScreenResolver.Resolve(new StatsScreenRequest(_state.ScoreKeeper)));
         }
     }
 }

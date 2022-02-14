@@ -304,7 +304,7 @@ namespace SlaamMono.Gameplay.Actors
             if (TilePosition.X < 0 || TilePosition.Y < 0 || TilePosition.X >= GameGlobals.BOARD_WIDTH || TilePosition.Y >= GameGlobals.BOARD_HEIGHT)
                 return false;
 
-            Tile tile = GameScreen.Instance.Tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = GameScreen.Instance.x_ToRemove__Tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Clear ||
                 tile.CurrentTileCondition == TileCondition.Clearing ||
@@ -319,7 +319,7 @@ namespace SlaamMono.Gameplay.Actors
             if (!IsClear(TilePosition))
                 return false;
 
-            Tile tile = GameScreen.Instance.Tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = GameScreen.Instance.x_ToRemove__Tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Marked)
                 return false;
@@ -332,7 +332,7 @@ namespace SlaamMono.Gameplay.Actors
             if (TilePosition.X < 0 || TilePosition.Y < 0 || TilePosition.X >= GameGlobals.BOARD_WIDTH || TilePosition.Y >= GameGlobals.BOARD_HEIGHT)
                 return false;
 
-            Tile tile = GameScreen.Instance.Tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = GameScreen.Instance.x_ToRemove__Tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Marked)
                 return false;
@@ -416,7 +416,7 @@ namespace SlaamMono.Gameplay.Actors
         /// <param name="coors">Current Coordinates of the player.</param>
         public void ReportDeath(Tile[,] tiles, Vector2 coors)
         {
-            if (GameScreen.Instance.ThisGameType == GameType.Classic || GameScreen.Instance.ThisGameType == GameType.Survival)
+            if (GameScreen.Instance.x_ToRemove__ThisGameType == GameType.Classic || GameScreen.Instance.x_ToRemove__ThisGameType == GameType.Survival)
                 Lives--;
 
             Deaths++;
@@ -442,7 +442,7 @@ namespace SlaamMono.Gameplay.Actors
             CurrentState = CharacterState.Normal;
             Alpha = 255;
             SpriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
-            GameScreen.Instance.Tiles[(int)other.X, (int)other.Y].MarkTileForRespawn(MarkingColor, new TimeSpan(0, 0, 0, 8), PlayerIndex);
+            GameScreen.Instance.x_ToRemove__Tiles[(int)other.X, (int)other.Y].MarkTileForRespawn(MarkingColor, new TimeSpan(0, 0, 0, 8), PlayerIndex);
         }
 
         public enum CharacterState

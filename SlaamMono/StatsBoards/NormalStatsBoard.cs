@@ -15,20 +15,20 @@ namespace SlaamMono.StatsBoards
         public NormalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph)
             : base(scorekeeper)
         {
-            NormalStatsPage = new NormalPlayerStatsPageListing[scorekeeper.ParentGameScreen.Characters.Count];
+            NormalStatsPage = new NormalPlayerStatsPageListing[scorekeeper.ParentGameScreen.x_ToRemove__Characters.Count];
             MainBoard = new Graph(rect, 2, col, resources, renderGraph);
         }
 
         public override void CalculateStats()
         {
 
-            TimeSpan[] TotalTime = new TimeSpan[ParentScoreCollector.ParentGameScreen.Characters.Count];
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.Characters.Count; x++)
+            TimeSpan[] TotalTime = new TimeSpan[ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count];
+            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count; x++)
             {
-                if (ParentScoreCollector.ParentGameScreen.Characters[x].Lives > 0)
-                    TotalTime[x] = ParentScoreCollector.ParentGameScreen.Characters[x].TimeAlive + new TimeSpan(0, 5, 0);
+                if (ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].Lives > 0)
+                    TotalTime[x] = ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].TimeAlive + new TimeSpan(0, 5, 0);
                 else
-                    TotalTime[x] = ParentScoreCollector.ParentGameScreen.Characters[x].TimeAlive;
+                    TotalTime[x] = ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].TimeAlive;
             }
 
             int AmtSelected = 0, CurrentPlace = 1;
@@ -78,10 +78,10 @@ namespace SlaamMono.StatsBoards
                 GraphItem itm = new GraphItem();
                 {
 
-                    if (ParentScoreCollector.ParentGameScreen.Characters[x].IsBot)
-                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.Characters[x].GetProfile().Name + "*");
+                    if (ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].IsBot)
+                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].GetProfile().Name + "*");
                     else
-                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.Characters[x].GetProfile().Name);
+                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].GetProfile().Name);
 
                     itm.Details.Add(NormalStatsPage[x].Place.ToString());
                     itm.Details.Add(NormalStatsPage[x].BestSpree.ToString());

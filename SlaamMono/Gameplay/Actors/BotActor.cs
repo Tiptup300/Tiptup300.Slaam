@@ -112,16 +112,16 @@ namespace SlaamMono.Gameplay.Actors
                 }
                 List<BotTarget> Targets = new List<BotTarget>();
 
-                for (int x = 0; x < ParentGameScreen.Characters.Count; x++)
+                for (int x = 0; x < ParentGameScreen.x_ToRemove__Characters.Count; x++)
                 {
                     if (x != PlayerIndex &&
-                         ParentGameScreen.Characters[x] != null &&
-                         ParentGameScreen.Characters[x].CurrentState != CharacterState.Dead &&
-                         ParentGameScreen.Characters[x].CurrentState != CharacterState.Dieing &&
+                         ParentGameScreen.x_ToRemove__Characters[x] != null &&
+                         ParentGameScreen.x_ToRemove__Characters[x].CurrentState != CharacterState.Dead &&
+                         ParentGameScreen.x_ToRemove__Characters[x].CurrentState != CharacterState.Dieing &&
                          /*( ParentGameScreen.Characters[x].CurrentTile != null && ParentGameScreen.Characters[x].CurrentTile.CurrentTileCondition != TileCondition.RespawnPoint ) && */
-                         ParentGameScreen.Characters[x].MarkingColor != MarkingColor)
+                         ParentGameScreen.x_ToRemove__Characters[x].MarkingColor != MarkingColor)
                     {
-                        Vector2 pos = ParentGameScreen.InterpretCoordinates(ParentGameScreen.Characters[x].Position, true);
+                        Vector2 pos = ParentGameScreen.InterpretCoordinates(ParentGameScreen.x_ToRemove__Characters[x].Position, true);
                         if (pos != CurrentCoordinates)
                             Targets.Add(new BotTarget(x, pos, GetDistance(CurrentCoordinates, pos)));
 
@@ -168,8 +168,8 @@ namespace SlaamMono.Gameplay.Actors
 
             Attacking = CurrentTarget != null &&
     CurrentTarget.ThisTargetType == BotTarget.TargetType.Character &&
-    ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
-    ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dieing;
+    ParentGameScreen.x_ToRemove__Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
+    ParentGameScreen.x_ToRemove__Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dieing;
 
             if (Moving)
             {
@@ -201,8 +201,8 @@ namespace SlaamMono.Gameplay.Actors
         {
             if (CurrentTarget != null && CurrentTarget.ThisTargetType == BotTarget.TargetType.Character)
             {
-                if (!(ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
-                    !(ParentGameScreen.Characters[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
+                if (!(ParentGameScreen.x_ToRemove__Characters[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
+                    !(ParentGameScreen.x_ToRemove__Characters[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
                 {
                     TargetTime.Update(FrameRateDirector.MovementFactorTimeSpan);
                     if (TargetTime.Active)
@@ -226,11 +226,11 @@ namespace SlaamMono.Gameplay.Actors
                 //CurrentDirection = Direction.None;
                 if (CurrentCoordinates.X != CurrentTarget.Position.X)
                 {
-                    if (CurrentCoordinates.X > CurrentTarget.Position.X && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, -1, 0))
+                    if (CurrentCoordinates.X > CurrentTarget.Position.X && IsSafe(ParentGameScreen.x_ToRemove__Tiles, CurrentCoordinates, -1, 0))
                     {
                         CurrentDirection = Direction.Left;
                     }
-                    else if (CurrentCoordinates.X < CurrentTarget.Position.X && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 1, 0))
+                    else if (CurrentCoordinates.X < CurrentTarget.Position.X && IsSafe(ParentGameScreen.x_ToRemove__Tiles, CurrentCoordinates, 1, 0))
                     {
                         CurrentDirection = Direction.Right;
                     }
@@ -240,20 +240,20 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     if (CurrentCoordinates.Y > CurrentTarget.Position.Y - 1)
                     {
-                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, -1, -1))
+                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.x_ToRemove__Tiles, CurrentCoordinates, -1, -1))
                             CurrentDirection = Direction.UpperLeft;
-                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 1, -1))
+                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.x_ToRemove__Tiles, CurrentCoordinates, 1, -1))
                             CurrentDirection = Direction.UpperRight;
-                        else if (IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 0, -1))
+                        else if (IsSafe(ParentGameScreen.x_ToRemove__Tiles, CurrentCoordinates, 0, -1))
                             CurrentDirection = Direction.Up;
                     }
                     else if (CurrentCoordinates.Y < CurrentTarget.Position.Y + 1)
                     {
-                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, -1, 1))
+                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.x_ToRemove__Tiles, CurrentCoordinates, -1, 1))
                             CurrentDirection = Direction.LowerLeft;
-                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 1, 1))
+                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.x_ToRemove__Tiles, CurrentCoordinates, 1, 1))
                             CurrentDirection = Direction.LowerRight;
-                        else if (IsSafe(ParentGameScreen.Tiles, CurrentCoordinates, 0, 1))
+                        else if (IsSafe(ParentGameScreen.x_ToRemove__Tiles, CurrentCoordinates, 0, 1))
                             CurrentDirection = Direction.Down;
                     }
                 }
@@ -301,14 +301,14 @@ namespace SlaamMono.Gameplay.Actors
             }
             else
             {
-                float Highest = ParentGameScreen.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
+                float Highest = ParentGameScreen.x_ToRemove__Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
 
                 for (int x = 0; x < PlacesToGo.Count; x++)
                 {
                     Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + PlacesToGo[x][0], CurrentCoordinates.Y + PlacesToGo[x][1]);
                     if (IsClear(CurrentTileLocation))
                     {
-                        float temp = ParentGameScreen.Tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
+                        float temp = ParentGameScreen.x_ToRemove__Tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
 
                         if (temp > Highest)
                         {
