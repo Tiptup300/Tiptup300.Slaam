@@ -1,4 +1,6 @@
-﻿namespace SlaamMono.Library.ResourceManagement
+﻿using ZzziveGameEngine;
+
+namespace SlaamMono.Library.ResourceManagement
 {
     public class CachedTextureRequestHandler : IResolver<TextureRequest, CachedTexture>
     {

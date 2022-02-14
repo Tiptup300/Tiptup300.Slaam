@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SlaamMono.Library
+namespace ZzziveGameEngine
 {
     public class Mut<TStateType>
     {
@@ -8,7 +8,7 @@ namespace SlaamMono.Library
 
         private TStateType _state;
 
-        public Mut(TStateType state = default(TStateType))
+        public Mut(TStateType state = default)
         {
             _state = state;
         }
