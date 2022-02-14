@@ -6,14 +6,14 @@ using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
 
 namespace SlaamMono.Menus
 {
     public class FirstTimeScreen : ILogic
     {
-        private Graph _controlsgraph;
+        public FirstTimeScreenState _state = new FirstTimeScreenState();
+
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
@@ -30,7 +30,7 @@ namespace SlaamMono.Menus
             BackgroundManager.ChangeBG(BackgroundType.Menu);
             FeedManager.InitializeFeeds("");
 
-            _controlsgraph = buildGraph();
+            _state.ControlsGraph = buildGraph();
         }
 
         private Graph buildGraph()
@@ -56,7 +56,7 @@ namespace SlaamMono.Menus
             output.Items.Add(true, new GraphItem("Toggle FPS", "None)", "Hold SP", "N/A"));
             output.CalculateBlocks();
 
-            return _controlsgraph;
+            return _state.ControlsGraph;
         }
 
         public void UpdateState()
@@ -71,7 +71,7 @@ namespace SlaamMono.Menus
         public void Draw(SpriteBatch batch)
         {
             batch.Draw(_resources.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
-            _controlsgraph.Draw(batch);
+            _state.ControlsGraph.Draw(batch);
         }
 
         public void Close()
