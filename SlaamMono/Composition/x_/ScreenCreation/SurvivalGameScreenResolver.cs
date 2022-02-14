@@ -5,6 +5,7 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.Survival;
+using ZzziveGameEngine;
 
 namespace SlaamMono.Composition.x_
 {

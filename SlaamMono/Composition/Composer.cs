@@ -17,6 +17,7 @@ using SlaamMono.ResourceManagement;
 using SlaamMono.ResourceManagement.Loading;
 using SlaamMono.Survival;
 using SlaamMono.x_;
+using ZzziveGameEngine;
 
 namespace SlaamMono.Composition
 {

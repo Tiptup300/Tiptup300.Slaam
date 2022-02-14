@@ -5,6 +5,7 @@ using SlaamMono.Library;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using System;
+using ZzziveGameEngine;
 
 namespace SlaamMono.Gameplay
 {

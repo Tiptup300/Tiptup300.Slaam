@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
+using ZzziveGameEngine;
 
 namespace SlaamMono.ResourceManagement
 {

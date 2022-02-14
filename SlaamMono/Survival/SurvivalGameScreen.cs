@@ -13,6 +13,7 @@ using SlaamMono.MatchCreation;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.SubClasses;
 using System;
+using ZzziveGameEngine;
 
 namespace SlaamMono.Survival
 {

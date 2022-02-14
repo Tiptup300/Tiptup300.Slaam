@@ -1,4 +1,4 @@
-﻿namespace SlaamMono.Library
+﻿namespace ZzziveGameEngine
 {
     public interface IResolver<TInputRequest, TOutputResponse> where TInputRequest : IRequest
     {

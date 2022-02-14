@@ -1,4 +1,6 @@
-﻿namespace SlaamMono.Library.Screens
+﻿using ZzziveGameEngine;
+
+namespace SlaamMono.Library.Screens
 {
     public class ScreenRequest : IRequest
     {
