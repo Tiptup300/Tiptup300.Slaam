@@ -109,7 +109,6 @@ namespace SlaamMono.MatchCreation
                 AddComputer();
                 _state.PlayerAmt++;
             }
-            FeedManager.InitializeFeeds(DialogStrings.LobbyScreenFeed);
         }
 
         public static void SetupZune()

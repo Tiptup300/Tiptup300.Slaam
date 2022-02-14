@@ -155,7 +155,6 @@ namespace SlaamMono.Gameplay
                 this,
                 x_Di.Get<IResources>());
 
-            FeedManager.FeedsActive = false;
             for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
             {
                 for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)

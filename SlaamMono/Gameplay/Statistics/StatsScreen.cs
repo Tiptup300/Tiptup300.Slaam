@@ -103,7 +103,6 @@ namespace SlaamMono.Gameplay.Statistics
                 else
                     third = third.Substring(0, third.Length - 2);
 
-                FeedManager.InitializeFeeds(first.Substring(0, first.Length - 2) + " " + second + " " + third);
 
                 CurrentChar = new IntRange(0, 0, PvP.MainBoard.Items.Count - 1);
 

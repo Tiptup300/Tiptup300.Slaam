@@ -40,7 +40,6 @@ namespace SlaamMono.Menus
                 }
                 _state.CreditsListings.Add(new CreditsListing(credname, credcreds));
             }
-            FeedManager.FeedsActive = false;
         }
         public void UpdateState()
         {

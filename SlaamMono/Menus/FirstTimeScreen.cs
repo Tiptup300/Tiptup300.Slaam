@@ -28,7 +28,6 @@ namespace SlaamMono.Menus
         public void InitializeState()
         {
             BackgroundManager.ChangeBG(BackgroundType.Menu);
-            FeedManager.InitializeFeeds("");
 
             _state.ControlsGraph = buildGraph();
         }

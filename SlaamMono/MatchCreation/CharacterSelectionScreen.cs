@@ -83,7 +83,6 @@ namespace SlaamMono.MatchCreation
                 ResetBoxes();
             }
             BackgroundManager.ChangeBG(BackgroundType.Menu);
-            FeedManager.InitializeFeeds(DialogStrings.CharacterSelectScreenFeed);
 
             for (int x = 0; x < SelectBoxes.Length; x++)
             {

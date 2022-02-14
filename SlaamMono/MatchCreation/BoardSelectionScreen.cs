@@ -58,7 +58,6 @@ namespace SlaamMono.MatchCreation
         public void InitializeState()
         {
             setBoardIndexs();
-            FeedManager.InitializeFeeds(DialogStrings.BoardSelectScreenFeed);
             BackgroundManager.ChangeBG(BackgroundType.Normal);
         }
 
