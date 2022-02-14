@@ -17,16 +17,13 @@ namespace SlaamMono.MatchCreation
 {
     public class LobbyScreen : ILogic
     {
-
-        public Graph MainMenu;
-        public List<CharacterShell> SetupCharacters;
-
-
         private static Texture2D _defaultBoard;
 
         private const int MAX_PLAYERS = 4;
 
         private LobbyScreenState _state = new LobbyScreenState();
+
+        public Graph x_this_needs_removed_later_MainMenu => _state.MainMenu;
 
 
         private readonly ILogger _logger;
@@ -39,7 +36,6 @@ namespace SlaamMono.MatchCreation
         private readonly IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen> _characterSelectionScreenResolver;
 
         public LobbyScreen(
-            List<CharacterShell> chars,
             ILogger logger,
             IScreenManager screenDirector,
             PlayerColorResolver playerColorResolver,
@@ -49,7 +45,6 @@ namespace SlaamMono.MatchCreation
             IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> boardSelectionScreenResolver,
             IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen> characterSelectionScreenResolver)
         {
-            SetupCharacters = chars;
             _logger = logger;
             _screenDirector = screenDirector;
             _playerColorResolver = playerColorResolver;
@@ -58,19 +53,20 @@ namespace SlaamMono.MatchCreation
             _gameScreenRequest = gameScreenRequest;
             _boardSelectionScreenResolver = boardSelectionScreenResolver;
             _characterSelectionScreenResolver = characterSelectionScreenResolver;
-            initialize();
         }
 
-        private void initialize()
+
+        public void Initialize(LobbyScreenRequest request)
         {
+            _state.SetupCharacters = request.CharacterShells;
             _state.Dialogs = new string[2];
             _state.ViewingSettings = false;
 
-            _state.PlayerAmt = SetupCharacters.Count;
-            MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), _resources, _renderGraphManager);
-            MainMenu.Items.Columns.Add("SETTING");
-            MainMenu.Items.Columns.Add("SETTING");
-            MainMenu.Items.Add(true,
+            _state.PlayerAmt = _state.SetupCharacters.Count;
+            _state.MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), _resources, _renderGraphManager);
+            _state.MainMenu.Items.Columns.Add("SETTING");
+            _state.MainMenu.Items.Columns.Add("SETTING");
+            _state.MainMenu.Items.Add(true,
                 new GraphItemSetting(0, "GameType", "Classic", "Spree", "Timed Spree"),
                 new GraphItemSetting(1, "Lives (Classic Only)", "3", "5", "10", "20", "40", "50", "100"),
                 new GraphItemSetting(2, "Speed", "0.50x", "0.75x", "1.00x", "1.25x", "1.50x"),
@@ -81,9 +77,9 @@ namespace SlaamMono.MatchCreation
                 new GraphItem("", "Save"),
                 new GraphItem("", "Cancel")
             );
-            _state.MenuChoice = new IntRange(0, 0, MainMenu.Items.Count - 1);
+            _state.MenuChoice = new IntRange(0, 0, _state.MainMenu.Items.Count - 1);
             CurrentMatchSettings.ReadValues(this);
-            MainMenu.SetHighlight(_state.MenuChoice.Value);
+            _state.MainMenu.SetHighlight(_state.MenuChoice.Value);
 
             if (CurrentMatchSettings.BoardLocation != null && CurrentMatchSettings.BoardLocation.Trim() != "" && File.Exists(CurrentMatchSettings.BoardLocation))
             {
@@ -102,6 +98,17 @@ namespace SlaamMono.MatchCreation
             }
 
             SetupZune();
+        }
+
+        public void InitializeState()
+        {
+            BackgroundManager.ChangeBG(BackgroundType.Menu);
+            if (_state.SetupCharacters.Count == 1)
+            {
+                AddComputer();
+                _state.PlayerAmt++;
+            }
+            FeedManager.InitializeFeeds(DialogStrings.LobbyScreenFeed);
         }
 
         public static void SetupZune()
@@ -137,17 +144,6 @@ namespace SlaamMono.MatchCreation
             return _defaultBoard;
         }
 
-        public void InitializeState()
-        {
-            BackgroundManager.ChangeBG(BackgroundType.Menu);
-            if (SetupCharacters.Count == 1)
-            {
-                AddComputer();
-                _state.PlayerAmt++;
-            }
-            FeedManager.InitializeFeeds(DialogStrings.LobbyScreenFeed);
-        }
-
         public void UpdateState()
         {
             BackgroundManager.SetRotation(1f);
@@ -156,38 +152,38 @@ namespace SlaamMono.MatchCreation
                 if (InputComponent.Players[0].PressedDown)
                 {
                     _state.MenuChoice.Add(1);
-                    MainMenu.SetHighlight(_state.MenuChoice.Value);
+                    _state.MainMenu.SetHighlight(_state.MenuChoice.Value);
                 }
                 if (InputComponent.Players[0].PressedUp)
                 {
                     _state.MenuChoice.Sub(1);
-                    MainMenu.SetHighlight(_state.MenuChoice.Value);
+                    _state.MainMenu.SetHighlight(_state.MenuChoice.Value);
                 }
 
-                if (MainMenu.Items[_state.MenuChoice.Value].GetType() == typeof(GraphItemSetting))
+                if (_state.MainMenu.Items[_state.MenuChoice.Value].GetType() == typeof(GraphItemSetting))
                 {
                     if (InputComponent.Players[0].PressedLeft)
                     {
-                        MainMenu.Items[_state.MenuChoice.Value].ToSetting().ChangeValue(false);
-                        MainMenu.CalculateBlocks();
+                        _state.MainMenu.Items[_state.MenuChoice.Value].ToSetting().ChangeValue(false);
+                        _state.MainMenu.CalculateBlocks();
                     }
                     else if (InputComponent.Players[0].PressedRight)
                     {
-                        MainMenu.Items[_state.MenuChoice.Value].ToSetting().ChangeValue(true);
-                        MainMenu.CalculateBlocks();
+                        _state.MainMenu.Items[_state.MenuChoice.Value].ToSetting().ChangeValue(true);
+                        _state.MainMenu.CalculateBlocks();
                     }
                 }
                 else
                 {
                     if (InputComponent.Players[0].PressedAction)
                     {
-                        if (MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Save")
+                        if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Save")
                         {
                             CurrentMatchSettings.SaveValues(this, _state.BoardLocation);
                             _state.ViewingSettings = false;
                             SetupZune();
                         }
-                        else if (MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Cancel")
+                        else if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Cancel")
                         {
                             CurrentMatchSettings.ReadValues(this);
                             _state.ViewingSettings = false;
@@ -210,20 +206,20 @@ namespace SlaamMono.MatchCreation
                     ResetZune();
                 }
 
-                if (InputComponent.Players[0].PressedUp && SetupCharacters.Count < MAX_PLAYERS)
+                if (InputComponent.Players[0].PressedUp && _state.SetupCharacters.Count < MAX_PLAYERS)
                 {
                     AddComputer();
                 }
-                if (InputComponent.Players[0].PressedDown && SetupCharacters.Count > _state.PlayerAmt)
+                if (InputComponent.Players[0].PressedDown && _state.SetupCharacters.Count > _state.PlayerAmt)
                 {
-                    ProfileManager.ResetBot(SetupCharacters[SetupCharacters.Count - 1].CharProfile);
-                    SetupCharacters.RemoveAt(SetupCharacters.Count - 1);
+                    ProfileManager.ResetBot(_state.SetupCharacters[_state.SetupCharacters.Count - 1].CharProfile);
+                    _state.SetupCharacters.RemoveAt(_state.SetupCharacters.Count - 1);
                 }
 
                 if (InputComponent.Players[0].PressedStart)
                 {
                     CurrentMatchSettings.SaveValues(this, _state.BoardLocation);
-                    GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequest(SetupCharacters));
+                    GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequest(_state.SetupCharacters));
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();
@@ -244,21 +240,21 @@ namespace SlaamMono.MatchCreation
         {
             if (_state.ViewingSettings)
             {
-                MainMenu.Draw(batch);
+                _state.MainMenu.Draw(batch);
             }
             else
             {
                 batch.Draw(_resources.GetTexture("LobbyUnderlay").Texture, Vector2.Zero, Color.White);
                 float YOffset = 75;
 
-                for (int x = 0; x < SetupCharacters.Count; x++)
+                for (int x = 0; x < _state.SetupCharacters.Count; x++)
                 {
                     batch.Draw(_resources.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
-                    batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), SetupCharacters[x].PlayerColor);
-                    if (SetupCharacters[x].Type == PlayerType.Player)
-                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[SetupCharacters[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+                    batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), _state.SetupCharacters[x].PlayerColor);
+                    if (_state.SetupCharacters[x].Type == PlayerType.Player)
+                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
                     else
-                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[SetupCharacters[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
+                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
                 }
                 batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
             }
@@ -311,7 +307,7 @@ namespace SlaamMono.MatchCreation
         /// </summary>
         private void AddComputer()
         {
-            SetupCharacters.Add(new CharacterShell(CharacterSelectionScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)SetupCharacters.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(SetupCharacters.Count)));
+            _state.SetupCharacters.Add(new CharacterShell(CharacterSelectionScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)_state.SetupCharacters.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(_state.SetupCharacters.Count)));
         }
     }
 }

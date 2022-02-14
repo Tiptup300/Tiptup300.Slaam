@@ -20,7 +20,7 @@ namespace SlaamMono.Gameplay
 
         public static void SaveValues(LobbyScreen parent, string boardloc)
         {
-            switch (parent.MainMenu.Items[0].ToSetting().OptionChoice.Value)
+            switch (parent.x_this_needs_removed_later_MainMenu.Items[0].ToSetting().OptionChoice.Value)
             {
                 case 0:
                     GameType = GameType.Classic;
@@ -32,7 +32,7 @@ namespace SlaamMono.Gameplay
                     GameType = GameType.TimedSpree;
                     break;
             }
-            switch (parent.MainMenu.Items[1].ToSetting().OptionChoice.Value)
+            switch (parent.x_this_needs_removed_later_MainMenu.Items[1].ToSetting().OptionChoice.Value)
             {
                 case 0:
                     LivesAmt = 3;
@@ -57,7 +57,7 @@ namespace SlaamMono.Gameplay
                     break;
             }
 
-            switch (parent.MainMenu.Items[2].ToSetting().OptionChoice.Value)
+            switch (parent.x_this_needs_removed_later_MainMenu.Items[2].ToSetting().OptionChoice.Value)
             {
                 case 0:
                     SpeedMultiplyer = .5f;
@@ -76,7 +76,7 @@ namespace SlaamMono.Gameplay
                     break;
             }
 
-            switch (parent.MainMenu.Items[3].ToSetting().OptionChoice.Value)
+            switch (parent.x_this_needs_removed_later_MainMenu.Items[3].ToSetting().OptionChoice.Value)
             {
                 case 0:
                     TimeOfMatch = new TimeSpan(0, 1, 0);
@@ -107,7 +107,7 @@ namespace SlaamMono.Gameplay
                     break;
             }
 
-            switch (parent.MainMenu.Items[4].ToSetting().OptionChoice.Value)
+            switch (parent.x_this_needs_removed_later_MainMenu.Items[4].ToSetting().OptionChoice.Value)
             {
                 case 0:
                     RespawnTime = new TimeSpan(0, 0, 0);
@@ -129,7 +129,7 @@ namespace SlaamMono.Gameplay
                     break;
             }
 
-            switch (parent.MainMenu.Items[5].ToSetting().OptionChoice.Value)
+            switch (parent.x_this_needs_removed_later_MainMenu.Items[5].ToSetting().OptionChoice.Value)
             {
                 case 0:
                     KillsToWin = 5;
@@ -168,7 +168,7 @@ namespace SlaamMono.Gameplay
 
             for (int x = 0; x < 6; x++)
             {
-                int y = parent.MainMenu.Items[x].ToSetting().OptionChoice.Value;
+                int y = parent.x_this_needs_removed_later_MainMenu.Items[x].ToSetting().OptionChoice.Value;
                 writer.Write(y);
             }
             writer.Write(BoardLocation != null ? BoardLocation : "");
@@ -201,7 +201,7 @@ namespace SlaamMono.Gameplay
                 for (int x = 0; x < 6; x++)
                 {
                     int y = reader.ReadInt32();
-                    parent.MainMenu.Items[x].ToSetting().ChangeValue(y);
+                    parent.x_this_needs_removed_later_MainMenu.Items[x].ToSetting().ChangeValue(y);
                 }
 
                 BoardLocation = reader.ReadString();

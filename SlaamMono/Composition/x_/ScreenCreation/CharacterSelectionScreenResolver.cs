@@ -9,18 +9,20 @@ namespace SlaamMono.Composition.x_.ScreenCreation
     {
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
+        private readonly IResolver<LobbyScreenRequest, LobbyScreen> _lobbyScreenResolver;
 
-        public CharacterSelectionScreenResolver(ILogger logger, IScreenManager screenDirector)
+        public CharacterSelectionScreenResolver(ILogger logger, IScreenManager screenDirector, IResolver<LobbyScreenRequest, LobbyScreen> lobbyScreenResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
+            _lobbyScreenResolver = lobbyScreenResolver;
         }
 
         public CharacterSelectionScreen Resolve(CharacterSelectionScreenRequest request)
         {
             CharacterSelectionScreen output;
 
-            output = new CharacterSelectionScreen(_logger, _screenDirector);
+            output = new CharacterSelectionScreen(_logger, _screenDirector, _lobbyScreenResolver);
             output.Initialize(request);
 
             return output;

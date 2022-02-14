@@ -17,8 +17,12 @@ namespace SlaamMono.Survival
         private readonly IScreenManager _screenDirector;
         private readonly IResolver<GameScreenRequest, SurvivalGameScreen> _survivalGameScreenRequest;
 
-        public SurvivalCharacterSelectionScreen(ILogger logger, IScreenManager screenDirector, IResolver<GameScreenRequest, SurvivalGameScreen> survivalGameScreenRequest)
-            : base(logger, screenDirector)
+        public SurvivalCharacterSelectionScreen(
+            ILogger logger,
+            IScreenManager screenDirector,
+            IResolver<GameScreenRequest, SurvivalGameScreen> survivalGameScreenRequest,
+            IResolver<LobbyScreenRequest, LobbyScreen> lobbyScreenResolver)
+            : base(logger, screenDirector, lobbyScreenResolver)
         {
             _screenDirector = screenDirector;
             _survivalGameScreenRequest = survivalGameScreenRequest;

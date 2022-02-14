@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
+using SlaamMono.Library.Graphing;
+using SlaamMono.PlayerProfiles;
+using System.Collections.Generic;
 
 namespace SlaamMono.MatchCreation
 {
@@ -11,5 +14,8 @@ namespace SlaamMono.MatchCreation
         public string BoardLocation { get; set; }
         public bool ViewingSettings { get; set; }
         public IntRange MenuChoice { get; set; }
+
+        public Graph MainMenu { get; set; }
+        public List<CharacterShell> SetupCharacters { get; set; }
     }
 }
