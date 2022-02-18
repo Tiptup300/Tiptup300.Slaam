@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace SlaamMono.StatsBoards
 {
-    class SurvivalStatsBoard : StatsBoard
+    public class SurvivalStatsBoard : StatsBoard
     {
         public List<SurvivalStatsPageListing> SurvivalStatsPage;
         public SurvivalStatsPageListing[] PeopleToCompare;

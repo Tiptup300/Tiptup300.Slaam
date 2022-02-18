@@ -14,7 +14,7 @@ namespace SlaamMono.Menus
     {
         public const int MAX_HIGHSCORES = 7;
 
-        private SurvivalStatsBoard _statsboard;
+        private HighScoreScreenState _state = new HighScoreScreenState();
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
@@ -31,11 +31,11 @@ namespace SlaamMono.Menus
 
         public void InitializeState()
         {
-            _statsboard = new SurvivalStatsBoard(null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderGraph);
+            _state._statsboard = new SurvivalStatsBoard(null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderGraph);
             BackgroundManager.SetRotation(.5f);
             BackgroundManager.ChangeBG(BackgroundType.Menu);
-            _statsboard.CalculateStats();
-            _statsboard.ConstructGraph(25);
+            _state._statsboard.CalculateStats();
+            _state._statsboard.ConstructGraph(25);
         }
 
         public void UpdateState()
@@ -48,7 +48,7 @@ namespace SlaamMono.Menus
 
         public void Draw(SpriteBatch batch)
         {
-            _statsboard.MainBoard.Draw(batch);
+            _state._statsboard.MainBoard.Draw(batch);
         }
 
         public void Close()
