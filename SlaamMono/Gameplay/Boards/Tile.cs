@@ -51,11 +51,11 @@ namespace SlaamMono.Gameplay.Boards
         {
             if (CurrentTileCondition == TileCondition.RespawnPoint)
             {
-                for (int x = 0; x < GameScreen.Instance.x_ToRemove__Characters.Count; x++)
+                for (int x = 0; x < GameScreen.Instance.Characters.Count; x++)
                 {
                     if (x == MarkedIndex)
                     {
-                        if (GameScreen.Instance.InterpretCoordinates(GameScreen.Instance.x_ToRemove__Characters[x].Position, true) != TileCoors)
+                        if (GameScreen.Instance.InterpretCoordinates(GameScreen.Instance.Characters[x].Position, true) != TileCoors)
                         {
                             CurrentTileCondition = TileCondition.Normal;
                         }

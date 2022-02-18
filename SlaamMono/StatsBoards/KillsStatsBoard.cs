@@ -20,11 +20,11 @@ namespace SlaamMono.StatsBoards
 
         public override void CalculateStats()
         {
-            int[] TotalKills = new int[ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count];
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count; x++)
+            int[] TotalKills = new int[ParentScoreCollector.ParentGameScreen.Characters.Count];
+            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.Characters.Count; x++)
             {
 
-                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count; y++)
+                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.Characters.Count; y++)
                 {
                     if (x != y)
                         TotalKills[x] += ParentScoreCollector.Kills[x][y];
@@ -32,24 +32,24 @@ namespace SlaamMono.StatsBoards
 
             }
 
-            int[] TotalDeaths = new int[ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count];
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count; x++)
+            int[] TotalDeaths = new int[ParentScoreCollector.ParentGameScreen.Characters.Count];
+            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.Characters.Count; x++)
             {
 
-                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count; y++)
+                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.Characters.Count; y++)
                 {
                     TotalDeaths[x] += ParentScoreCollector.Kills[y][x];
                 }
 
             }
 
-            int[] TotalSuicides = new int[ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count];
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count; x++)
+            int[] TotalSuicides = new int[ParentScoreCollector.ParentGameScreen.Characters.Count];
+            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.Characters.Count; x++)
             {
                 TotalSuicides[x] = ParentScoreCollector.Kills[x][x];
             }
 
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count; x++)
+            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.Characters.Count; x++)
             {
                 KillsPage.Add(new KillsPageListing(TotalKills[x], TotalDeaths[x], TotalSuicides[x]));
             }
@@ -67,10 +67,10 @@ namespace SlaamMono.StatsBoards
                 GraphItem itm = new GraphItem();
                 {
 
-                    if (ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].IsBot)
-                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].GetProfile().Name + "*");
+                    if (ParentScoreCollector.ParentGameScreen.Characters[x].IsBot)
+                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.Characters[x].GetProfile().Name + "*");
                     else
-                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].GetProfile().Name);
+                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.Characters[x].GetProfile().Name);
 
                     itm.Add(true, KillsPage[x].Kills.ToString(), KillsPage[x].Deaths.ToString(), KillsPage[x].Suicides.ToString());
 

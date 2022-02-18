@@ -34,9 +34,7 @@ namespace SlaamMono.MatchCreation
         public static bool SkinsLoaded = false;
         private static Random rand = new Random();
 
-        protected CharSelectBox[] SelectBoxes;
-        private int _peopleDone = 0;
-        private int _peopleIn = 0;
+        protected CharacterSelectionScreenState _state = new CharacterSelectionScreenState();
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
@@ -68,7 +66,7 @@ namespace SlaamMono.MatchCreation
             if (Skins.Count < 1)
             {
                 _logger.Log("0 Skins were found, Program Abort");
-                SlaamGame.Instance.Exit();
+                throw new Exception("0 Skins were found, Program Abort");
             }
             else
             {
@@ -76,15 +74,15 @@ namespace SlaamMono.MatchCreation
             }
             BackgroundManager.ChangeBG(BackgroundType.Menu);
 
-            for (int x = 0; x < SelectBoxes.Length; x++)
+            for (int x = 0; x < _state.SelectBoxes.Length; x++)
             {
-                if (SelectBoxes[x] != null)
+                if (_state.SelectBoxes[x] != null)
                 {
-                    if (SelectBoxes[x].CurrentState == CharSelectBoxState.Done)
+                    if (_state.SelectBoxes[x].CurrentState == CharSelectBoxState.Done)
                     {
-                        SelectBoxes[x].CurrentState = CharSelectBoxState.CharSelect;
+                        _state.SelectBoxes[x].CurrentState = CharSelectBoxState.CharSelect;
                     }
-                    SelectBoxes[x].Reset();
+                    _state.SelectBoxes[x].Reset();
                 }
             }
 
@@ -93,31 +91,31 @@ namespace SlaamMono.MatchCreation
         public void UpdateState()
         {
             BackgroundManager.SetRotation(1f);
-            _peopleDone = 0;
-            _peopleIn = 0;
+            _state._peopleDone = 0;
+            _state._peopleIn = 0;
 
             if (
-                _peopleIn == 0 &&
+                _state._peopleIn == 0 &&
                 InputComponent.Players[0].PressedAction2 &&
-                SelectBoxes[0].CurrentState == CharSelectBoxState.Computer)
+                _state.SelectBoxes[0].CurrentState == CharSelectBoxState.Computer)
             {
                 GoBack();
             }
 
-            for (int idx = 0; idx < SelectBoxes.Length; idx++)
+            for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
             {
-                SelectBoxes[idx].Update();
-                if (SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
+                _state.SelectBoxes[idx].Update();
+                if (_state.SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
                 {
-                    _peopleDone++;
+                    _state._peopleDone++;
                 }
 
-                if (SelectBoxes[idx].CurrentState != CharSelectBoxState.Computer)
+                if (_state.SelectBoxes[idx].CurrentState != CharSelectBoxState.Computer)
                 {
-                    _peopleIn++;
+                    _state._peopleIn++;
                 }
             }
-            if (_peopleIn > 0 && _peopleDone == _peopleIn)
+            if (_state._peopleIn > 0 && _state._peopleDone == _state._peopleIn)
             {
                 GoForward();
             }
@@ -130,7 +128,7 @@ namespace SlaamMono.MatchCreation
 
         public virtual void GoForward()
         {
-            var characterShells = SelectBoxes
+            var characterShells = _state.SelectBoxes
                 .Where(selectBox => selectBox.CurrentState == CharSelectBoxState.Done)
                 .Select(selectBox => selectBox.GetShell())
                 .ToList();
@@ -141,14 +139,14 @@ namespace SlaamMono.MatchCreation
 
         public void Draw(SpriteBatch batch)
         {
-            for (int idx = 0; idx < SelectBoxes.Length; idx++)
-                if (SelectBoxes[idx] != null)
-                    SelectBoxes[idx].Draw(batch);
+            for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
+                if (_state.SelectBoxes[idx] != null)
+                    _state.SelectBoxes[idx].Draw(batch);
         }
 
         public void Close()
         {
-            SelectBoxes = null;
+            _state.SelectBoxes = null;
         }
 
         public static string ReturnRandSkin(ILogger logger)
@@ -186,11 +184,11 @@ namespace SlaamMono.MatchCreation
 
         public virtual void ResetBoxes()
         {
-            SelectBoxes = new CharSelectBox[InputComponent.Players.Length];
+            _state.SelectBoxes = new CharSelectBox[InputComponent.Players.Length];
 
             for (int x = 0; x < InputComponent.Players.Length; x++)
             {
-                SelectBoxes[x] = new CharSelectBox(
+                _state.SelectBoxes[x] = new CharSelectBox(
                     _boxPositions[x],
                     SkinTexture,
                     (ExtendedPlayerIndex)x,

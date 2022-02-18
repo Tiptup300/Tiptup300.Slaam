@@ -11,7 +11,6 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.SubClasses;
 using System;
 using ZzziveGameEngine;
 
@@ -19,9 +18,7 @@ namespace SlaamMono.Survival
 {
     public class SurvivalGameScreen : GameScreen
     {
-        private Timer _timeToAddBot = new Timer(new TimeSpan(0, 0, 10));
-        private int _botsToAdd = 1;
-        private int _botsAdded = 0;
+        private SurvivalGameScreenState _survivalState = new SurvivalGameScreenState();
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
@@ -65,17 +62,17 @@ namespace SlaamMono.Survival
         {
             if (_state.CurrentGameStatus == GameStatus.Playing)
             {
-                _timeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (_timeToAddBot.Active)
+                _survivalState.TimeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
+                if (_survivalState.TimeToAddBot.Active)
                 {
-                    for (int x = 0; x < _botsToAdd + 1; x++)
+                    for (int x = 0; x < _survivalState.BotsToAdd + 1; x++)
                     {
                         AddNewBot();
-                        _botsAdded++;
+                        _survivalState.BotsAdded++;
 
-                        if (_state.Rand.Next(0, _botsAdded - 1) == _botsAdded)
+                        if (_state.Rand.Next(0, _survivalState.BotsAdded - 1) == _survivalState.BotsAdded)
                         {
-                            _botsToAdd++;
+                            _survivalState.BotsToAdd++;
                         }
                     }
                 }

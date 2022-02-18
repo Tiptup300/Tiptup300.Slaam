@@ -36,7 +36,7 @@ namespace SlaamMono.StatsBoards
             XNALoadHighScores();
 
             if (AddingNewChar)
-                PeopleToCompare[0] = new SurvivalStatsPageListing(ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[0].GetProfile().Name, ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[0].Kills, ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[0].TimeAlive,
+                PeopleToCompare[0] = new SurvivalStatsPageListing(ParentScoreCollector.ParentGameScreen.Characters[0].GetProfile().Name, ParentScoreCollector.ParentGameScreen.Characters[0].Kills, ParentScoreCollector.ParentGameScreen.Characters[0].TimeAlive,
                 DateTime.Now.ToString());
 
             SurvivalStatsPage = new List<SurvivalStatsPageListing>();

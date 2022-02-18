@@ -30,15 +30,15 @@ namespace SlaamMono.Survival
 
         public override void ResetBoxes()
         {
-            SelectBoxes = new CharSelectBox[1];
-            SelectBoxes[0] = new CharSelectBox(
+            _state.SelectBoxes = new CharSelectBox[1];
+            _state.SelectBoxes[0] = new CharSelectBox(
                 new Vector2(340, 427),
                 SkinTexture,
                 ExtendedPlayerIndex.One,
                 Skins,
                 x_Di.Get<PlayerColorResolver>(),
                 x_Di.Get<IResources>());
-            SelectBoxes[0].Survival = true;
+            _state.SelectBoxes[0].Survival = true;
         }
 
         public override void GoBack()
@@ -49,7 +49,7 @@ namespace SlaamMono.Survival
         public override void GoForward()
         {
             List<CharacterShell> list = new List<CharacterShell>();
-            list.Add(SelectBoxes[0].GetShell());
+            list.Add(_state.SelectBoxes[0].GetShell());
             GameScreen.Instance = _survivalGameScreenRequest.Resolve(new GameScreenRequest(list));
             _screenDirector.ChangeTo(GameScreen.Instance);
         }

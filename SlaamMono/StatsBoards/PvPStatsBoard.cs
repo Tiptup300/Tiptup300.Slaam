@@ -19,11 +19,11 @@ namespace SlaamMono.StatsBoards
 
         public override void CalculateStats()
         {
-            for (int z = 0; z < ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count; z++)
+            for (int z = 0; z < ParentScoreCollector.ParentGameScreen.Characters.Count; z++)
             {
                 List<SubPvPPageListing> templist = new List<SubPvPPageListing>();
 
-                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters.Count; y++)
+                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.Characters.Count; y++)
                 {
                     templist.Add(new SubPvPPageListing(ParentScoreCollector.Kills[z][y], ParentScoreCollector.Kills[y][z]));
                 }
@@ -45,10 +45,10 @@ namespace SlaamMono.StatsBoards
                 GraphItem itm = new GraphItem();
                 {
 
-                    if (ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].IsBot)
-                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].GetProfile().Name + "*");
+                    if (ParentScoreCollector.ParentGameScreen.Characters[x].IsBot)
+                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.Characters[x].GetProfile().Name + "*");
                     else
-                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.x_ToRemove__Characters[x].GetProfile().Name);
+                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.Characters[x].GetProfile().Name);
 
                     itm.Details.Add(PvPPage[index].Lists[x].Killed.ToString());
                     itm.Details.Add(PvPPage[index].Lists[x].KilledBy.ToString());

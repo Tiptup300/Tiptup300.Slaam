@@ -25,10 +25,9 @@ namespace SlaamMono.Gameplay
     {
         public static GameScreen Instance;
 
-        public Tile[,] x_ToRemove__Tiles => _state.Tiles;
-        public MenuItemTree x_ToRemove__main => _state.main;
-        public GameType x_ToRemove__ThisGameType => _state.ThisGameType;
-        public List<CharacterActor> x_ToRemove__Characters => _state.Characters;
+        public Tile[,] Tiles { get => _state.Tiles; }
+        public GameType ThisGameType { get => _state.ThisGameType; }
+        public List<CharacterActor> Characters { get => _state.Characters; }
 
         protected GameScreenState _state = new GameScreenState();
 
