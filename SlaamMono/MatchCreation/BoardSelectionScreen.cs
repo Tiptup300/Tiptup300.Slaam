@@ -8,37 +8,20 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.x_;
 using System;
-using System.Collections.Generic;
 
 namespace SlaamMono.MatchCreation
 {
     public class BoardSelectionScreen : ILogic
     {
-        public bool HasFoundBoard = false;
-        public string IsValidBoard;
-
-        private LobbyScreen _parentLobbyScreen;
-        private int _drawSizeWidth = 75;
-        private int _drawSizeHeight = 75;
-        private List<Texture2D> _boardTextures = new List<Texture2D>();
-        private List<string> _validBoards = new List<string>();
-        private IntRange _drawingBoardIndex = new IntRange(0, 0, 0);
-        private float _movementSpeed = 0.50f;
-        private bool _alphaUp = false;
-        private float _alpha = 255f;
-        private Direction _vertical = Direction.None;
-        private Direction _horizontal = Direction.None;
-        private float _verticalOffset = 0f;
-        private float _horizontalOffset = 0f;
-        private bool _isStillLoadingBoards = true;
-        private List<string> _boardNames;
-        private int _currentBoardLoading = 0;
-        private int _save;
-        private IntRange _verticalBoardOffset;
-        private IntRange _horizontalBoardOffset;
-        private bool _wasChosen = false;
-        private float _scale = 1.00f;
-        private Rectangle centeredRectangle;
+        public bool HasFoundBoard
+        {
+            get => _state.HasFoundBoard;
+        }
+        public string IsValidBoard
+        {
+            get => _state.IsValidBoard;
+        }
+        private BoardSelectionScreenState _state = new BoardSelectionScreenState();
 
         private readonly IScreenManager _screenManager;
         private readonly IResources _resources;
@@ -51,8 +34,8 @@ namespace SlaamMono.MatchCreation
 
         public void Initialize(BoardSelectionScreenRequest request)
         {
-            _parentLobbyScreen = request.ParentScreen;
-            _boardNames = _resources.GetTextList("Boards");
+            _state.ParentLobbyScreen = request.ParentScreen;
+            _state.BoardNames = _resources.GetTextList("Boards");
         }
 
         public void InitializeState()
@@ -63,129 +46,128 @@ namespace SlaamMono.MatchCreation
 
         private void setBoardIndexs()
         {
-            _drawingBoardIndex = new IntRange(0, 0, _boardNames.Count - 1);
-            _verticalBoardOffset = new IntRange(0);
-            _horizontalBoardOffset = new IntRange(-_boardNames.Count);
+            _state.DrawingBoardIndex = new IntRange(0, 0, _state.BoardNames.Count - 1);
+            _state.VerticalBoardOffset = new IntRange(0);
+            _state.HorizontalBoardOffset = new IntRange(-_state.BoardNames.Count);
         }
 
         public void UpdateState()
         {
-            if (_isStillLoadingBoards)
+            if (_state.IsStillLoadingBoards)
             {
                 ContinueLoadingBoards();
             }
             else
             {
-                _alpha += (_alphaUp ? 1 : -1) * FrameRateDirector.MovementFactor * _movementSpeed;
+                _state.Alpha += (_state.AlphaUp ? 1 : -1) * FrameRateDirector.MovementFactor * _state.MovementSpeed;
 
-                if (_alphaUp && _alpha >= 255f)
+                if (_state.AlphaUp && _state.Alpha >= 255f)
                 {
-                    _alphaUp = !_alphaUp;
-                    _alpha = 255f;
+                    _state.AlphaUp = !_state.AlphaUp;
+                    _state.Alpha = 255f;
                 }
-                else if (!_alphaUp && _alpha <= 0f)
+                else if (!_state.AlphaUp && _state.Alpha <= 0f)
                 {
-                    _alphaUp = !_alphaUp;
-                    _alpha = 0f;
+                    _state.AlphaUp = !_state.AlphaUp;
+                    _state.Alpha = 0f;
                 }
 
-                if (_wasChosen)
+                if (_state.WasChosen)
                 {
-                    _scale += FrameRateDirector.MovementFactor * .01f;
+                    _state.Scale += FrameRateDirector.MovementFactor * .01f;
 
-                    if (_scale >= 1.50f)
+                    if (_state.Scale >= 1.50f)
                     {
-                        _scale = 1.50f;
+                        _state.Scale = 1.50f;
                     }
 
                     if (InputComponent.Players[0].PressedAction)
                     {
-                        _parentLobbyScreen.LoadBoard(_validBoards[_save]);
-                        _screenManager.ChangeTo(_parentLobbyScreen);
+                        _state.ParentLobbyScreen.LoadBoard(_state.ValidBoards[_state.Save]);
+                        _screenManager.ChangeTo(_state.ParentLobbyScreen);
                     }
 
                     if (InputComponent.Players[0].PressedAction2)
                     {
-                        //SizeIncrease = 1.00f;
-                        _wasChosen = false;
+                        _state.WasChosen = false;
                     }
                 }
                 else
                 {
-                    _scale -= FrameRateDirector.MovementFactor * .01f;
+                    _state.Scale -= FrameRateDirector.MovementFactor * .01f;
 
-                    if (_scale <= 1.00f)
+                    if (_state.Scale <= 1.00f)
                     {
-                        _scale = 1.00f;
+                        _state.Scale = 1.00f;
                     }
 
                     if (InputComponent.Players[0].PressingDown)
                     {
-                        _vertical = Direction.Down;
+                        _state.Vertical = Direction.Down;
                     }
                     if (InputComponent.Players[0].PressingUp)
                     {
-                        _vertical = Direction.Up;
+                        _state.Vertical = Direction.Up;
                     }
 
                     if (InputComponent.Players[0].PressingRight)
                     {
-                        _horizontal = Direction.Right;
+                        _state.Horizontal = Direction.Right;
                     }
                     if (InputComponent.Players[0].PressingLeft)
                     {
-                        _horizontal = Direction.Left;
+                        _state.Horizontal = Direction.Left;
                     }
 
-                    if (_vertical == Direction.Down)
+                    if (_state.Vertical == Direction.Down)
                     {
-                        _verticalOffset -= FrameRateDirector.MovementFactor * _movementSpeed;
+                        _state.VerticalOffset -= FrameRateDirector.MovementFactor * _state.MovementSpeed;
 
-                        if (_verticalOffset <= -_drawSizeHeight)
+                        if (_state.VerticalOffset <= -_state.DrawSizeHeight)
                         {
-                            _verticalBoardOffset.Add(1);
-                            _verticalOffset = 0;
-                            _vertical = Direction.None;
+                            _state.VerticalBoardOffset.Add(1);
+                            _state.VerticalOffset = 0;
+                            _state.Vertical = Direction.None;
                         }
                     }
-                    else if (_vertical == Direction.Up)
+                    else if (_state.Vertical == Direction.Up)
                     {
-                        _verticalOffset += FrameRateDirector.MovementFactor * _movementSpeed;
+                        _state.VerticalOffset += FrameRateDirector.MovementFactor * _state.MovementSpeed;
 
-                        if (_verticalOffset >= _drawSizeHeight)
+                        if (_state.VerticalOffset >= _state.DrawSizeHeight)
                         {
-                            _verticalBoardOffset.Sub(1);
-                            _verticalOffset = 0;
-                            _vertical = Direction.None;
-                        }
-                    }
-
-                    if (_horizontal == Direction.Left)
-                    {
-                        _horizontalOffset += FrameRateDirector.MovementFactor * _movementSpeed;
-
-                        if (_horizontalOffset >= _drawSizeWidth)
-                        {
-                            _horizontalBoardOffset.Add(1);
-                            _horizontalOffset = 0;
-                            _horizontal = Direction.None;
-                        }
-                    }
-                    else if (_horizontal == Direction.Right)
-                    {
-                        _horizontalOffset -= FrameRateDirector.MovementFactor * _movementSpeed;
-
-                        if (_horizontalOffset <= -_drawSizeWidth)
-                        {
-                            _horizontalBoardOffset.Sub(1);
-                            _horizontalOffset = 0;
-                            _horizontal = Direction.None;
+                            _state.VerticalBoardOffset.Sub(1);
+                            _state.VerticalOffset = 0;
+                            _state.Vertical = Direction.None;
                         }
                     }
 
-                    if (_horizontalOffset == 0 && _verticalOffset == 0 && InputComponent.Players[0].PressedAction)
+                    if (_state.Horizontal == Direction.Left)
                     {
-                        _wasChosen = true;
+                        _state.HorizontalOffset += FrameRateDirector.MovementFactor * _state.MovementSpeed;
+
+                        if (_state.HorizontalOffset >= _state.DrawSizeWidth)
+                        {
+                            _state.HorizontalBoardOffset.Add(1);
+                            _state.HorizontalOffset = 0;
+                            _state.Horizontal = Direction.None;
+                        }
+                    }
+                    else if (_state.Horizontal == Direction.Right)
+                    {
+                        _state.HorizontalOffset -= FrameRateDirector.MovementFactor * _state.MovementSpeed;
+
+                        if (_state.HorizontalOffset <= -_state.DrawSizeWidth)
+                        {
+                            _state.HorizontalBoardOffset.Sub(1);
+                            _state.HorizontalOffset = 0;
+                            _state.Horizontal = Direction.None;
+                        }
+                    }
+
+                    if (_state.HorizontalOffset == 0 && _state.VerticalOffset == 0 && InputComponent.Players[0].PressedAction)
+                    {
+                        _state.WasChosen = true;
                     }
 
                 }
@@ -195,47 +177,47 @@ namespace SlaamMono.MatchCreation
 
         public void Draw(SpriteBatch batch)
         {
-            _drawingBoardIndex.Value = _verticalBoardOffset.Value;
-            for (int x = _horizontalBoardOffset.Value; x < 8; x++)
+            _state.DrawingBoardIndex.Value = _state.VerticalBoardOffset.Value;
+            for (int x = _state.HorizontalBoardOffset.Value; x < 8; x++)
             {
                 for (int y = 0; y < 11; y++)
                 {
-                    Vector2 Pos = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _drawSizeWidth / 2 + x * _drawSizeWidth + _horizontalOffset - _drawSizeWidth * 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _drawSizeHeight / 2 + y * _drawSizeHeight + _verticalOffset - _drawSizeHeight * 2);
-                    if (!(Pos.X < -_drawSizeWidth || Pos.X > GameGlobals.DRAWING_GAME_WIDTH || Pos.Y < -_drawSizeHeight || Pos.Y > GameGlobals.DRAWING_GAME_HEIGHT))
+                    Vector2 Pos = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _state.DrawSizeWidth / 2 + x * _state.DrawSizeWidth + _state.HorizontalOffset - _state.DrawSizeWidth * 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _state.DrawSizeHeight / 2 + y * _state.DrawSizeHeight + _state.VerticalOffset - _state.DrawSizeHeight * 2);
+                    if (!(Pos.X < -_state.DrawSizeWidth || Pos.X > GameGlobals.DRAWING_GAME_WIDTH || Pos.Y < -_state.DrawSizeHeight || Pos.Y > GameGlobals.DRAWING_GAME_HEIGHT))
                     {
-                        if (_drawingBoardIndex.Value < _boardTextures.Count && _boardTextures[_drawingBoardIndex.Value] != null)
+                        if (_state.DrawingBoardIndex.Value < _state.BoardTextures.Count && _state.BoardTextures[_state.DrawingBoardIndex.Value] != null)
                         {
-                            batch.Draw(_boardTextures[_drawingBoardIndex.Value], new Rectangle((int)Pos.X, (int)Pos.Y, _drawSizeWidth, _drawSizeHeight), Color.White);
+                            batch.Draw(_state.BoardTextures[_state.DrawingBoardIndex.Value], new Rectangle((int)Pos.X, (int)Pos.Y, _state.DrawSizeWidth, _state.DrawSizeHeight), Color.White);
                         }
                         else
                         {
                             batch.Draw(_resources.GetTexture("NowLoading").Texture, Pos, Color.White);
                         }
                     }
-                    if (Pos == new Vector2(centeredRectangle.X, centeredRectangle.Y))
+                    if (Pos == new Vector2(_state.CenteredRectangle.X, _state.CenteredRectangle.Y))
                     {
-                        _save = _drawingBoardIndex.Value;
+                        _state.Save = _state.DrawingBoardIndex.Value;
                     }
-                    _drawingBoardIndex.Add(1);
+                    _state.DrawingBoardIndex.Add(1);
                 }
             }
             batch.Draw(_resources.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
-            if (!_isStillLoadingBoards)
+            if (!_state.IsStillLoadingBoards)
             {
-                centeredRectangle = CenterRectangle(new Rectangle(0, 0, (int)(_scale * _drawSizeWidth), (int)(_scale * _drawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
-                if (_wasChosen)
+                _state.CenteredRectangle = CenterRectangle(new Rectangle(0, 0, (int)(_state.Scale * _state.DrawSizeWidth), (int)(_state.Scale * _state.DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
+                if (_state.WasChosen)
                 {
-                    batch.Draw(_boardTextures[_save], centeredRectangle, Color.White);
+                    batch.Draw(_state.BoardTextures[_state.Save], _state.CenteredRectangle, Color.White);
                 }
-                batch.Draw(_resources.GetTexture("BoardSelect").Texture, centeredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)_alpha));
-                RenderGraph.Instance.RenderText(DialogStrings.CleanMapName(_validBoards[_save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
+                batch.Draw(_resources.GetTexture("BoardSelect").Texture, _state.CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)_state.Alpha));
+                RenderGraph.Instance.RenderText(DialogStrings.CleanMapName(_state.ValidBoards[_state.Save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
             }
         }
 
         public void Close()
         {
-            _boardTextures = null;
-            _validBoards = null;
+            _state.BoardTextures = null;
+            _state.ValidBoards = null;
             GC.Collect();
         }
 
@@ -244,12 +226,12 @@ namespace SlaamMono.MatchCreation
         {
             try
             {
-                Texture2D temp = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + _boardNames[_currentBoardLoading]);
+                Texture2D temp = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + _state.BoardNames[_state.CurrentBoardLoading]);
 
-                HasFoundBoard = true;
-                IsValidBoard = _boardNames[_currentBoardLoading];
-                _boardTextures.Add(temp);
-                _validBoards.Add(_boardNames[_currentBoardLoading]);
+                _state.HasFoundBoard = true;
+                _state.IsValidBoard = _state.BoardNames[_state.CurrentBoardLoading];
+                _state.BoardTextures.Add(temp);
+                _state.ValidBoards.Add(_state.BoardNames[_state.CurrentBoardLoading]);
 
             }
             catch (InvalidOperationException)
@@ -258,8 +240,8 @@ namespace SlaamMono.MatchCreation
             }
 
 
-            _currentBoardLoading++;
-            if (_currentBoardLoading == _boardNames.Count)
+            _state.CurrentBoardLoading++;
+            if (_state.CurrentBoardLoading == _state.BoardNames.Count)
             {
                 FinishLoadingBoards();
             }
@@ -268,10 +250,10 @@ namespace SlaamMono.MatchCreation
 
         private void FinishLoadingBoards()
         {
-            _isStillLoadingBoards = false;
-            _drawingBoardIndex = new IntRange(0, 0, _boardTextures.Count - 1);
-            _verticalBoardOffset = new IntRange(0, 0, _boardTextures.Count - 1);
-            _horizontalBoardOffset = new IntRange(-_boardTextures.Count, -_boardTextures.Count, -1);
+            _state.IsStillLoadingBoards = false;
+            _state.DrawingBoardIndex = new IntRange(0, 0, _state.BoardTextures.Count - 1);
+            _state.VerticalBoardOffset = new IntRange(0, 0, _state.BoardTextures.Count - 1);
+            _state.HorizontalBoardOffset = new IntRange(-_state.BoardTextures.Count, -_state.BoardTextures.Count, -1);
         }
 
         private Rectangle CenterRectangle(Rectangle rect, Vector2 pos)
