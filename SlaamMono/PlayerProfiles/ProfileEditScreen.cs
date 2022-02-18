@@ -8,7 +8,6 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
-using SlaamMono.Menus;
 using SlaamMono.x_;
 using System;
 
@@ -22,14 +21,9 @@ namespace SlaamMono.PlayerProfiles
                 x_Di.Get<IResources>(),
                 x_Di.Get<IRenderGraph>());
 
-        private const float RotationSpeed = MathHelper.Pi / 3000f;
-        private Graph MainMenu;
-        private Graph SubMenu;
-        private IntRange CurrentMenu = new IntRange(0, 0, 1);
-        private IntRange CurrentMenuChoice = new IntRange(0, 0, 0);
-        private int EditingProfile;
-        private bool WaitingForQwerty = false;
-        public bool SetupNewProfile = false;
+        public bool SetupNewProfile { get => _state.SetupNewProfile; set { _state.SetupNewProfile = value; } }
+
+        private ProfileEditScreenState _state = new ProfileEditScreenState();
 
 
         private readonly IScreenManager _screenDirector;
@@ -37,21 +31,21 @@ namespace SlaamMono.PlayerProfiles
         public ProfileEditScreen(IScreenManager screenDirector, IResources resourcesManager, IRenderGraph renderGraphManager)
         {
             _screenDirector = screenDirector;
-            MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
-            SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
+            _state.MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
+            _state.SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);
         }
 
         public void InitializeState()
         {
             BackgroundManager.ChangeBG(BackgroundType.Menu);
 
-            SetupMainMenu();
-            ResetSubMenu();
-            if (SetupNewProfile)
+            setupMainMenu();
+            resetSubMenu();
+            if (_state.SetupNewProfile)
             {
-                SetupNewProfile = false;
-                CurrentMenu.Value = 0;
-                WaitingForQwerty = true;
+                _state.SetupNewProfile = false;
+                _state.CurrentMenu.Value = 0;
+                _state.WaitingForQwerty = true;
                 Qwerty.DisplayBoard("");
             }
         }
@@ -60,44 +54,44 @@ namespace SlaamMono.PlayerProfiles
         {
             BackgroundManager.SetRotation(1f);
 
-            if (CurrentMenu.Value == 0)
+            if (_state.CurrentMenu.Value == 0)
             {
-                if (WaitingForQwerty)
+                if (_state.WaitingForQwerty)
                 {
                     if (Qwerty.EditingString.Trim() != "")
                     {
                         ProfileManager.AddNewProfile(new PlayerProfile(Qwerty.EditingString, false));
 
                     }
-                    WaitingForQwerty = false;
+                    _state.WaitingForQwerty = false;
                     Qwerty.EditingString = "";
-                    SetupMainMenu();
+                    setupMainMenu();
                 }
                 else
                 {
                     if (InputComponent.Players[0].PressedUp)
                     {
-                        CurrentMenuChoice.Sub(1);
-                        MainMenu.SetHighlight(CurrentMenuChoice.Value);
+                        _state.CurrentMenuChoice.Sub(1);
+                        _state.MainMenu.SetHighlight(_state.CurrentMenuChoice.Value);
                     }
                     else if (InputComponent.Players[0].PressedDown)
                     {
-                        CurrentMenuChoice.Add(1);
-                        MainMenu.SetHighlight(CurrentMenuChoice.Value);
+                        _state.CurrentMenuChoice.Add(1);
+                        _state.MainMenu.SetHighlight(_state.CurrentMenuChoice.Value);
                     }
                     if (InputComponent.Players[0].PressedAction)
                     {
-                        if (MainMenu.Items[CurrentMenuChoice.Value].Details[1] == "new")
+                        if (_state.MainMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "new")
                         {
                             Qwerty.DisplayBoard("");
-                            WaitingForQwerty = true;
+                            _state.WaitingForQwerty = true;
                         }
                         else
                         {
-                            EditingProfile = int.Parse(MainMenu.Items[CurrentMenuChoice.Value].Details[1]);
-                            CurrentMenu.Value = 1;
-                            CurrentMenuChoice = new IntRange(0, 0, 2);
-                            SubMenu.SetHighlight(0);
+                            _state.EditingProfile = int.Parse(_state.MainMenu.Items[_state.CurrentMenuChoice.Value].Details[1]);
+                            _state.CurrentMenu.Value = 1;
+                            _state.CurrentMenuChoice = new IntRange(0, 0, 2);
+                            _state.SubMenu.SetHighlight(0);
                         }
                     }
                     if (InputComponent.Players[0].PressedAction2)
@@ -106,64 +100,64 @@ namespace SlaamMono.PlayerProfiles
                     }
                 }
             }
-            else if (CurrentMenu.Value == 1)
+            else if (_state.CurrentMenu.Value == 1)
             {
-                if (WaitingForQwerty)
+                if (_state.WaitingForQwerty)
                 {
                     if (Qwerty.EditingString.Trim() != "")
                     {
-                        ProfileManager.PlayableProfiles[EditingProfile].Name = Qwerty.EditingString;
+                        ProfileManager.PlayableProfiles[_state.EditingProfile].Name = Qwerty.EditingString;
                         ProfileManager.SaveProfiles();
                     }
-                    WaitingForQwerty = false;
+                    _state.WaitingForQwerty = false;
                     Qwerty.EditingString = "";
 
-                    CurrentMenu.Value = 0;
-                    SetupMainMenu();
+                    _state.CurrentMenu.Value = 0;
+                    setupMainMenu();
                 }
                 else
                 {
                     if (InputComponent.Players[0].PressedUp)
                     {
-                        CurrentMenuChoice.Sub(1);
-                        SubMenu.SetHighlight(CurrentMenuChoice.Value);
+                        _state.CurrentMenuChoice.Sub(1);
+                        _state.SubMenu.SetHighlight(_state.CurrentMenuChoice.Value);
                     }
                     else if (InputComponent.Players[0].PressedDown)
                     {
-                        CurrentMenuChoice.Add(1);
-                        SubMenu.SetHighlight(CurrentMenuChoice.Value);
+                        _state.CurrentMenuChoice.Add(1);
+                        _state.SubMenu.SetHighlight(_state.CurrentMenuChoice.Value);
                     }
                     if (InputComponent.Players[0].PressedAction)
                     {
-                        if (SubMenu.Items[CurrentMenuChoice.Value].Details[1] == "del")
+                        if (_state.SubMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "del")
                         {
-                            ProfileManager.RemovePlayer(ProfileManager.PlayableProfiles.GetRealIndex(EditingProfile));
-                            EditingProfile = -1;
-                            CurrentMenu.Value = 0;
-                            SetupMainMenu();
+                            ProfileManager.RemovePlayer(ProfileManager.PlayableProfiles.GetRealIndex(_state.EditingProfile));
+                            _state.EditingProfile = -1;
+                            _state.CurrentMenu.Value = 0;
+                            setupMainMenu();
                         }
-                        else if (SubMenu.Items[CurrentMenuChoice.Value].Details[1] == "ren")
+                        else if (_state.SubMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "ren")
                         {
-                            Qwerty.DisplayBoard(ProfileManager.PlayableProfiles[EditingProfile].Name);
-                            WaitingForQwerty = true;
+                            Qwerty.DisplayBoard(ProfileManager.PlayableProfiles[_state.EditingProfile].Name);
+                            _state.WaitingForQwerty = true;
                         }
-                        else if (SubMenu.Items[CurrentMenuChoice.Value].Details[1] == "clr")
+                        else if (_state.SubMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "clr")
                         {
-                            ProfileManager.PlayableProfiles[EditingProfile].TotalDeaths = 0;
-                            ProfileManager.PlayableProfiles[EditingProfile].TotalGames = 0;
-                            ProfileManager.PlayableProfiles[EditingProfile].TotalKills = 0;
-                            ProfileManager.PlayableProfiles[EditingProfile].TotalPowerups = 0;
-                            ProfileManager.PlayableProfiles[EditingProfile].BestGame = TimeSpan.Zero;
+                            ProfileManager.PlayableProfiles[_state.EditingProfile].TotalDeaths = 0;
+                            ProfileManager.PlayableProfiles[_state.EditingProfile].TotalGames = 0;
+                            ProfileManager.PlayableProfiles[_state.EditingProfile].TotalKills = 0;
+                            ProfileManager.PlayableProfiles[_state.EditingProfile].TotalPowerups = 0;
+                            ProfileManager.PlayableProfiles[_state.EditingProfile].BestGame = TimeSpan.Zero;
                             ProfileManager.SaveProfiles();
-                            EditingProfile = -1;
-                            CurrentMenu.Value = 0;
-                            SetupMainMenu();
+                            _state.EditingProfile = -1;
+                            _state.CurrentMenu.Value = 0;
+                            setupMainMenu();
                         }
                     }
                     if (InputComponent.Players[0].PressedAction2)
                     {
-                        CurrentMenu.Value = 0;
-                        SetupMainMenu();
+                        _state.CurrentMenu.Value = 0;
+                        setupMainMenu();
                     }
                 }
             }
@@ -172,10 +166,10 @@ namespace SlaamMono.PlayerProfiles
         public void Draw(SpriteBatch batch)
         {
 
-            if (CurrentMenu.Value == 0)
-                MainMenu.Draw(batch);
+            if (_state.CurrentMenu.Value == 0)
+                _state.MainMenu.Draw(batch);
             else
-                SubMenu.Draw(batch);
+                _state.SubMenu.Draw(batch);
         }
 
         public void Close()
@@ -183,25 +177,25 @@ namespace SlaamMono.PlayerProfiles
 
         }
 
-        private void SetupMainMenu()
+        private void setupMainMenu()
         {
-            MainMenu.Items.Columns.Clear();
-            MainMenu.Items.Columns.Add("PROFILES");
-            MainMenu.Items.Clear();
+            _state.MainMenu.Items.Columns.Clear();
+            _state.MainMenu.Items.Columns.Add("PROFILES");
+            _state.MainMenu.Items.Clear();
             for (int x = 1; x < ProfileManager.PlayableProfiles.Count; x++)
-                MainMenu.Items.Add(true, new GraphItem(ProfileManager.PlayableProfiles[x].Name, x.ToString()));
-            MainMenu.Items.Add(true, new GraphItem("Create New Profile...", "new"));
-            MainMenu.SetHighlight(0);
-            CurrentMenuChoice = new IntRange(0, 0, MainMenu.Items.Count - 1);
+                _state.MainMenu.Items.Add(true, new GraphItem(ProfileManager.PlayableProfiles[x].Name, x.ToString()));
+            _state.MainMenu.Items.Add(true, new GraphItem("Create New Profile...", "new"));
+            _state.MainMenu.SetHighlight(0);
+            _state.CurrentMenuChoice = new IntRange(0, 0, _state.MainMenu.Items.Count - 1);
         }
 
-        private void ResetSubMenu()
+        private void resetSubMenu()
         {
-            SubMenu.Items.Clear();
-            SubMenu.Items.Columns.Clear();
-            SubMenu.Items.Columns.Add("OPTIONS");
-            SubMenu.Items.Add(true, new GraphItem("Rename", "ren"), new GraphItem("Delete", "del"), new GraphItem("Clear Stats", "clr"));
-            SubMenu.CalculateBlocks();
+            _state.SubMenu.Items.Clear();
+            _state.SubMenu.Items.Columns.Clear();
+            _state.SubMenu.Items.Columns.Add("OPTIONS");
+            _state.SubMenu.Items.Add(true, new GraphItem("Rename", "ren"), new GraphItem("Delete", "del"), new GraphItem("Clear Stats", "clr"));
+            _state.SubMenu.CalculateBlocks();
         }
     }
 }

@@ -13,12 +13,13 @@ namespace SlaamMono.Menus
     public class HighScoreScreen : ILogic
     {
         public const int MAX_HIGHSCORES = 7;
-        private readonly ILogger _logger;
 
+        private SurvivalStatsBoard _statsboard;
+
+        private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraph;
-        private SurvivalStatsBoard _statsboard;
 
         public HighScoreScreen(ILogger logger, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
         {
