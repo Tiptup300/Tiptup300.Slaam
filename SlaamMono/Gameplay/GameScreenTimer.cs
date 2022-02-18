@@ -15,7 +15,7 @@ namespace SlaamMono.Gameplay
         public TimeSpan GameMatchTime;
         public TimeSpan TimeRemaining;
         public TimeSpan CurrentGameTime = new TimeSpan();
-        public readonly TimeSpan EndingTime = CurrentMatchSettings.TimeOfMatch;
+        public readonly TimeSpan EndingTime = MatchSettings.CurrentMatchSettings.TimeOfMatch;
         public bool Moving = false;
 
         private Vector2 _position;

@@ -80,12 +80,12 @@ namespace SlaamMono.MatchCreation
             );
             _state.MenuChoice = new IntRange(0, 0, _state.MainMenu.Items.Count - 1);
             readMatchSettingsFromFile();
-            CurrentMatchSettings.Set(buildMatchSettings());
+            MatchSettings.CurrentMatchSettings = buildMatchSettings();
             _state.MainMenu.SetHighlight(_state.MenuChoice.Value);
 
-            if (CurrentMatchSettings.BoardLocation != null && CurrentMatchSettings.BoardLocation.Trim() != "" && File.Exists(CurrentMatchSettings.BoardLocation))
+            if (MatchSettings.CurrentMatchSettings.BoardLocation != null && MatchSettings.CurrentMatchSettings.BoardLocation.Trim() != "" && File.Exists(MatchSettings.CurrentMatchSettings.BoardLocation))
             {
-                LoadBoard(CurrentMatchSettings.BoardLocation);
+                LoadBoard(MatchSettings.CurrentMatchSettings.BoardLocation);
             }
             else
             {
@@ -180,7 +180,7 @@ namespace SlaamMono.MatchCreation
                     {
                         if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Save")
                         {
-                            CurrentMatchSettings.Set(buildMatchSettings());
+                            MatchSettings.CurrentMatchSettings = buildMatchSettings();
                             writeMatchSettingsToFile();
                             _state.ViewingSettings = false;
                             SetupZune();
@@ -188,7 +188,7 @@ namespace SlaamMono.MatchCreation
                         else if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Cancel")
                         {
                             readMatchSettingsFromFile();
-                            CurrentMatchSettings.Set(buildMatchSettings());
+                            MatchSettings.CurrentMatchSettings = buildMatchSettings();
                             _state.ViewingSettings = false;
                             SetupZune();
                         }
@@ -221,7 +221,7 @@ namespace SlaamMono.MatchCreation
 
                 if (InputComponent.Players[0].PressedStart)
                 {
-                    CurrentMatchSettings.Set(buildMatchSettings());
+                    MatchSettings.CurrentMatchSettings = buildMatchSettings();
                     writeMatchSettingsToFile();
                     GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequest(_state.SetupCharacters));
                     _screenDirector.ChangeTo(GameScreen.Instance);
@@ -339,7 +339,7 @@ namespace SlaamMono.MatchCreation
 
                 if (reader.IsWrongVersion())
                 {
-                    CurrentMatchSettings.Set(buildMatchSettings());
+                    MatchSettings.CurrentMatchSettings = buildMatchSettings();
                     throw new EndOfStreamException();
                 }
 
@@ -357,7 +357,7 @@ namespace SlaamMono.MatchCreation
             finally
             {
                 reader.Close();
-                CurrentMatchSettings.Set(buildMatchSettings());
+                MatchSettings.CurrentMatchSettings = buildMatchSettings();
             }
         }
 

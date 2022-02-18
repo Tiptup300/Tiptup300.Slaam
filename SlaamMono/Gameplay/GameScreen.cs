@@ -63,8 +63,8 @@ namespace SlaamMono.Gameplay
             _state.Characters = new List<CharacterActor>();
             _state.Tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
             _state.CurrentGameStatus = GameStatus.Waiting;
-            _state.ThisGameType = CurrentMatchSettings.GameType;
-            SetupTheBoard(CurrentMatchSettings.BoardLocation);
+            _state.ThisGameType = MatchSettings.CurrentMatchSettings.GameType;
+            SetupTheBoard(MatchSettings.CurrentMatchSettings.BoardLocation);
             _state.CurrentGameStatus = GameStatus.MovingBoard;
             _resources.GetTexture("ReadySetGo").Load();
             _resources.GetTexture("BattleBG").Load();
@@ -104,9 +104,9 @@ namespace SlaamMono.Gameplay
             }
             else if (_state.ThisGameType == GameType.Spree)
             {
-                //CurrentMatchSettings.KillsToWin = 7;
+                //MatchSettings.CurrentMatchSettings.KillsToWin = 7;
                 _state.StepsRemaining = 100;
-                _state.KillsToWin = CurrentMatchSettings.KillsToWin;
+                _state.KillsToWin = MatchSettings.CurrentMatchSettings.KillsToWin;
                 _state.SpreeStepSize = 10;
                 _state.SpreeCurrentStep = 0;
             }

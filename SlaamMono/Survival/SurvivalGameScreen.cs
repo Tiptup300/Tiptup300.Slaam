@@ -46,10 +46,10 @@ namespace SlaamMono.Survival
         public override void SetupTheBoard(string BoardLoc)
         {
             _state.ThisGameType = GameType.Survival;
-            CurrentMatchSettings.GameType = GameType.Survival;
-            CurrentMatchSettings.SpeedMultiplyer = 1f;
-            CurrentMatchSettings.RespawnTime = new TimeSpan(0, 0, 8);
-            CurrentMatchSettings.LivesAmt = 1;
+            MatchSettings.CurrentMatchSettings.GameType = GameType.Survival;
+            MatchSettings.CurrentMatchSettings.SpeedMultiplyer = 1f;
+            MatchSettings.CurrentMatchSettings.RespawnTime = new TimeSpan(0, 0, 8);
+            MatchSettings.CurrentMatchSettings.LivesAmt = 1;
             _state.Tileset = LobbyScreen.LoadQuickBoard();
 
             _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, _state.SetupCharacters[0].CharProfile, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));

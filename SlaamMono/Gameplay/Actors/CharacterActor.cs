@@ -17,11 +17,11 @@ namespace SlaamMono.Gameplay.Actors
     public class CharacterActor
     {
         public bool Drawn = false;
-        public int Lives = CurrentMatchSettings.LivesAmt;
+        public int Lives = MatchSettings.CurrentMatchSettings.LivesAmt;
         public int Kills = 0;
         public int PowerupsUsed = 0;
         public int Deaths = 0;
-        public readonly float SpeedOfMovement = GameGlobals.TILE_SIZE / 50f * (5f / 30f) * CurrentMatchSettings.SpeedMultiplyer;
+        public readonly float SpeedOfMovement = GameGlobals.TILE_SIZE / 50f * (5f / 30f) * MatchSettings.CurrentMatchSettings.SpeedMultiplyer;
         public bool IsBot = false;
         public Texture2D CharacterSkin;
         public int ProfileIndex;
@@ -42,7 +42,7 @@ namespace SlaamMono.Gameplay.Actors
         public Tile CurrentTile;
         public Powerup CurrentPowerup;
 
-        private Timer ReappearTime = new Timer(CurrentMatchSettings.RespawnTime);
+        private Timer ReappearTime = new Timer(MatchSettings.CurrentMatchSettings.RespawnTime);
         private Timer FadeThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 25));
         private float Alpha = 255;
 
