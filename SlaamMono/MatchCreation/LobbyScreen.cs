@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Graphing;
@@ -10,6 +11,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using ZzziveGameEngine;
@@ -23,8 +25,6 @@ namespace SlaamMono.MatchCreation
         private const int MAX_PLAYERS = 4;
 
         private LobbyScreenState _state = new LobbyScreenState();
-
-        public Graph x_this_needs_removed_later_MainMenu => _state.MainMenu;
 
 
         private readonly ILogger _logger;
@@ -79,7 +79,8 @@ namespace SlaamMono.MatchCreation
                 new GraphItem("", "Cancel")
             );
             _state.MenuChoice = new IntRange(0, 0, _state.MainMenu.Items.Count - 1);
-            CurrentMatchSettings.ReadValues(this);
+            readMatchSettingsFromFile();
+            CurrentMatchSettings.Set(buildMatchSettings());
             _state.MainMenu.SetHighlight(_state.MenuChoice.Value);
 
             if (CurrentMatchSettings.BoardLocation != null && CurrentMatchSettings.BoardLocation.Trim() != "" && File.Exists(CurrentMatchSettings.BoardLocation))
@@ -179,13 +180,15 @@ namespace SlaamMono.MatchCreation
                     {
                         if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Save")
                         {
-                            CurrentMatchSettings.SaveValues(this, _state.BoardLocation);
+                            CurrentMatchSettings.Set(buildMatchSettings());
+                            writeMatchSettingsToFile();
                             _state.ViewingSettings = false;
                             SetupZune();
                         }
                         else if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Cancel")
                         {
-                            CurrentMatchSettings.ReadValues(this);
+                            readMatchSettingsFromFile();
+                            CurrentMatchSettings.Set(buildMatchSettings());
                             _state.ViewingSettings = false;
                             SetupZune();
                         }
@@ -218,7 +221,8 @@ namespace SlaamMono.MatchCreation
 
                 if (InputComponent.Players[0].PressedStart)
                 {
-                    CurrentMatchSettings.SaveValues(this, _state.BoardLocation);
+                    CurrentMatchSettings.Set(buildMatchSettings());
+                    writeMatchSettingsToFile();
                     GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequest(_state.SetupCharacters));
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
@@ -233,6 +237,127 @@ namespace SlaamMono.MatchCreation
                     BackgroundManager.ChangeBG(BackgroundType.Normal);
                 }
 
+            }
+        }
+
+        private MatchSettings buildMatchSettings()
+        {
+            MatchSettings output;
+
+            output = new MatchSettings();
+            switch (_state.MainMenu.Items[0].ToSetting().OptionChoice.Value)
+            {
+                case 0: output.GameType = GameType.Classic; break;
+                case 1: output.GameType = GameType.Spree; break;
+                case 2: output.GameType = GameType.TimedSpree; break;
+            }
+            switch (_state.MainMenu.Items[1].ToSetting().OptionChoice.Value)
+            {
+                case 0: output.LivesAmt = 3; break;
+                case 1: output.LivesAmt = 5; break;
+                case 2: output.LivesAmt = 10; break;
+                case 3: output.LivesAmt = 20; break;
+                case 4: output.LivesAmt = 40; break;
+                case 5: output.LivesAmt = 50; break;
+                case 6: output.LivesAmt = 100; break;
+            }
+
+            switch (_state.MainMenu.Items[2].ToSetting().OptionChoice.Value)
+            {
+                case 0: output.SpeedMultiplyer = .5f; break;
+                case 1: output.SpeedMultiplyer = .75f; break;
+                case 2: output.SpeedMultiplyer = 1f; break;
+                case 3: output.SpeedMultiplyer = 1.25f; break;
+                case 4: output.SpeedMultiplyer = 1.5f; break;
+            }
+
+            switch (_state.MainMenu.Items[3].ToSetting().OptionChoice.Value)
+            {
+                case 0: output.TimeOfMatch = new TimeSpan(0, 1, 0); break;
+                case 1: output.TimeOfMatch = new TimeSpan(0, 2, 0); break;
+                case 2: output.TimeOfMatch = new TimeSpan(0, 3, 0); break;
+                case 3: output.TimeOfMatch = new TimeSpan(0, 5, 0); break;
+                case 4: output.TimeOfMatch = new TimeSpan(0, 10, 0); break;
+                case 5: output.TimeOfMatch = new TimeSpan(0, 20, 0); break;
+                case 6: output.TimeOfMatch = new TimeSpan(0, 40, 0); break;
+                case 7: output.TimeOfMatch = new TimeSpan(0, 45, 0); break;
+                case 8: output.TimeOfMatch = new TimeSpan(0, 60, 0); break;
+            }
+
+            switch (_state.MainMenu.Items[4].ToSetting().OptionChoice.Value)
+            {
+                case 0: output.RespawnTime = new TimeSpan(0, 0, 0); break;
+                case 1: output.RespawnTime = new TimeSpan(0, 0, 2); break;
+                case 2: output.RespawnTime = new TimeSpan(0, 0, 4); break;
+                case 3: output.RespawnTime = new TimeSpan(0, 0, 6); break;
+                case 4: output.RespawnTime = new TimeSpan(0, 0, 8); break;
+                case 5: output.RespawnTime = new TimeSpan(0, 0, 10); break;
+            }
+
+            switch (_state.MainMenu.Items[5].ToSetting().OptionChoice.Value)
+            {
+                case 0: output.KillsToWin = 5; break;
+                case 1: output.KillsToWin = 10; break;
+                case 2: output.KillsToWin = 15; break;
+                case 3: output.KillsToWin = 20; break;
+                case 4: output.KillsToWin = 25; break;
+                case 5: output.KillsToWin = 30; break;
+                case 6: output.KillsToWin = 40; break;
+                case 7: output.KillsToWin = 50; break;
+                case 8: output.KillsToWin = 100; break;
+
+            }
+            output.BoardLocation = _state.BoardLocation;
+
+            return output;
+        }
+
+        private void writeMatchSettingsToFile()
+        {
+            XnaContentWriter writer = new XnaContentWriter(x_Di.Get<ProfileFileVersion>());
+            writer.Initialize(DialogStrings.MatchSettingsFilename);
+
+            for (int x = 0; x < 6; x++)
+            {
+                int y = _state.MainMenu.Items[x].ToSetting().OptionChoice.Value;
+                writer.Write(y);
+            }
+            writer.Write(_state.BoardLocation != null ? _state.BoardLocation : "");
+
+            writer.Close();
+        }
+
+        public void readMatchSettingsFromFile()
+        {
+            XnaContentReader reader;
+
+            reader = new XnaContentReader(_logger, x_Di.Get<ProfileFileVersion>());
+            try
+            {
+
+                reader.Initialize(DialogStrings.MatchSettingsFilename);
+
+                if (reader.IsWrongVersion())
+                {
+                    CurrentMatchSettings.Set(buildMatchSettings());
+                    throw new EndOfStreamException();
+                }
+
+                for (int x = 0; x < 6; x++)
+                {
+                    int y = reader.ReadInt32();
+                    _state.MainMenu.Items[x].ToSetting().ChangeValue(y);
+                }
+
+                _state.BoardLocation = reader.ReadString();
+            }
+            catch (EndOfStreamException)
+            {
+            }
+            finally
+            {
+                reader.Close();
+                CurrentMatchSettings.Set(buildMatchSettings());
             }
         }
 
