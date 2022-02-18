@@ -56,122 +56,122 @@ namespace SlaamMono.MatchCreation
             if (_state.IsStillLoadingBoards)
             {
                 ContinueLoadingBoards();
+                return;
+            }
+
+            _state.Alpha += (_state.AlphaUp ? 1 : -1) * FrameRateDirector.MovementFactor * _state.MovementSpeed;
+
+            if (_state.AlphaUp && _state.Alpha >= 255f)
+            {
+                _state.AlphaUp = !_state.AlphaUp;
+                _state.Alpha = 255f;
+            }
+            else if (!_state.AlphaUp && _state.Alpha <= 0f)
+            {
+                _state.AlphaUp = !_state.AlphaUp;
+                _state.Alpha = 0f;
+            }
+
+            if (_state.WasChosen)
+            {
+                _state.Scale += FrameRateDirector.MovementFactor * .01f;
+
+                if (_state.Scale >= 1.50f)
+                {
+                    _state.Scale = 1.50f;
+                }
+
+                if (InputComponent.Players[0].PressedAction)
+                {
+                    _state.ParentLobbyScreen.LoadBoard(_state.ValidBoards[_state.Save]);
+                    _screenManager.ChangeTo(_state.ParentLobbyScreen);
+                }
+
+                if (InputComponent.Players[0].PressedAction2)
+                {
+                    _state.WasChosen = false;
+                }
             }
             else
             {
-                _state.Alpha += (_state.AlphaUp ? 1 : -1) * FrameRateDirector.MovementFactor * _state.MovementSpeed;
+                _state.Scale -= FrameRateDirector.MovementFactor * .01f;
 
-                if (_state.AlphaUp && _state.Alpha >= 255f)
+                if (_state.Scale <= 1.00f)
                 {
-                    _state.AlphaUp = !_state.AlphaUp;
-                    _state.Alpha = 255f;
-                }
-                else if (!_state.AlphaUp && _state.Alpha <= 0f)
-                {
-                    _state.AlphaUp = !_state.AlphaUp;
-                    _state.Alpha = 0f;
+                    _state.Scale = 1.00f;
                 }
 
-                if (_state.WasChosen)
+                if (InputComponent.Players[0].PressingDown)
                 {
-                    _state.Scale += FrameRateDirector.MovementFactor * .01f;
+                    _state.Vertical = Direction.Down;
+                }
+                if (InputComponent.Players[0].PressingUp)
+                {
+                    _state.Vertical = Direction.Up;
+                }
 
-                    if (_state.Scale >= 1.50f)
-                    {
-                        _state.Scale = 1.50f;
-                    }
+                if (InputComponent.Players[0].PressingRight)
+                {
+                    _state.Horizontal = Direction.Right;
+                }
+                if (InputComponent.Players[0].PressingLeft)
+                {
+                    _state.Horizontal = Direction.Left;
+                }
 
-                    if (InputComponent.Players[0].PressedAction)
-                    {
-                        _state.ParentLobbyScreen.LoadBoard(_state.ValidBoards[_state.Save]);
-                        _screenManager.ChangeTo(_state.ParentLobbyScreen);
-                    }
+                if (_state.Vertical == Direction.Down)
+                {
+                    _state.VerticalOffset -= FrameRateDirector.MovementFactor * _state.MovementSpeed;
 
-                    if (InputComponent.Players[0].PressedAction2)
+                    if (_state.VerticalOffset <= -_state.DrawSizeHeight)
                     {
-                        _state.WasChosen = false;
+                        _state.VerticalBoardOffset.Add(1);
+                        _state.VerticalOffset = 0;
+                        _state.Vertical = Direction.None;
                     }
                 }
-                else
+                else if (_state.Vertical == Direction.Up)
                 {
-                    _state.Scale -= FrameRateDirector.MovementFactor * .01f;
+                    _state.VerticalOffset += FrameRateDirector.MovementFactor * _state.MovementSpeed;
 
-                    if (_state.Scale <= 1.00f)
+                    if (_state.VerticalOffset >= _state.DrawSizeHeight)
                     {
-                        _state.Scale = 1.00f;
+                        _state.VerticalBoardOffset.Sub(1);
+                        _state.VerticalOffset = 0;
+                        _state.Vertical = Direction.None;
                     }
-
-                    if (InputComponent.Players[0].PressingDown)
-                    {
-                        _state.Vertical = Direction.Down;
-                    }
-                    if (InputComponent.Players[0].PressingUp)
-                    {
-                        _state.Vertical = Direction.Up;
-                    }
-
-                    if (InputComponent.Players[0].PressingRight)
-                    {
-                        _state.Horizontal = Direction.Right;
-                    }
-                    if (InputComponent.Players[0].PressingLeft)
-                    {
-                        _state.Horizontal = Direction.Left;
-                    }
-
-                    if (_state.Vertical == Direction.Down)
-                    {
-                        _state.VerticalOffset -= FrameRateDirector.MovementFactor * _state.MovementSpeed;
-
-                        if (_state.VerticalOffset <= -_state.DrawSizeHeight)
-                        {
-                            _state.VerticalBoardOffset.Add(1);
-                            _state.VerticalOffset = 0;
-                            _state.Vertical = Direction.None;
-                        }
-                    }
-                    else if (_state.Vertical == Direction.Up)
-                    {
-                        _state.VerticalOffset += FrameRateDirector.MovementFactor * _state.MovementSpeed;
-
-                        if (_state.VerticalOffset >= _state.DrawSizeHeight)
-                        {
-                            _state.VerticalBoardOffset.Sub(1);
-                            _state.VerticalOffset = 0;
-                            _state.Vertical = Direction.None;
-                        }
-                    }
-
-                    if (_state.Horizontal == Direction.Left)
-                    {
-                        _state.HorizontalOffset += FrameRateDirector.MovementFactor * _state.MovementSpeed;
-
-                        if (_state.HorizontalOffset >= _state.DrawSizeWidth)
-                        {
-                            _state.HorizontalBoardOffset.Add(1);
-                            _state.HorizontalOffset = 0;
-                            _state.Horizontal = Direction.None;
-                        }
-                    }
-                    else if (_state.Horizontal == Direction.Right)
-                    {
-                        _state.HorizontalOffset -= FrameRateDirector.MovementFactor * _state.MovementSpeed;
-
-                        if (_state.HorizontalOffset <= -_state.DrawSizeWidth)
-                        {
-                            _state.HorizontalBoardOffset.Sub(1);
-                            _state.HorizontalOffset = 0;
-                            _state.Horizontal = Direction.None;
-                        }
-                    }
-
-                    if (_state.HorizontalOffset == 0 && _state.VerticalOffset == 0 && InputComponent.Players[0].PressedAction)
-                    {
-                        _state.WasChosen = true;
-                    }
-
                 }
+
+                if (_state.Horizontal == Direction.Left)
+                {
+                    _state.HorizontalOffset += FrameRateDirector.MovementFactor * _state.MovementSpeed;
+
+                    if (_state.HorizontalOffset >= _state.DrawSizeWidth)
+                    {
+                        _state.HorizontalBoardOffset.Add(1);
+                        _state.HorizontalOffset = 0;
+                        _state.Horizontal = Direction.None;
+                    }
+                }
+                else if (_state.Horizontal == Direction.Right)
+                {
+                    _state.HorizontalOffset -= FrameRateDirector.MovementFactor * _state.MovementSpeed;
+
+                    if (_state.HorizontalOffset <= -_state.DrawSizeWidth)
+                    {
+                        _state.HorizontalBoardOffset.Sub(1);
+                        _state.HorizontalOffset = 0;
+                        _state.Horizontal = Direction.None;
+                    }
+                }
+
+                if (_state.HorizontalOffset == 0 && _state.VerticalOffset == 0 && InputComponent.Players[0].PressedAction)
+                {
+                    _state.WasChosen = true;
+                }
+
             }
+
         }
 
 
