@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
@@ -15,17 +14,10 @@ namespace SlaamMono.Gameplay.Statistics
     public class StatsScreen : ILogic
     {
         public const int MAX_HIGHSCORES = 5;
-        public MatchScoreCollection ScoreCollection;
-
-        private IntRange CurrentPage = new IntRange(0, 0, 2);
-        private IntRange CurrentChar;
-        private StatsBoard PlayerStats;
-        private StatsBoard Kills;
-        private StatsBoard PvP;
-        private CachedTexture[] _statsButtons = new CachedTexture[3];
         private readonly Rectangle _statsRectangle = new Rectangle(20, 110, GameGlobals.DRAWING_GAME_WIDTH - 40, GameGlobals.DRAWING_GAME_HEIGHT);
-
         private readonly Color _statsColor = new Color(0, 0, 0, 125);
+
+        private StatsScreenState _state = new StatsScreenState();
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
@@ -42,69 +34,82 @@ namespace SlaamMono.Gameplay.Statistics
 
         public void Initialize(StatsScreenRequest statsScreenRequest)
         {
-            ScoreCollection = statsScreenRequest.ScoreCollection;
+            _state._scoreCollection = statsScreenRequest.ScoreCollection;
         }
 
         public void InitializeState()
         {
-            _statsButtons = setStatsButtons();
+            _state._statsButtons = setStatsButtons();
             BackgroundManager.ChangeBG(BackgroundType.Menu);
-            if (ScoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.Classic)
+            if (_state._scoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.Classic)
             {
-                PlayerStats = new NormalStatsBoard(ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.PlayerStats = new NormalStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
             }
-            else if (ScoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.Spree || ScoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.TimedSpree)
+            else if (_state._scoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.Spree || _state._scoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.TimedSpree)
             {
-                PlayerStats = new SpreeStatsBoard(ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.PlayerStats = new SpreeStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
             }
-            else if (ScoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.Survival)
+            else if (_state._scoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.Survival)
             {
-                PlayerStats = new SurvivalStatsBoard(ScoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderGraph);
+                _state.PlayerStats = new SurvivalStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderGraph);
             }
 
-            PlayerStats.CalculateStats();
-            PlayerStats.ConstructGraph(0);
+            _state.PlayerStats.CalculateStats();
+            _state.PlayerStats.ConstructGraph(0);
 
-            if (ScoreCollection.ParentGameScreen.x_ToRemove__ThisGameType != GameType.Survival)
+            if (_state._scoreCollection.ParentGameScreen.x_ToRemove__ThisGameType != GameType.Survival)
             {
 
-                Kills = new KillsStatsBoard(ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
-                Kills.CalculateStats();
-                Kills.ConstructGraph(0);
+                _state.Kills = new KillsStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.Kills.CalculateStats();
+                _state.Kills.ConstructGraph(0);
 
-                PvP = new PvPStatsBoard(ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
-                PvP.CalculateStats();
-                PvP.ConstructGraph(0);
+                _state.PvP = new PvPStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.PvP.CalculateStats();
+                _state.PvP.ConstructGraph(0);
 
                 string first = "First: ",
                        second = "Second: ",
                        third = "Third: ";
 
-                for (int x = 0; x < PlayerStats.MainBoard.Items.Count; x++)
+                for (int x = 0; x < _state.PlayerStats.MainBoard.Items.Count; x++)
                 {
-                    if (PlayerStats.MainBoard.Items[x].Details[1] == "First")
-                        first += PlayerStats.MainBoard.Items[x].Details[0] + ", ";
+                    if (_state.PlayerStats.MainBoard.Items[x].Details[1] == "First")
+                    {
+                        first += _state.PlayerStats.MainBoard.Items[x].Details[0] + ", ";
+                    }
 
-                    if (PlayerStats.MainBoard.Items[x].Details[1] == "Second")
-                        second += PlayerStats.MainBoard.Items[x].Details[0] + ", ";
+                    if (_state.PlayerStats.MainBoard.Items[x].Details[1] == "Second")
+                    {
+                        second += _state.PlayerStats.MainBoard.Items[x].Details[0] + ", ";
+                    }
 
-                    if (PlayerStats.MainBoard.Items[x].Details[1] == "Third")
-                        third += PlayerStats.MainBoard.Items[x].Details[0] + ", ";
-
+                    if (_state.PlayerStats.MainBoard.Items[x].Details[1] == "Third")
+                    {
+                        third += _state.PlayerStats.MainBoard.Items[x].Details[0] + ", ";
+                    }
                 }
 
                 if (second == "Second: ")
+                {
                     second = "";
+                }
                 else
+                {
                     second = second.Substring(0, second.Length - 2);
+                }
 
                 if (third == "Third: ")
+                {
                     third = "";
+                }
                 else
+                {
                     third = third.Substring(0, third.Length - 2);
+                }
 
 
-                CurrentChar = new IntRange(0, 0, PvP.MainBoard.Items.Count - 1);
+                _state.CurrentChar = new IntRange(0, 0, _state.PvP.MainBoard.Items.Count - 1);
 
             }
         }
@@ -125,30 +130,30 @@ namespace SlaamMono.Gameplay.Statistics
         {
             BackgroundManager.SetRotation(1f);
 
-            if (ScoreCollection.ParentGameScreen.x_ToRemove__ThisGameType != GameType.Survival)
+            if (_state._scoreCollection.ParentGameScreen.x_ToRemove__ThisGameType != GameType.Survival)
             {
 
                 if (InputComponent.Players[0].PressedLeft)
                 {
-                    CurrentPage.Sub(1);
+                    _state.CurrentPage.Sub(1);
                 }
 
                 if (InputComponent.Players[0].PressedRight)
                 {
-                    CurrentPage.Add(1);
+                    _state.CurrentPage.Add(1);
                 }
 
-                if (CurrentPage.Value == 2)
+                if (_state.CurrentPage.Value == 2)
                 {
                     if (InputComponent.Players[0].PressedUp)
                     {
-                        CurrentChar.Sub(1);
-                        PvP.ConstructGraph(CurrentChar.Value);
+                        _state.CurrentChar.Sub(1);
+                        _state.PvP.ConstructGraph(_state.CurrentChar.Value);
                     }
                     else if (InputComponent.Players[0].PressedDown)
                     {
-                        CurrentChar.Add(1);
-                        PvP.ConstructGraph(CurrentChar.Value);
+                        _state.CurrentChar.Add(1);
+                        _state.PvP.ConstructGraph(_state.CurrentChar.Value);
                     }
                 }
 
@@ -163,25 +168,25 @@ namespace SlaamMono.Gameplay.Statistics
         public void Draw(SpriteBatch batch)
         {
             Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("StatsBoard").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("StatsBoard").Height / 2);
-            //MainBG.Draw(batch);
+
             for (int x = 0; x < 3; x++)
             {
-                batch.Draw(_statsButtons[x].Texture, Statsboard, x == CurrentPage.Value ? Color.LightSkyBlue : ScoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
+                batch.Draw(_state._statsButtons[x].Texture, Statsboard, x == _state.CurrentPage.Value ? Color.LightSkyBlue : _state._scoreCollection.ParentGameScreen.x_ToRemove__ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
             }
             batch.Draw(_resources.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
-            //DrawingButton.Draw(batch);
-            if (CurrentPage.Value == 0)
-                PlayerStats.MainBoard.Draw(batch);
-            else if (CurrentPage.Value == 1)
-                Kills.MainBoard.Draw(batch);
-            else
-                PvP.MainBoard.Draw(batch);
 
-#if !ZUNE
-            Resources.DrawString(ScoreCollection.ParentGameScreen.ThisGameType != GameType.Survival ? "Player Stats" : "Survival High Scores", new Vector2(131+Statsboard.X, 255), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
-            Resources.DrawString("Kills", new Vector2(352+Statsboard.X, 255), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
-            Resources.DrawString("Player Vs. Player", new Vector2(573+Statsboard.X, 255), Resources.SegoeUIx14pt, TextAlignment.Centered, Color.White, true);
-#endif
+            if (_state.CurrentPage.Value == 0)
+            {
+                _state.PlayerStats.MainBoard.Draw(batch);
+            }
+            else if (_state.CurrentPage.Value == 1)
+            {
+                _state.Kills.MainBoard.Draw(batch);
+            }
+            else
+            {
+                _state.PvP.MainBoard.Draw(batch);
+            }
         }
 
         public void Close()

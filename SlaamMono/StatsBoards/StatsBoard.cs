@@ -3,7 +3,7 @@ using SlaamMono.Library.Graphing;
 
 namespace SlaamMono.StatsBoards
 {
-    abstract class StatsBoard
+    public abstract class StatsBoard
     {
         public Graph MainBoard;
         public MatchScoreCollection ParentScoreCollector;
