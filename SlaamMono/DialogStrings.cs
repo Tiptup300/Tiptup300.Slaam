@@ -43,31 +43,30 @@ namespace SlaamMono
         public const string CreatedBy = "Created by ";
         public const string Player = "Player ";
 
-        public static string GetDescMsg()
+        public static string GetDescMsg(MatchSettings matchSettings)
         {
-            if (MatchSettings.CurrentMatchSettings.GameType == GameType.Classic)
+            if (matchSettings.GameType == GameType.Classic)
             {
-                return "Mode: Classic\n" +
-                "Board: " + CleanMapName(MatchSettings.CurrentMatchSettings.BoardLocation) + "\n" +
-                MatchSettings.CurrentMatchSettings.LivesAmt + " Lives\n" +
-                MatchSettings.CurrentMatchSettings.SpeedMultiplyer + "x Speed\n" +
-                MatchSettings.CurrentMatchSettings.RespawnTime.TotalSeconds + " Second Respawn";
+                return "Board: " + CleanMapName(matchSettings.BoardLocation) + "\n" +
+                 matchSettings.LivesAmt + " Lives\n" +
+                 matchSettings.SpeedMultiplyer + "x Speed\n" +
+                 matchSettings.RespawnTime.TotalSeconds + " Second Respawn";
             }
-            else if (MatchSettings.CurrentMatchSettings.GameType == GameType.TimedSpree)
+            else if (matchSettings.GameType == GameType.TimedSpree)
             {
                 return "Mode: Timed Spree\n" +
-                "Board: " + CleanMapName(MatchSettings.CurrentMatchSettings.BoardLocation) + "\n" +
-                MatchSettings.CurrentMatchSettings.TimeOfMatch.TotalMinutes + " Minutes Long\n" +
-                MatchSettings.CurrentMatchSettings.SpeedMultiplyer + "x Speed\n" +
-                MatchSettings.CurrentMatchSettings.RespawnTime.TotalSeconds + " Second Respawn";
+                "Board: " + CleanMapName(matchSettings.BoardLocation) + "\n" +
+                matchSettings.TimeOfMatch.TotalMinutes + " Minutes Long\n" +
+                matchSettings.SpeedMultiplyer + "x Speed\n" +
+                matchSettings.RespawnTime.TotalSeconds + " Second Respawn";
             }
             else
             {
                 return "Mode: Spree\n" +
-                "Board: " + CleanMapName(MatchSettings.CurrentMatchSettings.BoardLocation) + "\n" +
-                MatchSettings.CurrentMatchSettings.KillsToWin + " Kills To Win\n" +
-                MatchSettings.CurrentMatchSettings.SpeedMultiplyer + "x Speed\n" +
-                MatchSettings.CurrentMatchSettings.RespawnTime.TotalSeconds + " Second Respawn";
+                "Board: " + CleanMapName(matchSettings.BoardLocation) + "\n" +
+                matchSettings.KillsToWin + " Kills To Win\n" +
+                matchSettings.SpeedMultiplyer + "x Speed\n" +
+                matchSettings.RespawnTime.TotalSeconds + " Second Respawn";
             }
         }
 
