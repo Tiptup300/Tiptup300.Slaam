@@ -4,7 +4,6 @@ using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.x_;
@@ -18,33 +17,26 @@ namespace SlaamMono.MatchCreation
 {
     public class CharacterSelectionScreen : ILogic
     {
-        public static Texture2D[] SkinTexture;
-
-        private static Random rand = new Random();
-
-        private int _peopleDone = 0;
-        private int _peopleIn = 0;
-
-        protected CharSelectBox[] SelectBoxes;
-
         private const float VOffset = 195f;
         private const float HOffset = 40f;
-
-        public static List<string> Skins = new List<string>();
-        public static bool SkinsLoaded = false;
-
-
-
-        public Vector2[] BoxPositions = new Vector2[]
+        private readonly Vector2[] _boxPositions = new Vector2[]
         {
             new Vector2(HOffset + 0, VOffset + 0),
             new Vector2(HOffset + 0, VOffset + 256),
             new Vector2(HOffset + 600, VOffset + 0),
             new Vector2(HOffset + 600, VOffset + 256),
             new Vector2(HOffset + 600, VOffset + 512),
-            new Vector2(600, 768),
-
+            new Vector2(600, 768)
         };
+
+        public static Texture2D[] SkinTexture;
+        public static List<string> Skins = new List<string>();
+        public static bool SkinsLoaded = false;
+        private static Random rand = new Random();
+
+        protected CharSelectBox[] SelectBoxes;
+        private int _peopleDone = 0;
+        private int _peopleIn = 0;
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
@@ -159,10 +151,6 @@ namespace SlaamMono.MatchCreation
             SelectBoxes = null;
         }
 
-        /// <summary>
-        /// Returns a random skin string.
-        /// </summary>
-        /// <returns></returns>
         public static string ReturnRandSkin(ILogger logger)
         {
             if (!SkinsLoaded)
@@ -172,9 +160,6 @@ namespace SlaamMono.MatchCreation
             return Skins[rand.Next(0, Skins.Count)];
         }
 
-        /// <summary>
-        /// Loads all skins and checks them for the correct height/width
-        /// </summary>
         private static void LoadAllSkins(ILogger logger)
         {
             if (!SkinsLoaded)
@@ -206,7 +191,7 @@ namespace SlaamMono.MatchCreation
             for (int x = 0; x < InputComponent.Players.Length; x++)
             {
                 SelectBoxes[x] = new CharSelectBox(
-                    BoxPositions[x],
+                    _boxPositions[x],
                     SkinTexture,
                     (ExtendedPlayerIndex)x,
                     Skins,
