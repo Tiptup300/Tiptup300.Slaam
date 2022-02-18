@@ -7,7 +7,6 @@ using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.ResourceManagement;
 using SlaamMono.SubClasses;
 using SlaamMono.x_;
 using System;
