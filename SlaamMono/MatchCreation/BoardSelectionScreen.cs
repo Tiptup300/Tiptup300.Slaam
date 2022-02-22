@@ -11,7 +11,7 @@ using System;
 
 namespace SlaamMono.MatchCreation
 {
-    public class BoardSelectionScreen : ILogic
+    public class BoardSelectionScreen : IStateUpdater
     {
         public bool HasFoundBoard
         {

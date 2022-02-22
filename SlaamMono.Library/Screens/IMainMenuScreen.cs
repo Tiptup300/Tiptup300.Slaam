@@ -1,6 +1,6 @@
 ﻿namespace SlaamMono.Library.Screens
 {
-    public interface IMainMenuScreen : ILogic
+    public interface IMainMenuScreen : IStateUpdater
     {
     }
 }

@@ -18,7 +18,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.MatchCreation
 {
-    public class LobbyScreen : ILogic
+    public class LobbyScreen : IStateUpdater
     {
         private static Texture2D _defaultBoard;
 

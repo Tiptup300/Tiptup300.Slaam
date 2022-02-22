@@ -10,7 +10,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Menus
 {
-    public class LogoScreen : ILogoScreen, ILogic
+    public class LogoScreen : ILogoScreen, IStateUpdater
     {
         private LogoScreenState _state;
 

@@ -21,7 +21,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreen : ILogic
+    public class GameScreen : IStateUpdater
     {
         public static GameScreen Instance;
 

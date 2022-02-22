@@ -11,7 +11,7 @@ using SlaamMono.x_;
 
 namespace SlaamMono.Gameplay.Statistics
 {
-    public class StatsScreen : ILogic
+    public class StatsScreen : IStateUpdater
     {
         public const int MAX_HIGHSCORES = 5;
         private readonly Rectangle _statsRectangle = new Rectangle(20, 110, GameGlobals.DRAWING_GAME_WIDTH - 40, GameGlobals.DRAWING_GAME_HEIGHT);

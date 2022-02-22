@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace SlaamMono.Menus
 {
-    public partial class CreditsScreen : ILogic
+    public partial class CreditsScreen : IStateUpdater
     {
         private CreditsState _state = new CreditsState();
 

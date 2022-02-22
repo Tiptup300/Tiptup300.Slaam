@@ -10,7 +10,7 @@ using SlaamMono.x_;
 
 namespace SlaamMono.Menus
 {
-    public class FirstTimeScreen : ILogic
+    public class FirstTimeScreen : IStateUpdater
     {
         public FirstTimeScreenState _state = new FirstTimeScreenState();
 

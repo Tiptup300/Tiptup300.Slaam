@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SlaamMono.Library.Screens
 {
-    public interface ILogic
+    public interface IStateUpdater
     {
         void InitializeState();
 

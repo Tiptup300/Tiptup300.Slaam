@@ -13,7 +13,7 @@ using System;
 
 namespace SlaamMono.PlayerProfiles
 {
-    public class ProfileEditScreen : ILogic
+    public class ProfileEditScreen : IStateUpdater
     {
         public static ProfileEditScreen Instance =
             new ProfileEditScreen(

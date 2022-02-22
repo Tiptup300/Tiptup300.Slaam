@@ -15,7 +15,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.MatchCreation
 {
-    public class CharacterSelectionScreen : ILogic
+    public class CharacterSelectionScreen : IStateUpdater
     {
         private const float VOffset = 195f;
         private const float HOffset = 40f;

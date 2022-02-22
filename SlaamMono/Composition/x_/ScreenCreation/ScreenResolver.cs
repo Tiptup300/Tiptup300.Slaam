@@ -3,7 +3,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Composition.x_
 {
-    public class ScreenResolver : IResolver<ScreenRequest, ILogic>
+    public class ScreenResolver : IResolver<ScreenRequest, IStateUpdater>
     {
         private readonly x_Di _resolver;
         private readonly IResolver<ScreenNameLookup> _screenNameLookupResolver;
@@ -14,10 +14,10 @@ namespace SlaamMono.Composition.x_
             _screenNameLookupResolver = screenNameLookupResolver;
         }
 
-        public ILogic Resolve(ScreenRequest request)
+        public IStateUpdater Resolve(ScreenRequest request)
         {
             var screenLookups = _screenNameLookupResolver.Resolve();
-            return (ILogic)_resolver.x_Get(screenLookups.ScreenNames[request.Name]);
+            return (IStateUpdater)_resolver.x_Get(screenLookups.ScreenNames[request.Name]);
         }
     }
 }
