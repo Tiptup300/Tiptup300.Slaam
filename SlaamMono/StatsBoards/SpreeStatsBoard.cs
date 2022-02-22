@@ -14,16 +14,16 @@ namespace SlaamMono.StatsBoards
         public SpreeStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph)
             : base(scorekeeper)
         {
-            SpreeStatsPage = new SpreePlayerStatsPageListing[scorekeeper.ParentGameScreen.Characters.Count];
+            SpreeStatsPage = new SpreePlayerStatsPageListing[scorekeeper.ParentGameScreen.x_Characters.Count];
             MainBoard = new Graph(rect, 2, col, resources, renderGraph);
         }
 
         public override void CalculateStats()
         {
-            int[] TotalScore = new int[ParentScoreCollector.ParentGameScreen.Characters.Count];
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.Characters.Count; x++)
+            int[] TotalScore = new int[ParentScoreCollector.ParentGameScreen.x_Characters.Count];
+            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_Characters.Count; x++)
             {
-                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.Characters.Count; y++)
+                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.x_Characters.Count; y++)
                 {
                     if (x != y)
                         TotalScore[x] += ParentScoreCollector.Kills[x][y];
@@ -79,10 +79,10 @@ namespace SlaamMono.StatsBoards
                 GraphItem itm = new GraphItem();
                 {
 
-                    if (ParentScoreCollector.ParentGameScreen.Characters[x].IsBot)
-                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.Characters[x].GetProfile().Name + "*");
+                    if (ParentScoreCollector.ParentGameScreen.x_Characters[x].IsBot)
+                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.x_Characters[x].GetProfile().Name + "*");
                     else
-                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.Characters[x].GetProfile().Name);
+                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.x_Characters[x].GetProfile().Name);
 
                     itm.Details.Add(SpreeStatsPage[x].Place.ToString());
                     itm.Details.Add(SpreeStatsPage[x].BestSpree.ToString());

@@ -41,15 +41,15 @@ namespace SlaamMono.Gameplay.Statistics
         {
             _state._statsButtons = setStatsButtons();
             BackgroundManager.ChangeBG(BackgroundType.Menu);
-            if (_state._scoreCollection.ParentGameScreen.ThisGameType == GameType.Classic)
+            if (_state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.Classic)
             {
                 _state.PlayerStats = new NormalStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
             }
-            else if (_state._scoreCollection.ParentGameScreen.ThisGameType == GameType.Spree || _state._scoreCollection.ParentGameScreen.ThisGameType == GameType.TimedSpree)
+            else if (_state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.Spree || _state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.TimedSpree)
             {
                 _state.PlayerStats = new SpreeStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
             }
-            else if (_state._scoreCollection.ParentGameScreen.ThisGameType == GameType.Survival)
+            else if (_state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.Survival)
             {
                 _state.PlayerStats = new SurvivalStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderGraph);
             }
@@ -57,7 +57,7 @@ namespace SlaamMono.Gameplay.Statistics
             _state.PlayerStats.CalculateStats();
             _state.PlayerStats.ConstructGraph(0);
 
-            if (_state._scoreCollection.ParentGameScreen.ThisGameType != GameType.Survival)
+            if (_state._scoreCollection.ParentGameScreen.x_ThisGameType != GameType.Survival)
             {
 
                 _state.Kills = new KillsStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
@@ -130,7 +130,7 @@ namespace SlaamMono.Gameplay.Statistics
         {
             BackgroundManager.SetRotation(1f);
 
-            if (_state._scoreCollection.ParentGameScreen.ThisGameType != GameType.Survival)
+            if (_state._scoreCollection.ParentGameScreen.x_ThisGameType != GameType.Survival)
             {
 
                 if (InputComponent.Players[0].PressedLeft)
@@ -171,7 +171,7 @@ namespace SlaamMono.Gameplay.Statistics
 
             for (int x = 0; x < 3; x++)
             {
-                batch.Draw(_state._statsButtons[x].Texture, Statsboard, x == _state.CurrentPage.Value ? Color.LightSkyBlue : _state._scoreCollection.ParentGameScreen.ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
+                batch.Draw(_state._statsButtons[x].Texture, Statsboard, x == _state.CurrentPage.Value ? Color.LightSkyBlue : _state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
             }
             batch.Draw(_resources.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
 

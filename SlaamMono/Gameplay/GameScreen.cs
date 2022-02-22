@@ -25,9 +25,9 @@ namespace SlaamMono.Gameplay
     {
         public static GameScreen Instance;
 
-        public Tile[,] Tiles { get => _state.Tiles; }
-        public GameType ThisGameType { get => _state.ThisGameType; }
-        public List<CharacterActor> Characters { get => _state.Characters; }
+        public Tile[,] x_Tiles { get => _state.Tiles; }
+        public GameType x_ThisGameType { get => _state.ThisGameType; }
+        public List<CharacterActor> x_Characters { get => _state.Characters; }
 
         protected GameScreenState _state = new GameScreenState();
 

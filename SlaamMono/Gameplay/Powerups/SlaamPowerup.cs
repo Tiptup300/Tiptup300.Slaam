@@ -49,7 +49,7 @@ namespace SlaamMono.Gameplay.Powerups
                     }
                     else if (x >= 0 && x < GameGlobals.BOARD_WIDTH && y >= 0 && y < GameGlobals.BOARD_HEIGHT)
                     {
-                        ParentGameScreen.Tiles[x, y].MarkTile(ParentCharacter.MarkingColor, new TimeSpan(0, 0, 0, 0, (x + y) * 100), false, PlayerIndex);
+                        ParentGameScreen.x_Tiles[x, y].MarkTile(ParentCharacter.MarkingColor, new TimeSpan(0, 0, 0, 0, (x + y) * 100), false, PlayerIndex);
                     }
                 }
             }

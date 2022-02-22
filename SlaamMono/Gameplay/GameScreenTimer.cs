@@ -34,7 +34,7 @@ namespace SlaamMono.Gameplay
 
             TimeRemaining = EndingTime;
             _stepSize = (float)TimeRemaining.TotalMilliseconds / 7f;
-            setGameMatchTime(_parentGameScreen.ThisGameType);
+            setGameMatchTime(_parentGameScreen.x_ThisGameType);
 
         }
 
@@ -51,7 +51,7 @@ namespace SlaamMono.Gameplay
             }
             if (StartTiming)
             {
-                if (TimeRemaining > TimeSpan.Zero || _parentGameScreen.ThisGameType == GameType.Spree || _parentGameScreen.ThisGameType == GameType.Classic || _parentGameScreen.ThisGameType == GameType.Survival)
+                if (TimeRemaining > TimeSpan.Zero || _parentGameScreen.x_ThisGameType == GameType.Spree || _parentGameScreen.x_ThisGameType == GameType.Classic || _parentGameScreen.x_ThisGameType == GameType.Survival)
                 {
                     CurrentGameTime += FrameRateDirector.MovementFactorTimeSpan;
                     TimeRemaining -= FrameRateDirector.MovementFactorTimeSpan;
@@ -62,7 +62,7 @@ namespace SlaamMono.Gameplay
                     TimeRemaining = TimeSpan.Zero;
                 }
 
-                if (_parentGameScreen.ThisGameType == GameType.TimedSpree)
+                if (_parentGameScreen.x_ThisGameType == GameType.TimedSpree)
                 {
                     _currentStep += FrameRateDirector.MovementFactor;
 
@@ -74,7 +74,7 @@ namespace SlaamMono.Gameplay
 
                 }
             }
-            setGameMatchTime(_parentGameScreen.ThisGameType);
+            setGameMatchTime(_parentGameScreen.x_ThisGameType);
         }
 
         public void Draw(SpriteBatch batch)
@@ -83,11 +83,11 @@ namespace SlaamMono.Gameplay
             RenderGraph.Instance.RenderText(GameMatchTime.Minutes.ToString("00"), new Vector2(1181.5f + _position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
             RenderGraph.Instance.RenderText(GameMatchTime.Seconds.ToString("00"), new Vector2(1219.5f + _position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
             RenderGraph.Instance.RenderText(GameMatchTime.Milliseconds.ToString("00"), new Vector2(1257.5f + _position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
-            if (_parentGameScreen.ThisGameType == GameType.Classic || _parentGameScreen.ThisGameType == GameType.Spree || _parentGameScreen.ThisGameType == GameType.Survival)
+            if (_parentGameScreen.x_ThisGameType == GameType.Classic || _parentGameScreen.x_ThisGameType == GameType.Spree || _parentGameScreen.x_ThisGameType == GameType.Survival)
             {
                 RenderGraph.Instance.RenderText("Time Elapsed", new Vector2(_position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
             }
-            else if (_parentGameScreen.ThisGameType == GameType.TimedSpree)
+            else if (_parentGameScreen.x_ThisGameType == GameType.TimedSpree)
             {
                 RenderGraph.Instance.RenderText("Time Remaining", new Vector2(_position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
             }
