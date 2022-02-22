@@ -60,6 +60,10 @@ namespace SlaamMono.MatchCreation
         public void Initialize(LobbyScreenRequest request)
         {
             _state.SetupCharacters = request.CharacterShells;
+        }
+
+        public void InitializeState()
+        {
             _state.Dialogs = new string[2];
             _state.ViewingSettings = false;
 
@@ -100,10 +104,6 @@ namespace SlaamMono.MatchCreation
             }
 
             SetupZune();
-        }
-
-        public void InitializeState()
-        {
             BackgroundManager.ChangeBG(BackgroundType.Menu);
             if (_state.SetupCharacters.Count == 1)
             {

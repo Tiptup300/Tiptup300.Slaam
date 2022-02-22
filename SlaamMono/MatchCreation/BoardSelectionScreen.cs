@@ -35,11 +35,11 @@ namespace SlaamMono.MatchCreation
         public void Initialize(BoardSelectionScreenRequest request)
         {
             _state.ParentLobbyScreen = request.ParentScreen;
-            _state.BoardNames = _resources.GetTextList("Boards");
         }
 
         public void InitializeState()
         {
+            _state.BoardNames = _resources.GetTextList("Boards");
             setBoardIndexs();
             BackgroundManager.ChangeBG(BackgroundType.Normal);
         }

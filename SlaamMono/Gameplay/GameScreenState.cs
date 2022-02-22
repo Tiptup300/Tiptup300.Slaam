@@ -28,7 +28,7 @@ namespace SlaamMono.Gameplay
         public GameScreenTimer Timer { get; set; }
         public List<CharacterShell> SetupCharacters { get; set; }
         public int NullChars { get; set; } = 0;
-        public List<Scoreboard> Scoreboards { get; set; }
+        public List<Scoreboard> Scoreboards { get; set; } = new List<Scoreboard>();
         public Random Rand { get; set; } = new Random();
         public GameStatus CurrentGameStatus { get; set; }
         public int ReadySetGoPart { get; set; } = 0;
@@ -38,6 +38,6 @@ namespace SlaamMono.Gameplay
         public Tile[,] Tiles { get; set; }
         public MenuItemTree main { get; set; } = new MenuItemTree();
         public GameType ThisGameType { get; set; }
-        public List<CharacterActor> Characters { get; set; }
+        public List<CharacterActor> Characters { get; set; } = new List<CharacterActor>();
     }
 }

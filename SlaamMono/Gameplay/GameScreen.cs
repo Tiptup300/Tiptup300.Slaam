@@ -54,12 +54,12 @@ namespace SlaamMono.Gameplay
         public void Initialize(GameScreenRequest gameScreenRequest)
         {
             _state.SetupCharacters = gameScreenRequest.SetupCharacters;
+        }
 
+        public void InitializeState()
+        {
             _state.PowerupTime = new Timer(new TimeSpan(0, 0, 0, 15));
             _state.ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
-            _state.Scoreboards = new List<Scoreboard>();
-            _state.SetupCharacters = new List<CharacterShell>();
-            _state.Characters = new List<CharacterActor>();
             _state.Tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
             _state.CurrentGameStatus = GameStatus.Waiting;
             _state.ThisGameType = MatchSettings.CurrentMatchSettings.GameType;
@@ -67,10 +67,7 @@ namespace SlaamMono.Gameplay
             _state.CurrentGameStatus = GameStatus.MovingBoard;
             _resources.GetTexture("ReadySetGo").Load();
             _resources.GetTexture("BattleBG").Load();
-        }
 
-        public void InitializeState()
-        {
             _state.Boardpos = new Vector2(calcFinalBoardPosition().X, -_state.Tileset.Height);
 
             _state.Timer = new GameScreenTimer(
