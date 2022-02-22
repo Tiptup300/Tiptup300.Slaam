@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Actors;
+using SlaamMono.Gameplay.Boards;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement;
 using SlaamMono.x_;
@@ -31,11 +32,11 @@ namespace SlaamMono.Gameplay.Powerups
             Active = true;
         }
 
-        public override void UpdateAttack()
+        public override void UpdateAttack(Tile[,] tiles)
         {
         }
 
-        public override void EndAttack()
+        public override void EndAttack(Tile[,] tiles)
         {
             Vector2 Charpos = ParentGameScreen.InterpretCoordinates(ParentCharacter.Position, true);
 
@@ -49,7 +50,7 @@ namespace SlaamMono.Gameplay.Powerups
                     }
                     else if (x >= 0 && x < GameGlobals.BOARD_WIDTH && y >= 0 && y < GameGlobals.BOARD_HEIGHT)
                     {
-                        ParentGameScreen.x_Tiles[x, y].MarkTile(ParentCharacter.MarkingColor, new TimeSpan(0, 0, 0, 0, (x + y) * 100), false, PlayerIndex);
+                        tiles[x, y].MarkTile(ParentCharacter.MarkingColor, new TimeSpan(0, 0, 0, 0, (x + y) * 100), false, PlayerIndex);
                     }
                 }
             }

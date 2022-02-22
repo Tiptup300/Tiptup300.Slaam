@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Gameplay.Actors;
+using SlaamMono.Gameplay.Boards;
 using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
@@ -67,7 +68,7 @@ namespace SlaamMono.Survival
                 {
                     for (int x = 0; x < _survivalState.BotsToAdd + 1; x++)
                     {
-                        AddNewBot();
+                        AddNewBot(_state.Tiles);
                         _survivalState.BotsAdded++;
 
                         if (_state.Rand.Next(0, _survivalState.BotsAdded - 1) == _survivalState.BotsAdded)
@@ -90,7 +91,7 @@ namespace SlaamMono.Survival
             bool temp = _state.CurrentGameStatus == GameStatus.Waiting;
             if (_state.CurrentGameStatus == GameStatus.Playing && temp)
             {
-                AddNewBot();
+                AddNewBot(_state.Tiles);
             }
             base.UpdateState();
         }
@@ -110,7 +111,7 @@ namespace SlaamMono.Survival
             }
         }
 
-        private void AddNewBot()
+        private void AddNewBot(Tile[,] tiles)
         {
             _state.Characters.Add(
                 new BotActor(
@@ -123,7 +124,7 @@ namespace SlaamMono.Survival
                     x_Di.Get<IResources>()));
 
             ProfileManager.ResetAllBots();
-            RespawnChar(_state.Characters.Count - 1);
+            RespawnChar(_state.Characters.Count - 1, tiles);
         }
 
         public override void EndGame()

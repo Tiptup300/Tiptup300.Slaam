@@ -91,7 +91,7 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     GoingTowardsSafety = true;
 
-                    Vector2 PlaceToGo = FindSafePlace(CurrentCoordinates);
+                    Vector2 PlaceToGo = FindSafePlace(CurrentCoordinates, tiles);
 
                     if (PlaceToGo == NullVector2)
                     {
@@ -173,7 +173,7 @@ namespace SlaamMono.Gameplay.Actors
 
             if (Moving)
             {
-                MakeMovements(CurrentCoordinates, Attacking);
+                MakeMovements(CurrentCoordinates, Attacking, tiles);
             }
             else
             {
@@ -214,7 +214,7 @@ namespace SlaamMono.Gameplay.Actors
             return false;
         }
 
-        private void MakeMovements(Vector2 CurrentCoordinates, bool Attacking)
+        private void MakeMovements(Vector2 CurrentCoordinates, bool Attacking, Tile[,] tiles)
         {
 
             if (CurrentTarget == null)
@@ -226,11 +226,11 @@ namespace SlaamMono.Gameplay.Actors
                 //CurrentDirection = Direction.None;
                 if (CurrentCoordinates.X != CurrentTarget.Position.X)
                 {
-                    if (CurrentCoordinates.X > CurrentTarget.Position.X && IsSafe(ParentGameScreen.x_Tiles, CurrentCoordinates, -1, 0))
+                    if (CurrentCoordinates.X > CurrentTarget.Position.X && IsSafe(tiles, CurrentCoordinates, -1, 0))
                     {
                         CurrentDirection = Direction.Left;
                     }
-                    else if (CurrentCoordinates.X < CurrentTarget.Position.X && IsSafe(ParentGameScreen.x_Tiles, CurrentCoordinates, 1, 0))
+                    else if (CurrentCoordinates.X < CurrentTarget.Position.X && IsSafe(tiles, CurrentCoordinates, 1, 0))
                     {
                         CurrentDirection = Direction.Right;
                     }
@@ -240,20 +240,20 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     if (CurrentCoordinates.Y > CurrentTarget.Position.Y - 1)
                     {
-                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.x_Tiles, CurrentCoordinates, -1, -1))
+                        if (CurrentDirection == Direction.Left && IsSafe(tiles, CurrentCoordinates, -1, -1))
                             CurrentDirection = Direction.UpperLeft;
-                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.x_Tiles, CurrentCoordinates, 1, -1))
+                        else if (CurrentDirection == Direction.Right && IsSafe(tiles, CurrentCoordinates, 1, -1))
                             CurrentDirection = Direction.UpperRight;
-                        else if (IsSafe(ParentGameScreen.x_Tiles, CurrentCoordinates, 0, -1))
+                        else if (IsSafe(tiles, CurrentCoordinates, 0, -1))
                             CurrentDirection = Direction.Up;
                     }
                     else if (CurrentCoordinates.Y < CurrentTarget.Position.Y + 1)
                     {
-                        if (CurrentDirection == Direction.Left && IsSafe(ParentGameScreen.x_Tiles, CurrentCoordinates, -1, 1))
+                        if (CurrentDirection == Direction.Left && IsSafe(tiles, CurrentCoordinates, -1, 1))
                             CurrentDirection = Direction.LowerLeft;
-                        else if (CurrentDirection == Direction.Right && IsSafe(ParentGameScreen.x_Tiles, CurrentCoordinates, 1, 1))
+                        else if (CurrentDirection == Direction.Right && IsSafe(tiles, CurrentCoordinates, 1, 1))
                             CurrentDirection = Direction.LowerRight;
-                        else if (IsSafe(ParentGameScreen.x_Tiles, CurrentCoordinates, 0, 1))
+                        else if (IsSafe(tiles, CurrentCoordinates, 0, 1))
                             CurrentDirection = Direction.Down;
                     }
                 }
@@ -276,7 +276,7 @@ namespace SlaamMono.Gameplay.Actors
             }
         }
 
-        private Vector2 FindSafePlace(Vector2 CurrentCoordinates)
+        private Vector2 FindSafePlace(Vector2 CurrentCoordinates, Tile[,] tiles)
         {
             PlacesToGo.RandomizeList();
 
@@ -287,7 +287,7 @@ namespace SlaamMono.Gameplay.Actors
             for (int x = 0; x < PlacesToGo.Count; x++)
             {
                 Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + PlacesToGo[x][0], CurrentCoordinates.Y + PlacesToGo[x][1]);
-                if (IsSafeAndClear(CurrentTileLocation))
+                if (IsSafeAndClear(CurrentTileLocation, tiles))
                 {
                     SafePlace = new Vector2(CurrentTileLocation.X, CurrentTileLocation.Y);
                     FoundSafePlace = true;
@@ -301,14 +301,14 @@ namespace SlaamMono.Gameplay.Actors
             }
             else
             {
-                float Highest = ParentGameScreen.x_Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
+                float Highest = tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
 
                 for (int x = 0; x < PlacesToGo.Count; x++)
                 {
                     Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + PlacesToGo[x][0], CurrentCoordinates.Y + PlacesToGo[x][1]);
-                    if (IsClear(CurrentTileLocation))
+                    if (IsClear(CurrentTileLocation, tiles))
                     {
-                        float temp = ParentGameScreen.x_Tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
+                        float temp = tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
 
                         if (temp > Highest)
                         {
@@ -428,7 +428,7 @@ namespace SlaamMono.Gameplay.Actors
 
         private bool IsSafe(Tile[,] s, Vector2 Coords, int x, int y)
         {
-            return IsSafe(new Vector2(Coords.X + x, Coords.Y + y));
+            return IsSafe(new Vector2(Coords.X + x, Coords.Y + y), s);
         }
 
         private enum BotStatus

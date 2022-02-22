@@ -90,11 +90,11 @@ namespace SlaamMono.Gameplay.Actors
 
             if (tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].CurrentPowerupType != PowerupType.None)
             {
-                GetPowerup(tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y]);
+                GetPowerup(tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y], tiles);
             }
 
             if (CurrentPowerup != null && CurrentPowerup.Active)
-                CurrentPowerup.UpdateAttack();
+                CurrentPowerup.UpdateAttack(tiles);
 
             if (CurrentState == CharacterState.Normal)
             {
@@ -110,7 +110,7 @@ namespace SlaamMono.Gameplay.Actors
 
                     if (Gamepad.PressingDown || Gamepad.PressedDown)
                     {
-                        if (IsClear(Position, new Vector2(0, Movement)))
+                        if (IsClear(Position, new Vector2(0, Movement), tiles))
                             Position.Y += Movement;
 
                         Row = 0;
@@ -120,7 +120,7 @@ namespace SlaamMono.Gameplay.Actors
                     else if (Gamepad.PressingUp || Gamepad.PressedUp)
                     {
                         //if (!(TilePos.Y < 1f + Movement && !IsClear(tiles, CurrentCoordinates, 0, -1)))
-                        if (IsClear(Position, new Vector2(0, -Movement)))
+                        if (IsClear(Position, new Vector2(0, -Movement), tiles))
                             Position.Y -= Movement;
                         Row = 2;
                         fx = SpriteEffects.None;
@@ -129,7 +129,7 @@ namespace SlaamMono.Gameplay.Actors
                     else if (Gamepad.PressingLeft || Gamepad.PressedLeft)
                     {
                         //if (!(TilePos.X < 1f + Movement && !IsClear(tiles, CurrentCoordinates, -1, 0)))
-                        if (IsClear(Position, new Vector2(-Movement, 0)))
+                        if (IsClear(Position, new Vector2(-Movement, 0), tiles))
                             Position.X -= Movement;
 
                         Row = 1;
@@ -138,7 +138,7 @@ namespace SlaamMono.Gameplay.Actors
                     }
                     else if (Gamepad.PressingRight || Gamepad.PressedRight)
                     {
-                        if (IsClear(Position, new Vector2(Movement, 0)))
+                        if (IsClear(Position, new Vector2(Movement, 0), tiles))
                             Position.X += Movement;
 
                         Row = 1;
@@ -192,7 +192,7 @@ namespace SlaamMono.Gameplay.Actors
                     {
                         if (CurrentPowerup != null && CurrentPowerup.AttackingType && CurrentPowerup.Active && !CurrentPowerup.Used)
                         {
-                            CurrentPowerup.EndAttack();
+                            CurrentPowerup.EndAttack(tiles);
                         }
                         else
                         {
@@ -247,7 +247,7 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     ReportDeath(tiles, CurrentCoordinates);
                     if (CurrentPowerup != null && CurrentPowerup.Active & !CurrentPowerup.AttackingType)
-                        CurrentPowerup.EndAttack();
+                        CurrentPowerup.EndAttack(tiles);
                 }
                 SpriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
             }
@@ -291,19 +291,19 @@ namespace SlaamMono.Gameplay.Actors
         /// <param name="x">X Tile Position Offset</param>
         /// <param name="y">Y Tile Position Offset</param>
         /// <returns></returns>
-        public bool IsClear(Vector2 CurrentCoords, Vector2 Movement)
+        public bool IsClear(Vector2 CurrentCoords, Vector2 Movement, Tile[,] tiles)
         {
             Vector2 TilePosition = GameScreen.Instance.InterpretCoordinates(new Vector2(CurrentCoords.X + Movement.X, CurrentCoords.Y + Movement.Y), true);
 
-            return IsClear(TilePosition);
+            return IsClear(TilePosition, tiles);
         }
 
-        public bool IsClear(Vector2 TilePosition)
+        public bool IsClear(Vector2 TilePosition, Tile[,] tiles)
         {
             if (TilePosition.X < 0 || TilePosition.Y < 0 || TilePosition.X >= GameGlobals.BOARD_WIDTH || TilePosition.Y >= GameGlobals.BOARD_HEIGHT)
                 return false;
 
-            Tile tile = GameScreen.Instance.x_Tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Clear ||
                 tile.CurrentTileCondition == TileCondition.Clearing ||
@@ -313,12 +313,12 @@ namespace SlaamMono.Gameplay.Actors
             return true;
         }
 
-        public bool IsSafeAndClear(Vector2 TilePosition)
+        public bool IsSafeAndClear(Vector2 TilePosition, Tile[,] tiles)
         {
-            if (!IsClear(TilePosition))
+            if (!IsClear(TilePosition, tiles))
                 return false;
 
-            Tile tile = GameScreen.Instance.x_Tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Marked)
                 return false;
@@ -326,12 +326,12 @@ namespace SlaamMono.Gameplay.Actors
             return true;
         }
 
-        public bool IsSafe(Vector2 TilePosition)
+        public bool IsSafe(Vector2 TilePosition, Tile[,] tiles)
         {
             if (TilePosition.X < 0 || TilePosition.Y < 0 || TilePosition.X >= GameGlobals.BOARD_WIDTH || TilePosition.Y >= GameGlobals.BOARD_HEIGHT)
                 return false;
 
-            Tile tile = GameScreen.Instance.x_Tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Marked)
                 return false;
@@ -339,12 +339,12 @@ namespace SlaamMono.Gameplay.Actors
             return true;
         }
 
-        private void GetPowerup(Tile currtile)
+        private void GetPowerup(Tile currtile, Tile[,] tiles)
         {
             if (CurrentPowerup != null && !CurrentPowerup.Used)
             {
                 if (CurrentPowerup.Active && !CurrentPowerup.AttackingType)
-                    CurrentPowerup.EndAttack();
+                    CurrentPowerup.EndAttack(tiles);
             }
             switch (currtile.CurrentPowerupType)
             {
@@ -431,7 +431,7 @@ namespace SlaamMono.Gameplay.Actors
         /// </summary>
         /// <param name="pos">Respawn Position</param>
         /// <param name="other">Interpretted Respawn Position</param>
-        public void Respawn(Vector2 pos, Vector2 other)
+        public void Respawn(Vector2 pos, Vector2 other, Tile[,] tiles)
         {
             Position = pos;
             currAni = new IntRange(0, 0, 2);
@@ -441,7 +441,7 @@ namespace SlaamMono.Gameplay.Actors
             CurrentState = CharacterState.Normal;
             Alpha = 255;
             SpriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
-            GameScreen.Instance.x_Tiles[(int)other.X, (int)other.Y].MarkTileForRespawn(MarkingColor, new TimeSpan(0, 0, 0, 8), PlayerIndex);
+            tiles[(int)other.X, (int)other.Y].MarkTileForRespawn(MarkingColor, new TimeSpan(0, 0, 0, 8), PlayerIndex);
         }
 
         public enum CharacterState

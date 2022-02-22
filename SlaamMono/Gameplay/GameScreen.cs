@@ -25,7 +25,6 @@ namespace SlaamMono.Gameplay
     {
         public static GameScreen Instance;
 
-        public Tile[,] x_Tiles { get => _state.Tiles; }
         public GameType x_ThisGameType { get => _state.ThisGameType; }
         public List<CharacterActor> x_Characters { get => _state.Characters; }
 
@@ -277,7 +276,7 @@ namespace SlaamMono.Gameplay
                     _state.Characters[x].Update(_state.Tiles, new Vector2(X, Y), new Vector2(X1, Y1));
                     if (_state.Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
                     {
-                        RespawnChar(x);
+                        RespawnChar(x, _state.Tiles);
                     }
                 }
             }
@@ -334,7 +333,7 @@ namespace SlaamMono.Gameplay
             if (_state.ReadySetGoThrottle.Active)
             {
                 _state.Scoreboards[_state.ReadySetGoPart].Moving = true;
-                RespawnChar(_state.ReadySetGoPart++);
+                RespawnChar(_state.ReadySetGoPart++, _state.Tiles);
                 if (_state.ReadySetGoPart == _state.Characters.Count)
                 {
                     _state.CurrentGameStatus = GameStatus.Waiting;
@@ -475,7 +474,7 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public void RespawnChar(int x)
+        public void RespawnChar(int x, Tile[,] tiles)
         {
             int newx = _state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
             int newy = _state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
@@ -486,7 +485,7 @@ namespace SlaamMono.Gameplay
                 newy = _state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
             }
             Vector2 newCharPos = InterpretCoordinates(new Vector2(newx, newy), false);
-            _state.Characters[x].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy));
+            _state.Characters[x].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy), tiles);
         }
 
         public void PauseGame(int playerindex)

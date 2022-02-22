@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Actors;
+using SlaamMono.Gameplay.Boards;
 using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement;
@@ -30,17 +31,17 @@ namespace SlaamMono.Gameplay.Powerups
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
         }
 
-        public override void UpdateAttack()
+        public override void UpdateAttack(Tile[,] tiles)
         {
             CurrentTime -= FrameRateDirector.MovementFactorTimeSpan;
 
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
 
             if (CurrentTime <= TimeSpan.Zero)
-                EndAttack();
+                EndAttack(tiles);
         }
 
-        public override void EndAttack()
+        public override void EndAttack(Tile[,] tiles)
         {
             Active = false;
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = 1f;

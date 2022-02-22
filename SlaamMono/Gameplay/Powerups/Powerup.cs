@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Actors;
+using SlaamMono.Gameplay.Boards;
 using SlaamMono.Library.ResourceManagement;
 
 namespace SlaamMono.Gameplay.Powerups
@@ -33,12 +34,12 @@ namespace SlaamMono.Gameplay.Powerups
         /// <summary>
         /// Attack operations during attack
         /// </summary>
-        public abstract void UpdateAttack();
+        public abstract void UpdateAttack(Tile[,] tiles);
 
         /// <summary>
         /// Attack operations after attack
         /// </summary>
-        public abstract void EndAttack();
+        public abstract void EndAttack(Tile[,] tiles);
 
         /// <summary>
         /// The Drawing of the powerup.

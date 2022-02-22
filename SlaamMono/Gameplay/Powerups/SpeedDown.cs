@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Actors;
+using SlaamMono.Gameplay.Boards;
 using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
 using System;
@@ -33,7 +34,7 @@ namespace SlaamMono.Gameplay.Powerups
             }
         }
 
-        public override void UpdateAttack()
+        public override void UpdateAttack(Tile[,] tiles)
         {
 
             for (int x = 0; x < ParentGameScreen.x_Characters.Count; x++)
@@ -45,10 +46,10 @@ namespace SlaamMono.Gameplay.Powerups
             CurrentTime -= FrameRateDirector.MovementFactorTimeSpan;
 
             if (CurrentTime <= TimeSpan.Zero)
-                EndAttack();
+                EndAttack(tiles);
         }
 
-        public override void EndAttack()
+        public override void EndAttack(Tile[,] tiles)
         {
             Active = false;
             for (int x = 0; x < ParentGameScreen.x_Characters.Count; x++)
