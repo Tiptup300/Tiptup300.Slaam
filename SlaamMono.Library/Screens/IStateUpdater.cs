@@ -8,7 +8,7 @@ namespace SlaamMono.Library.Screens
 
         void UpdateState();
 
-        void Draw(SpriteBatch batch);
+        void RenderState(SpriteBatch batch);
 
         void Close();
     }

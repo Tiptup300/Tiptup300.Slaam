@@ -137,7 +137,7 @@ namespace SlaamMono.MatchCreation
                 _lobbyScreenResolver.Resolve(new LobbyScreenRequest(characterShells)));
         }
 
-        public void Draw(SpriteBatch batch)
+        public void RenderState(SpriteBatch batch)
         {
             for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
                 if (_state.SelectBoxes[idx] != null)

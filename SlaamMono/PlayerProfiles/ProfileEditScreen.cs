@@ -163,7 +163,7 @@ namespace SlaamMono.PlayerProfiles
             }
         }
 
-        public void Draw(SpriteBatch batch)
+        public void RenderState(SpriteBatch batch)
         {
 
             if (_state.CurrentMenu.Value == 0)

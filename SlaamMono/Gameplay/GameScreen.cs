@@ -371,7 +371,7 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public void Draw(SpriteBatch batch)
+        public void RenderState(SpriteBatch batch)
         {
             if (_state.IsPaused)
             {

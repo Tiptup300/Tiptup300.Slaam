@@ -175,7 +175,7 @@ namespace SlaamMono.MatchCreation
         }
 
 
-        public void Draw(SpriteBatch batch)
+        public void RenderState(SpriteBatch batch)
         {
             _state.DrawingBoardIndex.Value = _state.VerticalBoardOffset.Value;
             for (int x = _state.HorizontalBoardOffset.Value; x < 8; x++)

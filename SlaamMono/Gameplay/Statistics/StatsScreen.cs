@@ -165,7 +165,7 @@ namespace SlaamMono.Gameplay.Statistics
             }
         }
 
-        public void Draw(SpriteBatch batch)
+        public void RenderState(SpriteBatch batch)
         {
             Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("StatsBoard").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("StatsBoard").Height / 2);
 

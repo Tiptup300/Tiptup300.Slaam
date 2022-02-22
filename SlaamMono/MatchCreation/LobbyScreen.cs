@@ -361,7 +361,7 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public void Draw(SpriteBatch batch)
+        public void RenderState(SpriteBatch batch)
         {
             if (_state.ViewingSettings)
             {

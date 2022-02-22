@@ -46,7 +46,7 @@ namespace SlaamMono.Menus
             }
         }
 
-        public void Draw(SpriteBatch batch)
+        public void RenderState(SpriteBatch batch)
         {
             _state._statsboard.MainBoard.Draw(batch);
         }

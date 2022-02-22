@@ -44,7 +44,7 @@ namespace SlaamMono.Library.Screens
         {
             if (_screenState.Get().HasCurrentScreen)
             {
-                _screenState.Get().CurrentScreen.Draw(batch);
+                _screenState.Get().CurrentScreen.RenderState(batch);
             }
         }
 

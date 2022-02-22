@@ -53,7 +53,7 @@ namespace SlaamMono.Menus
 
 
         public void UpdateState() { }
-        public void Draw(SpriteBatch batch) { }
+        public void RenderState(SpriteBatch batch) { }
 
         public void Close()
         {

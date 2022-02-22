@@ -67,7 +67,7 @@ namespace SlaamMono.Menus
             }
         }
 
-        public void Draw(SpriteBatch batch)
+        public void RenderState(SpriteBatch batch)
         {
             batch.Draw(_resources.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
             _state.ControlsGraph.Draw(batch);

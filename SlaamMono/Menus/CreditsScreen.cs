@@ -64,7 +64,7 @@ namespace SlaamMono.Menus
             }
         }
 
-        public void Draw(SpriteBatch batch)
+        public void RenderState(SpriteBatch batch)
         {
             float Offset = 0;
 
