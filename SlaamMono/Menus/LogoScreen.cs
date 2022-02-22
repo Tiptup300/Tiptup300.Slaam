@@ -12,11 +12,11 @@ namespace SlaamMono.Menus
 {
     public class LogoScreen : ILogoScreen, IStateUpdater
     {
-        private LogoScreenState _state;
-
         private const float _fadeInSeconds = 1f;
         private const float _holdSeconds = 3f;
         private const float _fadeOutSeconds = 0.5f;
+
+        private LogoScreenState _state;
 
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;

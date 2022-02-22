@@ -12,9 +12,9 @@ namespace SlaamMono.Menus
 {
     public partial class CreditsScreen : IStateUpdater
     {
-        private CreditsState _state = new CreditsState();
-
         private const float MovementSpeed = 3f / 120f;
+
+        private CreditsState _state = new CreditsState();
 
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;

@@ -13,14 +13,9 @@ namespace SlaamMono.MatchCreation
 {
     public class BoardSelectionScreen : IStateUpdater
     {
-        public bool HasFoundBoard
-        {
-            get => _state.HasFoundBoard;
-        }
-        public string IsValidBoard
-        {
-            get => _state.IsValidBoard;
-        }
+        public bool x_HasFoundBoard { get => _state.HasFoundBoard; }
+        public string x_IsValidBoard { get => _state.IsValidBoard; }
+
         private BoardSelectionScreenState _state = new BoardSelectionScreenState();
 
         private readonly IScreenManager _screenManager;

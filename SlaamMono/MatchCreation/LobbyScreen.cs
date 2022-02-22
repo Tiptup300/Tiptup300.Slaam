@@ -12,7 +12,6 @@ using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using ZzziveGameEngine;
 
@@ -25,7 +24,6 @@ namespace SlaamMono.MatchCreation
         private const int MAX_PLAYERS = 4;
 
         private LobbyScreenState _state = new LobbyScreenState();
-
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
@@ -95,11 +93,11 @@ namespace SlaamMono.MatchCreation
             {
                 BoardSelectionScreen viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequest(this));
                 viewer.InitializeState();
-                while (!viewer.HasFoundBoard)
+                while (!viewer.x_HasFoundBoard)
                 {
                     viewer.UpdateState();
                 }
-                LoadBoard(viewer.IsValidBoard);
+                LoadBoard(viewer.x_IsValidBoard);
                 viewer.Close();
             }
 
@@ -134,11 +132,11 @@ namespace SlaamMono.MatchCreation
                 // todo: this will need fixed.
                 BoardSelectionScreen viewer = new BoardSelectionScreen(null, null);
                 viewer.InitializeState();
-                while (!viewer.HasFoundBoard)
+                while (!viewer.x_HasFoundBoard)
                 {
                     viewer.UpdateState();
                 }
-                _defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.IsValidBoard);
+                _defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.x_IsValidBoard);
                 viewer.Close();
             }
 
