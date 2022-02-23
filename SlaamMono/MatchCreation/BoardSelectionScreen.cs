@@ -36,7 +36,6 @@ namespace SlaamMono.MatchCreation
         {
             _state.BoardNames = _resources.GetTextList("Boards");
             setBoardIndexs();
-            BackgroundManager.ChangeBG(BackgroundType.Normal);
         }
 
         private void setBoardIndexs()

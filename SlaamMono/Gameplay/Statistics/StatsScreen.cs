@@ -41,7 +41,6 @@ namespace SlaamMono.Gameplay.Statistics
         public void InitializeState()
         {
             _state._statsButtons = setStatsButtons();
-            BackgroundManager.ChangeBG(BackgroundType.Menu);
             if (_state.GameType == GameType.Classic)
             {
                 _state.PlayerStats = new NormalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph, _state);
@@ -129,7 +128,6 @@ namespace SlaamMono.Gameplay.Statistics
 
         public void UpdateState()
         {
-            BackgroundManager.SetRotation(1f);
 
             if (_state.GameType != GameType.Survival)
             {

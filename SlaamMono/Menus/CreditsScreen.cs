@@ -28,7 +28,7 @@ namespace SlaamMono.Menus
         public void InitializeState()
         {
             _state.credits = _resources.GetTextList("Credits").ToArray();
-            BackgroundManager.ChangeBG(BackgroundType.Credits);
+
             for (int x = 0; x < _state.credits.Length; x++)
             {
                 string[] credinfo = _state.credits[x].Replace("\r", "").Split("|".ToCharArray());

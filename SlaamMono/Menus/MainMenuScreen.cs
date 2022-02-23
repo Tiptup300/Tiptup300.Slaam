@@ -25,7 +25,7 @@ namespace SlaamMono.Menus
             SlaamGame.mainBlade.UserCanNavigateMenu = true;
             SlaamGame.mainBlade.UserCanCloseMenu = false;
 
-            BackgroundManager.ChangeBG(BackgroundType.Menu);
+
         }
 
         private MenuItemTree buildMainMenu()

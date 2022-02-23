@@ -27,8 +27,6 @@ namespace SlaamMono.Menus
 
         public void InitializeState()
         {
-            BackgroundManager.ChangeBG(BackgroundType.Menu);
-
             _state.ControlsGraph = buildGraph();
         }
 

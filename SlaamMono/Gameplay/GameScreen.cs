@@ -84,7 +84,6 @@ namespace SlaamMono.Gameplay
             }
             _state.ScoreKeeper = new MatchScoreCollection(this, _state.GameType, _state);
             _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-            BackgroundManager.ChangeBG(BackgroundType.BattleScreen);
             if (_state.GameType == GameType.Classic)
             {
                 _state.StepsRemaining = _state.SetupCharacters.Count - 1;
@@ -123,7 +122,6 @@ namespace SlaamMono.Gameplay
             resume.Activated += delegate
             {
                 _state.IsPaused = false;
-                BackgroundManager.ChangeBG(BackgroundType.BattleScreen);
                 SlaamGame.mainBlade.Status = BladeStatus.Hidden;
             };
             MenuTextItem quit = new MenuTextItem("Quit Game");
@@ -186,7 +184,7 @@ namespace SlaamMono.Gameplay
         {
             if (_state.IsPaused)
             {
-                BackgroundManager.ChangeBG(BackgroundType.Menu);
+
                 SlaamGame.mainBlade.Status = BladeStatus.Out;
                 return;
             }

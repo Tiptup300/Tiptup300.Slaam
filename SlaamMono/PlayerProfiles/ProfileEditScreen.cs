@@ -37,7 +37,6 @@ namespace SlaamMono.PlayerProfiles
 
         public void InitializeState()
         {
-            BackgroundManager.ChangeBG(BackgroundType.Menu);
 
             setupMainMenu();
             resetSubMenu();
@@ -52,7 +51,7 @@ namespace SlaamMono.PlayerProfiles
 
         public void UpdateState()
         {
-            BackgroundManager.SetRotation(1f);
+
 
             if (_state.CurrentMenu.Value == 0)
             {

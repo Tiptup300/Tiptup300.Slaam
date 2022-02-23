@@ -108,7 +108,7 @@ namespace SlaamMono
             }
             else
             {
-                BackgroundManager.Update();
+
                 _renderGraph.Update(gameTime);
                 _fpsRenderer.Update(gameTime);
 
@@ -128,7 +128,6 @@ namespace SlaamMono
         {
             GraphicsDevice.Clear(Color.Black);
             gamebatch.Begin(blendState: BlendState.NonPremultiplied);
-            BackgroundManager.Draw(gamebatch);
             _screenDirector.Draw(gamebatch);
 
             if (Qwerty.Active)

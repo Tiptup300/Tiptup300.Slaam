@@ -72,7 +72,6 @@ namespace SlaamMono.MatchCreation
             {
                 ResetBoxes();
             }
-            BackgroundManager.ChangeBG(BackgroundType.Menu);
 
             for (int x = 0; x < _state.SelectBoxes.Length; x++)
             {
@@ -90,7 +89,6 @@ namespace SlaamMono.MatchCreation
 
         public void UpdateState()
         {
-            BackgroundManager.SetRotation(1f);
             _state._peopleDone = 0;
             _state._peopleIn = 0;
 

@@ -102,7 +102,6 @@ namespace SlaamMono.MatchCreation
             }
 
             SetupZune();
-            BackgroundManager.ChangeBG(BackgroundType.Menu);
             if (_state.SetupCharacters.Count == 1)
             {
                 AddComputer();
@@ -145,7 +144,6 @@ namespace SlaamMono.MatchCreation
 
         public void UpdateState()
         {
-            BackgroundManager.SetRotation(1f);
             if (_state.ViewingSettings)
             {
                 if (InputComponent.Players[0].PressedDown)
@@ -194,7 +192,7 @@ namespace SlaamMono.MatchCreation
                         {
                             _screenDirector.ChangeTo(_boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequest(this)));
                         }
-                        BackgroundManager.ChangeBG(BackgroundType.Menu);
+
                     }
                 }
             }
@@ -232,7 +230,7 @@ namespace SlaamMono.MatchCreation
                     _state.ViewingSettings = true;
                     ResetZune();
 
-                    BackgroundManager.ChangeBG(BackgroundType.Normal);
+
                 }
 
             }
