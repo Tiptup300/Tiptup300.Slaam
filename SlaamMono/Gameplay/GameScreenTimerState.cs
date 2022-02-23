@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {

@@ -1,6 +1,6 @@
 ﻿using SlaamMono.Library;
 using SlaamMono.Library.Graphing;
-using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.PlayerProfiles
 {

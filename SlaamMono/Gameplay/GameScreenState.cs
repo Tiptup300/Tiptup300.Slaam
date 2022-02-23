@@ -7,7 +7,7 @@ using SlaamMono.SubClasses;
 using System;
 using System.Collections.Generic;
 using ZBlade;
-using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
