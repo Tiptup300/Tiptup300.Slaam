@@ -273,7 +273,7 @@ namespace SlaamMono.Gameplay
                     int Y1 = (int)((_state.Characters[x].Position.Y - _state.Boardpos.Y) % GameGlobals.TILE_SIZE);
                     int X = (int)((_state.Characters[x].Position.X - _state.Boardpos.X - X1) / GameGlobals.TILE_SIZE);
                     int Y = (int)((_state.Characters[x].Position.Y - _state.Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
-                    _state.Characters[x].Update(_state.Tiles, new Vector2(X, Y), new Vector2(X1, Y1), _state.GameType);
+                    _state.Characters[x].Update(new Vector2(X, Y), new Vector2(X1, Y1), _state);
                     if (_state.Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
                     {
                         RespawnChar(x, _state.Tiles);

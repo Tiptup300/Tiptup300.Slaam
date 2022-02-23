@@ -10,6 +10,7 @@ using SlaamMono.PlayerProfiles;
 using SlaamMono.SubClasses;
 using SlaamMono.x_;
 using System;
+using System.Collections.Generic;
 
 namespace SlaamMono.Gameplay.Actors
 {
@@ -70,7 +71,7 @@ namespace SlaamMono.Gameplay.Actors
             }
         }
 
-        public virtual void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos, GameType gameType)
+        public virtual void Update(Vector2 CurrentCoordinates, Vector2 TilePos, GameScreenState gameScreenState)
         {
 
             if (Gamepad.PressedStart)
@@ -88,17 +89,17 @@ namespace SlaamMono.Gameplay.Actors
                 throw new Exception("Character Exited Bounds, Error Currently being worked on.");
             }
 
-            CheckForDeath(tiles, CurrentCoordinates);
+            CheckForDeath(gameScreenState.Tiles, CurrentCoordinates);
             currentlymoving = false;
 
-            if (tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].CurrentPowerupType != PowerupType.None)
+            if (gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].CurrentPowerupType != PowerupType.None)
             {
-                GetPowerup(tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y], tiles);
+                GetPowerup(gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y], gameScreenState.Tiles);
             }
 
             if (CurrentPowerup != null && CurrentPowerup.Active)
             {
-                CurrentPowerup.UpdateAttack(tiles);
+                CurrentPowerup.UpdateAttack(gameScreenState.Tiles);
             }
 
             if (CurrentState == CharacterState.Normal)
@@ -117,7 +118,7 @@ namespace SlaamMono.Gameplay.Actors
 
                     if (Gamepad.PressingDown || Gamepad.PressedDown)
                     {
-                        if (IsClear(Position, new Vector2(0, Movement), tiles))
+                        if (IsClear(Position, new Vector2(0, Movement), gameScreenState.Tiles))
                         {
                             Position.Y += Movement;
                         }
@@ -128,7 +129,7 @@ namespace SlaamMono.Gameplay.Actors
                     }
                     else if (Gamepad.PressingUp || Gamepad.PressedUp)
                     {
-                        if (IsClear(Position, new Vector2(0, -Movement), tiles))
+                        if (IsClear(Position, new Vector2(0, -Movement), gameScreenState.Tiles))
                         {
                             Position.Y -= Movement;
                         }
@@ -138,7 +139,7 @@ namespace SlaamMono.Gameplay.Actors
                     }
                     else if (Gamepad.PressingLeft || Gamepad.PressedLeft)
                     {
-                        if (IsClear(Position, new Vector2(-Movement, 0), tiles))
+                        if (IsClear(Position, new Vector2(-Movement, 0), gameScreenState.Tiles))
                         {
                             Position.X -= Movement;
                         }
@@ -149,7 +150,7 @@ namespace SlaamMono.Gameplay.Actors
                     }
                     else if (Gamepad.PressingRight || Gamepad.PressedRight)
                     {
-                        if (IsClear(Position, new Vector2(Movement, 0), tiles))
+                        if (IsClear(Position, new Vector2(Movement, 0), gameScreenState.Tiles))
                         {
                             Position.X += Movement;
                         }
@@ -200,7 +201,7 @@ namespace SlaamMono.Gameplay.Actors
                     {
                         if (CurrentPowerup != null && CurrentPowerup.AttackingType && CurrentPowerup.Active && !CurrentPowerup.Used)
                         {
-                            CurrentPowerup.EndAttack(tiles);
+                            CurrentPowerup.EndAttack(gameScreenState.Tiles);
                         }
                         else
                         {
@@ -210,7 +211,7 @@ namespace SlaamMono.Gameplay.Actors
                                     for (int y = (int)CurrentCoordinates.Y - 1; y >= 0 && y >= CurrentCoordinates.Y - 8; y--)
                                     {
                                         ct += 100;
-                                        tiles[(int)CurrentCoordinates.X, y].MarkTile(MarkingColor, new TimeSpan(0, 0, 0, 0, 300 + ct), false, PlayerIndex);
+                                        gameScreenState.Tiles[(int)CurrentCoordinates.X, y].MarkTile(MarkingColor, new TimeSpan(0, 0, 0, 0, 300 + ct), false, PlayerIndex);
                                     }
                                     break;
 
@@ -218,7 +219,7 @@ namespace SlaamMono.Gameplay.Actors
                                     for (int y = (int)CurrentCoordinates.Y + 1; y < GameGlobals.BOARD_HEIGHT && y <= CurrentCoordinates.Y + 8; y++)
                                     {
                                         ct += 100;
-                                        tiles[(int)CurrentCoordinates.X, y].MarkTile(MarkingColor, new TimeSpan(0, 0, 0, 0, 300 + ct), false, PlayerIndex);
+                                        gameScreenState.Tiles[(int)CurrentCoordinates.X, y].MarkTile(MarkingColor, new TimeSpan(0, 0, 0, 0, 300 + ct), false, PlayerIndex);
                                     }
                                     break;
 
@@ -227,13 +228,13 @@ namespace SlaamMono.Gameplay.Actors
                                         for (int x = (int)CurrentCoordinates.X - 1; x >= 0 && x >= CurrentCoordinates.X - 8; x--)
                                         {
                                             ct += 100;
-                                            tiles[x, (int)CurrentCoordinates.Y].MarkTile(MarkingColor, new TimeSpan(0, 0, 0, 0, 300 + ct), false, PlayerIndex);
+                                            gameScreenState.Tiles[x, (int)CurrentCoordinates.Y].MarkTile(MarkingColor, new TimeSpan(0, 0, 0, 0, 300 + ct), false, PlayerIndex);
                                         }
                                     else
                                         for (int x = (int)CurrentCoordinates.X + 1; x < GameGlobals.BOARD_WIDTH && x <= CurrentCoordinates.X + 8; x++)
                                         {
                                             ct += 100;
-                                            tiles[x, (int)CurrentCoordinates.Y].MarkTile(MarkingColor, new TimeSpan(0, 0, 0, 0, 300 + ct), false, PlayerIndex);
+                                            gameScreenState.Tiles[x, (int)CurrentCoordinates.Y].MarkTile(MarkingColor, new TimeSpan(0, 0, 0, 0, 300 + ct), false, PlayerIndex);
                                         }
                                     break;
                             }
@@ -254,9 +255,9 @@ namespace SlaamMono.Gameplay.Actors
                 }
                 if (Alpha <= 0)
                 {
-                    ReportDeath(tiles, CurrentCoordinates, gameType);
+                    ReportDeath(gameScreenState.Tiles, CurrentCoordinates, gameScreenState.GameType);
                     if (CurrentPowerup != null && CurrentPowerup.Active & !CurrentPowerup.AttackingType)
-                        CurrentPowerup.EndAttack(tiles);
+                        CurrentPowerup.EndAttack(gameScreenState.Tiles);
                 }
                 SpriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
             }

@@ -41,7 +41,7 @@ namespace SlaamMono.Gameplay.Actors
             PlacesToGo.Add(new int[] { 1, 0 });
             PlacesToGo.Add(new int[] { -1, 0 });
         }
-        public override void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos, GameType gameType)
+        public override void Update(Vector2 CurrentCoordinates, Vector2 TilePos, GameScreenState gameScreenState)
         {
             AIInput.PressedAction2 = false;
 
@@ -54,20 +54,20 @@ namespace SlaamMono.Gameplay.Actors
             LogicUpdateThreshold.Update(FrameRateDirector.MovementFactorTimeSpan);
             if (LogicUpdateThreshold.Active)
             {
-                LogicUpdate(tiles, CurrentCoordinates, TilePos);
+                LogicUpdate(CurrentCoordinates, TilePos, gameScreenState);
                 LogicUpdateThreshold.Reset();
             }
 
             CreateInput();
 
-            base.Update(tiles, CurrentCoordinates, TilePos, gameType);
+            base.Update(CurrentCoordinates, TilePos, gameScreenState);
 
             ClearInput();
         }
 
-        private void LogicUpdate(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
+        private void LogicUpdate(Vector2 CurrentCoordinates, Vector2 TilePos, GameScreenState gameScreenState)
         {
-            Tile CurrentTile = tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
+            Tile CurrentTile = gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
             bool Moving = true, Attacking = false, InDanger = CurrentTile.CurrentTileCondition != TileCondition.Normal && CurrentTile.CurrentTileCondition != TileCondition.RespawnPoint;
             if (CurrentState == CharacterState.Dead || CurrentState == CharacterState.Dieing)
             {
@@ -91,7 +91,7 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     GoingTowardsSafety = true;
 
-                    Vector2 PlaceToGo = FindSafePlace(CurrentCoordinates, tiles);
+                    Vector2 PlaceToGo = FindSafePlace(CurrentCoordinates, gameScreenState.Tiles);
 
                     if (PlaceToGo == NullVector2)
                     {
@@ -104,7 +104,7 @@ namespace SlaamMono.Gameplay.Actors
                 }
                 Attacking = false;
             }
-            else /* if(!CurrentTargetIsGood()) */
+            else
             {
                 if (GoingTowardsSafety)
                 {
@@ -112,16 +112,15 @@ namespace SlaamMono.Gameplay.Actors
                 }
                 List<BotTarget> Targets = new List<BotTarget>();
 
-                for (int x = 0; x < ParentGameScreen.x_Characters.Count; x++)
+                for (int x = 0; x < gameScreenState.Characters.Count; x++)
                 {
                     if (x != PlayerIndex &&
-                         ParentGameScreen.x_Characters[x] != null &&
-                         ParentGameScreen.x_Characters[x].CurrentState != CharacterState.Dead &&
-                         ParentGameScreen.x_Characters[x].CurrentState != CharacterState.Dieing &&
-                         /*( ParentGameScreen.Characters[x].CurrentTile != null && ParentGameScreen.Characters[x].CurrentTile.CurrentTileCondition != TileCondition.RespawnPoint ) && */
-                         ParentGameScreen.x_Characters[x].MarkingColor != MarkingColor)
+                         gameScreenState.Characters[x] != null &&
+                         gameScreenState.Characters[x].CurrentState != CharacterState.Dead &&
+                         gameScreenState.Characters[x].CurrentState != CharacterState.Dieing &&
+                         gameScreenState.Characters[x].MarkingColor != MarkingColor)
                     {
-                        Vector2 pos = ParentGameScreen.InterpretCoordinates(ParentGameScreen.x_Characters[x].Position, true);
+                        Vector2 pos = ParentGameScreen.InterpretCoordinates(gameScreenState.Characters[x].Position, true);
                         if (pos != CurrentCoordinates)
                             Targets.Add(new BotTarget(x, pos, GetDistance(CurrentCoordinates, pos)));
 
@@ -132,7 +131,7 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                     {
-                        if (tiles[x, y].CurrentPowerupType != PowerupType.None)
+                        if (gameScreenState.Tiles[x, y].CurrentPowerupType != PowerupType.None)
                         {
                             float distance = GetDistance(new Vector2(x, y), CurrentCoordinates);
                             Targets.Add(new BotTarget(new Vector2(x, y), distance));
@@ -167,13 +166,13 @@ namespace SlaamMono.Gameplay.Actors
             }
 
             Attacking = CurrentTarget != null &&
-    CurrentTarget.ThisTargetType == BotTarget.TargetType.Character &&
-    ParentGameScreen.x_Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
-    ParentGameScreen.x_Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dieing;
+                CurrentTarget.ThisTargetType == BotTarget.TargetType.Character &&
+                gameScreenState.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
+                gameScreenState.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dieing;
 
             if (Moving)
             {
-                MakeMovements(CurrentCoordinates, Attacking, tiles);
+                MakeMovements(CurrentCoordinates, Attacking, gameScreenState.Tiles);
             }
             else
             {
@@ -197,12 +196,12 @@ namespace SlaamMono.Gameplay.Actors
             AIInput.PressingUp = false;
         }
 
-        private bool CurrentTargetIsGood()
+        private bool CurrentTargetIsGood(List<CharacterActor> characterActors)
         {
             if (CurrentTarget != null && CurrentTarget.ThisTargetType == BotTarget.TargetType.Character)
             {
-                if (!(ParentGameScreen.x_Characters[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
-                    !(ParentGameScreen.x_Characters[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
+                if (!(characterActors[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
+                    !(characterActors[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
                 {
                     TargetTime.Update(FrameRateDirector.MovementFactorTimeSpan);
                     if (TargetTime.Active)
