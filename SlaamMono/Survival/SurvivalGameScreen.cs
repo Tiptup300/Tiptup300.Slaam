@@ -41,7 +41,7 @@ namespace SlaamMono.Survival
             _statsScreenResolver = statsScreenResolver;
         }
 
-        public override void SetupTheBoard(string BoardLoc)
+        protected override void SetupTheBoard(string BoardLoc)
         {
             _state.GameType = GameType.Survival;
             MatchSettings.CurrentMatchSettings.GameType = GameType.Survival;
@@ -127,7 +127,7 @@ namespace SlaamMono.Survival
             RespawnChar(_state.Characters.Count - 1, tiles);
         }
 
-        public override void EndGame()
+        protected override void EndGame()
         {
             if (ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame < _state.Timer.CurrentGameTime)
             {

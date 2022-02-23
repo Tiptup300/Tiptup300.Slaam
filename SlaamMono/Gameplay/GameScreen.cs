@@ -115,22 +115,6 @@ namespace SlaamMono.Gameplay
 
             return new Vector2(width - boardWidth / 2f, height - boardHeight / 2f);
         }
-        public void ShortenBoard()
-        {
-            TimeSpan ShortenTime = new TimeSpan(0, 0, 0, 2);
-            if (_state.BoardSize < 6)
-            {
-                markBoardOutline();
-                _state.BoardSize++;
-            }
-            _state.StepsRemaining--;
-            if (_state.StepsRemaining == 0)
-            {
-                _state.CurrentGameStatus = GameStatus.Over;
-                _state.ReadySetGoPart = 3;
-                _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-            }
-        }
         public Vector2 InterpretCoordinates(Vector2 pos, bool flip)
         {
             if (!flip)
@@ -177,7 +161,7 @@ namespace SlaamMono.Gameplay
             SlaamGame.mainBlade.TopMenu = _state.main;
         }
 
-        public virtual void SetupTheBoard(string BoardLoc)
+        protected virtual void SetupTheBoard(string BoardLoc)
         {
             _state.Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);
 
@@ -430,6 +414,55 @@ namespace SlaamMono.Gameplay
             _resources.GetTexture("BattleBG").Unload();
         }
 
+
+
+
+        private static void markBoardOutline()
+        {
+            for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
+            {
+                // TODO FIX LOGIC!
+                /*tiles[x, 0 + Boardsize].MarkTile(Color.Black, ShortenTime, true, -2);
+                tiles[x, 15 - Boardsize].MarkTile(Color.Black, ShortenTime, true, -2);
+                tiles[0 + Boardsize, x].MarkTile(Color.Black, ShortenTime, true, -2);
+                tiles[15 - Boardsize, x].MarkTile(Color.Black, ShortenTime, true, -2);*/
+            }
+        }
+
+        protected virtual void EndGame()
+        {
+            _state.ScoreKeeper.CalcTotals(_state);
+            for (int x = 0; x < _state.Characters.Count; x++)
+            {
+                _state.Characters[x].SaveProfileData();
+            }
+            ProfileManager.SaveProfiles();
+            _screenDirector.ChangeTo(_statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
+        }
+
+
+        // to remove
+        public void PauseGame(int playerindex)
+        {
+            _state.IsPaused = true;
+            BackgroundManager.ChangeBG(BackgroundType.Menu);
+
+#if !ZUNE
+            PausedPlayer = playerindex;
+            if (PauseChoice)
+            {
+                PauseStrings[0] = DialogStrings.ContinueSelected;
+                PauseStrings[1] = DialogStrings.Quit;
+            }
+            else
+            {
+                PauseStrings[0] = DialogStrings.Continue;
+                PauseStrings[1] = DialogStrings.QuitSelected;
+            }
+#else
+            SlaamGame.mainBlade.Status = BladeStatus.Out;
+#endif
+        }
         public virtual void ReportKilling(int Killer, int Killee)
         {
             if (_state.Characters[Killee].Lives == 0 && _state.GameType == GameType.Classic)
@@ -472,7 +505,22 @@ namespace SlaamMono.Gameplay
                 }
             }
         }
-
+        public void ShortenBoard()
+        {
+            TimeSpan ShortenTime = new TimeSpan(0, 0, 0, 2);
+            if (_state.BoardSize < 6)
+            {
+                markBoardOutline();
+                _state.BoardSize++;
+            }
+            _state.StepsRemaining--;
+            if (_state.StepsRemaining == 0)
+            {
+                _state.CurrentGameStatus = GameStatus.Over;
+                _state.ReadySetGoPart = 3;
+                _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+            }
+        }
         public void RespawnChar(int x, Tile[,] tiles)
         {
             int newx = _state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
@@ -485,52 +533,6 @@ namespace SlaamMono.Gameplay
             }
             Vector2 newCharPos = InterpretCoordinates(new Vector2(newx, newy), false);
             _state.Characters[x].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy), tiles);
-        }
-
-        public void PauseGame(int playerindex)
-        {
-            _state.IsPaused = true;
-            BackgroundManager.ChangeBG(BackgroundType.Menu);
-
-#if !ZUNE
-            PausedPlayer = playerindex;
-            if (PauseChoice)
-            {
-                PauseStrings[0] = DialogStrings.ContinueSelected;
-                PauseStrings[1] = DialogStrings.Quit;
-            }
-            else
-            {
-                PauseStrings[0] = DialogStrings.Continue;
-                PauseStrings[1] = DialogStrings.QuitSelected;
-            }
-#else
-            SlaamGame.mainBlade.Status = BladeStatus.Out;
-#endif
-        }
-
-
-        private static void markBoardOutline()
-        {
-            for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
-            {
-                // TODO FIX LOGIC!
-                /*tiles[x, 0 + Boardsize].MarkTile(Color.Black, ShortenTime, true, -2);
-                tiles[x, 15 - Boardsize].MarkTile(Color.Black, ShortenTime, true, -2);
-                tiles[0 + Boardsize, x].MarkTile(Color.Black, ShortenTime, true, -2);
-                tiles[15 - Boardsize, x].MarkTile(Color.Black, ShortenTime, true, -2);*/
-            }
-        }
-
-        public virtual void EndGame()
-        {
-            _state.ScoreKeeper.CalcTotals(_state);
-            for (int x = 0; x < _state.Characters.Count; x++)
-            {
-                _state.Characters[x].SaveProfileData();
-            }
-            ProfileManager.SaveProfiles();
-            _screenDirector.ChangeTo(_statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
         }
     }
 }
