@@ -94,12 +94,12 @@ namespace SlaamMono.Gameplay.Actors
 
             if (gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].CurrentPowerupType != PowerupType.None)
             {
-                GetPowerup(gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y], gameScreenState.Tiles);
+                GetPowerup(gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y], gameScreenState);
             }
 
             if (CurrentPowerup != null && CurrentPowerup.Active)
             {
-                CurrentPowerup.UpdateAttack(gameScreenState.Tiles);
+                CurrentPowerup.UpdateAttack(gameScreenState);
             }
 
             if (CurrentState == CharacterState.Normal)
@@ -170,7 +170,7 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     if (CurrentPowerup != null && !CurrentPowerup.Used && !CurrentPowerup.Active)
                     {
-                        CurrentPowerup.BeginAttack(Position, Direction.Left);
+                        CurrentPowerup.BeginAttack(Position, Direction.Left, gameScreenState);
                         PowerupsUsed++;
 
                         if (CurrentPowerup.AttackingType)
@@ -201,7 +201,7 @@ namespace SlaamMono.Gameplay.Actors
                     {
                         if (CurrentPowerup != null && CurrentPowerup.AttackingType && CurrentPowerup.Active && !CurrentPowerup.Used)
                         {
-                            CurrentPowerup.EndAttack(gameScreenState.Tiles);
+                            CurrentPowerup.EndAttack(gameScreenState);
                         }
                         else
                         {
@@ -257,7 +257,9 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     ReportDeath(gameScreenState.Tiles, CurrentCoordinates, gameScreenState.GameType);
                     if (CurrentPowerup != null && CurrentPowerup.Active & !CurrentPowerup.AttackingType)
-                        CurrentPowerup.EndAttack(gameScreenState.Tiles);
+                    {
+                        CurrentPowerup.EndAttack(gameScreenState);
+                    }
                 }
                 SpriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
             }
@@ -350,12 +352,14 @@ namespace SlaamMono.Gameplay.Actors
             return true;
         }
 
-        private void GetPowerup(Tile currtile, Tile[,] tiles)
+        private void GetPowerup(Tile currtile, GameScreenState gameScreenState)
         {
             if (CurrentPowerup != null && !CurrentPowerup.Used)
             {
                 if (CurrentPowerup.Active && !CurrentPowerup.AttackingType)
-                    CurrentPowerup.EndAttack(tiles);
+                {
+                    CurrentPowerup.EndAttack(gameScreenState);
+                }
             }
             switch (currtile.CurrentPowerupType)
             {

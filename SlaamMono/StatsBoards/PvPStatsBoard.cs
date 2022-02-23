@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
+using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
@@ -11,19 +12,19 @@ namespace SlaamMono.StatsBoards
     {
         public List<PvPPageListing> PvPPage = new List<PvPPageListing>();
 
-        public PvPStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph)
-            : base(scorekeeper)
+        public PvPStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph, StatsScreenState statsScreenState)
+            : base(scorekeeper, statsScreenState)
         {
             MainBoard = new Graph(rect, 2, col, resources, renderGraph);
         }
 
         public override void CalculateStats()
         {
-            for (int z = 0; z < ParentScoreCollector.ParentGameScreen.x_Characters.Count; z++)
+            for (int z = 0; z < _statsScreenState.Characters.Count; z++)
             {
                 List<SubPvPPageListing> templist = new List<SubPvPPageListing>();
 
-                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.x_Characters.Count; y++)
+                for (int y = 0; y < _statsScreenState.Characters.Count; y++)
                 {
                     templist.Add(new SubPvPPageListing(ParentScoreCollector.Kills[z][y], ParentScoreCollector.Kills[y][z]));
                 }
@@ -45,10 +46,10 @@ namespace SlaamMono.StatsBoards
                 GraphItem itm = new GraphItem();
                 {
 
-                    if (ParentScoreCollector.ParentGameScreen.x_Characters[x].IsBot)
-                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.x_Characters[x].GetProfile().Name + "*");
+                    if (_statsScreenState.Characters[x].IsBot)
+                        itm.Details.Add("*" + _statsScreenState.Characters[x].GetProfile().Name + "*");
                     else
-                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.x_Characters[x].GetProfile().Name);
+                        itm.Details.Add(_statsScreenState.Characters[x].GetProfile().Name);
 
                     itm.Details.Add(PvPPage[index].Lists[x].Killed.ToString());
                     itm.Details.Add(PvPPage[index].Lists[x].KilledBy.ToString());

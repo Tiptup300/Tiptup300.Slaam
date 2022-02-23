@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
+using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
@@ -21,8 +22,8 @@ namespace SlaamMono.StatsBoards
         private int RowsToDraw;
 
         private ILogger _logger;
-        public SurvivalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, int rowstodraw, ILogger logger, IResources resources, IRenderGraph renderGraph)
-            : base(scorekeeper)
+        public SurvivalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, int rowstodraw, ILogger logger, IResources resources, IRenderGraph renderGraph, StatsScreenState statsScreenState)
+            : base(scorekeeper, statsScreenState)
         {
             _logger = logger;
 
@@ -36,8 +37,10 @@ namespace SlaamMono.StatsBoards
             XNALoadHighScores();
 
             if (AddingNewChar)
-                PeopleToCompare[0] = new SurvivalStatsPageListing(ParentScoreCollector.ParentGameScreen.x_Characters[0].GetProfile().Name, ParentScoreCollector.ParentGameScreen.x_Characters[0].Kills, ParentScoreCollector.ParentGameScreen.x_Characters[0].TimeAlive,
+            {
+                PeopleToCompare[0] = new SurvivalStatsPageListing(_statsScreenState.Characters[0].GetProfile().Name, _statsScreenState.Characters[0].Kills, _statsScreenState.Characters[0].TimeAlive,
                 DateTime.Now.ToString());
+            }
 
             SurvivalStatsPage = new List<SurvivalStatsPageListing>();
 

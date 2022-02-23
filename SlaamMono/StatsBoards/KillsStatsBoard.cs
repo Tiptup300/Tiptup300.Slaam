@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
+using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
@@ -7,24 +8,23 @@ using System.Collections.Generic;
 
 namespace SlaamMono.StatsBoards
 {
-    class KillsStatsBoard : StatsBoard
+    public class KillsStatsBoard : StatsBoard
     {
-
         public List<KillsPageListing> KillsPage = new List<KillsPageListing>();
 
-        public KillsStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resourcesManager, IRenderGraph renderGraphManager)
-            : base(scorekeeper)
+        public KillsStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resourcesManager, IRenderGraph renderGraphManager, StatsScreenState statsScreenState)
+            : base(scorekeeper, statsScreenState)
         {
             MainBoard = new Graph(rect, 2, col, resourcesManager, renderGraphManager);
         }
 
         public override void CalculateStats()
         {
-            int[] TotalKills = new int[ParentScoreCollector.ParentGameScreen.x_Characters.Count];
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_Characters.Count; x++)
+            int[] TotalKills = new int[_statsScreenState.Characters.Count];
+            for (int x = 0; x < _statsScreenState.Characters.Count; x++)
             {
 
-                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.x_Characters.Count; y++)
+                for (int y = 0; y < _statsScreenState.Characters.Count; y++)
                 {
                     if (x != y)
                         TotalKills[x] += ParentScoreCollector.Kills[x][y];
@@ -32,24 +32,24 @@ namespace SlaamMono.StatsBoards
 
             }
 
-            int[] TotalDeaths = new int[ParentScoreCollector.ParentGameScreen.x_Characters.Count];
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_Characters.Count; x++)
+            int[] TotalDeaths = new int[_statsScreenState.Characters.Count];
+            for (int x = 0; x < _statsScreenState.Characters.Count; x++)
             {
 
-                for (int y = 0; y < ParentScoreCollector.ParentGameScreen.x_Characters.Count; y++)
+                for (int y = 0; y < _statsScreenState.Characters.Count; y++)
                 {
                     TotalDeaths[x] += ParentScoreCollector.Kills[y][x];
                 }
 
             }
 
-            int[] TotalSuicides = new int[ParentScoreCollector.ParentGameScreen.x_Characters.Count];
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_Characters.Count; x++)
+            int[] TotalSuicides = new int[_statsScreenState.Characters.Count];
+            for (int x = 0; x < _statsScreenState.Characters.Count; x++)
             {
                 TotalSuicides[x] = ParentScoreCollector.Kills[x][x];
             }
 
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_Characters.Count; x++)
+            for (int x = 0; x < _statsScreenState.Characters.Count; x++)
             {
                 KillsPage.Add(new KillsPageListing(TotalKills[x], TotalDeaths[x], TotalSuicides[x]));
             }
@@ -67,10 +67,10 @@ namespace SlaamMono.StatsBoards
                 GraphItem itm = new GraphItem();
                 {
 
-                    if (ParentScoreCollector.ParentGameScreen.x_Characters[x].IsBot)
-                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.x_Characters[x].GetProfile().Name + "*");
+                    if (_statsScreenState.Characters[x].IsBot)
+                        itm.Details.Add("*" + _statsScreenState.Characters[x].GetProfile().Name + "*");
                     else
-                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.x_Characters[x].GetProfile().Name);
+                        itm.Details.Add(_statsScreenState.Characters[x].GetProfile().Name);
 
                     itm.Add(true, KillsPage[x].Kills.ToString(), KillsPage[x].Deaths.ToString(), KillsPage[x].Suicides.ToString());
 

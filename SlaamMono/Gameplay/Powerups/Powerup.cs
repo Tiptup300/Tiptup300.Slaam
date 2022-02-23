@@ -29,17 +29,17 @@ namespace SlaamMono.Gameplay.Powerups
         /// <summary>
         /// Attack Operations before attack
         /// </summary>
-        public abstract void BeginAttack(Vector2 charposition, Direction chardirection);
+        public abstract void BeginAttack(Vector2 charposition, Direction chardirection, GameScreenState gameScreenState);
 
         /// <summary>
         /// Attack operations during attack
         /// </summary>
-        public abstract void UpdateAttack(Tile[,] tiles);
+        public abstract void UpdateAttack(GameScreenState gameScreenState);
 
         /// <summary>
         /// Attack operations after attack
         /// </summary>
-        public abstract void EndAttack(Tile[,] tiles);
+        public abstract void EndAttack(GameScreenState gameScreenState);
 
         /// <summary>
         /// The Drawing of the powerup.

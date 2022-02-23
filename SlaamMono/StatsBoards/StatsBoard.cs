@@ -1,4 +1,5 @@
 using SlaamMono.Gameplay;
+using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library.Graphing;
 
 namespace SlaamMono.StatsBoards
@@ -7,10 +8,12 @@ namespace SlaamMono.StatsBoards
     {
         public Graph MainBoard;
         public MatchScoreCollection ParentScoreCollector;
+        protected readonly StatsScreenState _statsScreenState;
 
-        public StatsBoard(MatchScoreCollection parentscorecollector)
+        public StatsBoard(MatchScoreCollection parentscorecollector, StatsScreenState statsScreenState)
         {
             ParentScoreCollector = parentscorecollector;
+            _statsScreenState = statsScreenState;
         }
 
         public abstract void CalculateStats();

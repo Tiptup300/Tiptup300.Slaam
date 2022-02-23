@@ -23,39 +23,41 @@ namespace SlaamMono.Gameplay.Powerups
             CharacterIndex = charindex;
         }
 
-        public override void BeginAttack(Vector2 charposition, Direction chardirection)
+        public override void BeginAttack(Vector2 charposition, Direction chardirection, GameScreenState gameScreenState)
         {
             Active = true;
             CurrentTime = TimeLasting;
-            for (int x = 0; x < ParentGameScreen.x_Characters.Count; x++)
+            for (int x = 0; x < gameScreenState.Characters.Count; x++)
             {
-                if (x != CharacterIndex && ParentGameScreen.x_Characters[x] != null)
-                    ParentGameScreen.x_Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
+                if (x != CharacterIndex && gameScreenState.Characters[x] != null)
+                    gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
             }
         }
 
-        public override void UpdateAttack(Tile[,] tiles)
+        public override void UpdateAttack(GameScreenState gameScreenState)
         {
 
-            for (int x = 0; x < ParentGameScreen.x_Characters.Count; x++)
+            for (int x = 0; x < gameScreenState.Characters.Count; x++)
             {
-                if (x != CharacterIndex && ParentGameScreen.x_Characters[x] != null)
-                    ParentGameScreen.x_Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
+                if (x != CharacterIndex && gameScreenState.Characters[x] != null)
+                    gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
             }
 
             CurrentTime -= FrameRateDirector.MovementFactorTimeSpan;
 
             if (CurrentTime <= TimeSpan.Zero)
-                EndAttack(tiles);
+            {
+                EndAttack(gameScreenState);
+            }
         }
 
-        public override void EndAttack(Tile[,] tiles)
+        public override void EndAttack(GameScreenState gameScreenState)
         {
             Active = false;
-            for (int x = 0; x < ParentGameScreen.x_Characters.Count; x++)
+            for (int x = 0; x < gameScreenState.Characters.Count; x++)
             {
-                if (x != CharacterIndex && ParentGameScreen.x_Characters[x] != null)
-                    ParentGameScreen.x_Characters[x].SpeedMultiplyer[PowerupIndex] = 1f;
+                if (x != CharacterIndex && gameScreenState.Characters[x] != null)
+                    gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = 1f;
             }
             Used = true;
         }

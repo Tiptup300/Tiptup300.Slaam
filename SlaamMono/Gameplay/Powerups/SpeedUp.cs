@@ -24,24 +24,24 @@ namespace SlaamMono.Gameplay.Powerups
             ParentCharacter = parent;
         }
 
-        public override void BeginAttack(Vector2 charposition, Direction chardirection)
+        public override void BeginAttack(Vector2 charposition, Direction chardirection, GameScreenState gameScreenState)
         {
             Active = true;
             CurrentTime = TimeLasting;
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
         }
 
-        public override void UpdateAttack(Tile[,] tiles)
+        public override void UpdateAttack(GameScreenState gameScreenState)
         {
             CurrentTime -= FrameRateDirector.MovementFactorTimeSpan;
 
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
 
             if (CurrentTime <= TimeSpan.Zero)
-                EndAttack(tiles);
+                EndAttack(gameScreenState);
         }
 
-        public override void EndAttack(Tile[,] tiles)
+        public override void EndAttack(GameScreenState gameScreenState)
         {
             Active = false;
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = 1f;

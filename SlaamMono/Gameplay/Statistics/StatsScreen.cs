@@ -44,15 +44,15 @@ namespace SlaamMono.Gameplay.Statistics
             BackgroundManager.ChangeBG(BackgroundType.Menu);
             if (_state.GameType == GameType.Classic)
             {
-                _state.PlayerStats = new NormalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.PlayerStats = new NormalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph, _state);
             }
             else if (_state.GameType == GameType.Spree || _state.GameType == GameType.TimedSpree)
             {
-                _state.PlayerStats = new SpreeStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.PlayerStats = new SpreeStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph, _state);
             }
             else if (_state.GameType == GameType.Survival)
             {
-                _state.PlayerStats = new SurvivalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderGraph);
+                _state.PlayerStats = new SurvivalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderGraph, _state);
             }
 
             _state.PlayerStats.CalculateStats();
@@ -61,11 +61,11 @@ namespace SlaamMono.Gameplay.Statistics
             if (_state.GameType != GameType.Survival)
             {
 
-                _state.Kills = new KillsStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.Kills = new KillsStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph, _state);
                 _state.Kills.CalculateStats();
                 _state.Kills.ConstructGraph(0);
 
-                _state.PvP = new PvPStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.PvP = new PvPStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph, _state);
                 _state.PvP.CalculateStats();
                 _state.PvP.ConstructGraph(0);
 

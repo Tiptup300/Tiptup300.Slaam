@@ -1,6 +1,8 @@
-﻿using SlaamMono.Library;
+﻿using SlaamMono.Gameplay.Actors;
+using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.StatsBoards;
+using System.Collections.Generic;
 using ZzziveGameEngine;
 
 namespace SlaamMono.Gameplay.Statistics
@@ -15,5 +17,6 @@ namespace SlaamMono.Gameplay.Statistics
         public StatsBoard Kills;
         public StatsBoard PvP;
         public CachedTexture[] _statsButtons = new CachedTexture[3];
+        public List<CharacterActor> Characters { get; set; } = new List<CharacterActor>();
     }
 }

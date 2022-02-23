@@ -10,25 +10,27 @@ namespace SlaamMono.Gameplay
 
 
 
-        public MatchScoreCollection(GameScreen parentgamecreen, GameType gameType)
+        public MatchScoreCollection(GameScreen parentgamecreen, GameType gameType, GameScreenState gameScreenState)
         {
             ParentGameScreen = parentgamecreen;
             _gameType = gameType;
-            Kills = new int[ParentGameScreen.x_Characters.Count][];
-            BestSprees = new int[ParentGameScreen.x_Characters.Count];
-            Sprees = new int[ParentGameScreen.x_Characters.Count];
+            Kills = new int[gameScreenState.Characters.Count][];
+            BestSprees = new int[gameScreenState.Characters.Count];
+            Sprees = new int[gameScreenState.Characters.Count];
             for (int x = 0; x < Kills.Length; x++)
             {
-                Kills[x] = new int[ParentGameScreen.x_Characters.Count];
+                Kills[x] = new int[gameScreenState.Characters.Count];
             }
         }
 
-        public void CalcTotals()
+        public void CalcTotals(GameScreenState gameScreenState)
         {
             if (_gameType != GameType.Survival)
             {
-                for (int x = 0; x < ParentGameScreen.x_Characters.Count; x++)
+                for (int x = 0; x < gameScreenState.Characters.Count; x++)
+                {
                     ResetSpree(x);
+                }
             }
 
         }
@@ -38,22 +40,26 @@ namespace SlaamMono.Gameplay
         /// </summary>
         /// <param name="Killer">Index of who killed.</param>
         /// <param name="Killee">Index of who was killed.</param>
-        public void ReportKilling(int Killer, int Killee)
+        public void ReportKilling(int Killer, int Killee, GameScreenState gameScreenState)
         {
             if (_gameType == GameType.Survival)
             {
                 if (Killer == 0)
+                {
                     Kills[0][0]++;
+                }
             }
             else
             {
-                if (Killer != -2 && Killer < ParentGameScreen.x_Characters.Count)
+                if (Killer != -2 && Killer < gameScreenState.Characters.Count)
                 {
                     Kills[Killer][Killee]++;
                     Sprees[Killer]++;
                 }
                 else
+                {
                     Kills[Killee][Killee]++;
+                }
 
                 ResetSpree(Killee);
             }
@@ -63,7 +69,9 @@ namespace SlaamMono.Gameplay
         private void ResetSpree(int PlayerIndex)
         {
             if (Sprees[PlayerIndex] > BestSprees[PlayerIndex])
+            {
                 BestSprees[PlayerIndex] = Sprees[PlayerIndex];
+            }
 
             Sprees[PlayerIndex] = 0;
         }

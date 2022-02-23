@@ -31,7 +31,9 @@ namespace SlaamMono.Menus
 
         public void InitializeState()
         {
-            _state._statsboard = new SurvivalStatsBoard(null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderGraph);
+            _state._statsboard = new SurvivalStatsBoard(null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderGraph,
+                null // this will not cause problems, but it's still ugly.
+                );
             BackgroundManager.SetRotation(.5f);
             BackgroundManager.ChangeBG(BackgroundType.Menu);
             _state._statsboard.CalculateStats();

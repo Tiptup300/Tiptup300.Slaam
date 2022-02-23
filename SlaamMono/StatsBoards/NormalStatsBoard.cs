@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
+using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
@@ -12,23 +13,23 @@ namespace SlaamMono.StatsBoards
     {
         public NormalPlayerStatsPageListing[] NormalStatsPage;
 
-        public NormalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph)
-            : base(scorekeeper)
+        public NormalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph, StatsScreenState statsScreenState)
+            : base(scorekeeper, statsScreenState)
         {
-            NormalStatsPage = new NormalPlayerStatsPageListing[scorekeeper.ParentGameScreen.x_Characters.Count];
+            NormalStatsPage = new NormalPlayerStatsPageListing[statsScreenState.Characters.Count];
             MainBoard = new Graph(rect, 2, col, resources, renderGraph);
         }
 
         public override void CalculateStats()
         {
 
-            TimeSpan[] TotalTime = new TimeSpan[ParentScoreCollector.ParentGameScreen.x_Characters.Count];
-            for (int x = 0; x < ParentScoreCollector.ParentGameScreen.x_Characters.Count; x++)
+            TimeSpan[] TotalTime = new TimeSpan[_statsScreenState.Characters.Count];
+            for (int x = 0; x < _statsScreenState.Characters.Count; x++)
             {
-                if (ParentScoreCollector.ParentGameScreen.x_Characters[x].Lives > 0)
-                    TotalTime[x] = ParentScoreCollector.ParentGameScreen.x_Characters[x].TimeAlive + new TimeSpan(0, 5, 0);
+                if (_statsScreenState.Characters[x].Lives > 0)
+                    TotalTime[x] = _statsScreenState.Characters[x].TimeAlive + new TimeSpan(0, 5, 0);
                 else
-                    TotalTime[x] = ParentScoreCollector.ParentGameScreen.x_Characters[x].TimeAlive;
+                    TotalTime[x] = _statsScreenState.Characters[x].TimeAlive;
             }
 
             int AmtSelected = 0, CurrentPlace = 1;
@@ -78,10 +79,10 @@ namespace SlaamMono.StatsBoards
                 GraphItem itm = new GraphItem();
                 {
 
-                    if (ParentScoreCollector.ParentGameScreen.x_Characters[x].IsBot)
-                        itm.Details.Add("*" + ParentScoreCollector.ParentGameScreen.x_Characters[x].GetProfile().Name + "*");
+                    if (_statsScreenState.Characters[x].IsBot)
+                        itm.Details.Add("*" + _statsScreenState.Characters[x].GetProfile().Name + "*");
                     else
-                        itm.Details.Add(ParentScoreCollector.ParentGameScreen.x_Characters[x].GetProfile().Name);
+                        itm.Details.Add(_statsScreenState.Characters[x].GetProfile().Name);
 
                     itm.Details.Add(NormalStatsPage[x].Place.ToString());
                     itm.Details.Add(NormalStatsPage[x].BestSpree.ToString());

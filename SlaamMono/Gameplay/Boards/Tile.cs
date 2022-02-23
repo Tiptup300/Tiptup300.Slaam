@@ -46,15 +46,15 @@ namespace SlaamMono.Gameplay.Boards
             _renderGraph = renderGraph;
         }
 
-        public void Update()
+        public void Update(GameScreenState gameScreenState)
         {
             if (CurrentTileCondition == TileCondition.RespawnPoint)
             {
-                for (int x = 0; x < GameScreen.Instance.x_Characters.Count; x++)
+                for (int x = 0; x < gameScreenState.Characters.Count; x++)
                 {
                     if (x == MarkedIndex)
                     {
-                        if (GameScreen.Instance.InterpretCoordinates(GameScreen.Instance.x_Characters[x].Position, true) != TileCoors)
+                        if (GameScreen.Instance.InterpretCoordinates(gameScreenState.Characters[x].Position, true) != TileCoors)
                         {
                             CurrentTileCondition = TileCondition.Normal;
                         }

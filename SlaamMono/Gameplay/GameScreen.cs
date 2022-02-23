@@ -14,7 +14,6 @@ using SlaamMono.PlayerProfiles;
 using SlaamMono.SubClasses;
 using SlaamMono.x_;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using ZBlade;
 using ZzziveGameEngine;
@@ -24,8 +23,6 @@ namespace SlaamMono.Gameplay
     public class GameScreen : IStateUpdater
     {
         public static GameScreen Instance;
-
-        public List<CharacterActor> x_Characters { get => _state.Characters; }
 
         protected GameScreenState _state = new GameScreenState();
 
@@ -86,7 +83,7 @@ namespace SlaamMono.Gameplay
                         x_Di.Get<IRenderGraph>());
                 }
             }
-            _state.ScoreKeeper = new MatchScoreCollection(this, _state.GameType);
+            _state.ScoreKeeper = new MatchScoreCollection(this, _state.GameType, _state);
             _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             BackgroundManager.ChangeBG(BackgroundType.BattleScreen);
             if (_state.GameType == GameType.Classic)
@@ -284,7 +281,7 @@ namespace SlaamMono.Gameplay
             {
                 for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    _state.Tiles[x, y].Update();
+                    _state.Tiles[x, y].Update(_state);
                 }
             }
             _state.PowerupTime.Update(FrameRateDirector.MovementFactorTimeSpan);
@@ -436,13 +433,15 @@ namespace SlaamMono.Gameplay
         public virtual void ReportKilling(int Killer, int Killee)
         {
             if (_state.Characters[Killee].Lives == 0 && _state.GameType == GameType.Classic)
+            {
                 ShortenBoard();
+            }
 
             if (Killer != -2 && Killer < _state.Characters.Count)
             {
                 _state.Characters[Killer].Kills++;
             }
-            _state.ScoreKeeper.ReportKilling(Killer, Killee);
+            _state.ScoreKeeper.ReportKilling(Killer, Killee, _state);
 
             if (_state.GameType == GameType.Spree && Killer != -2)
             {
@@ -525,14 +524,13 @@ namespace SlaamMono.Gameplay
 
         public virtual void EndGame()
         {
-            _state.ScoreKeeper.CalcTotals();
+            _state.ScoreKeeper.CalcTotals(_state);
             for (int x = 0; x < _state.Characters.Count; x++)
             {
                 _state.Characters[x].SaveProfileData();
             }
             ProfileManager.SaveProfiles();
-            _screenDirector.ChangeTo(
-                _statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
+            _screenDirector.ChangeTo(_statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
         }
     }
 }
