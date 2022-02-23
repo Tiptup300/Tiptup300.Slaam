@@ -146,25 +146,25 @@ namespace SlaamMono.Gameplay
 
             for (int x = 0; x < _state.SetupCharacters.Count; x++)
             {
-                if (_state.SetupCharacters[x].Type == PlayerType.Player)
+                if (_state.SetupCharacters[x].PlayerType == PlayerType.Player)
                 {
                     _state.Characters.Add(
                         new CharacterActor(
                             SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[x].SkinLocation),
-                            _state.SetupCharacters[x].CharProfile,
+                            _state.SetupCharacters[x].CharacterProfileIndex,
                             new Vector2(-100, -100),
-                            InputComponent.Players[(int)_state.SetupCharacters[x].PlayerIDX],
+                            InputComponent.Players[(int)_state.SetupCharacters[x].PlayerIndex],
                             _state.SetupCharacters[x].PlayerColor,
                             x,
                             x_Di.Get<IResources>()));
                 }
                 else
                 {
-                    ProfileManager.AllProfiles[_state.SetupCharacters[x].CharProfile].Skin = _state.SetupCharacters[x].SkinLocation;
+                    ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Skin = _state.SetupCharacters[x].SkinLocation;
                     _state.Characters.Add(
                         new BotActor(
                             SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[x].SkinLocation),
-                            _state.SetupCharacters[x].CharProfile,
+                            _state.SetupCharacters[x].CharacterProfileIndex,
                             new Vector2(-100, -100),
                             this,
                             _state.SetupCharacters[x].PlayerColor,

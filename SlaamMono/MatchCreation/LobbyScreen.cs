@@ -213,7 +213,7 @@ namespace SlaamMono.MatchCreation
                 }
                 if (InputComponent.Players[0].PressedDown && _state.SetupCharacters.Count > _state.PlayerAmt)
                 {
-                    ProfileManager.ResetBot(_state.SetupCharacters[_state.SetupCharacters.Count - 1].CharProfile);
+                    ProfileManager.ResetBot(_state.SetupCharacters[_state.SetupCharacters.Count - 1].CharacterProfileIndex);
                     _state.SetupCharacters.RemoveAt(_state.SetupCharacters.Count - 1);
                 }
 
@@ -374,10 +374,10 @@ namespace SlaamMono.MatchCreation
                 {
                     batch.Draw(_resources.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
                     batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), _state.SetupCharacters[x].PlayerColor);
-                    if (_state.SetupCharacters[x].Type == PlayerType.Player)
-                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharProfile].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+                    if (_state.SetupCharacters[x].PlayerType == PlayerType.Player)
+                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
                     else
-                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharProfile].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
+                        RenderGraph.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
                 }
                 batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
             }
@@ -430,7 +430,13 @@ namespace SlaamMono.MatchCreation
         /// </summary>
         private void AddComputer()
         {
-            _state.SetupCharacters.Add(new CharacterShell(CharacterSelectionScreen.ReturnRandSkin(_logger), ProfileManager.GetBotProfile(), (ExtendedPlayerIndex)_state.SetupCharacters.Count, PlayerType.Computer, _playerColorResolver.GetColorByIndex(_state.SetupCharacters.Count)));
+            _state.SetupCharacters.Add(
+                new CharacterShell(
+                    skinLocation: CharacterSelectionScreen.ReturnRandSkin(_logger),
+                    characterProfileIndex: ProfileManager.GetBotProfile(),
+                    playerIndex: (ExtendedPlayerIndex)_state.SetupCharacters.Count,
+                    playerType: PlayerType.Computer,
+                    playerColor: _playerColorResolver.GetColorByIndex(_state.SetupCharacters.Count)));
         }
     }
 }

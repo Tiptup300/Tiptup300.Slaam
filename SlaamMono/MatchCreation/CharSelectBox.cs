@@ -262,8 +262,15 @@ namespace SlaamMono.MatchCreation
         {
             PlayerType type = PlayerType.Computer;
             if (CurrentState != CharSelectBoxState.Computer)
+            {
                 type = PlayerType.Player;
-            return new CharacterShell(ParentSkinStrings[ChosenSkin.Value], ProfileManager.PlayableProfiles.GetRealIndex(ChosenProfile.Value), (ExtendedPlayerIndex)PlayerIDX, type, _playerColorResolver.GetColorByIndex(PlayerIDX));
+            }
+            return new CharacterShell(
+                skinLocation: ParentSkinStrings[ChosenSkin.Value],
+                characterProfileIndex: ProfileManager.PlayableProfiles.GetRealIndex(ChosenProfile.Value),
+                playerIndex: (ExtendedPlayerIndex)PlayerIDX,
+                playerType: type,
+                playerColor: _playerColorResolver.GetColorByIndex(PlayerIDX));
         }
 
         public enum Status

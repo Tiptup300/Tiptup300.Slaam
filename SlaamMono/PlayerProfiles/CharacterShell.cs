@@ -7,18 +7,23 @@ namespace SlaamMono.PlayerProfiles
     public class CharacterShell
     {
         public string SkinLocation;
-        public int CharProfile;
-        public ExtendedPlayerIndex PlayerIDX;
-        public PlayerType Type;
+        public int CharacterProfileIndex;
+        public ExtendedPlayerIndex PlayerIndex;
+        public PlayerType PlayerType;
         public Color PlayerColor;
 
-        public CharacterShell(string skinloc, int profile, ExtendedPlayerIndex idx, PlayerType type, Color col)
+        public CharacterShell(
+            string skinLocation,
+            int characterProfileIndex,
+            ExtendedPlayerIndex playerIndex,
+            PlayerType playerType,
+            Color playerColor)
         {
-            SkinLocation = skinloc;
-            CharProfile = profile;
-            PlayerIDX = idx;
-            Type = type;
-            PlayerColor = col;
+            SkinLocation = skinLocation;
+            CharacterProfileIndex = characterProfileIndex;
+            PlayerIndex = playerIndex;
+            PlayerType = playerType;
+            PlayerColor = playerColor;
         }
     }
 }
