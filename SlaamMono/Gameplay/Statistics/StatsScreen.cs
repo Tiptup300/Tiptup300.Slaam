@@ -32,39 +32,40 @@ namespace SlaamMono.Gameplay.Statistics
             _renderGraph = renderGraph;
         }
 
-        public void Initialize(StatsScreenRequest statsScreenRequest)
+        public void Initialize(StatsScreenRequest request)
         {
-            _state._scoreCollection = statsScreenRequest.ScoreCollection;
+            _state.ScoreCollection = request.ScoreCollection;
+            _state.GameType = request.GameType;
         }
 
         public void InitializeState()
         {
             _state._statsButtons = setStatsButtons();
             BackgroundManager.ChangeBG(BackgroundType.Menu);
-            if (_state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.Classic)
+            if (_state.GameType == GameType.Classic)
             {
-                _state.PlayerStats = new NormalStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.PlayerStats = new NormalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
             }
-            else if (_state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.Spree || _state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.TimedSpree)
+            else if (_state.GameType == GameType.Spree || _state.GameType == GameType.TimedSpree)
             {
-                _state.PlayerStats = new SpreeStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.PlayerStats = new SpreeStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
             }
-            else if (_state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.Survival)
+            else if (_state.GameType == GameType.Survival)
             {
-                _state.PlayerStats = new SurvivalStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderGraph);
+                _state.PlayerStats = new SurvivalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderGraph);
             }
 
             _state.PlayerStats.CalculateStats();
             _state.PlayerStats.ConstructGraph(0);
 
-            if (_state._scoreCollection.ParentGameScreen.x_ThisGameType != GameType.Survival)
+            if (_state.GameType != GameType.Survival)
             {
 
-                _state.Kills = new KillsStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.Kills = new KillsStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
                 _state.Kills.CalculateStats();
                 _state.Kills.ConstructGraph(0);
 
-                _state.PvP = new PvPStatsBoard(_state._scoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
+                _state.PvP = new PvPStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph);
                 _state.PvP.CalculateStats();
                 _state.PvP.ConstructGraph(0);
 
@@ -130,7 +131,7 @@ namespace SlaamMono.Gameplay.Statistics
         {
             BackgroundManager.SetRotation(1f);
 
-            if (_state._scoreCollection.ParentGameScreen.x_ThisGameType != GameType.Survival)
+            if (_state.GameType != GameType.Survival)
             {
 
                 if (InputComponent.Players[0].PressedLeft)
@@ -171,7 +172,7 @@ namespace SlaamMono.Gameplay.Statistics
 
             for (int x = 0; x < 3; x++)
             {
-                batch.Draw(_state._statsButtons[x].Texture, Statsboard, x == _state.CurrentPage.Value ? Color.LightSkyBlue : _state._scoreCollection.ParentGameScreen.x_ThisGameType == GameType.Survival ? Color.DarkGray : Color.White);
+                batch.Draw(_state._statsButtons[x].Texture, Statsboard, x == _state.CurrentPage.Value ? Color.LightSkyBlue : _state.GameType == GameType.Survival ? Color.DarkGray : Color.White);
             }
             batch.Draw(_resources.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
 

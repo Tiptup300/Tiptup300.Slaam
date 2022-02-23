@@ -69,7 +69,7 @@ namespace SlaamMono.Gameplay.Actors
             }
         }
 
-        public virtual void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
+        public virtual void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos, GameType gameType)
         {
             CurrentTile = tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
 #if ZUNE
@@ -245,7 +245,7 @@ namespace SlaamMono.Gameplay.Actors
                     Alpha -= 10.625f;
                 if (Alpha <= 0)
                 {
-                    ReportDeath(tiles, CurrentCoordinates);
+                    ReportDeath(tiles, CurrentCoordinates, gameType);
                     if (CurrentPowerup != null && CurrentPowerup.Active & !CurrentPowerup.AttackingType)
                         CurrentPowerup.EndAttack(tiles);
                 }
@@ -413,9 +413,9 @@ namespace SlaamMono.Gameplay.Actors
         /// </summary>
         /// <param name="tiles">Listing of all tiles on the board.</param>
         /// <param name="coors">Current Coordinates of the player.</param>
-        public void ReportDeath(Tile[,] tiles, Vector2 coors)
+        public void ReportDeath(Tile[,] tiles, Vector2 coors, GameType gameType)
         {
-            if (GameScreen.Instance.x_ThisGameType == GameType.Classic || GameScreen.Instance.x_ThisGameType == GameType.Survival)
+            if (gameType == GameType.Classic || gameType == GameType.Survival)
                 Lives--;
 
             Deaths++;

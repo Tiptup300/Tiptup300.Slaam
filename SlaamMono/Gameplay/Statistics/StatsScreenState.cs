@@ -7,7 +7,8 @@ namespace SlaamMono.Gameplay.Statistics
 {
     public class StatsScreenState : IState
     {
-        public MatchScoreCollection _scoreCollection;
+        public MatchScoreCollection ScoreCollection;
+        public GameType GameType;
         public IntRange CurrentPage = new IntRange(0, 0, 2);
         public IntRange CurrentChar;
         public StatsBoard PlayerStats;

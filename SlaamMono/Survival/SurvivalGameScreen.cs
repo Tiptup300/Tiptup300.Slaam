@@ -43,7 +43,7 @@ namespace SlaamMono.Survival
 
         public override void SetupTheBoard(string BoardLoc)
         {
-            _state.ThisGameType = GameType.Survival;
+            _state.GameType = GameType.Survival;
             MatchSettings.CurrentMatchSettings.GameType = GameType.Survival;
             MatchSettings.CurrentMatchSettings.SpeedMultiplyer = 1f;
             MatchSettings.CurrentMatchSettings.RespawnTime = new TimeSpan(0, 0, 8);
@@ -56,7 +56,7 @@ namespace SlaamMono.Survival
                     new ScoreboardRequest(
                         new Vector2(-250, 10),
                         _state.Characters[0],
-                        _state.ThisGameType)));
+                        _state.GameType)));
         }
 
         public override void UpdateState()
@@ -135,7 +135,7 @@ namespace SlaamMono.Survival
             }
             ProfileManager.SaveProfiles();
             _screenDirector.ChangeTo(
-                _statsScreenResolver.Resolve(new StatsScreenRequest(_state.ScoreKeeper)));
+                _statsScreenResolver.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
         }
     }
 }

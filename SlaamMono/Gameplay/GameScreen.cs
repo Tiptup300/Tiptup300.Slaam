@@ -25,7 +25,6 @@ namespace SlaamMono.Gameplay
     {
         public static GameScreen Instance;
 
-        public GameType x_ThisGameType { get => _state.ThisGameType; }
         public List<CharacterActor> x_Characters { get => _state.Characters; }
 
         protected GameScreenState _state = new GameScreenState();
@@ -61,7 +60,7 @@ namespace SlaamMono.Gameplay
             _state.ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
             _state.Tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
             _state.CurrentGameStatus = GameStatus.Waiting;
-            _state.ThisGameType = MatchSettings.CurrentMatchSettings.GameType;
+            _state.GameType = MatchSettings.CurrentMatchSettings.GameType;
             SetupTheBoard(MatchSettings.CurrentMatchSettings.BoardLocation);
             _state.CurrentGameStatus = GameStatus.MovingBoard;
             _resources.GetTexture("ReadySetGo").Load();
@@ -72,7 +71,8 @@ namespace SlaamMono.Gameplay
             _state.Timer = new GameScreenTimer(
                 new Vector2(1024, 0),
                 this,
-                x_Di.Get<IResources>());
+                x_Di.Get<IResources>(),
+                _state.GameType);
 
             for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
             {
@@ -86,18 +86,18 @@ namespace SlaamMono.Gameplay
                         x_Di.Get<IRenderGraph>());
                 }
             }
-            _state.ScoreKeeper = new MatchScoreCollection(this);
+            _state.ScoreKeeper = new MatchScoreCollection(this, _state.GameType);
             _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             BackgroundManager.ChangeBG(BackgroundType.BattleScreen);
-            if (_state.ThisGameType == GameType.Classic)
+            if (_state.GameType == GameType.Classic)
             {
                 _state.StepsRemaining = _state.SetupCharacters.Count - 1;
             }
-            else if (_state.ThisGameType == GameType.TimedSpree)
+            else if (_state.GameType == GameType.TimedSpree)
             {
                 _state.StepsRemaining = 7;
             }
-            else if (_state.ThisGameType == GameType.Spree)
+            else if (_state.GameType == GameType.Spree)
             {
                 //MatchSettings.CurrentMatchSettings.KillsToWin = 7;
                 _state.StepsRemaining = 100;
@@ -217,7 +217,7 @@ namespace SlaamMono.Gameplay
                         new ScoreboardRequest(
                             Vector2.Zero,
                             _state.Characters[_state.Characters.Count - 1],
-                            _state.ThisGameType)));
+                            _state.GameType)));
 
             }
         }
@@ -273,7 +273,7 @@ namespace SlaamMono.Gameplay
                     int Y1 = (int)((_state.Characters[x].Position.Y - _state.Boardpos.Y) % GameGlobals.TILE_SIZE);
                     int X = (int)((_state.Characters[x].Position.X - _state.Boardpos.X - X1) / GameGlobals.TILE_SIZE);
                     int Y = (int)((_state.Characters[x].Position.Y - _state.Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
-                    _state.Characters[x].Update(_state.Tiles, new Vector2(X, Y), new Vector2(X1, Y1));
+                    _state.Characters[x].Update(_state.Tiles, new Vector2(X, Y), new Vector2(X1, Y1), _state.GameType);
                     if (_state.Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
                     {
                         RespawnChar(x, _state.Tiles);
@@ -435,7 +435,7 @@ namespace SlaamMono.Gameplay
 
         public virtual void ReportKilling(int Killer, int Killee)
         {
-            if (_state.Characters[Killee].Lives == 0 && _state.ThisGameType == GameType.Classic)
+            if (_state.Characters[Killee].Lives == 0 && _state.GameType == GameType.Classic)
                 ShortenBoard();
 
             if (Killer != -2 && Killer < _state.Characters.Count)
@@ -444,7 +444,7 @@ namespace SlaamMono.Gameplay
             }
             _state.ScoreKeeper.ReportKilling(Killer, Killee);
 
-            if (_state.ThisGameType == GameType.Spree && Killer != -2)
+            if (_state.GameType == GameType.Spree && Killer != -2)
             {
                 if (_state.Characters[Killer].Kills > _state.SpreeHighestKillCount)
                 {
@@ -532,7 +532,7 @@ namespace SlaamMono.Gameplay
             }
             ProfileManager.SaveProfiles();
             _screenDirector.ChangeTo(
-                _statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper)));
+                _statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
         }
     }
 }

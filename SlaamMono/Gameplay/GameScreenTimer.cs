@@ -21,20 +21,22 @@ namespace SlaamMono.Gameplay
         private Vector2 _position;
         private const float _movementSpeed = 10f / 10f;
         private GameScreen _parentGameScreen;
+        private GameType _gameType;
         private float _stepSize;
         private float _currentStep;
 
         private readonly IResources _resources;
 
-        public GameScreenTimer(Vector2 position, GameScreen parentgamescreen, IResources resources)
+        public GameScreenTimer(Vector2 position, GameScreen parentgamescreen, IResources resources, GameType gameType)
         {
             _position = position;
             _parentGameScreen = parentgamescreen;
             _resources = resources;
+            _gameType = gameType;
 
             TimeRemaining = EndingTime;
             _stepSize = (float)TimeRemaining.TotalMilliseconds / 7f;
-            setGameMatchTime(_parentGameScreen.x_ThisGameType);
+            setGameMatchTime(gameType);
 
         }
 
@@ -51,7 +53,7 @@ namespace SlaamMono.Gameplay
             }
             if (StartTiming)
             {
-                if (TimeRemaining > TimeSpan.Zero || _parentGameScreen.x_ThisGameType == GameType.Spree || _parentGameScreen.x_ThisGameType == GameType.Classic || _parentGameScreen.x_ThisGameType == GameType.Survival)
+                if (TimeRemaining > TimeSpan.Zero || _gameType == GameType.Spree || _gameType == GameType.Classic || _gameType == GameType.Survival)
                 {
                     CurrentGameTime += FrameRateDirector.MovementFactorTimeSpan;
                     TimeRemaining -= FrameRateDirector.MovementFactorTimeSpan;
@@ -62,7 +64,7 @@ namespace SlaamMono.Gameplay
                     TimeRemaining = TimeSpan.Zero;
                 }
 
-                if (_parentGameScreen.x_ThisGameType == GameType.TimedSpree)
+                if (_gameType == GameType.TimedSpree)
                 {
                     _currentStep += FrameRateDirector.MovementFactor;
 
@@ -74,7 +76,7 @@ namespace SlaamMono.Gameplay
 
                 }
             }
-            setGameMatchTime(_parentGameScreen.x_ThisGameType);
+            setGameMatchTime(_gameType);
         }
 
         public void Draw(SpriteBatch batch)
@@ -83,11 +85,11 @@ namespace SlaamMono.Gameplay
             RenderGraph.Instance.RenderText(GameMatchTime.Minutes.ToString("00"), new Vector2(1181.5f + _position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
             RenderGraph.Instance.RenderText(GameMatchTime.Seconds.ToString("00"), new Vector2(1219.5f + _position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
             RenderGraph.Instance.RenderText(GameMatchTime.Milliseconds.ToString("00"), new Vector2(1257.5f + _position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
-            if (_parentGameScreen.x_ThisGameType == GameType.Classic || _parentGameScreen.x_ThisGameType == GameType.Spree || _parentGameScreen.x_ThisGameType == GameType.Survival)
+            if (_gameType == GameType.Classic || _gameType == GameType.Spree || _gameType == GameType.Survival)
             {
                 RenderGraph.Instance.RenderText("Time Elapsed", new Vector2(_position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
             }
-            else if (_parentGameScreen.x_ThisGameType == GameType.TimedSpree)
+            else if (_gameType == GameType.TimedSpree)
             {
                 RenderGraph.Instance.RenderText("Time Remaining", new Vector2(_position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
             }

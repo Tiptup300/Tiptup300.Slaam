@@ -41,7 +41,7 @@ namespace SlaamMono.Gameplay.Actors
             PlacesToGo.Add(new int[] { 1, 0 });
             PlacesToGo.Add(new int[] { -1, 0 });
         }
-        public override void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos)
+        public override void Update(Tile[,] tiles, Vector2 CurrentCoordinates, Vector2 TilePos, GameType gameType)
         {
             AIInput.PressedAction2 = false;
 
@@ -60,7 +60,7 @@ namespace SlaamMono.Gameplay.Actors
 
             CreateInput();
 
-            base.Update(tiles, CurrentCoordinates, TilePos);
+            base.Update(tiles, CurrentCoordinates, TilePos, gameType);
 
             ClearInput();
         }
