@@ -13,7 +13,7 @@ namespace SlaamMono.Gameplay
 {
     public class GameScreenState : IState
     {
-        public bool Timing { get; set; } = false;
+        public bool IsTiming { get; set; } = false;
         public bool IsPaused { get; set; } = false;
         public int KillsToWin { get; set; } = 0;
         public Timer PowerupTime { get; set; }

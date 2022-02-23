@@ -66,9 +66,8 @@ namespace SlaamMono.Gameplay
             _state.Boardpos = new Vector2(calcFinalBoardPosition().X, -_state.Tileset.Height);
 
             _state.Timer = new GameScreenTimer(
-                new Vector2(1024, 0),
-                this,
                 x_Di.Get<IResources>(),
+                new Vector2(1024, 0),
                 _state.GameType);
 
             for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
@@ -114,28 +113,6 @@ namespace SlaamMono.Gameplay
             int boardHeight = GameGlobals.BOARD_HEIGHT * GameGlobals.TILE_SIZE;
 
             return new Vector2(width - boardWidth / 2f, height - boardHeight / 2f);
-        }
-        public static Vector2 InterpretCoordinates(GameScreenState gameScreenState, Vector2 position, bool flip)
-        {
-            if (!flip)
-            {
-                return new Vector2(gameScreenState.Boardpos.X + position.X * GameGlobals.TILE_SIZE, gameScreenState.Boardpos.Y + position.Y * GameGlobals.TILE_SIZE);
-            }
-            else
-            {
-
-                int X1 = (int)((position.X - gameScreenState.Boardpos.X) % GameGlobals.TILE_SIZE);
-                int Y1 = (int)((position.Y - gameScreenState.Boardpos.Y) % GameGlobals.TILE_SIZE);
-                int X = (int)((position.X - gameScreenState.Boardpos.X - X1) / GameGlobals.TILE_SIZE);
-                int Y = (int)((position.Y - gameScreenState.Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
-
-                if (position.X < gameScreenState.Boardpos.X)
-                    X = -1;
-                if (position.Y < gameScreenState.Boardpos.Y)
-                    Y = -1;
-
-                return new Vector2(X, Y);
-            }
         }
 
         private void setupPauseMenu()
@@ -214,7 +191,7 @@ namespace SlaamMono.Gameplay
                 return;
             }
 
-            _state.Timer.Update(_state.Timing);
+            _state.Timer.Update(_state);
             updateScoreBoards();
 
             if (_state.CurrentGameStatus == GameStatus.MovingBoard)
@@ -241,7 +218,7 @@ namespace SlaamMono.Gameplay
         }
         private void updateOverGameState()
         {
-            _state.Timing = false;
+            _state.IsTiming = false;
             _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             if (_state.ReadySetGoThrottle.Active)
             {
@@ -261,7 +238,7 @@ namespace SlaamMono.Gameplay
                     _state.Characters[x].Update(new Vector2(X, Y), new Vector2(X1, Y1), _state);
                     if (_state.Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
                     {
-                        RespawnChar(x, _state);
+                        RespawnCharacter(_state, x);
                     }
                 }
             }
@@ -308,7 +285,7 @@ namespace SlaamMono.Gameplay
                     _state.CurrentGameStatus = GameStatus.Playing;
                     _state.ReadySetGoPart = 2;
                     _state.ReadySetGoThrottle.Reset();
-                    _state.Timing = true;
+                    _state.IsTiming = true;
                 }
             }
         }
@@ -318,7 +295,7 @@ namespace SlaamMono.Gameplay
             if (_state.ReadySetGoThrottle.Active)
             {
                 _state.Scoreboards[_state.ReadySetGoPart].Moving = true;
-                RespawnChar(_state.ReadySetGoPart++, _state);
+                RespawnCharacter(_state, _state.ReadySetGoPart++);
                 if (_state.ReadySetGoPart == _state.Characters.Count)
                 {
                     _state.CurrentGameStatus = GameStatus.Waiting;
@@ -444,12 +421,65 @@ namespace SlaamMono.Gameplay
             _screenDirector.ChangeTo(_statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
         }
 
+
+        public static void ShortenBoard(GameScreenState gameScreenState)
+        {
+            TimeSpan ShortenTime = new TimeSpan(0, 0, 0, 2);
+            if (gameScreenState.BoardSize < 6)
+            {
+                markBoardOutline();
+                gameScreenState.BoardSize++;
+            }
+            gameScreenState.StepsRemaining--;
+            if (gameScreenState.StepsRemaining == 0)
+            {
+                gameScreenState.CurrentGameStatus = GameStatus.Over;
+                gameScreenState.ReadySetGoPart = 3;
+                gameScreenState.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+            }
+        }
+        public static void RespawnCharacter(GameScreenState gameScreenState, int characterIndex)
+        {
+            int newx = gameScreenState.Rand.Next(0, GameGlobals.BOARD_WIDTH);
+            int newy = gameScreenState.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
+
+            while (gameScreenState.Tiles[newx, newy].Dead || gameScreenState.Tiles[newx, newy].CurrentTileCondition == TileCondition.RespawnPoint)
+            {
+                newx = gameScreenState.Rand.Next(0, GameGlobals.BOARD_WIDTH);
+                newy = gameScreenState.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
+            }
+            Vector2 newCharPos = InterpretCoordinates(gameScreenState, new Vector2(newx, newy), false);
+            gameScreenState.Characters[characterIndex].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy), gameScreenState.Tiles);
+        }
+        public static Vector2 InterpretCoordinates(GameScreenState gameScreenState, Vector2 position, bool flip)
+        {
+            if (!flip)
+            {
+                return new Vector2(gameScreenState.Boardpos.X + position.X * GameGlobals.TILE_SIZE, gameScreenState.Boardpos.Y + position.Y * GameGlobals.TILE_SIZE);
+            }
+            else
+            {
+
+                int X1 = (int)((position.X - gameScreenState.Boardpos.X) % GameGlobals.TILE_SIZE);
+                int Y1 = (int)((position.Y - gameScreenState.Boardpos.Y) % GameGlobals.TILE_SIZE);
+                int X = (int)((position.X - gameScreenState.Boardpos.X - X1) / GameGlobals.TILE_SIZE);
+                int Y = (int)((position.Y - gameScreenState.Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
+
+                if (position.X < gameScreenState.Boardpos.X)
+                    X = -1;
+                if (position.Y < gameScreenState.Boardpos.Y)
+                    Y = -1;
+
+                return new Vector2(X, Y);
+            }
+        }
+
         // to remove
         public virtual void ReportKilling(int Killer, int Killee)
         {
             if (_state.Characters[Killee].Lives == 0 && _state.GameType == GameType.Classic)
             {
-                ShortenBoard();
+                ShortenBoard(_state);
             }
 
             if (Killer != -2 && Killer < _state.Characters.Count)
@@ -474,7 +504,7 @@ namespace SlaamMono.Gameplay
                         }
                         else
                         {
-                            ShortenBoard();
+                            ShortenBoard(_state);
                             int TimesShortened = 100 - _state.StepsRemaining;
                         }
                     }
@@ -482,39 +512,10 @@ namespace SlaamMono.Gameplay
                     if (_state.Characters[Killer].Kills == _state.KillsToWin)
                     {
                         _state.StepsRemaining = 1;
-                        ShortenBoard();
+                        ShortenBoard(_state);
                     }
                 }
             }
-        }
-        public void ShortenBoard()
-        {
-            TimeSpan ShortenTime = new TimeSpan(0, 0, 0, 2);
-            if (_state.BoardSize < 6)
-            {
-                markBoardOutline();
-                _state.BoardSize++;
-            }
-            _state.StepsRemaining--;
-            if (_state.StepsRemaining == 0)
-            {
-                _state.CurrentGameStatus = GameStatus.Over;
-                _state.ReadySetGoPart = 3;
-                _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-            }
-        }
-        public void RespawnChar(int x, GameScreenState gameScreenState)
-        {
-            int newx = _state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
-            int newy = _state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
-
-            while (_state.Tiles[newx, newy].Dead || _state.Tiles[newx, newy].CurrentTileCondition == TileCondition.RespawnPoint)
-            {
-                newx = _state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
-                newy = _state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
-            }
-            Vector2 newCharPos = InterpretCoordinates(gameScreenState, new Vector2(newx, newy), false);
-            _state.Characters[x].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy), gameScreenState.Tiles);
         }
     }
 }

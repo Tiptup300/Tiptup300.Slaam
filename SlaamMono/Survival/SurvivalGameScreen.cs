@@ -123,7 +123,7 @@ namespace SlaamMono.Survival
                     x_Di.Get<IResources>()));
 
             ProfileManager.ResetAllBots();
-            RespawnChar(_state.Characters.Count - 1, gameScreenState);
+            RespawnCharacter(gameScreenState, _state.Characters.Count - 1);
         }
 
         protected override void EndGame()
