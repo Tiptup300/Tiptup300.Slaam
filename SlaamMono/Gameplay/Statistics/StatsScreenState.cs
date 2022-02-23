@@ -3,7 +3,7 @@ using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.StatsBoards;
 using System.Collections.Generic;
-using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay.Statistics
 {

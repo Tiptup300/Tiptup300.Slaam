@@ -1,6 +1,6 @@
 ﻿using SlaamMono.SubClasses;
 using System;
-using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Survival
 {

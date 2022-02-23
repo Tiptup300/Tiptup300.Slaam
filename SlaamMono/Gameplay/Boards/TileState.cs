@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Powerups;
 using SlaamMono.SubClasses;
 using System;
-using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay.Boards
 {

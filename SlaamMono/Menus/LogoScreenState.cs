@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Subclasses;
-using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
