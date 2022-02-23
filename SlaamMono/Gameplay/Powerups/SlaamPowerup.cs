@@ -36,7 +36,7 @@ namespace SlaamMono.Gameplay.Powerups
 
         public override void EndAttack(GameScreenState gameScreenState)
         {
-            Vector2 Charpos = ParentGameScreen.InterpretCoordinates(ParentCharacter.Position, true);
+            Vector2 Charpos = GameScreen.InterpretCoordinates(gameScreenState, ParentCharacter.Position, true);
 
             for (int x = (int)Charpos.X - (size - 1); x < Charpos.X + size; x++)
             {

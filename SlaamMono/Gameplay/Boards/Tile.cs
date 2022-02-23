@@ -54,7 +54,7 @@ namespace SlaamMono.Gameplay.Boards
                 {
                     if (x == MarkedIndex)
                     {
-                        if (GameScreen.Instance.InterpretCoordinates(gameScreenState.Characters[x].Position, true) != TileCoors)
+                        if (GameScreen.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true) != TileCoors)
                         {
                             CurrentTileCondition = TileCondition.Normal;
                         }

@@ -68,7 +68,7 @@ namespace SlaamMono.Survival
                 {
                     for (int x = 0; x < _survivalState.BotsToAdd + 1; x++)
                     {
-                        AddNewBot(_state.Tiles);
+                        AddNewBot(_state);
                         _survivalState.BotsAdded++;
 
                         if (_state.Rand.Next(0, _survivalState.BotsAdded - 1) == _survivalState.BotsAdded)
@@ -91,7 +91,7 @@ namespace SlaamMono.Survival
             bool temp = _state.CurrentGameStatus == GameStatus.Waiting;
             if (_state.CurrentGameStatus == GameStatus.Playing && temp)
             {
-                AddNewBot(_state.Tiles);
+                AddNewBot(_state);
             }
             base.UpdateState();
         }
@@ -111,7 +111,7 @@ namespace SlaamMono.Survival
             }
         }
 
-        private void AddNewBot(Tile[,] tiles)
+        private void AddNewBot(GameScreenState gameScreenState)
         {
             _state.Characters.Add(
                 new BotActor(
@@ -124,7 +124,7 @@ namespace SlaamMono.Survival
                     x_Di.Get<IResources>()));
 
             ProfileManager.ResetAllBots();
-            RespawnChar(_state.Characters.Count - 1, tiles);
+            RespawnChar(_state.Characters.Count - 1, gameScreenState);
         }
 
         protected override void EndGame()

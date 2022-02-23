@@ -115,21 +115,23 @@ namespace SlaamMono.Gameplay
 
             return new Vector2(width - boardWidth / 2f, height - boardHeight / 2f);
         }
-        public Vector2 InterpretCoordinates(Vector2 pos, bool flip)
+        public static Vector2 InterpretCoordinates(GameScreenState gameScreenState, Vector2 position, bool flip)
         {
             if (!flip)
-                return new Vector2(_state.Boardpos.X + pos.X * GameGlobals.TILE_SIZE, _state.Boardpos.Y + pos.Y * GameGlobals.TILE_SIZE);
+            {
+                return new Vector2(gameScreenState.Boardpos.X + position.X * GameGlobals.TILE_SIZE, gameScreenState.Boardpos.Y + position.Y * GameGlobals.TILE_SIZE);
+            }
             else
             {
 
-                int X1 = (int)((pos.X - _state.Boardpos.X) % GameGlobals.TILE_SIZE);
-                int Y1 = (int)((pos.Y - _state.Boardpos.Y) % GameGlobals.TILE_SIZE);
-                int X = (int)((pos.X - _state.Boardpos.X - X1) / GameGlobals.TILE_SIZE);
-                int Y = (int)((pos.Y - _state.Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
+                int X1 = (int)((position.X - gameScreenState.Boardpos.X) % GameGlobals.TILE_SIZE);
+                int Y1 = (int)((position.Y - gameScreenState.Boardpos.Y) % GameGlobals.TILE_SIZE);
+                int X = (int)((position.X - gameScreenState.Boardpos.X - X1) / GameGlobals.TILE_SIZE);
+                int Y = (int)((position.Y - gameScreenState.Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
 
-                if (pos.X < _state.Boardpos.X)
+                if (position.X < gameScreenState.Boardpos.X)
                     X = -1;
-                if (pos.Y < _state.Boardpos.Y)
+                if (position.Y < gameScreenState.Boardpos.Y)
                     Y = -1;
 
                 return new Vector2(X, Y);
@@ -207,6 +209,8 @@ namespace SlaamMono.Gameplay
         {
             if (_state.IsPaused)
             {
+                BackgroundManager.ChangeBG(BackgroundType.Menu);
+                SlaamGame.mainBlade.Status = BladeStatus.Out;
                 return;
             }
 
@@ -257,7 +261,7 @@ namespace SlaamMono.Gameplay
                     _state.Characters[x].Update(new Vector2(X, Y), new Vector2(X1, Y1), _state);
                     if (_state.Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
                     {
-                        RespawnChar(x, _state.Tiles);
+                        RespawnChar(x, _state);
                     }
                 }
             }
@@ -314,7 +318,7 @@ namespace SlaamMono.Gameplay
             if (_state.ReadySetGoThrottle.Active)
             {
                 _state.Scoreboards[_state.ReadySetGoPart].Moving = true;
-                RespawnChar(_state.ReadySetGoPart++, _state.Tiles);
+                RespawnChar(_state.ReadySetGoPart++, _state);
                 if (_state.ReadySetGoPart == _state.Characters.Count)
                 {
                     _state.CurrentGameStatus = GameStatus.Waiting;
@@ -440,29 +444,6 @@ namespace SlaamMono.Gameplay
             _screenDirector.ChangeTo(_statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
         }
 
-
-        // to remove
-        public void PauseGame(int playerindex)
-        {
-            _state.IsPaused = true;
-            BackgroundManager.ChangeBG(BackgroundType.Menu);
-
-#if !ZUNE
-            PausedPlayer = playerindex;
-            if (PauseChoice)
-            {
-                PauseStrings[0] = DialogStrings.ContinueSelected;
-                PauseStrings[1] = DialogStrings.Quit;
-            }
-            else
-            {
-                PauseStrings[0] = DialogStrings.Continue;
-                PauseStrings[1] = DialogStrings.QuitSelected;
-            }
-#else
-            SlaamGame.mainBlade.Status = BladeStatus.Out;
-#endif
-        }
         public virtual void ReportKilling(int Killer, int Killee)
         {
             if (_state.Characters[Killee].Lives == 0 && _state.GameType == GameType.Classic)
@@ -521,7 +502,7 @@ namespace SlaamMono.Gameplay
                 _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             }
         }
-        public void RespawnChar(int x, Tile[,] tiles)
+        public void RespawnChar(int x, GameScreenState gameScreenState)
         {
             int newx = _state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
             int newy = _state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
@@ -531,8 +512,8 @@ namespace SlaamMono.Gameplay
                 newx = _state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
                 newy = _state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
             }
-            Vector2 newCharPos = InterpretCoordinates(new Vector2(newx, newy), false);
-            _state.Characters[x].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy), tiles);
+            Vector2 newCharPos = InterpretCoordinates(gameScreenState, new Vector2(newx, newy), false);
+            _state.Characters[x].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy), gameScreenState.Tiles);
         }
     }
 }

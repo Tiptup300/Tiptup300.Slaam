@@ -76,7 +76,7 @@ namespace SlaamMono.Gameplay.Actors
 
             if (Gamepad.PressedStart)
             {
-                GameScreen.Instance.PauseGame(PlayerIndex);
+                gameScreenState.IsPaused = true;
             }
 
             if (Lives > 0)
@@ -118,7 +118,7 @@ namespace SlaamMono.Gameplay.Actors
 
                     if (Gamepad.PressingDown || Gamepad.PressedDown)
                     {
-                        if (IsClear(Position, new Vector2(0, Movement), gameScreenState.Tiles))
+                        if (IsClear(Position, new Vector2(0, Movement), gameScreenState))
                         {
                             Position.Y += Movement;
                         }
@@ -129,7 +129,7 @@ namespace SlaamMono.Gameplay.Actors
                     }
                     else if (Gamepad.PressingUp || Gamepad.PressedUp)
                     {
-                        if (IsClear(Position, new Vector2(0, -Movement), gameScreenState.Tiles))
+                        if (IsClear(Position, new Vector2(0, -Movement), gameScreenState))
                         {
                             Position.Y -= Movement;
                         }
@@ -139,7 +139,7 @@ namespace SlaamMono.Gameplay.Actors
                     }
                     else if (Gamepad.PressingLeft || Gamepad.PressedLeft)
                     {
-                        if (IsClear(Position, new Vector2(-Movement, 0), gameScreenState.Tiles))
+                        if (IsClear(Position, new Vector2(-Movement, 0), gameScreenState))
                         {
                             Position.X -= Movement;
                         }
@@ -150,7 +150,7 @@ namespace SlaamMono.Gameplay.Actors
                     }
                     else if (Gamepad.PressingRight || Gamepad.PressedRight)
                     {
-                        if (IsClear(Position, new Vector2(Movement, 0), gameScreenState.Tiles))
+                        if (IsClear(Position, new Vector2(Movement, 0), gameScreenState))
                         {
                             Position.X += Movement;
                         }
@@ -304,19 +304,19 @@ namespace SlaamMono.Gameplay.Actors
         /// <param name="x">X Tile Position Offset</param>
         /// <param name="y">Y Tile Position Offset</param>
         /// <returns></returns>
-        public bool IsClear(Vector2 CurrentCoords, Vector2 Movement, Tile[,] tiles)
+        public bool IsClear(Vector2 CurrentCoords, Vector2 Movement, GameScreenState gameScreenState)
         {
-            Vector2 TilePosition = GameScreen.Instance.InterpretCoordinates(new Vector2(CurrentCoords.X + Movement.X, CurrentCoords.Y + Movement.Y), true);
+            Vector2 TilePosition = GameScreen.InterpretCoordinates(gameScreenState, new Vector2(CurrentCoords.X + Movement.X, CurrentCoords.Y + Movement.Y), true);
 
-            return IsClear(TilePosition, tiles);
+            return IsClear(TilePosition, gameScreenState);
         }
 
-        public bool IsClear(Vector2 TilePosition, Tile[,] tiles)
+        public bool IsClear(Vector2 TilePosition, GameScreenState gameScreenState)
         {
             if (TilePosition.X < 0 || TilePosition.Y < 0 || TilePosition.X >= GameGlobals.BOARD_WIDTH || TilePosition.Y >= GameGlobals.BOARD_HEIGHT)
                 return false;
 
-            Tile tile = tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = gameScreenState.Tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Clear ||
                 tile.CurrentTileCondition == TileCondition.Clearing ||
@@ -326,12 +326,12 @@ namespace SlaamMono.Gameplay.Actors
             return true;
         }
 
-        public bool IsSafeAndClear(Vector2 TilePosition, Tile[,] tiles)
+        public bool IsSafeAndClear(Vector2 TilePosition, GameScreenState gameScreenState)
         {
-            if (!IsClear(TilePosition, tiles))
+            if (!IsClear(TilePosition, gameScreenState))
                 return false;
 
-            Tile tile = tiles[(int)TilePosition.X, (int)TilePosition.Y];
+            Tile tile = gameScreenState.Tiles[(int)TilePosition.X, (int)TilePosition.Y];
 
             if (tile.CurrentTileCondition == TileCondition.Marked)
                 return false;

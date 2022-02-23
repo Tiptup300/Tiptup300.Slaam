@@ -91,7 +91,7 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     GoingTowardsSafety = true;
 
-                    Vector2 PlaceToGo = FindSafePlace(CurrentCoordinates, gameScreenState.Tiles);
+                    Vector2 PlaceToGo = FindSafePlace(CurrentCoordinates, gameScreenState);
 
                     if (PlaceToGo == NullVector2)
                     {
@@ -120,7 +120,7 @@ namespace SlaamMono.Gameplay.Actors
                          gameScreenState.Characters[x].CurrentState != CharacterState.Dieing &&
                          gameScreenState.Characters[x].MarkingColor != MarkingColor)
                     {
-                        Vector2 pos = ParentGameScreen.InterpretCoordinates(gameScreenState.Characters[x].Position, true);
+                        Vector2 pos = GameScreen.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true);
                         if (pos != CurrentCoordinates)
                             Targets.Add(new BotTarget(x, pos, GetDistance(CurrentCoordinates, pos)));
 
@@ -275,7 +275,7 @@ namespace SlaamMono.Gameplay.Actors
             }
         }
 
-        private Vector2 FindSafePlace(Vector2 CurrentCoordinates, Tile[,] tiles)
+        private Vector2 FindSafePlace(Vector2 CurrentCoordinates, GameScreenState gameScreenState)
         {
             PlacesToGo.RandomizeList();
 
@@ -286,7 +286,7 @@ namespace SlaamMono.Gameplay.Actors
             for (int x = 0; x < PlacesToGo.Count; x++)
             {
                 Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + PlacesToGo[x][0], CurrentCoordinates.Y + PlacesToGo[x][1]);
-                if (IsSafeAndClear(CurrentTileLocation, tiles))
+                if (IsSafeAndClear(CurrentTileLocation, gameScreenState))
                 {
                     SafePlace = new Vector2(CurrentTileLocation.X, CurrentTileLocation.Y);
                     FoundSafePlace = true;
@@ -300,14 +300,14 @@ namespace SlaamMono.Gameplay.Actors
             }
             else
             {
-                float Highest = tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
+                float Highest = gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
 
                 for (int x = 0; x < PlacesToGo.Count; x++)
                 {
                     Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + PlacesToGo[x][0], CurrentCoordinates.Y + PlacesToGo[x][1]);
-                    if (IsClear(CurrentTileLocation, tiles))
+                    if (IsClear(CurrentTileLocation, gameScreenState))
                     {
-                        float temp = tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
+                        float temp = gameScreenState.Tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
 
                         if (temp > Highest)
                         {
