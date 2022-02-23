@@ -21,84 +21,95 @@ namespace SlaamMono.Gameplay
         public GameScreenTimer(IResources resources, Vector2 position, GameType gameType)
         {
             _resources = resources;
-            _state.Position = position;
-            _state.GameType = gameType;
-
-            _state.TimeRemaining = _state.EndingTime;
-            _state.StepSize = (float)_state.TimeRemaining.TotalMilliseconds / 7f;
-            setGameMatchTime(gameType);
-
+            _state = InitializeState(position, gameType);
         }
 
-        public void Update(GameScreenState gameScreenState)
+        public static GameScreenTimerState InitializeState(Vector2 position, GameType gameType)
         {
-            if (Moving)
+            GameScreenTimerState output;
+
+            output = new GameScreenTimerState();
+            output.Position = position;
+            output.GameType = gameType;
+            output.TimeRemaining = output.EndingTime;
+            output.StepSize = (float)output.TimeRemaining.TotalMilliseconds / 7f;
+            output.GameMatchTime = getGameMatchTime(output);
+
+            return output;
+        }
+
+        public void Update(GameScreenState gameScreenState) => updateState(gameScreenState, _state);
+
+        public static void updateState(GameScreenState gameScreenState, GameScreenTimerState state)
+        {
+            if (state.Moving)
             {
-                _state.Position.X -= FrameRateDirector.MovementFactor * _state.MovementSpeed;
-                if (_state.Position.X <= 0)
+                state.Position.X -= FrameRateDirector.MovementFactor * state.MovementSpeed;
+                if (state.Position.X <= 0)
                 {
-                    _state.Position.X = 0;
-                    _state.Moving = false;
+                    state.Position.X = 0;
+                    state.Moving = false;
                 }
             }
             if (gameScreenState.IsTiming)
             {
-                if (_state.TimeRemaining > TimeSpan.Zero || _state.GameType == GameType.Spree || _state.GameType == GameType.Classic || _state.GameType == GameType.Survival)
+                if (state.TimeRemaining > TimeSpan.Zero || state.GameType == GameType.Spree || state.GameType == GameType.Classic || state.GameType == GameType.Survival)
                 {
-                    _state.CurrentGameTime += FrameRateDirector.MovementFactorTimeSpan;
-                    _state.TimeRemaining -= FrameRateDirector.MovementFactorTimeSpan;
+                    state.CurrentGameTime += FrameRateDirector.MovementFactorTimeSpan;
+                    state.TimeRemaining -= FrameRateDirector.MovementFactorTimeSpan;
                 }
 
-                if (_state.TimeRemaining < TimeSpan.Zero)
+                if (state.TimeRemaining < TimeSpan.Zero)
                 {
-                    _state.TimeRemaining = TimeSpan.Zero;
+                    state.TimeRemaining = TimeSpan.Zero;
                 }
 
-                if (_state.GameType == GameType.TimedSpree)
+                if (state.GameType == GameType.TimedSpree)
                 {
-                    _state.CurrentStep += FrameRateDirector.MovementFactor;
+                    state.CurrentStep += FrameRateDirector.MovementFactor;
 
-                    if (_state.CurrentStep >= _state.StepSize)
+                    if (state.CurrentStep >= state.StepSize)
                     {
-                        _state.CurrentStep -= _state.StepSize;
+                        state.CurrentStep -= state.StepSize;
                         GameScreen.ShortenBoard(gameScreenState);
                     }
 
                 }
             }
-            setGameMatchTime(_state.GameType);
+            state.GameMatchTime = getGameMatchTime(state);
         }
 
-        public void Draw(SpriteBatch batch)
+        public void Draw(SpriteBatch batch) => drawState(batch, _state);
+
+        public void drawState(SpriteBatch batch, GameScreenTimerState state)
         {
-            batch.Draw(_resources.GetTexture("TopGameBoard").Texture, new Vector2(1280 - _resources.GetTexture("TopGameBoard").Width + _state.Position.X, 0), Color.White);
-            RenderGraph.Instance.RenderText(_state.GameMatchTime.Minutes.ToString("00"), new Vector2(1181.5f + _state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
-            RenderGraph.Instance.RenderText(_state.GameMatchTime.Seconds.ToString("00"), new Vector2(1219.5f + _state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
-            RenderGraph.Instance.RenderText(_state.GameMatchTime.Milliseconds.ToString("00"), new Vector2(1257.5f + _state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
-            if (_state.GameType == GameType.Classic || _state.GameType == GameType.Spree || _state.GameType == GameType.Survival)
+            batch.Draw(_resources.GetTexture("TopGameBoard").Texture, new Vector2(1280 - _resources.GetTexture("TopGameBoard").Width + state.Position.X, 0), Color.White);
+            RenderGraph.Instance.RenderText(state.GameMatchTime.Minutes.ToString("00"), new Vector2(1181.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
+            RenderGraph.Instance.RenderText(state.GameMatchTime.Seconds.ToString("00"), new Vector2(1219.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
+            RenderGraph.Instance.RenderText(state.GameMatchTime.Milliseconds.ToString("00"), new Vector2(1257.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
+            if (state.GameType == GameType.Classic || state.GameType == GameType.Spree || state.GameType == GameType.Survival)
             {
-                RenderGraph.Instance.RenderText("Time Elapsed", new Vector2(_state.Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
+                RenderGraph.Instance.RenderText("Time Elapsed", new Vector2(state.Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
             }
-            else if (_state.GameType == GameType.TimedSpree)
+            else if (state.GameType == GameType.TimedSpree)
             {
-                RenderGraph.Instance.RenderText("Time Remaining", new Vector2(_state.Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
+                RenderGraph.Instance.RenderText("Time Remaining", new Vector2(state.Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
             }
         }
 
-        private void setGameMatchTime(GameType type)
+        private static TimeSpan getGameMatchTime(GameScreenTimerState state)
         {
-            switch (type)
+            switch (state.GameType)
             {
                 case GameType.Classic:
                 case GameType.Spree:
                 case GameType.Survival:
-                    _state.GameMatchTime = CurrentGameTime;
-                    return;
+                    return state.CurrentGameTime;
                 case GameType.TimedSpree:
-                    _state.GameMatchTime = _state.TimeRemaining;
-                    return;
+                    return state.TimeRemaining;
 
             }
+            throw new Exception("");
         }
     }
 }

@@ -320,7 +320,7 @@ namespace SlaamMono.Gameplay
             {
                 for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    _state.Tiles[x, y].ResetTileLoc(_state.Boardpos, new Vector2(x, y));
+                    _state.Tiles[x, y].ResetTileLocation(_state.Boardpos, new Vector2(x, y));
                 }
             }
         }

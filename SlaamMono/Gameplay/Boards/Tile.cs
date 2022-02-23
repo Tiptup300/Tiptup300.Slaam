@@ -12,187 +12,206 @@ namespace SlaamMono.Gameplay.Boards
 {
     public class Tile
     {
-        public TileCondition CurrentTileCondition = TileCondition.Normal;
-        public Color TileColor = Color.White;
-        public Color MarkedColor;
-        public int MarkedIndex;
-        public Color TileOverlayColor;
-        public bool Dead = false;
-        public PowerupType CurrentPowerupType = PowerupType.None;
+        public TileCondition CurrentTileCondition { get => _state.CurrentTileCondition; }
+        public Color MarkedColor { get => _state.MarkedColor; }
+        public int MarkedIndex { get => _state.MarkedIndex; }
+        public bool Dead { get => _state.Dead; }
+        public PowerupType CurrentPowerupType { get => _state.CurrentPowerupType; }
+        public float TimeTillClearing { get => _state.TimeTillClearing; }
 
-        public float TimeTillClearing => (float)FallSpeed.TimeLeft.TotalMilliseconds;
-
-        private static TimeSpan FadeOutTime = new TimeSpan(0, 0, 0, 0, 25);
-
-        private Vector2 AbsTileloc;
-        private Vector2 TileCoors;
-        private Texture2D ParentTileTileset;
-        private Timer FadeThrottle = new Timer(FadeOutTime);
-        private Timer FallSpeed = new Timer(new TimeSpan(0, 0, 0, 0, 400));
-        private Timer ReappearSpeed = new Timer(new TimeSpan(0, 0, 5));
-        private float Alpha = 255;
-
+        private TileState _state;
 
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraph;
 
+        private readonly static TimeSpan FadeOutTime = new TimeSpan(0, 0, 0, 0, 25);
+
+
         public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, IResources resources, IRenderGraph renderGraph)
         {
-            ParentTileTileset = tiletex;
-            TileCoors = TileLoc;
-            AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
-
             _resources = resources;
             _renderGraph = renderGraph;
+            _state = IntializeState(Boardpos, TileLoc, tiletex, FadeOutTime);
+        }
+        public static TileState IntializeState(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, TimeSpan fadeOutTime)
+        {
+            TileState output;
+
+            output = new TileState();
+            output.ParentTileTileset = tiletex;
+            output.TileCoors = TileLoc;
+            output.AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
+            output.FadeThrottle = new Timer(fadeOutTime);
+
+            return output;
         }
 
-        public void Update(GameScreenState gameScreenState)
+
+        public void Update(GameScreenState gameScreenState) => updateState(gameScreenState, _state);
+        public static void updateState(GameScreenState gameScreenState, TileState tileState)
         {
-            if (CurrentTileCondition == TileCondition.RespawnPoint)
+            if (tileState.CurrentTileCondition == TileCondition.RespawnPoint)
             {
                 for (int x = 0; x < gameScreenState.Characters.Count; x++)
                 {
-                    if (x == MarkedIndex)
+                    if (x == tileState.MarkedIndex)
                     {
-                        if (GameScreen.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true) != TileCoors)
+                        if (GameScreen.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true) != tileState.TileCoors)
                         {
-                            CurrentTileCondition = TileCondition.Normal;
+                            tileState.CurrentTileCondition = TileCondition.Normal;
                         }
                     }
                 }
-                FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (FallSpeed.Active)
-                    CurrentTileCondition = TileCondition.Normal;
+                tileState.FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
+                if (tileState.FallSpeed.Active)
+                {
+                    tileState.CurrentTileCondition = TileCondition.Normal;
+                }
             }
-            if (CurrentTileCondition == TileCondition.Marked)
+            if (tileState.CurrentTileCondition == TileCondition.Marked)
             {
-                FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (FallSpeed.Active)
-                    CurrentTileCondition = TileCondition.Clearing;
+                tileState.FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
+                if (tileState.FallSpeed.Active)
+                {
+                    tileState.CurrentTileCondition = TileCondition.Clearing;
+                }
             }
-            if (CurrentTileCondition == TileCondition.Clearing)
+            if (tileState.CurrentTileCondition == TileCondition.Clearing)
             {
-                FadeThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (FadeThrottle.Active)
-                    Alpha -= 12.75f;
+                tileState.FadeThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+                if (tileState.FadeThrottle.Active)
+                {
+                    tileState.Alpha -= 12.75f;
+                }
 
-                TileColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
-                TileOverlayColor = new Color(MarkedColor.R, MarkedColor.G, MarkedColor.B, (byte)(Alpha / 2));
+                tileState.TileColor = new Color((byte)255, (byte)255, (byte)255, (byte)tileState.Alpha);
+                tileState.TileOverlayColor = new Color(tileState.MarkedColor.R, tileState.MarkedColor.G, tileState.MarkedColor.B, (byte)(tileState.Alpha / 2));
             }
-            if (CurrentTileCondition == TileCondition.Clear && !Dead)
+            if (tileState.CurrentTileCondition == TileCondition.Clear && !tileState.Dead)
             {
-                ReappearSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (ReappearSpeed.Active)
-                    ResetTile();
+                tileState.ReappearSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
+                if (tileState.ReappearSpeed.Active)
+                {
+                    ResetTile(tileState);
+                }
             }
-            if (Alpha <= 0 && CurrentTileCondition == TileCondition.Clearing)
+            if (tileState.Alpha <= 0 && tileState.CurrentTileCondition == TileCondition.Clearing)
             {
-                CurrentTileCondition = TileCondition.Clear;
-                ReappearSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
+                tileState.CurrentTileCondition = TileCondition.Clear;
+                tileState.ReappearSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
             }
         }
 
-        public void Draw(SpriteBatch batch)
+
+        public void Draw(SpriteBatch batch) => drawState(batch, _state, _resources);
+        public static void drawState(SpriteBatch batch, TileState tileState, IResources resources)
         {
-            if (CurrentTileCondition != TileCondition.Clear)
+            if (tileState.CurrentTileCondition != TileCondition.Clear)
             {
 
-                batch.Draw(ParentTileTileset, AbsTileloc, new Rectangle((int)TileCoors.X * GameGlobals.TILE_SIZE, (int)TileCoors.Y * GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileColor);
-                if (CurrentTileCondition != TileCondition.Normal)
+                batch.Draw(tileState.ParentTileTileset, tileState.AbsTileloc, new Rectangle((int)tileState.TileCoors.X * GameGlobals.TILE_SIZE, (int)tileState.TileCoors.Y * GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), tileState.TileColor);
+                if (tileState.CurrentTileCondition != TileCondition.Normal)
                 {
-                    batch.Draw(_resources.GetTexture("TileOverlay").Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), TileOverlayColor);
+                    batch.Draw(resources.GetTexture("TileOverlay").Texture, new Rectangle((int)tileState.AbsTileloc.X, (int)tileState.AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), tileState.TileOverlayColor);
                 }
-                if (CurrentTileCondition == TileCondition.RespawnPoint)
+                if (tileState.CurrentTileCondition == TileCondition.RespawnPoint)
                 {
-                    batch.Draw(_resources.GetTexture("RespawnTileOverlay").Texture, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), MarkedColor);
+                    batch.Draw(resources.GetTexture("RespawnTileOverlay").Texture, new Rectangle((int)tileState.AbsTileloc.X, (int)tileState.AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), tileState.MarkedColor);
                 }
-                if (CurrentPowerupType != PowerupType.None)
+                if (tileState.CurrentPowerupType != PowerupType.None)
                 {
-                    Texture2D tex = PowerupManager.Instance.GetPowerupTexture(CurrentPowerupType);
-                    batch.Draw(tex, new Rectangle((int)AbsTileloc.X, (int)AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), Color.White);
+                    Texture2D tex = PowerupManager.Instance.GetPowerupTexture(tileState.CurrentPowerupType);
+                    batch.Draw(tex, new Rectangle((int)tileState.AbsTileloc.X, (int)tileState.AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), Color.White);
                 }
             }
         }
 
-        public void DrawShadow(SpriteBatch batch)
+
+        public void DrawShadow(SpriteBatch batch, TileState tileState)
         {
-            if (CurrentTileCondition != TileCondition.Clear)
+            drawShadow(tileState, _renderGraph);
+        }
+        private static void drawShadow(TileState tileState, IRenderGraph _renderGraph)
+        {
+            if (tileState.CurrentTileCondition != TileCondition.Clear)
             {
                 _renderGraph.RenderBox(
-                    destinationRectangle: new Rectangle((int)AbsTileloc.X + 10, (int)AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE),
+                    destinationRectangle: new Rectangle((int)tileState.AbsTileloc.X + 10, (int)tileState.AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE),
                     color: new Color(0, 0, 0, 50));
             }
         }
 
-        /// <summary>
-        /// Marks the current tile for respawn so its invincible.
-        /// </summary>
-        /// <param name="markingcolor">Color to mark it.</param>
-        /// <param name="Delay">How long do we delay it?</param>
-        /// <param name="idx">Player's Index</param>
+
         public void MarkTileForRespawn(Color markingcolor, TimeSpan Delay, int idx)
         {
-            MarkedIndex = idx;
-            MarkedColor = markingcolor;
-            CurrentTileCondition = TileCondition.RespawnPoint;
-            FallSpeed.Threshold = Delay;
-            FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
-            TileColor = Color.White;
+            markTileForRespawn(_state, markingcolor, Delay, idx);
         }
+        private static void markTileForRespawn(TileState tileState, Color markingcolor, TimeSpan Delay, int idx)
+        {
+            tileState.MarkedIndex = idx;
+            tileState.MarkedColor = markingcolor;
+            tileState.CurrentTileCondition = TileCondition.RespawnPoint;
+            tileState.FallSpeed.Threshold = Delay;
+            tileState.FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
+            tileState.TileColor = Color.White;
+        }
+
 
         public void MarkWithPowerup(PowerupType type)
         {
-            CurrentPowerupType = type;
+            markWithPowerup(_state, type);
+        }
+        private static void markWithPowerup(TileState tileState, PowerupType type)
+        {
+            tileState.CurrentPowerupType = type;
         }
 
-        /// <summary>
-        /// Mark tile for killing
-        /// </summary>
-        /// <param name="markingcolor">Color to mark it.</param>
-        /// <param name="FallDelay">How long do we dealy it?</param>
-        /// <param name="cominback">Is it coming back?</param>
-        /// <param name="IDX">Player's Index</param>
+
         public void MarkTile(Color markingcolor, TimeSpan FallDelay, bool cominback, int IDX)
         {
-            if (CurrentTileCondition == TileCondition.Normal || CurrentTileCondition == TileCondition.RespawnPoint && cominback)
+            markTile(_state, markingcolor, FallDelay, cominback, IDX);
+        }
+        private static void markTile(TileState tileState, Color markingcolor, TimeSpan FallDelay, bool cominback, int IDX)
+        {
+            if (tileState.CurrentTileCondition == TileCondition.Normal || tileState.CurrentTileCondition == TileCondition.RespawnPoint && cominback)
             {
-                MarkedIndex = IDX;
-                MarkedColor = markingcolor;
-                TileOverlayColor = new Color(markingcolor.R, markingcolor.G, markingcolor.B, (byte)127);
-                CurrentTileCondition = TileCondition.Marked;
-                FallSpeed.Threshold = FallDelay;
-                FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
-                TileColor = Color.White;
-                Dead = cominback;
+                tileState.MarkedIndex = IDX;
+                tileState.MarkedColor = markingcolor;
+                tileState.TileOverlayColor = new Color(markingcolor.R, markingcolor.G, markingcolor.B, (byte)127);
+                tileState.CurrentTileCondition = TileCondition.Marked;
+                tileState.FallSpeed.Threshold = FallDelay;
+                tileState.FallSpeed.Update(FrameRateDirector.MovementFactorTimeSpan);
+                tileState.TileColor = Color.White;
+                tileState.Dead = cominback;
             }
             if (cominback)
-                Dead = cominback;
+            {
+                tileState.Dead = cominback;
+            }
         }
 
-        /// <summary>
-        /// Resets real location of tile on screen.
-        /// </summary>
-        /// <param name="Boardpos"></param>
-        /// <param name="TileLoc"></param>
-        public void ResetTileLoc(Vector2 Boardpos, Vector2 TileLoc)
+
+        public void ResetTileLocation(Vector2 Boardpos, Vector2 TileLoc)
         {
-            TileCoors = TileLoc;
-            AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
+            resetTileLocation(_state, Boardpos, TileLoc);
+        }
+        private static void resetTileLocation(TileState tileState, Vector2 Boardpos, Vector2 TileLoc)
+        {
+            tileState.TileCoors = TileLoc;
+            tileState.AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
         }
 
-        /// <summary>
-        /// Reset all tile variables for renewal
-        /// </summary>
-        private void ResetTile()
+
+        private static void ResetTile(TileState tileState)
         {
-            TileColor = Color.White;
-            Alpha = 255;
-            CurrentTileCondition = TileCondition.Normal;
-            CurrentPowerupType = PowerupType.None;
-            MarkedColor = Color.Transparent;
-            FadeThrottle.Reset();
-            FallSpeed.Reset();
-            ReappearSpeed.Reset();
+            tileState.TileColor = Color.White;
+            tileState.Alpha = 255;
+            tileState.CurrentTileCondition = TileCondition.Normal;
+            tileState.CurrentPowerupType = PowerupType.None;
+            tileState.MarkedColor = Color.Transparent;
+            tileState.FadeThrottle.Reset();
+            tileState.FallSpeed.Reset();
+            tileState.ReappearSpeed.Reset();
         }
 
     }
