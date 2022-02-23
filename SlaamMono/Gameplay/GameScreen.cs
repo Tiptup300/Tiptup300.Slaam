@@ -444,6 +444,7 @@ namespace SlaamMono.Gameplay
             _screenDirector.ChangeTo(_statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
         }
 
+        // to remove
         public virtual void ReportKilling(int Killer, int Killee)
         {
             if (_state.Characters[Killee].Lives == 0 && _state.GameType == GameType.Classic)

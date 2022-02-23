@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Gameplay.Actors;
-using SlaamMono.Gameplay.Boards;
 using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;

@@ -10,7 +10,6 @@ using SlaamMono.PlayerProfiles;
 using SlaamMono.SubClasses;
 using SlaamMono.x_;
 using System;
-using System.Collections.Generic;
 
 namespace SlaamMono.Gameplay.Actors
 {
