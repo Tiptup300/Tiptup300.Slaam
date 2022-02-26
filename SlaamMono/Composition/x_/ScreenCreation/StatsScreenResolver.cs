@@ -9,28 +9,18 @@ namespace SlaamMono.Composition.x_
 {
     public class StatsScreenResolver : IResolver<StatsScreenRequest, StatsScreen>
     {
-        private readonly ILogger _logger;
-        private readonly IScreenManager _screenManager;
-        private readonly IResources _resources;
-        private readonly IRenderGraph _renderGraph;
+        private readonly StatsScreen _statsScreen;
 
-        public StatsScreenResolver(
-            ILogger logger,
-            IScreenManager screenManager,
-            IResources resources,
-            IRenderGraph renderGraph)
+        public StatsScreenResolver(StatsScreen statsScreen)
         {
-            _logger = logger;
-            _screenManager = screenManager;
-            _resources = resources;
-            _renderGraph = renderGraph;
+            this._statsScreen = statsScreen;
         }
 
         public StatsScreen Resolve(StatsScreenRequest request)
         {
             StatsScreen output;
 
-            output = new StatsScreen(_logger, _screenManager, _resources, _renderGraph);
+            output = _statsScreen;
             output.Initialize(request);
 
             return output;

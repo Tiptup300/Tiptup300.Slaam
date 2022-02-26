@@ -6,6 +6,7 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
+using SlaamMono.Menus;
 using SlaamMono.StatsBoards;
 using SlaamMono.x_;
 using ZzziveGameEngine.StateManagement;
@@ -21,14 +22,12 @@ namespace SlaamMono.Gameplay.Statistics
         private StatsScreenState _state = new StatsScreenState();
 
         private readonly ILogger _logger;
-        private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraph;
 
-        public StatsScreen(ILogger logger, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
+        public StatsScreen(ILogger logger, IResources resources, IRenderGraph renderGraph)
         {
             _logger = logger;
-            _screenDirector = screenDirector;
             _resources = resources;
             _renderGraph = renderGraph;
         }
@@ -160,7 +159,8 @@ namespace SlaamMono.Gameplay.Statistics
 
             if (InputComponent.Players[0].PressedAction)
             {
-                _screenDirector.ChangeTo<IMainMenuScreen>();
+                new MainMenuScreenState();
+                //_screenDirector.ChangeTo<IMainMenuScreen>();
             }
             return _state;
         }
