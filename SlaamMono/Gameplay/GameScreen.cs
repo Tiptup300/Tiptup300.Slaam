@@ -27,24 +27,18 @@ namespace SlaamMono.Gameplay
 
         protected GameScreenState _state = new GameScreenState();
 
-        private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
         private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
-        private readonly IResolver<StatsScreenRequest, StatsScreen> _statsScreenRequest;
 
         public GameScreen(
-            IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphicsState,
-            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver,
-            IResolver<StatsScreenRequest, StatsScreen> statsScreenRequest)
+            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
         {
-            _screenDirector = screenDirector;
             _resources = resources;
             _graphics = graphicsState;
             _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
-            _statsScreenRequest = statsScreenRequest;
         }
 
         public void Initialize(GameScreenRequest gameScreenRequest)
@@ -417,7 +411,7 @@ namespace SlaamMono.Gameplay
                 _state.Characters[x].SaveProfileData();
             }
             ProfileManager.SaveProfiles();
-            _screenDirector.ChangeTo(_statsScreenRequest.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
+            new StatsScreenRequest(_state.ScoreKeeper, _state.GameType);
         }
 
 

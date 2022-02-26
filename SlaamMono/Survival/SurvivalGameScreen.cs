@@ -22,23 +22,17 @@ namespace SlaamMono.Survival
         private SurvivalGameScreenState _survivalState = new SurvivalGameScreenState();
 
         private readonly ILogger _logger;
-        private readonly IScreenManager _screenDirector;
         private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
-        private readonly IResolver<StatsScreenRequest, StatsScreen> _statsScreenResolver;
 
         public SurvivalGameScreen(
             ILogger logger,
-            IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphics,
-            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver,
-            IResolver<StatsScreenRequest, StatsScreen> statsScreenResolver)
-            : base(screenDirector, resources, graphics, gameScreenScoreBoardResolver, statsScreenResolver)
+            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
+            : base(resources, graphics, gameScreenScoreBoardResolver)
         {
             _logger = logger;
-            _screenDirector = screenDirector;
             _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
-            _statsScreenResolver = statsScreenResolver;
         }
 
         protected override void SetupTheBoard(string BoardLoc)
@@ -134,8 +128,7 @@ namespace SlaamMono.Survival
                 ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame = _state.Timer.CurrentGameTime;
             }
             ProfileManager.SaveProfiles();
-            _screenDirector.ChangeTo(
-                _statsScreenResolver.Resolve(new StatsScreenRequest(_state.ScoreKeeper, _state.GameType)));
+            new StatsScreenRequest(_state.ScoreKeeper, _state.GameType);
         }
     }
 }
