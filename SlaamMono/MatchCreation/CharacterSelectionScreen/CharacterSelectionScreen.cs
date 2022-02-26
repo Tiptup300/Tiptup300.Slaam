@@ -31,11 +31,6 @@ namespace SlaamMono.MatchCreation
             new Vector2(600, 768)
         };
 
-        public static Texture2D[] SkinTexture;
-        public static List<string> Skins = new List<string>();
-        public static bool SkinsLoaded = false;
-        private static Random rand = new Random();
-
         protected CharacterSelectionScreenState _state = new CharacterSelectionScreenState();
 
         private readonly ILogger _logger;
@@ -57,11 +52,11 @@ namespace SlaamMono.MatchCreation
             _logger.Log("----------------------------------");
             _logger.Log("Attemping to load in all skins...");
 
-            LoadAllSkins(_logger);
+            SkinLoadingFunctions.LoadAllSkins(_logger);
 
             _logger.Log("Listing of skins complete;");
 
-            if (Skins.Count < 1)
+            if (SkinLoadingFunctions.Skins.Count < 1)
             {
                 _logger.Log("0 Skins were found, Program Abort");
                 throw new Exception("0 Skins were found, Program Abort");
@@ -145,39 +140,6 @@ namespace SlaamMono.MatchCreation
             _state.SelectBoxes = null;
         }
 
-        public static string ReturnRandSkin(ILogger logger)
-        {
-            if (!SkinsLoaded)
-            {
-                LoadAllSkins(logger);
-            }
-            return Skins[rand.Next(0, Skins.Count)];
-        }
-
-        private static void LoadAllSkins(ILogger logger)
-        {
-            if (!SkinsLoaded)
-            {
-                List<string> skins = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\content\\SkinList.txt").ToList();
-                for (int x = 0; x < skins.Count; x++)
-                {
-                    Skins.Add(skins[x]);
-                    logger.Log(" - \"" + skins[x] + "\" was added to listing.");
-                }
-                SkinTexture = new Texture2D[Skins.Count];
-                for (int y = 0; y < Skins.Count; y++)
-                {
-                    SkinTexture[y] = SlaamGame.Content.Load<Texture2D>("content\\skins\\" + Skins[y]);
-                    if (!(SkinTexture[y].Width == 250 && SkinTexture[y].Height == 180))
-                    {
-                        Skins.RemoveAt(y);
-                        y--;
-                    }
-                }
-                SkinsLoaded = true;
-            }
-        }
-
         public virtual void ResetBoxes()
         {
             _state.SelectBoxes = new CharSelectBox[InputComponent.Players.Length];
@@ -186,9 +148,9 @@ namespace SlaamMono.MatchCreation
             {
                 _state.SelectBoxes[x] = new CharSelectBox(
                     _boxPositions[x],
-                    SkinTexture,
+                    SkinLoadingFunctions.SkinTexture,
                     (ExtendedPlayerIndex)x,
-                    Skins,
+                    SkinLoadingFunctions.Skins,
                     x_Di.Get<PlayerColorResolver>(),
                     x_Di.Get<IResources>());
             }

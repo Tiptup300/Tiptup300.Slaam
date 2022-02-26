@@ -433,7 +433,7 @@ namespace SlaamMono.MatchCreation
         {
             _state.SetupCharacters.Add(
                 new CharacterShell(
-                    skinLocation: CharacterSelectionScreen.ReturnRandSkin(_logger),
+                    skinLocation: SkinLoadingFunctions.ReturnRandSkin(_logger),
                     characterProfileIndex: ProfileManager.GetBotProfile(),
                     playerIndex: (ExtendedPlayerIndex)_state.SetupCharacters.Count,
                     playerType: PlayerType.Computer,

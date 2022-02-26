@@ -26,9 +26,9 @@ namespace SlaamMono.Survival
             _state.SelectBoxes = new CharSelectBox[1];
             _state.SelectBoxes[0] = new CharSelectBox(
                 new Vector2(340, 427),
-                SkinTexture,
+                SkinLoadingFunctions.SkinTexture,
                 ExtendedPlayerIndex.One,
-                Skins,
+                SkinLoadingFunctions.Skins,
                 x_Di.Get<PlayerColorResolver>(),
                 x_Di.Get<IResources>());
             _state.SelectBoxes[0].Survival = true;
