@@ -14,6 +14,7 @@ using SlaamMono.x_;
 using System;
 using System.IO;
 using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
@@ -142,7 +143,7 @@ namespace SlaamMono.MatchCreation
             return _defaultBoard;
         }
 
-        public void Perform()
+        public IState Perform()
         {
             if (_state.ViewingSettings)
             {
@@ -234,6 +235,7 @@ namespace SlaamMono.MatchCreation
                 }
 
             }
+            return _state;
         }
 
         private MatchSettings buildMatchSettings()

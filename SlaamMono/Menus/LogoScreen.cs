@@ -7,6 +7,7 @@ using SlaamMono.Subclasses;
 using SlaamMono.x_;
 using System;
 using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
@@ -41,7 +42,7 @@ namespace SlaamMono.Menus
             _state.LogoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"));
         }
 
-        public void Perform()
+        public IState Perform()
         {
             switch (_state.StateIndex)
             {
@@ -58,6 +59,7 @@ namespace SlaamMono.Menus
                     fadeOutState();
                     break;
             }
+            return _state;
         }
 
         private void initFadeInState()

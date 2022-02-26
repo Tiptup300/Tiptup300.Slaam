@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Library.Screens
 {
@@ -6,7 +7,7 @@ namespace SlaamMono.Library.Screens
     {
         void InitializeState();
 
-        void Perform();
+        IState Perform();
 
         void RenderState(SpriteBatch batch);
 

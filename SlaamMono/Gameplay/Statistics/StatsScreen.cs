@@ -8,6 +8,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.StatsBoards;
 using SlaamMono.x_;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay.Statistics
 {
@@ -126,9 +127,8 @@ namespace SlaamMono.Gameplay.Statistics
             return output;
         }
 
-        public void Perform()
+        public IState Perform()
         {
-
             if (_state.GameType != GameType.Survival)
             {
 
@@ -162,6 +162,7 @@ namespace SlaamMono.Gameplay.Statistics
             {
                 _screenDirector.ChangeTo<IMainMenuScreen>();
             }
+            return _state;
         }
 
         public void RenderState(SpriteBatch batch)

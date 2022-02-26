@@ -13,6 +13,7 @@ using SlaamMono.MatchCreation;
 using SlaamMono.PlayerProfiles;
 using System;
 using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Survival
 {
@@ -58,7 +59,7 @@ namespace SlaamMono.Survival
                         _state.GameType)));
         }
 
-        public override void Perform()
+        public override IState Perform()
         {
             if (_state.CurrentGameStatus == GameStatus.Playing)
             {
@@ -92,7 +93,7 @@ namespace SlaamMono.Survival
             {
                 AddNewBot(_state);
             }
-            base.Perform();
+            return base.Perform();
         }
 
         public override void ReportKilling(int Killer, int Killee)

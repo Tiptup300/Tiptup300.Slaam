@@ -8,6 +8,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.x_;
 using System;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
@@ -45,12 +46,12 @@ namespace SlaamMono.MatchCreation
             _state.HorizontalBoardOffset = new IntRange(-_state.BoardNames.Count);
         }
 
-        public void Perform()
+        public IState Perform()
         {
             if (_state.IsStillLoadingBoards)
             {
                 ContinueLoadingBoards();
-                return;
+                return _state;
             }
 
             _state.Alpha += (_state.AlphaUp ? 1 : -1) * FrameRateDirector.MovementFactor * _state.MovementSpeed;
@@ -165,7 +166,7 @@ namespace SlaamMono.MatchCreation
                 }
 
             }
-
+            return _state;
         }
 
 

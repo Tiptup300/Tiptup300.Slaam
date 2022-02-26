@@ -17,6 +17,7 @@ using System;
 using System.Linq;
 using ZBlade;
 using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
@@ -180,13 +181,13 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public virtual void Perform()
+        public virtual IState Perform()
         {
             if (_state.IsPaused)
             {
 
                 SlaamGame.mainBlade.Status = BladeStatus.Out;
-                return;
+                return _state;
             }
 
             _state.Timer.Update(_state);
@@ -212,7 +213,7 @@ namespace SlaamMono.Gameplay
             {
                 updateOverGameState();
             }
-
+            return _state;
         }
         private void updateOverGameState()
         {

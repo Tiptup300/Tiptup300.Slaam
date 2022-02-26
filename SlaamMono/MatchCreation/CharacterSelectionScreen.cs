@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
@@ -87,7 +88,7 @@ namespace SlaamMono.MatchCreation
 
         }
 
-        public void Perform()
+        public IState Perform()
         {
             _state._peopleDone = 0;
             _state._peopleIn = 0;
@@ -117,6 +118,7 @@ namespace SlaamMono.MatchCreation
             {
                 GoForward();
             }
+            return _state;
         }
 
         public virtual void GoBack()

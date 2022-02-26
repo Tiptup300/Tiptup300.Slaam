@@ -10,6 +10,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.x_;
 using System;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.PlayerProfiles
 {
@@ -49,10 +50,8 @@ namespace SlaamMono.PlayerProfiles
             }
         }
 
-        public void Perform()
+        public IState Perform()
         {
-
-
             if (_state.CurrentMenu.Value == 0)
             {
                 if (_state.WaitingForQwerty)
@@ -160,6 +159,7 @@ namespace SlaamMono.PlayerProfiles
                     }
                 }
             }
+            return _state;
         }
 
         public void RenderState(SpriteBatch batch)

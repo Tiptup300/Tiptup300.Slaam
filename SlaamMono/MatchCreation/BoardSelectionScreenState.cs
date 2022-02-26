@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay.Actors;
 using SlaamMono.Library;
 using System.Collections.Generic;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class BoardSelectionScreenState
+    public class BoardSelectionScreenState : IState
     {
         public LobbyScreen ParentLobbyScreen;
         public int DrawSizeWidth = 75;

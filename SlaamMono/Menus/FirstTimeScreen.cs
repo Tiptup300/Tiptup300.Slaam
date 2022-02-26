@@ -7,6 +7,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
@@ -56,13 +57,14 @@ namespace SlaamMono.Menus
             return _state.ControlsGraph;
         }
 
-        public void Perform()
+        public IState Perform()
         {
             if (InputComponent.Players[0].PressedAction)
             {
                 ProfileEditScreen.Instance.SetupNewProfile = true;
                 _screenDirector.ChangeTo(ProfileEditScreen.Instance);
             }
+            return _state;
         }
 
         public void RenderState(SpriteBatch batch)

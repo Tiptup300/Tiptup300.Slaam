@@ -7,6 +7,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.StatsBoards;
 using SlaamMono.x_;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
@@ -40,12 +41,13 @@ namespace SlaamMono.Menus
             _state._statsboard.ConstructGraph(25);
         }
 
-        public void Perform()
+        public IState Perform()
         {
             if (InputComponent.Players[0].PressedAction2)
             {
                 _screenDirector.ChangeTo<IMainMenuScreen>();
             }
+            return _state;
         }
 
         public void RenderState(SpriteBatch batch)

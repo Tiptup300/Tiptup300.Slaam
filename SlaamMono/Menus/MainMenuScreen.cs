@@ -6,11 +6,14 @@ using SlaamMono.Survival;
 using SlaamMono.x_;
 using System;
 using ZBlade;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
     public class MainMenuScreen : IMainMenuScreen, IStatePerformer
     {
+        private MainMenuScreenState _state;
+
         private readonly IScreenManager _screenManager;
 
         public MainMenuScreen(IScreenManager screenDirector)
@@ -25,7 +28,7 @@ namespace SlaamMono.Menus
             SlaamGame.mainBlade.UserCanNavigateMenu = true;
             SlaamGame.mainBlade.UserCanCloseMenu = false;
 
-
+            _state = new MainMenuScreenState();
         }
 
         private MenuItemTree buildMainMenu()
@@ -52,7 +55,10 @@ namespace SlaamMono.Menus
         private void exitGame(object sender, EventArgs e) => SlaamGame.Instance.Exit();
 
 
-        public void Perform() { }
+        public IState Perform() 
+        {
+            return _state;
+        }
         public void RenderState(SpriteBatch batch) { }
 
         public void Close()

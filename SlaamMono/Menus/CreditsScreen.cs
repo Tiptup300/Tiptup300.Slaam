@@ -7,6 +7,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.x_;
 using System.Collections.Generic;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
@@ -41,7 +42,7 @@ namespace SlaamMono.Menus
                 _state.CreditsListings.Add(new CreditsListing(credname, credcreds));
             }
         }
-        public void Perform()
+        public IState Perform()
         {
             if (InputComponent.Players[0].PressedAction)
             {
@@ -62,6 +63,7 @@ namespace SlaamMono.Menus
             {
                 _screenDirector.ChangeTo<IMainMenuScreen>();
             }
+            return _state;
         }
 
         public void RenderState(SpriteBatch batch)
