@@ -22,7 +22,7 @@ namespace SlaamMono.MatchCreation
     {
         private static Texture2D _defaultBoard;
 
-        private const int MAX_PLAYERS = 4;
+        private const int _maxPlayers = 4;
 
         private LobbyScreenState _state = new LobbyScreenState();
 
@@ -130,7 +130,8 @@ namespace SlaamMono.MatchCreation
             if (_defaultBoard == null)
             {
                 // todo: this will need fixed.
-                BoardSelectionScreen viewer = new BoardSelectionScreen(null, null);
+                BoardSelectionScreen viewer = null;//= new BoardSelectionScreen(null, null);
+                new BoardSelectionScreenRequest(null);
                 viewer.InitializeState();
                 while (!viewer.x_HasFoundBoard)
                 {
@@ -206,7 +207,7 @@ namespace SlaamMono.MatchCreation
                     ResetZune();
                 }
 
-                if (InputComponent.Players[0].PressedUp && _state.SetupCharacters.Count < MAX_PLAYERS)
+                if (InputComponent.Players[0].PressedUp && _state.SetupCharacters.Count < _maxPlayers)
                 {
                     AddComputer();
                 }

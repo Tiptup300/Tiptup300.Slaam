@@ -7,20 +7,18 @@ namespace SlaamMono.Composition.x_
 {
     public class BoardSelectionScreenResolver : IResolver<BoardSelectionScreenRequest, BoardSelectionScreen>
     {
-        private readonly IResources _resources;
-        private readonly IScreenManager _screenManager;
+        private readonly BoardSelectionScreen _boardSelectionScreen;
 
-        public BoardSelectionScreenResolver(IResources resources, IScreenManager screenManager)
+        public BoardSelectionScreenResolver(BoardSelectionScreen boardSelectionScreen)
         {
-            _resources = resources;
-            _screenManager = screenManager;
+            _boardSelectionScreen = boardSelectionScreen;
         }
 
         public BoardSelectionScreen Resolve(BoardSelectionScreenRequest request)
         {
             BoardSelectionScreen output;
 
-            output = new BoardSelectionScreen(_resources, _screenManager);
+            output = _boardSelectionScreen;
             output.Initialize(request);
 
             return output;

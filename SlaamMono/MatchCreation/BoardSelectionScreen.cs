@@ -19,13 +19,11 @@ namespace SlaamMono.MatchCreation
 
         private BoardSelectionScreenState _state = new BoardSelectionScreenState();
 
-        private readonly IScreenManager _screenManager;
         private readonly IResources _resources;
 
-        public BoardSelectionScreen(IResources resources, IScreenManager screenManager)
+        public BoardSelectionScreen(IResources resources)
         {
             _resources = resources;
-            _screenManager = screenManager;
         }
 
         public void Initialize(BoardSelectionScreenRequest request)
@@ -79,7 +77,8 @@ namespace SlaamMono.MatchCreation
                 if (InputComponent.Players[0].PressedAction)
                 {
                     _state.ParentLobbyScreen.LoadBoard(_state.ValidBoards[_state.Save]);
-                    _screenManager.ChangeTo(_state.ParentLobbyScreen);
+                    // todo
+                    //_screenManager.ChangeTo(_state.ParentLobbyScreen);
                 }
 
                 if (InputComponent.Players[0].PressedAction2)
