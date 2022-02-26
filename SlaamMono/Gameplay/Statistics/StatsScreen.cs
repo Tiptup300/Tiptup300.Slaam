@@ -32,7 +32,7 @@ namespace SlaamMono.Gameplay.Statistics
             _renderGraph = renderGraph;
         }
 
-        public void Initialize(StatsScreenRequest request)
+        public void Initialize(StatsScreenRequestState request)
         {
             _state.ScoreCollection = request.ScoreCollection;
             _state.GameType = request.GameType;

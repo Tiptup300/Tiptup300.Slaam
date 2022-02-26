@@ -6,13 +6,13 @@ using ZzziveGameEngine;
 namespace SlaamMono.Composition.x_.ScreenCreation
 {
     public class x_ScreensResolver :
-        IResolver<FirstTimeScreenRequest, FirstTimeScreen>,
-        IResolver<HighScoreScreenRequest, HighScoreScreen>,
-        IResolver<LogoScreenRequest, LogoScreen>,
+        IResolver<FirstTimeScreenRequestState, FirstTimeScreen>,
+        IResolver<HighScoreScreenRequestState, HighScoreScreen>,
+        IResolver<LogoScreenRequestState, LogoScreen>,
         IResolver<MainMenuRequest, MainMenuScreen>,
-        IResolver<ProfileEditScreenRequest, ProfileEditScreen>,
-        IResolver<SurvivalChracterSelectionScreenRequest, SurvivalCharacterSelectionScreen>,
-        IResolver<CreditsScreenRequest, CreditsScreen>
+        IResolver<ProfileEditScreenRequestState, ProfileEditScreen>,
+        IResolver<SurvivalChracterSelectionScreenRequestState, SurvivalCharacterSelectionScreen>,
+        IResolver<CreditsScreenRequestState, CreditsScreen>
     {
         private FirstTimeScreen _firstTimeScreen;
         private HighScoreScreen _highScoreScreen;
@@ -33,17 +33,17 @@ namespace SlaamMono.Composition.x_.ScreenCreation
             _creditsScreen = creditsScreen;
         }
 
-        public FirstTimeScreen Resolve(FirstTimeScreenRequest request)
+        public FirstTimeScreen Resolve(FirstTimeScreenRequestState request)
         {
             return _firstTimeScreen;
         }
 
-        public HighScoreScreen Resolve(HighScoreScreenRequest request)
+        public HighScoreScreen Resolve(HighScoreScreenRequestState request)
         {
             return _highScoreScreen;
         }
 
-        public LogoScreen Resolve(LogoScreenRequest request)
+        public LogoScreen Resolve(LogoScreenRequestState request)
         {
             return _logoScreen;
         }
@@ -53,17 +53,17 @@ namespace SlaamMono.Composition.x_.ScreenCreation
             return _mainMenuScreen;
         }
 
-        public ProfileEditScreen Resolve(ProfileEditScreenRequest request)
+        public ProfileEditScreen Resolve(ProfileEditScreenRequestState request)
         {
             return _profileEditScreen;
         }
 
-        public SurvivalCharacterSelectionScreen Resolve(SurvivalChracterSelectionScreenRequest request)
+        public SurvivalCharacterSelectionScreen Resolve(SurvivalChracterSelectionScreenRequestState request)
         {
             return _survivalCharacterSelectionScreen;
         }
 
-        public CreditsScreen Resolve(CreditsScreenRequest request)
+        public CreditsScreen Resolve(CreditsScreenRequestState request)
         {
             return _creditsScreen;
         }

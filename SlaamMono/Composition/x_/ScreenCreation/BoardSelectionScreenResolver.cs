@@ -5,7 +5,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Composition.x_
 {
-    public class BoardSelectionScreenResolver : IResolver<BoardSelectionScreenRequest, BoardSelectionScreen>
+    public class BoardSelectionScreenResolver : IResolver<BoardSelectionScreenRequestState, BoardSelectionScreen>
     {
         private readonly BoardSelectionScreen _boardSelectionScreen;
 
@@ -14,7 +14,7 @@ namespace SlaamMono.Composition.x_
             _boardSelectionScreen = boardSelectionScreen;
         }
 
-        public BoardSelectionScreen Resolve(BoardSelectionScreenRequest request)
+        public BoardSelectionScreen Resolve(BoardSelectionScreenRequestState request)
         {
             BoardSelectionScreen output;
 

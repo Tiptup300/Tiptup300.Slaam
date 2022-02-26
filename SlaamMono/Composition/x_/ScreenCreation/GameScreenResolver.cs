@@ -7,7 +7,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Composition.x_
 {
-    public class GameScreenResolver : IResolver<GameScreenRequest, GameScreen>
+    public class GameScreenResolver : IResolver<GameScreenRequestState, GameScreen>
     {
         private readonly GameScreen _gameScreen;
 
@@ -16,7 +16,7 @@ namespace SlaamMono.Composition.x_
             _gameScreen = gameScreen;
         }
 
-        public GameScreen Resolve(GameScreenRequest request)
+        public GameScreen Resolve(GameScreenRequestState request)
         {
             GameScreen output;
 

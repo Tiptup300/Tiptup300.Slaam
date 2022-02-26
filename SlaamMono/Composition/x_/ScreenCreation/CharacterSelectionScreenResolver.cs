@@ -5,20 +5,20 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Composition.x_.ScreenCreation
 {
-    public class CharacterSelectionScreenResolver : IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen>
+    public class CharacterSelectionScreenResolver : IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreen>
     {
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
-        private readonly IResolver<LobbyScreenRequest, LobbyScreen> _lobbyScreenResolver;
+        private readonly IResolver<LobbyScreenRequestState, LobbyScreen> _lobbyScreenResolver;
 
-        public CharacterSelectionScreenResolver(ILogger logger, IScreenManager screenDirector, IResolver<LobbyScreenRequest, LobbyScreen> lobbyScreenResolver)
+        public CharacterSelectionScreenResolver(ILogger logger, IScreenManager screenDirector, IResolver<LobbyScreenRequestState, LobbyScreen> lobbyScreenResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _lobbyScreenResolver = lobbyScreenResolver;
         }
 
-        public CharacterSelectionScreen Resolve(CharacterSelectionScreenRequest request)
+        public CharacterSelectionScreen Resolve(CharacterSelectionScreenRequestState request)
         {
             CharacterSelectionScreen output;
 

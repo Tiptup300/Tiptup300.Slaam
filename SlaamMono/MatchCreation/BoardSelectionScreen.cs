@@ -26,7 +26,7 @@ namespace SlaamMono.MatchCreation
             _resources = resources;
         }
 
-        public void Initialize(BoardSelectionScreenRequest request)
+        public void Initialize(BoardSelectionScreenRequestState request)
         {
             _state.ParentLobbyScreen = request.ParentScreen;
         }

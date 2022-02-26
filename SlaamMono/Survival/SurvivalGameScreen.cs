@@ -128,7 +128,7 @@ namespace SlaamMono.Survival
                 ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame = _state.Timer.CurrentGameTime;
             }
             ProfileManager.SaveProfiles();
-            new StatsScreenRequest(_state.ScoreKeeper, _state.GameType);
+            new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
         }
     }
 }

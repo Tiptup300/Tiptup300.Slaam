@@ -31,9 +31,9 @@ namespace SlaamMono.MatchCreation
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
-        private readonly IResolver<GameScreenRequest, GameScreen> _gameScreenRequest;
-        private readonly IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> _boardSelectionScreenResolver;
-        private readonly IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen> _characterSelectionScreenResolver;
+        private readonly IResolver<GameScreenRequestState, GameScreen> _gameScreenRequest;
+        private readonly IResolver<BoardSelectionScreenRequestState, BoardSelectionScreen> _boardSelectionScreenResolver;
+        private readonly IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreen> _characterSelectionScreenResolver;
 
         public LobbyScreen(
             ILogger logger,
@@ -41,9 +41,9 @@ namespace SlaamMono.MatchCreation
             PlayerColorResolver playerColorResolver,
             IResources resources,
             IRenderGraph renderGraphManager,
-            IResolver<GameScreenRequest, GameScreen> gameScreenRequest,
-            IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> boardSelectionScreenResolver,
-            IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen> characterSelectionScreenResolver)
+            IResolver<GameScreenRequestState, GameScreen> gameScreenRequest,
+            IResolver<BoardSelectionScreenRequestState, BoardSelectionScreen> boardSelectionScreenResolver,
+            IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreen> characterSelectionScreenResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
@@ -56,7 +56,7 @@ namespace SlaamMono.MatchCreation
         }
 
 
-        public void Initialize(LobbyScreenRequest request)
+        public void Initialize(LobbyScreenRequestState request)
         {
             _state.SetupCharacters = request.CharacterShells;
         }
@@ -92,7 +92,7 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                BoardSelectionScreen viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequest(this));
+                BoardSelectionScreen viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequestState(this));
                 viewer.InitializeState();
                 while (!viewer.x_HasFoundBoard)
                 {
@@ -131,7 +131,7 @@ namespace SlaamMono.MatchCreation
             {
                 // todo: this will need fixed.
                 BoardSelectionScreen viewer = null;//= new BoardSelectionScreen(null, null);
-                new BoardSelectionScreenRequest(null);
+                new BoardSelectionScreenRequestState(null);
                 viewer.InitializeState();
                 while (!viewer.x_HasFoundBoard)
                 {
@@ -192,7 +192,7 @@ namespace SlaamMono.MatchCreation
                         }
                         else
                         {
-                            _screenDirector.ChangeTo(_boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequest(this)));
+                            _screenDirector.ChangeTo(_boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequestState(this)));
                         }
 
                     }
@@ -202,7 +202,7 @@ namespace SlaamMono.MatchCreation
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    _screenDirector.ChangeTo(_characterSelectionScreenResolver.Resolve(new CharacterSelectionScreenRequest()));
+                    _screenDirector.ChangeTo(_characterSelectionScreenResolver.Resolve(new CharacterSelectionScreenRequestState()));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }
@@ -221,7 +221,7 @@ namespace SlaamMono.MatchCreation
                 {
                     MatchSettings.CurrentMatchSettings = buildMatchSettings();
                     writeMatchSettingsToFile();
-                    GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequest(_state.SetupCharacters));
+                    GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequestState(_state.SetupCharacters));
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();

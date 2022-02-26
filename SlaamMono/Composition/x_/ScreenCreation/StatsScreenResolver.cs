@@ -7,7 +7,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Composition.x_
 {
-    public class StatsScreenResolver : IResolver<StatsScreenRequest, StatsScreen>
+    public class StatsScreenResolver : IResolver<StatsScreenRequestState, StatsScreen>
     {
         private readonly StatsScreen _statsScreen;
 
@@ -16,7 +16,7 @@ namespace SlaamMono.Composition.x_
             this._statsScreen = statsScreen;
         }
 
-        public StatsScreen Resolve(StatsScreenRequest request)
+        public StatsScreen Resolve(StatsScreenRequestState request)
         {
             StatsScreen output;
 

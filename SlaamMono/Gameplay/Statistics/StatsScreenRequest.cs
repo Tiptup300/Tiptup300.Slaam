@@ -1,13 +1,13 @@
-﻿using ZzziveGameEngine;
+﻿using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay.Statistics
 {
-    public class StatsScreenRequest : IRequest
+    public class StatsScreenRequestState : IState
     {
         public MatchScoreCollection ScoreCollection;
         public GameType GameType;
 
-        public StatsScreenRequest(MatchScoreCollection scoreCollection, GameType gameType)
+        public StatsScreenRequestState(MatchScoreCollection scoreCollection, GameType gameType)
         {
             ScoreCollection = scoreCollection;
             GameType = gameType;

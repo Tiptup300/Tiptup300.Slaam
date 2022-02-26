@@ -41,7 +41,7 @@ namespace SlaamMono.Gameplay
             _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
         }
 
-        public void Initialize(GameScreenRequest gameScreenRequest)
+        public void Initialize(GameScreenRequestState gameScreenRequest)
         {
             _state.SetupCharacters = gameScreenRequest.SetupCharacters;
         }
@@ -411,7 +411,7 @@ namespace SlaamMono.Gameplay
                 _state.Characters[x].SaveProfileData();
             }
             ProfileManager.SaveProfiles();
-            new StatsScreenRequest(_state.ScoreKeeper, _state.GameType);
+            new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
         }
 
 

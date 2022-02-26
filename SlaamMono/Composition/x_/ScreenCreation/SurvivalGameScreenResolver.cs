@@ -9,7 +9,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Composition.x_
 {
-    public class SurvivalGameScreenResolver : IResolver<GameScreenRequest, SurvivalGameScreen>
+    public class SurvivalGameScreenResolver : IResolver<GameScreenRequestState, SurvivalGameScreen>
     {
         private readonly SurvivalGameScreen _survivalGameScreen;
 
@@ -19,7 +19,7 @@ namespace SlaamMono.Composition.x_
             _survivalGameScreen = survivalGameScreen;
         }
 
-        public SurvivalGameScreen Resolve(GameScreenRequest request)
+        public SurvivalGameScreen Resolve(GameScreenRequestState request)
         {
             SurvivalGameScreen output;
 

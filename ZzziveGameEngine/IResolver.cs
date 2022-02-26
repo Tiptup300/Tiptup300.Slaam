@@ -1,6 +1,6 @@
 ﻿namespace ZzziveGameEngine
 {
-    public interface IResolver<TInputRequest, TOutputResponse> where TInputRequest : IRequest
+    public interface IResolver<TInputRequest, TOutputResponse>
     {
         TOutputResponse Resolve(TInputRequest request);
     }

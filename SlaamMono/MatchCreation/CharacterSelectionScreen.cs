@@ -39,16 +39,16 @@ namespace SlaamMono.MatchCreation
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
-        private readonly IResolver<LobbyScreenRequest, LobbyScreen> _lobbyScreenResolver;
+        private readonly IResolver<LobbyScreenRequestState, LobbyScreen> _lobbyScreenResolver;
 
-        public CharacterSelectionScreen(ILogger logger, IScreenManager screenDirector, IResolver<LobbyScreenRequest, LobbyScreen> lobbyScreenResolver)
+        public CharacterSelectionScreen(ILogger logger, IScreenManager screenDirector, IResolver<LobbyScreenRequestState, LobbyScreen> lobbyScreenResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _lobbyScreenResolver = lobbyScreenResolver;
         }
 
-        public void Initialize(CharacterSelectionScreenRequest request)
+        public void Initialize(CharacterSelectionScreenRequestState request)
         {
             // do nothing
         }
@@ -134,7 +134,7 @@ namespace SlaamMono.MatchCreation
                 .ToList();
 
             _screenDirector.ChangeTo(
-                _lobbyScreenResolver.Resolve(new LobbyScreenRequest(characterShells)));
+                _lobbyScreenResolver.Resolve(new LobbyScreenRequestState(characterShells)));
         }
 
         public void RenderState(SpriteBatch batch)

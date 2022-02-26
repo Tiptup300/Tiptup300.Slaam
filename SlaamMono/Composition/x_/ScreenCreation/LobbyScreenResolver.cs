@@ -8,16 +8,16 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Composition.x_.ScreenCreation
 {
-    public class LobbyScreenResolver : IResolver<LobbyScreenRequest, LobbyScreen>
+    public class LobbyScreenResolver : IResolver<LobbyScreenRequestState, LobbyScreen>
     {
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
-        private readonly IResolver<GameScreenRequest, GameScreen> _gameScreenRequest;
-        private readonly IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> _boardSelectionScreenResolver;
-        private readonly IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen> _characterSelectionScreenResolver;
+        private readonly IResolver<GameScreenRequestState, GameScreen> _gameScreenRequest;
+        private readonly IResolver<BoardSelectionScreenRequestState, BoardSelectionScreen> _boardSelectionScreenResolver;
+        private readonly IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreen> _characterSelectionScreenResolver;
 
         public LobbyScreenResolver(
             ILogger logger,
@@ -25,9 +25,9 @@ namespace SlaamMono.Composition.x_.ScreenCreation
             PlayerColorResolver playerColorResolver,
             IResources resources,
             IRenderGraph renderGraphManager,
-            IResolver<GameScreenRequest, GameScreen> gameScreenRequest,
-            IResolver<BoardSelectionScreenRequest, BoardSelectionScreen> boardSelectionScreenResolver,
-            IResolver<CharacterSelectionScreenRequest, CharacterSelectionScreen> characterSelectionScreenResolver)
+            IResolver<GameScreenRequestState, GameScreen> gameScreenRequest,
+            IResolver<BoardSelectionScreenRequestState, BoardSelectionScreen> boardSelectionScreenResolver,
+            IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreen> characterSelectionScreenResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
@@ -39,7 +39,7 @@ namespace SlaamMono.Composition.x_.ScreenCreation
             _characterSelectionScreenResolver = characterSelectionScreenResolver;
         }
 
-        public LobbyScreen Resolve(LobbyScreenRequest request)
+        public LobbyScreen Resolve(LobbyScreenRequestState request)
         {
             LobbyScreen output;
 

@@ -15,13 +15,13 @@ namespace SlaamMono.Survival
     public class SurvivalCharacterSelectionScreen : CharacterSelectionScreen
     {
         private readonly IScreenManager _screenDirector;
-        private readonly IResolver<GameScreenRequest, SurvivalGameScreen> _survivalGameScreenRequest;
+        private readonly IResolver<GameScreenRequestState, SurvivalGameScreen> _survivalGameScreenRequest;
 
         public SurvivalCharacterSelectionScreen(
             ILogger logger,
             IScreenManager screenDirector,
-            IResolver<GameScreenRequest, SurvivalGameScreen> survivalGameScreenRequest,
-            IResolver<LobbyScreenRequest, LobbyScreen> lobbyScreenResolver)
+            IResolver<GameScreenRequestState, SurvivalGameScreen> survivalGameScreenRequest,
+            IResolver<LobbyScreenRequestState, LobbyScreen> lobbyScreenResolver)
             : base(logger, screenDirector, lobbyScreenResolver)
         {
             _screenDirector = screenDirector;
@@ -50,7 +50,7 @@ namespace SlaamMono.Survival
         {
             List<CharacterShell> list = new List<CharacterShell>();
             list.Add(_state.SelectBoxes[0].GetShell());
-            GameScreen.Instance = _survivalGameScreenRequest.Resolve(new GameScreenRequest(list));
+            GameScreen.Instance = _survivalGameScreenRequest.Resolve(new GameScreenRequestState(list));
             _screenDirector.ChangeTo(GameScreen.Instance);
         }
     }
