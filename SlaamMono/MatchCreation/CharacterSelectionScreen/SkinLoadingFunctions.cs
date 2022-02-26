@@ -12,21 +12,21 @@ namespace SlaamMono.MatchCreation
 
         public static Texture2D[] SkinTexture;
         public static List<string> Skins = new List<string>();
-        private static bool SkinsLoaded = false;
-        private static Random rand = new Random();
+        private static bool _skinsLoaded = false;
+        private static Random _rand = new Random();
 
         public static string ReturnRandSkin(ILogger logger)
         {
-            if (!SkinsLoaded)
+            if (!_skinsLoaded)
             {
                 LoadAllSkins(logger);
             }
-            return Skins[rand.Next(0, Skins.Count)];
+            return Skins[_rand.Next(0, Skins.Count)];
         }
 
         public static void LoadAllSkins(ILogger logger)
         {
-            if (!SkinsLoaded)
+            if (!_skinsLoaded)
             {
                 List<string> skins = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\content\\SkinList.txt").ToList();
                 for (int x = 0; x < skins.Count; x++)
@@ -44,7 +44,7 @@ namespace SlaamMono.MatchCreation
                         y--;
                     }
                 }
-                SkinsLoaded = true;
+                _skinsLoaded = true;
             }
         }
     }
