@@ -6,6 +6,7 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
+using SlaamMono.Menus;
 using SlaamMono.x_;
 using System;
 using System.Collections.Generic;
@@ -18,15 +19,15 @@ namespace SlaamMono.MatchCreation
 {
     public class CharacterSelectionScreen : IStatePerformer
     {
-        private const float VOffset = 195f;
-        private const float HOffset = 40f;
+        private const float _verticalOffset = 195f;
+        private const float _horizontalOffset = 40f;
         private readonly Vector2[] _boxPositions = new Vector2[]
         {
-            new Vector2(HOffset + 0, VOffset + 0),
-            new Vector2(HOffset + 0, VOffset + 256),
-            new Vector2(HOffset + 600, VOffset + 0),
-            new Vector2(HOffset + 600, VOffset + 256),
-            new Vector2(HOffset + 600, VOffset + 512),
+            new Vector2(_horizontalOffset + 0, _verticalOffset + 0),
+            new Vector2(_horizontalOffset + 0, _verticalOffset + 256),
+            new Vector2(_horizontalOffset + 600, _verticalOffset + 0),
+            new Vector2(_horizontalOffset + 600, _verticalOffset + 256),
+            new Vector2(_horizontalOffset + 600, _verticalOffset + 512),
             new Vector2(600, 768)
         };
 
@@ -38,14 +39,10 @@ namespace SlaamMono.MatchCreation
         protected CharacterSelectionScreenState _state = new CharacterSelectionScreenState();
 
         private readonly ILogger _logger;
-        private readonly IScreenManager _screenDirector;
-        private readonly IResolver<LobbyScreenRequestState, LobbyScreen> _lobbyScreenResolver;
 
-        public CharacterSelectionScreen(ILogger logger, IScreenManager screenDirector, IResolver<LobbyScreenRequestState, LobbyScreen> lobbyScreenResolver)
+        public CharacterSelectionScreen(ILogger logger)
         {
             _logger = logger;
-            _screenDirector = screenDirector;
-            _lobbyScreenResolver = lobbyScreenResolver;
         }
 
         public void Initialize(CharacterSelectionScreenRequestState request)
@@ -56,7 +53,7 @@ namespace SlaamMono.MatchCreation
         public void InitializeState()
         {
             _logger.Log("----------------------------------");
-            _logger.Log("     Character Select Screen      ");
+            _logger.Log("     Char.acter Select Screen      ");
             _logger.Log("----------------------------------");
             _logger.Log("Attemping to load in all skins...");
 
@@ -98,7 +95,7 @@ namespace SlaamMono.MatchCreation
                 InputComponent.Players[0].PressedAction2 &&
                 _state.SelectBoxes[0].CurrentState == CharSelectBoxState.Computer)
             {
-                GoBack();
+                return GoBack();
             }
 
             for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
@@ -116,25 +113,24 @@ namespace SlaamMono.MatchCreation
             }
             if (_state._peopleIn > 0 && _state._peopleDone == _state._peopleIn)
             {
-                GoForward();
+                return GoForward();
             }
             return _state;
         }
 
-        public virtual void GoBack()
+        public virtual IState GoBack()
         {
-            _screenDirector.ChangeTo<IMainMenuScreen>();
+            return new MainMenuScreenState();
         }
 
-        public virtual void GoForward()
+        public virtual IState GoForward()
         {
             var characterShells = _state.SelectBoxes
                 .Where(selectBox => selectBox.CurrentState == CharSelectBoxState.Done)
                 .Select(selectBox => selectBox.GetShell())
                 .ToList();
 
-            _screenDirector.ChangeTo(
-                _lobbyScreenResolver.Resolve(new LobbyScreenRequestState(characterShells)));
+            return new LobbyScreenRequestState(characterShells);
         }
 
         public void RenderState(SpriteBatch batch)
