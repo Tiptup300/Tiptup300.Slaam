@@ -20,7 +20,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreen : IStateUpdater
+    public class GameScreen : IStatePerformer
     {
         public static GameScreen Instance;
 
@@ -180,7 +180,7 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public virtual void UpdateState()
+        public virtual void Perform()
         {
             if (_state.IsPaused)
             {

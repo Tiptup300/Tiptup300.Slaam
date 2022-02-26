@@ -1,6 +1,6 @@
 ﻿namespace SlaamMono.Library.Screens
 {
-    public interface ILogoScreen : IStateUpdater
+    public interface ILogoScreen : IStatePerformer
     {
     }
 }

@@ -9,7 +9,7 @@ using ZBlade;
 
 namespace SlaamMono.Menus
 {
-    public class MainMenuScreen : IMainMenuScreen, IStateUpdater
+    public class MainMenuScreen : IMainMenuScreen, IStatePerformer
     {
         private readonly IScreenManager _screenManager;
 
@@ -52,7 +52,7 @@ namespace SlaamMono.Menus
         private void exitGame(object sender, EventArgs e) => SlaamGame.Instance.Exit();
 
 
-        public void UpdateState() { }
+        public void Perform() { }
         public void RenderState(SpriteBatch batch) { }
 
         public void Close()

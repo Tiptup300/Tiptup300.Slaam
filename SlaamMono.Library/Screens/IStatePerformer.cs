@@ -2,11 +2,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SlaamMono.Library.Screens
 {
-    public interface IStateUpdater
+    public interface IStatePerformer
     {
         void InitializeState();
 
-        void UpdateState();
+        void Perform();
 
         void RenderState(SpriteBatch batch);
 

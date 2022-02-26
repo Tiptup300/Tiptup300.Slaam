@@ -11,7 +11,7 @@ using SlaamMono.x_;
 
 namespace SlaamMono.Gameplay.Statistics
 {
-    public class StatsScreen : IStateUpdater
+    public class StatsScreen : IStatePerformer
     {
         public const int MAX_HIGHSCORES = 5;
         private readonly Rectangle _statsRectangle = new Rectangle(20, 110, GameGlobals.DRAWING_GAME_WIDTH - 40, GameGlobals.DRAWING_GAME_HEIGHT);
@@ -126,7 +126,7 @@ namespace SlaamMono.Gameplay.Statistics
             return output;
         }
 
-        public void UpdateState()
+        public void Perform()
         {
 
             if (_state.GameType != GameType.Survival)

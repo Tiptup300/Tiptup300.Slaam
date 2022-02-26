@@ -6,11 +6,11 @@ namespace SlaamMono.Library.Screens
     public class ScreenManager : IScreenManager
     {
         private readonly Mut<ScreenTransitionState> _screenState;
-        private readonly IResolver<ScreenRequest, IStateUpdater> _screenResolver;
+        private readonly IResolver<ScreenRequest, IStatePerformer> _screenResolver;
 
         public ScreenManager(
             Mut<ScreenTransitionState> screenState,
-            IResolver<ScreenRequest, IStateUpdater> screenResolver)
+            IResolver<ScreenRequest, IStatePerformer> screenResolver)
         {
             _screenState = screenState;
             _screenResolver = screenResolver;
@@ -20,7 +20,7 @@ namespace SlaamMono.Library.Screens
         {
             if (_screenState.Get().HasCurrentScreen)
             {
-                _screenState.Get().CurrentScreen.UpdateState();
+                _screenState.Get().CurrentScreen.Perform();
             }
 
             if (_screenState.Get().IsChangingScreens)
@@ -37,7 +37,7 @@ namespace SlaamMono.Library.Screens
             }
             _screenState.Mutate(_screenState.Get().CompleteTransition());
             _screenState.Get().CurrentScreen.InitializeState();
-            _screenState.Get().CurrentScreen.UpdateState();
+            _screenState.Get().CurrentScreen.Perform();
         }
 
         public void Draw(SpriteBatch batch)
@@ -48,13 +48,13 @@ namespace SlaamMono.Library.Screens
             }
         }
 
-        public void ChangeTo(IStateUpdater nextScreen)
+        public void ChangeTo(IStatePerformer nextScreen)
         {
             var newState = _screenState.Get().BeginTransition(nextScreen);
             _screenState.Mutate(newState);
         }
 
-        public void ChangeTo<TScreenType>() where TScreenType : IStateUpdater
+        public void ChangeTo<TScreenType>() where TScreenType : IStatePerformer
         {
             ChangeTo(_screenResolver.Resolve(new ScreenRequest(typeof(TScreenType).Name)));
         }

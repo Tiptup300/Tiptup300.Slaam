@@ -2,20 +2,20 @@
 {
     public class ScreenTransitionState
     {
-        public IStateUpdater CurrentScreen { get; private set; }
-        public IStateUpdater NextScreen { get; private set; }
+        public IStatePerformer CurrentScreen { get; private set; }
+        public IStatePerformer NextScreen { get; private set; }
         public bool IsChangingScreens { get; private set; }
 
         public bool HasCurrentScreen => CurrentScreen != null;
 
-        public ScreenTransitionState(IStateUpdater currentScreen, IStateUpdater nextScreen, bool isChangingScreens = false)
+        public ScreenTransitionState(IStatePerformer currentScreen, IStatePerformer nextScreen, bool isChangingScreens = false)
         {
             CurrentScreen = currentScreen;
             NextScreen = nextScreen;
             IsChangingScreens = isChangingScreens;
         }
 
-        public ScreenTransitionState BeginTransition(IStateUpdater nextScreen)
+        public ScreenTransitionState BeginTransition(IStatePerformer nextScreen)
         {
             return new ScreenTransitionState(CurrentScreen, nextScreen, true);
         }

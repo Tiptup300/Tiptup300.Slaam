@@ -11,7 +11,7 @@ using System;
 
 namespace SlaamMono.MatchCreation
 {
-    public class BoardSelectionScreen : IStateUpdater
+    public class BoardSelectionScreen : IStatePerformer
     {
         public bool x_HasFoundBoard { get => _state.HasFoundBoard; }
         public string x_IsValidBoard { get => _state.IsValidBoard; }
@@ -45,7 +45,7 @@ namespace SlaamMono.MatchCreation
             _state.HorizontalBoardOffset = new IntRange(-_state.BoardNames.Count);
         }
 
-        public void UpdateState()
+        public void Perform()
         {
             if (_state.IsStillLoadingBoards)
             {

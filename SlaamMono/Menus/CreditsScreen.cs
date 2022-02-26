@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace SlaamMono.Menus
 {
-    public partial class CreditsScreen : IStateUpdater
+    public partial class CreditsScreen : IStatePerformer
     {
         private const float MovementSpeed = 3f / 120f;
 
@@ -41,7 +41,7 @@ namespace SlaamMono.Menus
                 _state.CreditsListings.Add(new CreditsListing(credname, credcreds));
             }
         }
-        public void UpdateState()
+        public void Perform()
         {
             if (InputComponent.Players[0].PressedAction)
             {

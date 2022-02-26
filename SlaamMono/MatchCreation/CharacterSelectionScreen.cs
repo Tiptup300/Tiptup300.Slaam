@@ -15,7 +15,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.MatchCreation
 {
-    public class CharacterSelectionScreen : IStateUpdater
+    public class CharacterSelectionScreen : IStatePerformer
     {
         private const float VOffset = 195f;
         private const float HOffset = 40f;
@@ -87,7 +87,7 @@ namespace SlaamMono.MatchCreation
 
         }
 
-        public void UpdateState()
+        public void Perform()
         {
             _state._peopleDone = 0;
             _state._peopleIn = 0;

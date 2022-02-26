@@ -10,7 +10,7 @@ using SlaamMono.x_;
 
 namespace SlaamMono.Menus
 {
-    public class HighScoreScreen : IStateUpdater
+    public class HighScoreScreen : IStatePerformer
     {
         public const int MAX_HIGHSCORES = 7;
 
@@ -40,7 +40,7 @@ namespace SlaamMono.Menus
             _state._statsboard.ConstructGraph(25);
         }
 
-        public void UpdateState()
+        public void Perform()
         {
             if (InputComponent.Players[0].PressedAction2)
             {

@@ -10,7 +10,7 @@ using SlaamMono.x_;
 
 namespace SlaamMono.Menus
 {
-    public class FirstTimeScreen : IStateUpdater
+    public class FirstTimeScreen : IStatePerformer
     {
         public FirstTimeScreenState _state = new FirstTimeScreenState();
 
@@ -56,7 +56,7 @@ namespace SlaamMono.Menus
             return _state.ControlsGraph;
         }
 
-        public void UpdateState()
+        public void Perform()
         {
             if (InputComponent.Players[0].PressedAction)
             {

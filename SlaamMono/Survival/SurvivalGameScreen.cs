@@ -58,7 +58,7 @@ namespace SlaamMono.Survival
                         _state.GameType)));
         }
 
-        public override void UpdateState()
+        public override void Perform()
         {
             if (_state.CurrentGameStatus == GameStatus.Playing)
             {
@@ -92,7 +92,7 @@ namespace SlaamMono.Survival
             {
                 AddNewBot(_state);
             }
-            base.UpdateState();
+            base.Perform();
         }
 
         public override void ReportKilling(int Killer, int Killee)

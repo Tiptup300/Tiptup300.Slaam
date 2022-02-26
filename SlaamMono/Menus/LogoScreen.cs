@@ -10,7 +10,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Menus
 {
-    public class LogoScreen : ILogoScreen, IStateUpdater
+    public class LogoScreen : ILogoScreen, IStatePerformer
     {
         private const float _fadeInSeconds = 1f;
         private const float _holdSeconds = 3f;
@@ -41,7 +41,7 @@ namespace SlaamMono.Menus
             _state.LogoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"));
         }
 
-        public void UpdateState()
+        public void Perform()
         {
             switch (_state.StateIndex)
             {

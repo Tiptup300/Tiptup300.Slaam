@@ -17,7 +17,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.MatchCreation
 {
-    public class LobbyScreen : IStateUpdater
+    public class LobbyScreen : IStatePerformer
     {
         private static Texture2D _defaultBoard;
 
@@ -95,7 +95,7 @@ namespace SlaamMono.MatchCreation
                 viewer.InitializeState();
                 while (!viewer.x_HasFoundBoard)
                 {
-                    viewer.UpdateState();
+                    viewer.Perform();
                 }
                 LoadBoard(viewer.x_IsValidBoard);
                 viewer.Close();
@@ -133,7 +133,7 @@ namespace SlaamMono.MatchCreation
                 viewer.InitializeState();
                 while (!viewer.x_HasFoundBoard)
                 {
-                    viewer.UpdateState();
+                    viewer.Perform();
                 }
                 _defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.x_IsValidBoard);
                 viewer.Close();
@@ -142,7 +142,7 @@ namespace SlaamMono.MatchCreation
             return _defaultBoard;
         }
 
-        public void UpdateState()
+        public void Perform()
         {
             if (_state.ViewingSettings)
             {
