@@ -2,7 +2,7 @@
 
 namespace ZzziveGameEngine.StateManagement.States
 {
-    public interface IGameStartedState : IState
+    public class GameStartState : IState
     {
     }
 }

@@ -7,5 +7,7 @@ namespace SlaamMono.MatchCreation
         public PlayerCharacterSelectBox[] SelectBoxes;
         public int _peopleDone = 0;
         public int _peopleIn = 0;
+
+        public bool isForSurvival = false;
     }
 }

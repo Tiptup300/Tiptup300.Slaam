@@ -7,6 +7,7 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.Menus;
+using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
 using System;
 using System.Collections.Generic;
@@ -70,9 +71,9 @@ namespace SlaamMono.MatchCreation
             {
                 if (_state.SelectBoxes[x] != null)
                 {
-                    if (_state.SelectBoxes[x].CurrentState == CharSelectBoxState.Done)
+                    if (_state.SelectBoxes[x].CurrentState == PlayerCharacterSelectBoxStatus.Done)
                     {
-                        _state.SelectBoxes[x].CurrentState = CharSelectBoxState.CharSelect;
+                        _state.SelectBoxes[x].CurrentState = PlayerCharacterSelectBoxStatus.CharSelect;
                     }
                     _state.SelectBoxes[x].Reset();
                 }
@@ -88,7 +89,7 @@ namespace SlaamMono.MatchCreation
             if (
                 _state._peopleIn == 0 &&
                 InputComponent.Players[0].PressedAction2 &&
-                _state.SelectBoxes[0].CurrentState == CharSelectBoxState.Computer)
+                _state.SelectBoxes[0].CurrentState == PlayerCharacterSelectBoxStatus.Computer)
             {
                 return GoBack();
             }
@@ -96,12 +97,12 @@ namespace SlaamMono.MatchCreation
             for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
             {
                 _state.SelectBoxes[idx].Update();
-                if (_state.SelectBoxes[idx].CurrentState == CharSelectBoxState.Done)
+                if (_state.SelectBoxes[idx].CurrentState == PlayerCharacterSelectBoxStatus.Done)
                 {
                     _state._peopleDone++;
                 }
 
-                if (_state.SelectBoxes[idx].CurrentState != CharSelectBoxState.Computer)
+                if (_state.SelectBoxes[idx].CurrentState != PlayerCharacterSelectBoxStatus.Computer)
                 {
                     _state._peopleIn++;
                 }
@@ -120,12 +121,26 @@ namespace SlaamMono.MatchCreation
 
         public virtual IState GoForward()
         {
-            var characterShells = _state.SelectBoxes
-                .Where(selectBox => selectBox.CurrentState == CharSelectBoxState.Done)
-                .Select(selectBox => selectBox.GetShell())
-                .ToList();
+            if (_state.isForSurvival)
+            {
+                MatchSettings matchSettings = new MatchSettings()
+                {
+                    GameType = GameType.Survival
+                };
+                List<CharacterShell> list = new List<CharacterShell>();
+                list.Add(_state.SelectBoxes[0].GetShell());
 
-            return new LobbyScreenRequestState(characterShells);
+                return new GameScreenRequestState(list, matchSettings);
+            }
+            else
+            {
+                var characterShells = _state.SelectBoxes
+                    .Where(selectBox => selectBox.CurrentState == PlayerCharacterSelectBoxStatus.Done)
+                    .Select(selectBox => selectBox.GetShell())
+                    .ToList();
+
+                return new LobbyScreenRequestState(characterShells);
+            }
         }
 
         public void RenderState(SpriteBatch batch)
@@ -142,19 +157,33 @@ namespace SlaamMono.MatchCreation
 
         public virtual void ResetBoxes()
         {
-            _state.SelectBoxes = new PlayerCharacterSelectBox[InputComponent.Players.Length];
-
-            for (int x = 0; x < InputComponent.Players.Length; x++)
+            if (_state.isForSurvival)
             {
-                _state.SelectBoxes[x] = new PlayerCharacterSelectBox(
-                    _boxPositions[x],
+                _state.SelectBoxes = new PlayerCharacterSelectBox[1];
+                _state.SelectBoxes[0] = new PlayerCharacterSelectBox(
+                    new Vector2(340, 427),
                     SkinLoadingFunctions.SkinTexture,
-                    (ExtendedPlayerIndex)x,
+                    ExtendedPlayerIndex.One,
                     SkinLoadingFunctions.Skins,
                     x_Di.Get<PlayerColorResolver>(),
                     x_Di.Get<IResources>());
+                _state.SelectBoxes[0].Survival = true;
             }
+            else
+            {
+                _state.SelectBoxes = new PlayerCharacterSelectBox[InputComponent.Players.Length];
 
+                for (int x = 0; x < InputComponent.Players.Length; x++)
+                {
+                    _state.SelectBoxes[x] = new PlayerCharacterSelectBox(
+                        _boxPositions[x],
+                        SkinLoadingFunctions.SkinTexture,
+                        (ExtendedPlayerIndex)x,
+                        SkinLoadingFunctions.Skins,
+                        x_Di.Get<PlayerColorResolver>(),
+                        x_Di.Get<IResources>());
+                }
+            }
         }
     }
 }

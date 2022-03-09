@@ -14,19 +14,19 @@ namespace SlaamMono.MatchCreation
     public class PlayerCharacterSelectBox
     {
         public bool Survival = false;
-        public CharSelectBoxState CurrentState = CharSelectBoxState.Computer;
+        public PlayerCharacterSelectBoxStatus CurrentState = PlayerCharacterSelectBoxStatus.Computer;
 
-        private const float ScrollSpeed = 4f / 35f;
-        private List<string> ParentSkinStrings = new List<string>();
-        private int PlayerIDX;
-        private float Offset;
-        private IntRange ChosenSkin = new IntRange(0);
-        private IntRange ChosenProfile;
-        private PlayerCharacterSelectBoxStatus CurrentStatus = PlayerCharacterSelectBoxStatus.Stationary;
-        private Texture2D[] DispResources = new Texture2D[3];
-        private Texture2D[] ParentCharSkins;
-        private Vector2[] Positions = new Vector2[10];
-        private string[] MsgStrings = new string[6];
+        private const float _scrollSpeed = 4f / 35f;
+        private List<string> _parentSkinStrings = new List<string>();
+        private int _playerIDX;
+        private float _offset;
+        private IntRange _chosenSkin = new IntRange(0);
+        private IntRange _chosenProfile;
+        private PlayerCharacterSelectBoxMovementStatus _status = PlayerCharacterSelectBoxMovementStatus.Stationary;
+        private Texture2D[] _displayResources = new Texture2D[3];
+        private Texture2D[] _parentCharSkins;
+        private Vector2[] _positions = new Vector2[10];
+        private string[] _messageLines = new string[6];
 
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
@@ -39,150 +39,150 @@ namespace SlaamMono.MatchCreation
             PlayerColorResolver playerColorResolver,
             IResources resources)
         {
-            PlayerIDX = InputComponent.GetIndex(playeridx);
-            ParentCharSkins = parentcharskins;
-            ParentSkinStrings = parentskinstrings;
+            _playerIDX = InputComponent.GetIndex(playeridx);
+            _parentCharSkins = parentcharskins;
+            _parentSkinStrings = parentskinstrings;
             _playerColorResolver = playerColorResolver;
             _resources = resources;
-            RefreshSkins();
+            _refreshSkins();
 
-            Positions[0] = Position;
-            Positions[1] = new Vector2(Position.X + 75, Position.Y + 125 - 30 + Offset - 70);
-            Positions[2] = new Vector2(Position.X + 75, Position.Y + 125 - 30 + Offset);
-            Positions[3] = new Vector2(Position.X + 75, Position.Y + 125 - 30 + Offset + 70);
-            Positions[4] = new Vector2(Position.X + 175, Position.Y + 108);
-            Positions[5] = new Vector2(Position.X + 188, Position.Y + 77);
+            _positions[0] = Position;
+            _positions[1] = new Vector2(Position.X + 75, Position.Y + 125 - 30 + _offset - 70);
+            _positions[2] = new Vector2(Position.X + 75, Position.Y + 125 - 30 + _offset);
+            _positions[3] = new Vector2(Position.X + 75, Position.Y + 125 - 30 + _offset + 70);
+            _positions[4] = new Vector2(Position.X + 175, Position.Y + 108);
+            _positions[5] = new Vector2(Position.X + 188, Position.Y + 77);
 
-            Positions[6] = new Vector2(Position.X + 209, Position.Y + 146);
-            Positions[7] = new Vector2(Position.X + 412, Position.Y + 146);
-            Positions[8] = new Vector2(Position.X + 209, Position.Y + 188);
-            Positions[9] = new Vector2(Position.X + 412, Position.Y + 188);
+            _positions[6] = new Vector2(Position.X + 209, Position.Y + 146);
+            _positions[7] = new Vector2(Position.X + 412, Position.Y + 146);
+            _positions[8] = new Vector2(Position.X + 209, Position.Y + 188);
+            _positions[9] = new Vector2(Position.X + 412, Position.Y + 188);
 
-            MsgStrings[0] = DialogStrings.Player + (ExtendedPlayerIndex)PlayerIDX;
-            MsgStrings[1] = DialogStrings.PressStartToJoin;
-            MsgStrings[2] = "";
-            MsgStrings[3] = "";
-            MsgStrings[4] = "";
-            MsgStrings[5] = "";
+            _messageLines[0] = DialogStrings.Player + (ExtendedPlayerIndex)_playerIDX;
+            _messageLines[1] = DialogStrings.PressStartToJoin;
+            _messageLines[2] = "";
+            _messageLines[3] = "";
+            _messageLines[4] = "";
+            _messageLines[5] = "";
         }
 
         public void Reset()
         {
-            if (ChosenProfile == null || ProfileManager.PlayableProfiles.Count - 1 != ChosenProfile.Max)
-                ChosenProfile = new IntRange(0, 0, ProfileManager.PlayableProfiles.Count - 1);
+            if (_chosenProfile == null || ProfileManager.PlayableProfiles.Count - 1 != _chosenProfile.Max)
+                _chosenProfile = new IntRange(0, 0, ProfileManager.PlayableProfiles.Count - 1);
         }
 
         public void Update()
         {
             switch (CurrentState)
             {
-                case CharSelectBoxState.Computer:
+                case PlayerCharacterSelectBoxStatus.Computer:
                     {
-                        if (InputComponent.Players[PlayerIDX].PressedStart)
+                        if (InputComponent.Players[_playerIDX].PressedStart)
                         {
-                            CurrentState = CharSelectBoxState.ProfileSelect;
-                            MsgStrings[1] = DialogStrings.SelectAProfile;
-                            MsgStrings[0] = ProfileManager.PlayableProfiles[ChosenProfile.Value].Name;
-                            ResetStats();
+                            CurrentState = PlayerCharacterSelectBoxStatus.ProfileSelect;
+                            _messageLines[1] = DialogStrings.SelectAProfile;
+                            _messageLines[0] = ProfileManager.PlayableProfiles[_chosenProfile.Value].Name;
+                            _resetStats();
                         }
                     }
                     break;
 
-                case CharSelectBoxState.ProfileSelect:
+                case PlayerCharacterSelectBoxStatus.ProfileSelect:
                     {
-                        if (InputComponent.Players[PlayerIDX].PressedAction2)
+                        if (InputComponent.Players[_playerIDX].PressedAction2)
                         {
-                            MsgStrings[0] = DialogStrings.Player + (ExtendedPlayerIndex)PlayerIDX;
-                            MsgStrings[1] = DialogStrings.PressStartToJoin;
-                            MsgStrings[2] = "";
-                            MsgStrings[3] = "";
-                            MsgStrings[4] = "";
-                            MsgStrings[5] = "";
-                            CurrentState = CharSelectBoxState.Computer;
+                            _messageLines[0] = DialogStrings.Player + (ExtendedPlayerIndex)_playerIDX;
+                            _messageLines[1] = DialogStrings.PressStartToJoin;
+                            _messageLines[2] = "";
+                            _messageLines[3] = "";
+                            _messageLines[4] = "";
+                            _messageLines[5] = "";
+                            CurrentState = PlayerCharacterSelectBoxStatus.Computer;
                         }
 
-                        if (InputComponent.Players[PlayerIDX].PressedUp)
+                        if (InputComponent.Players[_playerIDX].PressedUp)
                         {
-                            ChosenProfile.Add(1);
-                            MsgStrings[0] = ProfileManager.PlayableProfiles[ChosenProfile.Value].Name;
-                            ResetStats();
+                            _chosenProfile.Add(1);
+                            _messageLines[0] = ProfileManager.PlayableProfiles[_chosenProfile.Value].Name;
+                            _resetStats();
                         }
 
-                        if (InputComponent.Players[PlayerIDX].PressedDown)
+                        if (InputComponent.Players[_playerIDX].PressedDown)
                         {
-                            ChosenProfile.Sub(1);
-                            MsgStrings[0] = ProfileManager.PlayableProfiles[ChosenProfile.Value].Name;
-                            ResetStats();
+                            _chosenProfile.Sub(1);
+                            _messageLines[0] = ProfileManager.PlayableProfiles[_chosenProfile.Value].Name;
+                            _resetStats();
                         }
 
-                        if (InputComponent.Players[PlayerIDX].PressedAction)
+                        if (InputComponent.Players[_playerIDX].PressedAction)
                         {
-                            CurrentState = CharSelectBoxState.CharSelect;
-                            FindSkin(ProfileManager.PlayableProfiles[ChosenProfile.Value].Skin);
-                            MsgStrings[1] = DialogStrings.PlayingAs + ParentSkinStrings[ChosenSkin.Value].Substring(ParentSkinStrings[ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
+                            CurrentState = PlayerCharacterSelectBoxStatus.CharSelect;
+                            _findSkin(ProfileManager.PlayableProfiles[_chosenProfile.Value].Skin);
+                            _messageLines[1] = DialogStrings.PlayingAs + _parentSkinStrings[_chosenSkin.Value].Substring(_parentSkinStrings[_chosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
                         }
                     }
                     break;
 
-                case CharSelectBoxState.CharSelect:
+                case PlayerCharacterSelectBoxStatus.CharSelect:
                     {
-                        if (InputComponent.Players[PlayerIDX].PressedAction2)
+                        if (InputComponent.Players[_playerIDX].PressedAction2)
                         {
-                            MsgStrings[1] = DialogStrings.SelectAProfile;
-                            CurrentState = CharSelectBoxState.ProfileSelect;
+                            _messageLines[1] = DialogStrings.SelectAProfile;
+                            CurrentState = PlayerCharacterSelectBoxStatus.ProfileSelect;
                         }
 
-                        if (InputComponent.Players[PlayerIDX].PressingUp && CurrentStatus == PlayerCharacterSelectBoxStatus.Stationary)
+                        if (InputComponent.Players[_playerIDX].PressingUp && _status == PlayerCharacterSelectBoxMovementStatus.Stationary)
                         {
-                            CurrentStatus = PlayerCharacterSelectBoxStatus.Lowering;
+                            _status = PlayerCharacterSelectBoxMovementStatus.Lowering;
                         }
-                        else if (InputComponent.Players[PlayerIDX].PressingDown && CurrentStatus == PlayerCharacterSelectBoxStatus.Stationary)
+                        else if (InputComponent.Players[_playerIDX].PressingDown && _status == PlayerCharacterSelectBoxMovementStatus.Stationary)
                         {
-                            CurrentStatus = PlayerCharacterSelectBoxStatus.Raising;
+                            _status = PlayerCharacterSelectBoxMovementStatus.Raising;
                         }
 
-                        if (InputComponent.Players[PlayerIDX].PressedAction && CurrentState == CharSelectBoxState.CharSelect)
+                        if (InputComponent.Players[_playerIDX].PressedAction && CurrentState == PlayerCharacterSelectBoxStatus.CharSelect)
                         {
-                            ProfileManager.PlayableProfiles[ChosenProfile.Value].Skin = ParentSkinStrings[ChosenSkin.Value];
+                            ProfileManager.PlayableProfiles[_chosenProfile.Value].Skin = _parentSkinStrings[_chosenSkin.Value];
                             ProfileManager.SaveProfiles();
-                            CurrentState = CharSelectBoxState.Done;
+                            CurrentState = PlayerCharacterSelectBoxStatus.Done;
                         }
 
-                        if (CurrentStatus != PlayerCharacterSelectBoxStatus.Stationary)
+                        if (_status != PlayerCharacterSelectBoxMovementStatus.Stationary)
                         {
-                            if (CurrentStatus == PlayerCharacterSelectBoxStatus.Lowering)
-                                Offset -= FrameRateDirector.MovementFactor * ScrollSpeed;
+                            if (_status == PlayerCharacterSelectBoxMovementStatus.Lowering)
+                                _offset -= FrameRateDirector.MovementFactor * _scrollSpeed;
                             else
-                                Offset += FrameRateDirector.MovementFactor * ScrollSpeed;
+                                _offset += FrameRateDirector.MovementFactor * _scrollSpeed;
 
-                            Positions[1] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset - 70);
-                            Positions[2] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset);
-                            Positions[3] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset + 70);
+                            _positions[1] = new Vector2(_positions[0].X + 75, _positions[0].Y + 125 - 30 + _offset - 70);
+                            _positions[2] = new Vector2(_positions[0].X + 75, _positions[0].Y + 125 - 30 + _offset);
+                            _positions[3] = new Vector2(_positions[0].X + 75, _positions[0].Y + 125 - 30 + _offset + 70);
 
                         }
 
-                        if (Offset >= 70)
+                        if (_offset >= 70)
                         {
-                            ChosenSkin.Add(1, 0, ParentCharSkins.Length - 1);
-                            RefreshSkins();
-                            Offset = 0;
-                            CurrentStatus = PlayerCharacterSelectBoxStatus.Stationary;
-                            MsgStrings[1] = DialogStrings.PlayingAs + ParentSkinStrings[ChosenSkin.Value].Substring(ParentSkinStrings[ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
-                            Positions[1] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset - 70);
-                            Positions[2] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset);
-                            Positions[3] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset + 70);
+                            _chosenSkin.Add(1, 0, _parentCharSkins.Length - 1);
+                            _refreshSkins();
+                            _offset = 0;
+                            _status = PlayerCharacterSelectBoxMovementStatus.Stationary;
+                            _messageLines[1] = DialogStrings.PlayingAs + _parentSkinStrings[_chosenSkin.Value].Substring(_parentSkinStrings[_chosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
+                            _positions[1] = new Vector2(_positions[0].X + 75, _positions[0].Y + 125 - 30 + _offset - 70);
+                            _positions[2] = new Vector2(_positions[0].X + 75, _positions[0].Y + 125 - 30 + _offset);
+                            _positions[3] = new Vector2(_positions[0].X + 75, _positions[0].Y + 125 - 30 + _offset + 70);
                         }
-                        else if (Offset <= -70)
+                        else if (_offset <= -70)
                         {
 
-                            ChosenSkin.Sub(1, 0, ParentCharSkins.Length - 1);
-                            RefreshSkins();
-                            Offset = 0;
-                            CurrentStatus = PlayerCharacterSelectBoxStatus.Stationary;
-                            MsgStrings[1] = DialogStrings.PlayingAs + ParentSkinStrings[ChosenSkin.Value].Substring(ParentSkinStrings[ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
-                            Positions[1] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset - 70);
-                            Positions[2] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset);
-                            Positions[3] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset + 70);
+                            _chosenSkin.Sub(1, 0, _parentCharSkins.Length - 1);
+                            _refreshSkins();
+                            _offset = 0;
+                            _status = PlayerCharacterSelectBoxMovementStatus.Stationary;
+                            _messageLines[1] = DialogStrings.PlayingAs + _parentSkinStrings[_chosenSkin.Value].Substring(_parentSkinStrings[_chosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
+                            _positions[1] = new Vector2(_positions[0].X + 75, _positions[0].Y + 125 - 30 + _offset - 70);
+                            _positions[2] = new Vector2(_positions[0].X + 75, _positions[0].Y + 125 - 30 + _offset);
+                            _positions[3] = new Vector2(_positions[0].X + 75, _positions[0].Y + 125 - 30 + _offset + 70);
                         }
                     }
                     break;
@@ -190,88 +190,75 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public void Draw(SpriteBatch batch) // 387
+        public void Draw(SpriteBatch batch)
         {
             batch.Draw(_resources.GetTexture("ProfileShell").Texture, new Vector2(13, 96), Color.White);
 
-            var temp = MsgStrings[1];
+            var temp = _messageLines[1];
 
-            if (CurrentState == CharSelectBoxState.CharSelect)
+            if (CurrentState == PlayerCharacterSelectBoxStatus.CharSelect)
             {
-                batch.Draw(DispResources[1], new Vector2(152, 239), new Rectangle(0, 0, 50, 60), Color.White);
+                batch.Draw(_displayResources[1], new Vector2(152, 239), new Rectangle(0, 0, 50, 60), Color.White);
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
             RenderGraph.Instance.RenderText(temp, new Vector2(31, 141), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
-            RenderGraph.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+            RenderGraph.Instance.RenderText(_messageLines[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
         }
 
-        public void RefreshSkins()
+        private void _refreshSkins()
         {
-            DispResources[0] = ParentCharSkins[ChosenSkin.NextValue(1, 0, ParentCharSkins.Length - 1)];
-            DispResources[1] = ParentCharSkins[ChosenSkin.Value];
-            DispResources[2] = ParentCharSkins[ChosenSkin.PreviousValue(1, 0, ParentCharSkins.Length - 1)];
+            _displayResources[0] = _parentCharSkins[_chosenSkin.NextValue(1, 0, _parentCharSkins.Length - 1)];
+            _displayResources[1] = _parentCharSkins[_chosenSkin.Value];
+            _displayResources[2] = _parentCharSkins[_chosenSkin.PreviousValue(1, 0, _parentCharSkins.Length - 1)];
         }
 
-        public void ResetStats()
+        private void _resetStats()
         {
             if (Survival)
             {
-                MsgStrings[2] = DialogStrings.BestTime + NormalStatsBoard.TimeSpanToString(ProfileManager.PlayableProfiles[ChosenProfile.Value].BestGame);
-                MsgStrings[3] = "";
-                MsgStrings[4] = "";
-                MsgStrings[5] = "";
+                _messageLines[2] = DialogStrings.BestTime + NormalStatsBoard.TimeSpanToString(ProfileManager.PlayableProfiles[_chosenProfile.Value].BestGame);
+                _messageLines[3] = "";
+                _messageLines[4] = "";
+                _messageLines[5] = "";
             }
             else
             {
-                MsgStrings[2] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalGames;
-                MsgStrings[3] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalDeaths;
-                MsgStrings[4] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalPowerups;
-                MsgStrings[5] = "" + ProfileManager.PlayableProfiles[ChosenProfile.Value].TotalKills;
+                _messageLines[2] = "" + ProfileManager.PlayableProfiles[_chosenProfile.Value].TotalGames;
+                _messageLines[3] = "" + ProfileManager.PlayableProfiles[_chosenProfile.Value].TotalDeaths;
+                _messageLines[4] = "" + ProfileManager.PlayableProfiles[_chosenProfile.Value].TotalPowerups;
+                _messageLines[5] = "" + ProfileManager.PlayableProfiles[_chosenProfile.Value].TotalKills;
             }
         }
 
-        private void FindSkin(string str)
+        private void _findSkin(string str)
         {
-            for (int x = 0; x < ParentSkinStrings.Count; x++)
+            for (int x = 0; x < _parentSkinStrings.Count; x++)
             {
-                if (ParentSkinStrings[x] == str)
+                if (_parentSkinStrings[x] == str)
                 {
-                    ChosenSkin.Value = x;
+                    _chosenSkin.Value = x;
                     break;
                 }
             }
-            RefreshSkins();
+            _refreshSkins();
         }
 
         public CharacterShell GetShell()
         {
             PlayerType type = PlayerType.Computer;
-            if (CurrentState != CharSelectBoxState.Computer)
+            if (CurrentState != PlayerCharacterSelectBoxStatus.Computer)
             {
                 type = PlayerType.Player;
             }
             return new CharacterShell(
-                skinLocation: ParentSkinStrings[ChosenSkin.Value],
-                characterProfileIndex: ProfileManager.PlayableProfiles.GetRealIndex(ChosenProfile.Value),
-                playerIndex: (ExtendedPlayerIndex)PlayerIDX,
+                skinLocation: _parentSkinStrings[_chosenSkin.Value],
+                characterProfileIndex: ProfileManager.PlayableProfiles.GetRealIndex(_chosenProfile.Value),
+                playerIndex: (ExtendedPlayerIndex)_playerIDX,
                 playerType: type,
-                playerColor: _playerColorResolver.GetColorByIndex(PlayerIDX));
+                playerColor: _playerColorResolver.GetColorByIndex(_playerIDX));
         }
 
-        public enum PlayerCharacterSelectBoxStatus
-        {
-            Lowering,
-            Stationary,
-            Raising,
-        }
-    }
 
-    public enum CharSelectBoxState
-    {
-        Computer,
-        ProfileSelect,
-        CharSelect,
-        Done,
     }
 }

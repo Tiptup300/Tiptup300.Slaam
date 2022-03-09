@@ -2,11 +2,10 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.PlayerProfiles;
-using SlaamMono.Survival;
-using SlaamMono.x_;
 using System;
 using ZBlade;
 using ZzziveGameEngine.StateManagement;
+using ZzziveGameEngine.StateManagement.States;
 
 namespace SlaamMono.Menus
 {
@@ -47,17 +46,24 @@ namespace SlaamMono.Menus
             });
         }
 
-        private void selectedCredits(object sender, EventArgs e) => _screenManager.ChangeTo<CreditsScreen>();
-        private void selectedHighscores(object sender, EventArgs e) => _screenManager.ChangeTo<HighScoreScreen>();
-        private void selectedManageProfiles(object sender, EventArgs e) => _screenManager.ChangeTo<ProfileEditScreen>();
-        private void selectedSurvival(object sender, EventArgs e) => _screenManager.ChangeTo<SurvivalCharacterSelectionScreen>();
-        private void selectedClassicMode(object sender, EventArgs e) => _screenManager.ChangeTo<CharacterSelectionScreen>();
-        private void exitGame(object sender, EventArgs e) => SlaamGame.Instance.Exit();
+        private void selectedCredits(object sender, EventArgs e) => _state.NextState = new CreditsScreenRequestState();
+        private void selectedHighscores(object sender, EventArgs e) => _state.NextState = new HighScoreScreenRequestState();
+        private void selectedManageProfiles(object sender, EventArgs e) => _state.NextState = new ProfileEditScreenRequestState();
+        private void selectedSurvival(object sender, EventArgs e) => _state.NextState = new CharacterSelectionScreenState() { isForSurvival = true };
+        private void selectedClassicMode(object sender, EventArgs e) => _state.NextState = new CharacterSelectionScreenRequestState();
+        private void exitGame(object sender, EventArgs e) => _state.NextState = new GameExitState();
 
 
-        public IState Perform() 
+        public IState Perform()
         {
-            return _state;
+            if (_state.NextState != null)
+            {
+                return _state.NextState;
+            }
+            else
+            {
+                return _state;
+            }
         }
         public void RenderState(SpriteBatch batch) { }
 
