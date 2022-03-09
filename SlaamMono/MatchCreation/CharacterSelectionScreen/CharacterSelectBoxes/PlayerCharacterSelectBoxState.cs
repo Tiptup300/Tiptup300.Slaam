@@ -18,7 +18,7 @@ namespace SlaamMono.MatchCreation
         public Texture2D[] ParentCharSkins;
         public Vector2[] Positions = new Vector2[10];
         public string[] MessageLines = new string[6];
-        public bool Survival = false;
+        public bool IsSurvival = false;
         public PlayerCharacterSelectBoxStatus Status = PlayerCharacterSelectBoxStatus.Computer;
     }
 }

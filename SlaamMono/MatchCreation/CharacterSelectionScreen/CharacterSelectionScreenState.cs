@@ -4,7 +4,7 @@ namespace SlaamMono.MatchCreation
 {
     public class CharacterSelectionScreenState : IState
     {
-        public PlayerCharacterSelectBox[] SelectBoxes;
+        public PlayerCharacterSelectBoxState[] SelectBoxes;
         public int _peopleDone = 0;
         public int _peopleIn = 0;
 
