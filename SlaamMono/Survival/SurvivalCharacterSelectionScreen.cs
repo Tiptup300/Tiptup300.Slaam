@@ -21,8 +21,8 @@ namespace SlaamMono.Survival
 
         public override void ResetBoxes()
         {
-            _state.SelectBoxes = new CharSelectBox[1];
-            _state.SelectBoxes[0] = new CharSelectBox(
+            _state.SelectBoxes = new PlayerCharacterSelectBox[1];
+            _state.SelectBoxes[0] = new PlayerCharacterSelectBox(
                 new Vector2(340, 427),
                 SkinLoadingFunctions.SkinTexture,
                 ExtendedPlayerIndex.One,

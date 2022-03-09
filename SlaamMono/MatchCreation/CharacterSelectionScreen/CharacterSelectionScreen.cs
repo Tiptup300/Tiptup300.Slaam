@@ -142,11 +142,11 @@ namespace SlaamMono.MatchCreation
 
         public virtual void ResetBoxes()
         {
-            _state.SelectBoxes = new CharSelectBox[InputComponent.Players.Length];
+            _state.SelectBoxes = new PlayerCharacterSelectBox[InputComponent.Players.Length];
 
             for (int x = 0; x < InputComponent.Players.Length; x++)
             {
-                _state.SelectBoxes[x] = new CharSelectBox(
+                _state.SelectBoxes[x] = new PlayerCharacterSelectBox(
                     _boxPositions[x],
                     SkinLoadingFunctions.SkinTexture,
                     (ExtendedPlayerIndex)x,

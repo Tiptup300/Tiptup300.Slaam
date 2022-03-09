@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace SlaamMono.MatchCreation
 {
-    public class CharSelectBox
+    public class PlayerCharacterSelectBox
     {
         public bool Survival = false;
         public CharSelectBoxState CurrentState = CharSelectBoxState.Computer;
@@ -22,7 +22,7 @@ namespace SlaamMono.MatchCreation
         private float Offset;
         private IntRange ChosenSkin = new IntRange(0);
         private IntRange ChosenProfile;
-        private Status CurrentStatus = Status.Stationary;
+        private PlayerCharacterSelectBoxStatus CurrentStatus = PlayerCharacterSelectBoxStatus.Stationary;
         private Texture2D[] DispResources = new Texture2D[3];
         private Texture2D[] ParentCharSkins;
         private Vector2[] Positions = new Vector2[10];
@@ -31,7 +31,7 @@ namespace SlaamMono.MatchCreation
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
 
-        public CharSelectBox(
+        public PlayerCharacterSelectBox(
             Vector2 Position,
             Texture2D[] parentcharskins,
             ExtendedPlayerIndex playeridx,
@@ -132,13 +132,13 @@ namespace SlaamMono.MatchCreation
                             CurrentState = CharSelectBoxState.ProfileSelect;
                         }
 
-                        if (InputComponent.Players[PlayerIDX].PressingUp && CurrentStatus == Status.Stationary)
+                        if (InputComponent.Players[PlayerIDX].PressingUp && CurrentStatus == PlayerCharacterSelectBoxStatus.Stationary)
                         {
-                            CurrentStatus = Status.Lowering;
+                            CurrentStatus = PlayerCharacterSelectBoxStatus.Lowering;
                         }
-                        else if (InputComponent.Players[PlayerIDX].PressingDown && CurrentStatus == Status.Stationary)
+                        else if (InputComponent.Players[PlayerIDX].PressingDown && CurrentStatus == PlayerCharacterSelectBoxStatus.Stationary)
                         {
-                            CurrentStatus = Status.Raising;
+                            CurrentStatus = PlayerCharacterSelectBoxStatus.Raising;
                         }
 
                         if (InputComponent.Players[PlayerIDX].PressedAction && CurrentState == CharSelectBoxState.CharSelect)
@@ -148,9 +148,9 @@ namespace SlaamMono.MatchCreation
                             CurrentState = CharSelectBoxState.Done;
                         }
 
-                        if (CurrentStatus != Status.Stationary)
+                        if (CurrentStatus != PlayerCharacterSelectBoxStatus.Stationary)
                         {
-                            if (CurrentStatus == Status.Lowering)
+                            if (CurrentStatus == PlayerCharacterSelectBoxStatus.Lowering)
                                 Offset -= FrameRateDirector.MovementFactor * ScrollSpeed;
                             else
                                 Offset += FrameRateDirector.MovementFactor * ScrollSpeed;
@@ -166,7 +166,7 @@ namespace SlaamMono.MatchCreation
                             ChosenSkin.Add(1, 0, ParentCharSkins.Length - 1);
                             RefreshSkins();
                             Offset = 0;
-                            CurrentStatus = Status.Stationary;
+                            CurrentStatus = PlayerCharacterSelectBoxStatus.Stationary;
                             MsgStrings[1] = DialogStrings.PlayingAs + ParentSkinStrings[ChosenSkin.Value].Substring(ParentSkinStrings[ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
                             Positions[1] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset - 70);
                             Positions[2] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset);
@@ -178,7 +178,7 @@ namespace SlaamMono.MatchCreation
                             ChosenSkin.Sub(1, 0, ParentCharSkins.Length - 1);
                             RefreshSkins();
                             Offset = 0;
-                            CurrentStatus = Status.Stationary;
+                            CurrentStatus = PlayerCharacterSelectBoxStatus.Stationary;
                             MsgStrings[1] = DialogStrings.PlayingAs + ParentSkinStrings[ChosenSkin.Value].Substring(ParentSkinStrings[ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
                             Positions[1] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset - 70);
                             Positions[2] = new Vector2(Positions[0].X + 75, Positions[0].Y + 125 - 30 + Offset);
@@ -259,7 +259,7 @@ namespace SlaamMono.MatchCreation
                 playerColor: _playerColorResolver.GetColorByIndex(PlayerIDX));
         }
 
-        public enum Status
+        public enum PlayerCharacterSelectBoxStatus
         {
             Lowering,
             Stationary,
