@@ -7,11 +7,14 @@ using SlaamMono.Gameplay.Powerups;
 using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
+using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
+using SlaamMono.MatchCreation;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.SubClasses;
+using SlaamMono.Survival;
 using SlaamMono.x_;
 using System;
 using System.Linq;
@@ -25,25 +28,30 @@ namespace SlaamMono.Gameplay
     {
         public static GameScreen Instance;
 
-        protected GameScreenState _state = new GameScreenState();
+        private GameScreenState _state = new GameScreenState();
+        private SurvivalGameScreenState _survivalState = new SurvivalGameScreenState();
 
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
         private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
+        private readonly ILogger _logger;
 
         public GameScreen(
             IResources resources,
             IGraphicsState graphicsState,
-            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver)
+            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver,
+            ILogger logger)
         {
             _resources = resources;
             _graphics = graphicsState;
             _gameScreenScoreBoardResolver = gameScreenScoreBoardResolver;
+            _logger = logger;
         }
 
         public void Initialize(GameScreenRequestState gameScreenRequest)
         {
             _state.SetupCharacters = gameScreenRequest.SetupCharacters;
+            _state.CurrentMatchSettings = gameScreenRequest.MatchSettings;
         }
 
         public void InitializeState()
@@ -52,8 +60,8 @@ namespace SlaamMono.Gameplay
             _state.ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
             _state.Tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
             _state.CurrentGameStatus = GameStatus.Waiting;
-            _state.GameType = MatchSettings.CurrentMatchSettings.GameType;
-            SetupTheBoard(MatchSettings.CurrentMatchSettings.BoardLocation);
+            _state.GameType = _state.CurrentMatchSettings.GameType;
+            SetupTheBoard(_state.CurrentMatchSettings.BoardLocation);
             _state.CurrentGameStatus = GameStatus.MovingBoard;
             _resources.GetTexture("ReadySetGo").Load();
             _resources.GetTexture("BattleBG").Load();
@@ -89,9 +97,8 @@ namespace SlaamMono.Gameplay
             }
             else if (_state.GameType == GameType.Spree)
             {
-                //MatchSettings.CurrentMatchSettings.KillsToWin = 7;
                 _state.StepsRemaining = 100;
-                _state.KillsToWin = MatchSettings.CurrentMatchSettings.KillsToWin;
+                _state.KillsToWin = _state.CurrentMatchSettings.KillsToWin;
                 _state.SpreeStepSize = 10;
                 _state.SpreeCurrentStep = 0;
             }
@@ -133,50 +140,77 @@ namespace SlaamMono.Gameplay
             SlaamGame.mainBlade.TopMenu = _state.main;
         }
 
-        protected virtual void SetupTheBoard(string BoardLoc)
+        private void SetupTheBoard(string BoardLoc)
         {
-            _state.Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);
-
-            for (int x = 0; x < _state.SetupCharacters.Count; x++)
+            if (_state.GameType == GameType.Survival)
             {
-                if (_state.SetupCharacters[x].PlayerType == PlayerType.Player)
-                {
-                    _state.Characters.Add(
-                        new CharacterActor(
-                            SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[x].SkinLocation),
-                            _state.SetupCharacters[x].CharacterProfileIndex,
-                            new Vector2(-100, -100),
-                            InputComponent.Players[(int)_state.SetupCharacters[x].PlayerIndex],
-                            _state.SetupCharacters[x].PlayerColor,
-                            x,
-                            x_Di.Get<IResources>()));
-                }
-                else
-                {
-                    ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Skin = _state.SetupCharacters[x].SkinLocation;
-                    _state.Characters.Add(
-                        new BotActor(
-                            SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[x].SkinLocation),
-                            _state.SetupCharacters[x].CharacterProfileIndex,
-                            new Vector2(-100, -100),
-                            this,
-                            _state.SetupCharacters[x].PlayerColor,
-                            _state.Characters.Count,
-                            x_Di.Get<IResources>()));
-                }
-
-                _state.Scoreboards.Add(
-                    _gameScreenScoreBoardResolver.Resolve(
-                        new ScoreboardRequest(
-                            Vector2.Zero,
-                            _state.Characters[_state.Characters.Count - 1],
-                            _state.GameType)));
-
+                survival_SetupTheBoard(BoardLoc);
             }
+            else
+            {
+                _state.Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);
+
+                for (int x = 0; x < _state.SetupCharacters.Count; x++)
+                {
+                    if (_state.SetupCharacters[x].PlayerType == PlayerType.Player)
+                    {
+                        _state.Characters.Add(
+                            new CharacterActor(
+                                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[x].SkinLocation),
+                                _state.SetupCharacters[x].CharacterProfileIndex,
+                                new Vector2(-100, -100),
+                                InputComponent.Players[(int)_state.SetupCharacters[x].PlayerIndex],
+                                _state.SetupCharacters[x].PlayerColor,
+                                x,
+                                x_Di.Get<IResources>()));
+                    }
+                    else
+                    {
+                        ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Skin = _state.SetupCharacters[x].SkinLocation;
+                        _state.Characters.Add(
+                            new BotActor(
+                                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[x].SkinLocation),
+                                _state.SetupCharacters[x].CharacterProfileIndex,
+                                new Vector2(-100, -100),
+                                this,
+                                _state.SetupCharacters[x].PlayerColor,
+                                _state.Characters.Count,
+                                x_Di.Get<IResources>()));
+                    }
+
+                    _state.Scoreboards.Add(
+                        _gameScreenScoreBoardResolver.Resolve(
+                            new ScoreboardRequest(
+                                Vector2.Zero,
+                                _state.Characters[_state.Characters.Count - 1],
+                                _state.GameType)));
+                }
+            }
+        }
+        private void survival_SetupTheBoard(string BoardLoc)
+        {
+            _state.GameType = GameType.Survival;
+            MatchSettings.CurrentMatchSettings.GameType = GameType.Survival;
+            MatchSettings.CurrentMatchSettings.SpeedMultiplyer = 1f;
+            MatchSettings.CurrentMatchSettings.RespawnTime = new TimeSpan(0, 0, 8);
+            MatchSettings.CurrentMatchSettings.LivesAmt = 1;
+            _state.Tileset = LobbyScreen.LoadQuickBoard();
+
+            _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, _state.SetupCharacters[0].CharacterProfileIndex, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
+            _state.Scoreboards.Add(
+                _gameScreenScoreBoardResolver.Resolve(
+                    new ScoreboardRequest(
+                        new Vector2(-250, 10),
+                        _state.Characters[0],
+                        _state.GameType)));
         }
 
         public virtual IState Perform()
         {
+            if (_state.GameType == GameType.Survival)
+            {
+                survival_Perform();
+            }
             if (_state.IsPaused)
             {
 
@@ -209,6 +243,58 @@ namespace SlaamMono.Gameplay
             }
             return _state;
         }
+
+        public void survival_Perform()
+        {
+            if (_state.CurrentGameStatus == GameStatus.Playing)
+            {
+                _survivalState.TimeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
+                if (_survivalState.TimeToAddBot.Active)
+                {
+                    for (int x = 0; x < _survivalState.BotsToAdd + 1; x++)
+                    {
+                        survival_AddNewBot(_state);
+                        _survivalState.BotsAdded++;
+
+                        if (_state.Rand.Next(0, _survivalState.BotsAdded - 1) == _survivalState.BotsAdded)
+                        {
+                            _survivalState.BotsToAdd++;
+                        }
+                    }
+                }
+
+                for (int x = 0; x < _state.Characters.Count; x++)
+                {
+                    if (_state.Characters[x] != null && _state.Characters[x].Lives == 0)
+                    {
+                        _state.Characters[x] = null;
+                        _state.NullChars++;
+                    }
+                }
+            }
+
+            bool temp = _state.CurrentGameStatus == GameStatus.Waiting;
+            if (_state.CurrentGameStatus == GameStatus.Playing && temp)
+            {
+                survival_AddNewBot(_state);
+            }
+        }
+        private void survival_AddNewBot(GameScreenState gameScreenState)
+        {
+            _state.Characters.Add(
+                new BotActor(
+                    SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SkinLoadingFunctions.ReturnRandSkin(_logger)),
+                    ProfileManager.GetBotProfile(),
+                    new Vector2(-200, -200),
+                    this,
+                    Color.Black,
+                    _state.Characters.Count,
+                    x_Di.Get<IResources>()));
+
+            ProfileManager.ResetAllBots();
+            RespawnCharacter(gameScreenState, _state.Characters.Count - 1);
+        }
+
         private void updateOverGameState()
         {
             _state.IsTiming = false;
@@ -403,17 +489,32 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        protected virtual void EndGame()
+        private void EndGame()
         {
-            _state.ScoreKeeper.CalcTotals(_state);
-            for (int x = 0; x < _state.Characters.Count; x++)
+            if (_state.GameType == GameType.Survival)
             {
-                _state.Characters[x].SaveProfileData();
+                survival_EndGame();
+            }
+            else
+            {
+                _state.ScoreKeeper.CalcTotals(_state);
+                for (int x = 0; x < _state.Characters.Count; x++)
+                {
+                    _state.Characters[x].SaveProfileData();
+                }
+                ProfileManager.SaveProfiles();
+                new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
+            }
+        }
+        private void survival_EndGame()
+        {
+            if (ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame < _state.Timer.CurrentGameTime)
+            {
+                ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame = _state.Timer.CurrentGameTime;
             }
             ProfileManager.SaveProfiles();
             new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
         }
-
 
         public static void ShortenBoard(GameScreenState gameScreenState)
         {
@@ -468,46 +569,68 @@ namespace SlaamMono.Gameplay
         }
 
         // to remove
-        public virtual void ReportKilling(int Killer, int Killee)
+        public static void ReportKilling(int Killer, int Killee, GameScreenState gameScreenState)
         {
-            if (_state.Characters[Killee].Lives == 0 && _state.GameType == GameType.Classic)
+            if (gameScreenState.GameType == GameType.Survival)
             {
-                ShortenBoard(_state);
+                survival_ReportKilling(Killer, Killee, gameScreenState);
             }
-
-            if (Killer != -2 && Killer < _state.Characters.Count)
+            else
             {
-                _state.Characters[Killer].Kills++;
-            }
-            _state.ScoreKeeper.ReportKilling(Killer, Killee, _state);
-
-            if (_state.GameType == GameType.Spree && Killer != -2)
-            {
-                if (_state.Characters[Killer].Kills > _state.SpreeHighestKillCount)
+                if (gameScreenState.Characters[Killee].Lives == 0 && gameScreenState.GameType == GameType.Classic)
                 {
-                    _state.SpreeCurrentStep += _state.Characters[Killer].Kills - _state.SpreeHighestKillCount;
-                    _state.SpreeHighestKillCount = _state.Characters[Killer].Kills;
+                    ShortenBoard(gameScreenState);
+                }
 
-                    if (_state.SpreeCurrentStep >= _state.SpreeStepSize)
-                    {
-                        _state.SpreeCurrentStep -= _state.SpreeStepSize;
-                        if (_state.Characters[Killer].Kills < _state.KillsToWin && _state.StepsRemaining == 1)
-                        {
-                            // WHY IS THIS HAPPENING!?!??!?!
-                        }
-                        else
-                        {
-                            ShortenBoard(_state);
-                            int TimesShortened = 100 - _state.StepsRemaining;
-                        }
-                    }
+                if (Killer != -2 && Killer < gameScreenState.Characters.Count)
+                {
+                    gameScreenState.Characters[Killer].Kills++;
+                }
+                gameScreenState.ScoreKeeper.ReportKilling(Killer, Killee, gameScreenState);
 
-                    if (_state.Characters[Killer].Kills == _state.KillsToWin)
+                if (gameScreenState.GameType == GameType.Spree && Killer != -2)
+                {
+                    if (gameScreenState.Characters[Killer].Kills > gameScreenState.SpreeHighestKillCount)
                     {
-                        _state.StepsRemaining = 1;
-                        ShortenBoard(_state);
+                        gameScreenState.SpreeCurrentStep += gameScreenState.Characters[Killer].Kills - gameScreenState.SpreeHighestKillCount;
+                        gameScreenState.SpreeHighestKillCount = gameScreenState.Characters[Killer].Kills;
+
+                        if (gameScreenState.SpreeCurrentStep >= gameScreenState.SpreeStepSize)
+                        {
+                            gameScreenState.SpreeCurrentStep -= gameScreenState.SpreeStepSize;
+                            if (gameScreenState.Characters[Killer].Kills < gameScreenState.KillsToWin && gameScreenState.StepsRemaining == 1)
+                            {
+                                // WHY IS THIS HAPPENING!?!??!?!
+                            }
+                            else
+                            {
+                                ShortenBoard(gameScreenState);
+                                int TimesShortened = 100 - gameScreenState.StepsRemaining;
+                            }
+                        }
+
+                        if (gameScreenState.Characters[Killer].Kills == gameScreenState.KillsToWin)
+                        {
+                            gameScreenState.StepsRemaining = 1;
+                            ShortenBoard(gameScreenState);
+                        }
                     }
                 }
+            }
+        }
+
+        public static void survival_ReportKilling(int Killer, int Killee, GameScreenState gameScreenState)
+        {
+            if (Killer == 0)
+            {
+                gameScreenState.Characters[Killer].Kills++;
+            }
+
+            if (Killee == 0)
+            {
+                gameScreenState.CurrentGameStatus = GameStatus.Over;
+                gameScreenState.ReadySetGoPart = 3;
+                gameScreenState.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             }
         }
     }

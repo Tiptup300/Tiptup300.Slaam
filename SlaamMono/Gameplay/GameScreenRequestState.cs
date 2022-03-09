@@ -7,10 +7,12 @@ namespace SlaamMono.Gameplay
     public class GameScreenRequestState : IState
     {
         public List<CharacterShell> SetupCharacters { get; private set; }
+        public MatchSettings MatchSettings { get; private set; }
 
-        public GameScreenRequestState(List<CharacterShell> chars)
+        public GameScreenRequestState(List<CharacterShell> chars, MatchSettings matchSettings)
         {
-            this.SetupCharacters = chars;
+            SetupCharacters = chars;
+            MatchSettings = matchSettings;
         }
     }
 }

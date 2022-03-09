@@ -34,10 +34,14 @@ namespace SlaamMono.Survival
 
         public override IState GoForward()
         {
+            MatchSettings matchSettings = new MatchSettings()
+            {
+                GameType = GameType.Survival
+            };
             List<CharacterShell> list = new List<CharacterShell>();
             list.Add(_state.SelectBoxes[0].GetShell());
 
-            return new GameScreenRequestState(list);
+            return new GameScreenRequestState(list, matchSettings);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace SlaamMono.Menus
 
         public void InitializeState()
         {
+            _state = new LogoScreenState();
         }
 
 

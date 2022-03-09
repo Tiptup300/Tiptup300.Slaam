@@ -7,7 +7,7 @@ namespace SlaamMono.Menus
 {
     public class LogoScreenState : IState
     {
-        public int StateIndex { get; set; }
+        public int StateIndex { get; set; } = -1;
         public Transition StateTransition { get; set; }
         public Color LogoColor { get; set; }
 

@@ -254,7 +254,7 @@ namespace SlaamMono.Gameplay.Actors
                 }
                 if (Alpha <= 0)
                 {
-                    ReportDeath(gameScreenState.Tiles, CurrentCoordinates, gameScreenState.GameType);
+                    ReportDeath(gameScreenState.Tiles, CurrentCoordinates, gameScreenState.GameType, gameScreenState);
                     if (CurrentPowerup != null && CurrentPowerup.Active & !CurrentPowerup.AttackingType)
                     {
                         CurrentPowerup.EndAttack(gameScreenState);
@@ -427,14 +427,14 @@ namespace SlaamMono.Gameplay.Actors
         /// </summary>
         /// <param name="tiles">Listing of all tiles on the board.</param>
         /// <param name="coors">Current Coordinates of the player.</param>
-        public void ReportDeath(Tile[,] tiles, Vector2 coors, GameType gameType)
+        public void ReportDeath(Tile[,] tiles, Vector2 coors, GameType gameType, GameScreenState gameScreenState)
         {
             if (gameType == GameType.Classic || gameType == GameType.Survival)
                 Lives--;
 
             Deaths++;
 
-            GameScreen.Instance.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex);
+            GameScreen.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex, gameScreenState);
 
             CurrentState = CharacterState.Dead;
             ReappearTime.Update(FrameRateDirector.MovementFactorTimeSpan);

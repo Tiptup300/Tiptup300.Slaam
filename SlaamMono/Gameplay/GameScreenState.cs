@@ -39,5 +39,7 @@ namespace SlaamMono.Gameplay
         public MenuItemTree main { get; set; } = new MenuItemTree();
         public GameType GameType { get; set; }
         public List<CharacterActor> Characters { get; set; } = new List<CharacterActor>();
+
+        public MatchSettings CurrentMatchSettings { get; set; }
     }
 }

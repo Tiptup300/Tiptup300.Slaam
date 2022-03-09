@@ -219,9 +219,10 @@ namespace SlaamMono.MatchCreation
 
                 if (InputComponent.Players[0].PressedStart)
                 {
-                    MatchSettings.CurrentMatchSettings = buildMatchSettings();
+                    MatchSettings matchSettings = buildMatchSettings();
+                    MatchSettings.CurrentMatchSettings = matchSettings;
                     writeMatchSettingsToFile();
-                    GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequestState(_state.SetupCharacters));
+                    GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequestState(_state.SetupCharacters, matchSettings));
                     _screenDirector.ChangeTo(GameScreen.Instance);
                     ProfileManager.ResetAllBots();
                     ResetZune();
