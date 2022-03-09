@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
 using System.Collections.Generic;
 
-namespace SlaamMono.MatchCreation
+namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
 {
     public class PlayerCharacterSelectBoxState
     {

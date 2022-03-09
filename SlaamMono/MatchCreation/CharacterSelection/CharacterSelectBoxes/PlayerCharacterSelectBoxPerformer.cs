@@ -7,9 +7,8 @@ using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.StatsBoards;
-using ZzziveGameEngine;
 
-namespace SlaamMono.MatchCreation
+namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
 {
 
     public class PlayerCharacterSelectBoxPerformer

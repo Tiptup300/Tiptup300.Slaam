@@ -4,7 +4,7 @@ using SlaamMono.Library.Input;
 using System.Collections.Generic;
 using ZzziveGameEngine;
 
-namespace SlaamMono.MatchCreation
+namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
 {
     public class PlayerCharacterSelectBoxRequest : IRequest
     {

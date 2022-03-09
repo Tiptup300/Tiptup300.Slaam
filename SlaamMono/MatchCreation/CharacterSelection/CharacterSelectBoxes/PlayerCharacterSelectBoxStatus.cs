@@ -1,4 +1,4 @@
-﻿namespace SlaamMono.MatchCreation
+﻿namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
 {
     public enum PlayerCharacterSelectBoxStatus
     {

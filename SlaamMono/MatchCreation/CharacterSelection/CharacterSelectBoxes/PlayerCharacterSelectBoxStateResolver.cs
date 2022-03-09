@@ -2,7 +2,7 @@
 using SlaamMono.Library.Input;
 using ZzziveGameEngine;
 
-namespace SlaamMono.MatchCreation
+namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
 {
     public class PlayerCharacterSelectBoxStateResolver : IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState>
     {
