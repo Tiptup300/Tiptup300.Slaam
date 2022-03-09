@@ -1,8 +1,6 @@
-﻿using ZzziveGameEngine.StateManagement;
-
-namespace ZzziveGameEngine.StateManagement.States
+﻿namespace ZzziveGameEngine.StateManagement.States
 {
-    public class GameStartState : IState
+    public struct GameStartState : IState
     {
     }
 }
