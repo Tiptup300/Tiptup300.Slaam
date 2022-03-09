@@ -13,11 +13,10 @@ namespace SlaamMono.Gameplay.Powerups
         private int PlayerIndex;
         private const int size = 4;
 
-        public SlaamPowerup(GameScreen parentscreen, CharacterActor parentcharacter, int playerindex, IResources resources)
+        public SlaamPowerup(CharacterActor parentcharacter, int playerindex, IResources resources)
             : base("Slaam!",
                   new CachedTexture[] { resources.GetTexture("Slaam"), resources.GetTexture("Slaam0") }, PowerupUse.Attacking)
         {
-            ParentGameScreen = parentscreen;
             PlayerIndex = playerindex;
             AttackingType = true;
             ParentCharacter = parentcharacter;

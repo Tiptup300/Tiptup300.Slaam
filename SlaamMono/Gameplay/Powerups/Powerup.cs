@@ -11,7 +11,6 @@ namespace SlaamMono.Gameplay.Powerups
         public bool Active = false;
         public bool Used = false;
         public Texture2D SmallTex, BigTex;
-        public GameScreen ParentGameScreen;
         public bool AttackingType = false;
         public PowerupUse ThisPowerupsUse;
         public int AttackingRange;

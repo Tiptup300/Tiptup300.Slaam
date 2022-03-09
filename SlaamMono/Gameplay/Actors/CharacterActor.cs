@@ -367,15 +367,15 @@ namespace SlaamMono.Gameplay.Actors
                     break;
 
                 case PowerupType.SpeedDown:
-                    CurrentPowerup = new SpeedDown(GameScreen.Instance, PlayerIndex, x_Di.Get<IResources>());
+                    CurrentPowerup = new SpeedDown(PlayerIndex, x_Di.Get<IResources>());
                     break;
 
                 case PowerupType.Inversion:
-                    CurrentPowerup = new Inversion(GameScreen.Instance, PlayerIndex, x_Di.Get<IResources>());
+                    CurrentPowerup = new Inversion(PlayerIndex, x_Di.Get<IResources>());
                     break;
 
                 case PowerupType.Slaam:
-                    CurrentPowerup = new SlaamPowerup(GameScreen.Instance, this, PlayerIndex, x_Di.Get<IResources>());
+                    CurrentPowerup = new SlaamPowerup(this, PlayerIndex, x_Di.Get<IResources>());
                     break;
 
                 default:
