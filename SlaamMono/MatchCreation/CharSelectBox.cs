@@ -206,9 +206,6 @@ namespace SlaamMono.MatchCreation
             RenderGraph.Instance.RenderText(MsgStrings[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
         }
 
-        /// <summary>
-        /// Sets the new skins for display
-        /// </summary>
         public void RefreshSkins()
         {
             DispResources[0] = ParentCharSkins[ChosenSkin.NextValue(1, 0, ParentCharSkins.Length - 1)];
@@ -216,9 +213,6 @@ namespace SlaamMono.MatchCreation
             DispResources[2] = ParentCharSkins[ChosenSkin.PreviousValue(1, 0, ParentCharSkins.Length - 1)];
         }
 
-        /// <summary>
-        /// Resets the current stats when the profile changes
-        /// </summary>
         public void ResetStats()
         {
             if (Survival)
@@ -237,10 +231,6 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        /// <summary>
-        /// Finds the inserted skin, if its not found it gets a random one.
-        /// </summary>
-        /// <param name="str">The Skin its looking for.</param>
         private void FindSkin(string str)
         {
             for (int x = 0; x < ParentSkinStrings.Count; x++)
@@ -254,10 +244,6 @@ namespace SlaamMono.MatchCreation
             RefreshSkins();
         }
 
-        /// <summary>
-        /// Gets a characters base information into a simple class for the gamescreen.
-        /// </summary>
-        /// <returns></returns>
         public CharacterShell GetShell()
         {
             PlayerType type = PlayerType.Computer;

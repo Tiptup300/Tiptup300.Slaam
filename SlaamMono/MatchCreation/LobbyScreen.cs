@@ -222,8 +222,7 @@ namespace SlaamMono.MatchCreation
                     MatchSettings matchSettings = buildMatchSettings();
                     MatchSettings.CurrentMatchSettings = matchSettings;
                     writeMatchSettingsToFile();
-                    GameScreen.Instance = _gameScreenRequest.Resolve(new GameScreenRequestState(_state.SetupCharacters, matchSettings));
-                    _screenDirector.ChangeTo(GameScreen.Instance);
+                    _screenDirector.ChangeTo(_gameScreenRequest.Resolve(new GameScreenRequestState(_state.SetupCharacters, matchSettings)));
                     ProfileManager.ResetAllBots();
                     ResetZune();
                 }

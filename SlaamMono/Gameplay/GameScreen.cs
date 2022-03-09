@@ -26,8 +26,6 @@ namespace SlaamMono.Gameplay
 {
     public class GameScreen : IStatePerformer
     {
-        public static GameScreen Instance;
-
         private GameScreenState _state = new GameScreenState();
         private SurvivalGameScreenState _survivalState = new SurvivalGameScreenState();
 
@@ -205,7 +203,7 @@ namespace SlaamMono.Gameplay
                         _state.GameType)));
         }
 
-        public virtual IState Perform()
+        public IState Perform()
         {
             if (_state.GameType == GameType.Survival)
             {

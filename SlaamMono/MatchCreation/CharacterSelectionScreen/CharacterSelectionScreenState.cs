@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZzziveGameEngine.StateManagement;
+﻿using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
