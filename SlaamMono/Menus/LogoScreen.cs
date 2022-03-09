@@ -122,7 +122,12 @@ namespace SlaamMono.Menus
             batch.Draw(_state.LogoTexture.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), _state.LogoColor);
         }
 
-        public static IState Close(LogoScreenState state)
+        public void Close()
+        {
+            unloadTexturesFromState(_state);
+        }
+
+        public static IState unloadTexturesFromState(LogoScreenState state)
         {
             state.BackgroundTexture.Unload();
             state.LogoTexture.Unload();
