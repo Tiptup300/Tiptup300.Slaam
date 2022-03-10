@@ -128,7 +128,7 @@ namespace SlaamMono.Gameplay
             quit.Activated += delegate
             {
                 SlaamGame.mainBlade.Status = BladeStatus.Hidden;
-                EndGame();
+                endGame();
             };
 
             _state.main.Nodes.Add(resume);
@@ -297,7 +297,7 @@ namespace SlaamMono.Gameplay
             _state.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
             if (_state.ReadySetGoThrottle.Active)
             {
-                EndGame();
+                endGame();
             }
         }
         private void updatePlayingGameState()
@@ -474,11 +474,11 @@ namespace SlaamMono.Gameplay
 
 
 
-        private void EndGame()
+        private IState endGame()
         {
             if (_state.GameType == GameType.Survival)
             {
-                survival_EndGame();
+                return survival_EndGame();
             }
             else
             {
@@ -488,17 +488,17 @@ namespace SlaamMono.Gameplay
                     _state.Characters[x].SaveProfileData();
                 }
                 ProfileManager.SaveProfiles();
-                new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
+                return new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
             }
         }
-        private void survival_EndGame()
+        private IState survival_EndGame()
         {
             if (ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame < _state.Timer.CurrentGameTime)
             {
                 ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame = _state.Timer.CurrentGameTime;
             }
             ProfileManager.SaveProfiles();
-            new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
+            return new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
         }
     }
 }
