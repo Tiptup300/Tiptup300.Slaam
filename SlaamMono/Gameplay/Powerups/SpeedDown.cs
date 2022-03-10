@@ -42,7 +42,7 @@ namespace SlaamMono.Gameplay.Powerups
                     gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
             }
 
-            CurrentTime -= FrameRateDirector.MovementFactorTimeSpan;
+            CurrentTime -= FrameRateDirector.Instance.MovementFactorTimeSpan;
 
             if (CurrentTime <= TimeSpan.Zero)
             {

@@ -43,7 +43,7 @@ namespace SlaamMono.Gameplay
         {
             if (Moving)
             {
-                Position.X += FrameRateDirector.MovementFactor * MovementSpeed;
+                Position.X += FrameRateDirector.Instance.MovementFactor * MovementSpeed;
                 if (Position.X >= 0)
                 {
                     Position.X = 0;
@@ -53,7 +53,7 @@ namespace SlaamMono.Gameplay
             }
             if (Character.CurrentPowerup != null && Character.CurrentPowerup.Active)
             {
-                Alpha += (AlphaUp ? 1 : -1) * FrameRateDirector.MovementFactor;
+                Alpha += (AlphaUp ? 1 : -1) * FrameRateDirector.Instance.MovementFactor;
 
                 if (AlphaUp && Alpha >= 255f)
                 {

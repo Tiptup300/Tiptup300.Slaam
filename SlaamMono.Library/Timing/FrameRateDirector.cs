@@ -5,8 +5,12 @@ namespace SlaamMono.Library
 {
     public class FrameRateDirector : DrawableGameComponent
     {
-        public static float MovementFactor { private set; get; }
-        public static TimeSpan MovementFactorTimeSpan { get { return new TimeSpan(0, 0, 0, 0, (int)MovementFactor); } }
+        public static FrameRateDirector Instance { get; private set; }
+
+        public float MovementFactor { private set; get; }
+        public TimeSpan MovementFactorTimeSpan { get { return new TimeSpan(0, 0, 0, 0, (int)MovementFactor); } }
+        public int FDPS { private set; get; }
+        public int FUPS { private set; get; }
 
         private int _framesDrawn;
         private int _framesDrawnLast;
@@ -16,9 +20,11 @@ namespace SlaamMono.Library
         private readonly TimeSpan _oneSecond = TimeSpan.FromSeconds(1);
         private TimeSpan _currentTimer = TimeSpan.Zero;
 
-        public static int FDPS { private set; get; }
-
-        public static int FUPS { private set; get; }
+        public static FrameRateDirector Init(Game game)
+        {
+            Instance = new FrameRateDirector(game);
+            return Instance;
+        }
 
         public FrameRateDirector(Game game)
             : base(game)

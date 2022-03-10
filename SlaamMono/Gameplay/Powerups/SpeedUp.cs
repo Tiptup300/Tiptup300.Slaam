@@ -33,7 +33,7 @@ namespace SlaamMono.Gameplay.Powerups
 
         public override void UpdateAttack(GameScreenState gameScreenState)
         {
-            CurrentTime -= FrameRateDirector.MovementFactorTimeSpan;
+            CurrentTime -= FrameRateDirector.Instance.MovementFactorTimeSpan;
 
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
 

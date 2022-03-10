@@ -59,7 +59,7 @@ namespace SlaamMono
 
         protected override void Initialize()
         {
-            Components.Insert(0, new FrameRateDirector(this));
+            Components.Insert(0, FrameRateDirector.Init(this));
             Components.Add(new InputComponent(this));
             _renderGraph.Initialize();
             _fpsRenderer.Initialize();

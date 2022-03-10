@@ -33,7 +33,7 @@ namespace SlaamMono.Gameplay
             {
                 gameScreenState.CurrentGameStatus = GameStatus.Over;
                 gameScreenState.ReadySetGoPart = 3;
-                gameScreenState.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+                gameScreenState.ReadySetGoThrottle.Update(FrameRateDirector.Instance.MovementFactorTimeSpan);
             }
         }
         public static void RespawnCharacter(GameScreenState gameScreenState, int characterIndex)
@@ -134,7 +134,7 @@ namespace SlaamMono.Gameplay
             {
                 gameScreenState.CurrentGameStatus = GameStatus.Over;
                 gameScreenState.ReadySetGoPart = 3;
-                gameScreenState.ReadySetGoThrottle.Update(FrameRateDirector.MovementFactorTimeSpan);
+                gameScreenState.ReadySetGoThrottle.Update(FrameRateDirector.Instance.MovementFactorTimeSpan);
             }
         }
     }

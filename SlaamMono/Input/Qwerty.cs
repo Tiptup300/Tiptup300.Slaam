@@ -98,14 +98,14 @@ namespace SlaamMono.Input
         {
             if (Status == QwertyStatus.GoingUp)
             {
-                BoardPosition.Y -= FrameRateDirector.MovementFactor * MovementSpeed;
+                BoardPosition.Y -= FrameRateDirector.Instance.MovementFactor * MovementSpeed;
 
                 if (BoardPosition.Y <= TargetPosition.Y)
                     Status = QwertyStatus.Normal;
             }
             else if (Status == QwertyStatus.GoingDown)
             {
-                BoardPosition.Y += FrameRateDirector.MovementFactor * MovementSpeed;
+                BoardPosition.Y += FrameRateDirector.Instance.MovementFactor * MovementSpeed;
 
                 if (BoardPosition.Y >= 1024)
                     Active = false;
