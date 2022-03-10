@@ -14,9 +14,6 @@ namespace SlaamMono.MatchCreation
 {
     public class BoardSelectionScreenPerformer : IStatePerformer
     {
-        public bool x_HasFoundBoard { get => _state.HasFoundBoard; }
-        public string x_IsValidBoard { get => _state.IsValidBoard; }
-
         private BoardSelectionScreenState _state = new BoardSelectionScreenState();
 
         private readonly IResources _resources;
@@ -36,7 +33,6 @@ namespace SlaamMono.MatchCreation
             _state.BoardNames = _resources.GetTextList("Boards");
             setBoardIndexs();
         }
-
         private void setBoardIndexs()
         {
             _state.DrawingBoardIndex = new IntRange(0, 0, _state.BoardNames.Count - 1);
@@ -48,7 +44,7 @@ namespace SlaamMono.MatchCreation
         {
             if (_state.IsStillLoadingBoards)
             {
-                ContinueLoadingBoards();
+                continueLoadingBoards();
                 return _state;
             }
 
@@ -167,7 +163,35 @@ namespace SlaamMono.MatchCreation
             }
             return _state;
         }
+        private void continueLoadingBoards()
+        {
+            try
+            {
+                Texture2D temp = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + _state.BoardNames[_state.CurrentBoardLoading]);
 
+                _state.HasFoundBoard = true;
+                _state.IsValidBoard = _state.BoardNames[_state.CurrentBoardLoading];
+                _state.BoardTextures.Add(temp);
+                _state.ValidBoards.Add(_state.BoardNames[_state.CurrentBoardLoading]);
+
+            }
+            catch (InvalidOperationException)
+            {
+                // Found a .png that is either corrupt or not really a .png, lets just skip it!
+            }
+            _state.CurrentBoardLoading++;
+            if (_state.CurrentBoardLoading == _state.BoardNames.Count)
+            {
+                finishLoadingBoards();
+            }
+        }
+        private void finishLoadingBoards()
+        {
+            _state.IsStillLoadingBoards = false;
+            _state.DrawingBoardIndex = new IntRange(0, 0, _state.BoardTextures.Count - 1);
+            _state.VerticalBoardOffset = new IntRange(0, 0, _state.BoardTextures.Count - 1);
+            _state.HorizontalBoardOffset = new IntRange(-_state.BoardTextures.Count, -_state.BoardTextures.Count, -1);
+        }
 
         public void RenderState(SpriteBatch batch)
         {
@@ -198,7 +222,7 @@ namespace SlaamMono.MatchCreation
             batch.Draw(_resources.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
             if (!_state.IsStillLoadingBoards)
             {
-                _state.CenteredRectangle = CenterRectangle(new Rectangle(0, 0, (int)(_state.Scale * _state.DrawSizeWidth), (int)(_state.Scale * _state.DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
+                _state.CenteredRectangle = centerRectangle(new Rectangle(0, 0, (int)(_state.Scale * _state.DrawSizeWidth), (int)(_state.Scale * _state.DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
                 if (_state.WasChosen)
                 {
                     batch.Draw(_state.BoardTextures[_state.Save], _state.CenteredRectangle, Color.White);
@@ -207,52 +231,16 @@ namespace SlaamMono.MatchCreation
                 RenderGraph.Instance.RenderText(DialogStrings.CleanMapName(_state.ValidBoards[_state.Save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
             }
         }
+        private Rectangle centerRectangle(Rectangle rect, Vector2 pos)
+        {
+            return new Rectangle((int)pos.X - rect.Width / 2, (int)pos.Y - rect.Height / 2, rect.Width, rect.Height);
+        }
 
         public void Close()
         {
             _state.BoardTextures = null;
             _state.ValidBoards = null;
             GC.Collect();
-        }
-
-
-        private void ContinueLoadingBoards()
-        {
-            try
-            {
-                Texture2D temp = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + _state.BoardNames[_state.CurrentBoardLoading]);
-
-                _state.HasFoundBoard = true;
-                _state.IsValidBoard = _state.BoardNames[_state.CurrentBoardLoading];
-                _state.BoardTextures.Add(temp);
-                _state.ValidBoards.Add(_state.BoardNames[_state.CurrentBoardLoading]);
-
-            }
-            catch (InvalidOperationException)
-            {
-                // Found a .png that is either corrupt or not really a .png, lets just skip it!
-            }
-
-
-            _state.CurrentBoardLoading++;
-            if (_state.CurrentBoardLoading == _state.BoardNames.Count)
-            {
-                FinishLoadingBoards();
-            }
-
-        }
-
-        private void FinishLoadingBoards()
-        {
-            _state.IsStillLoadingBoards = false;
-            _state.DrawingBoardIndex = new IntRange(0, 0, _state.BoardTextures.Count - 1);
-            _state.VerticalBoardOffset = new IntRange(0, 0, _state.BoardTextures.Count - 1);
-            _state.HorizontalBoardOffset = new IntRange(-_state.BoardTextures.Count, -_state.BoardTextures.Count, -1);
-        }
-
-        private Rectangle CenterRectangle(Rectangle rect, Vector2 pos)
-        {
-            return new Rectangle((int)pos.X - rect.Width / 2, (int)pos.Y - rect.Height / 2, rect.Width, rect.Height);
         }
     }
 }

@@ -81,15 +81,16 @@ namespace SlaamMono.MatchCreation
             else
             {
                 // This will need to be redone to accomidate the State/Logic system.
+                // this should have been done in the request step.... I think....
+
                 //BoardSelectionScreenPerformer viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequestState(_state));
-                BoardSelectionScreenPerformer viewer = null; // todo remove
-                viewer.InitializeState();
-                while (!viewer.x_HasFoundBoard)
-                {
-                    viewer.Perform();
-                }
-                LobbyScreenFunctions.LoadBoard(viewer.x_IsValidBoard, _state);
-                viewer.Close();
+                //viewer.InitializeState();
+                //while (!viewer.x_HasFoundBoard)
+                //{
+                //    viewer.Perform();
+                //}
+                //LobbyScreenFunctions.LoadBoard(viewer.x_IsValidBoard, _state);
+                //viewer.Close();
             }
 
             LobbyScreenFunctions.SetupZune();

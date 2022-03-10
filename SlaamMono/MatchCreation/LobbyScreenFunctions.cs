@@ -26,16 +26,17 @@ namespace SlaamMono.MatchCreation
         {
             if (_defaultBoard == null)
             {
-                // todo: this will need fixed.
-                BoardSelectionScreenPerformer viewer = null;//= new BoardSelectionScreen(null, null);
-                new BoardSelectionScreenRequestState(null);
-                viewer.InitializeState();
-                while (!viewer.x_HasFoundBoard)
-                {
-                    viewer.Perform();
-                }
-                _defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.x_IsValidBoard);
-                viewer.Close();
+                // . @State/Logic This needs to be rethought out to deal with the new state/logic 
+
+                //BoardSelectionScreenPerformer viewer = null;//= new BoardSelectionScreen(null, null);
+                //new BoardSelectionScreenRequestState(null);
+                //viewer.InitializeState();
+                //while (!viewer.x_HasFoundBoard)
+                //{
+                //    viewer.Perform();
+                //}
+                //_defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.x_IsValidBoard);
+                //viewer.Close();
             }
 
             return _defaultBoard;
