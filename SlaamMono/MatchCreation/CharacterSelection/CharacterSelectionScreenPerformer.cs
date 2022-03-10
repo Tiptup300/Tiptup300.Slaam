@@ -33,7 +33,7 @@ namespace SlaamMono.MatchCreation
             new Vector2(600, 768)
         };
 
-        protected CharacterSelectionScreenState _state = new CharacterSelectionScreenState();
+        private CharacterSelectionScreenState _state = new CharacterSelectionScreenState();
 
         private readonly ILogger _logger;
         private readonly PlayerCharacterSelectBoxPerformer _playerCharacterSelectBox;
@@ -72,7 +72,7 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                ResetBoxes();
+                resetBoxes();
             }
 
             for (int x = 0; x < _state.SelectBoxes.Length; x++)
@@ -88,6 +88,51 @@ namespace SlaamMono.MatchCreation
             }
 
         }
+        private void resetBoxes()
+        {
+            if (_state.isForSurvival)
+            {
+                _state.SelectBoxes = new PlayerCharacterSelectBoxState[1];
+                _state.SelectBoxes[0] = buildCharacterSelectBoxState(
+                    position: new Vector2(340, 427),
+                    parentcharskins: SkinLoadingFunctions.SkinTexture,
+                    playeridx: ExtendedPlayerIndex.One,
+                    parentskinstrings: SkinLoadingFunctions.Skins,
+                    isSurvival: true);
+            }
+            else
+            {
+                _state.SelectBoxes = new PlayerCharacterSelectBoxState[InputComponent.Players.Length];
+                for (int x = 0; x < InputComponent.Players.Length; x++)
+                {
+                    _state.SelectBoxes[0] = buildCharacterSelectBoxState(
+                        position: _boxPositions[x],
+                        parentcharskins: SkinLoadingFunctions.SkinTexture,
+                        playeridx: (ExtendedPlayerIndex)x,
+                        parentskinstrings: SkinLoadingFunctions.Skins);
+                }
+            }
+        }
+        private PlayerCharacterSelectBoxState buildCharacterSelectBoxState(
+            Vector2 position,
+            Texture2D[] parentcharskins,
+            ExtendedPlayerIndex playeridx,
+            List<string> parentskinstrings,
+            bool isSurvival = false)
+        {
+            PlayerCharacterSelectBoxState output;
+
+            output = _selectBoxStateResolver.Resolve(new PlayerCharacterSelectBoxRequest()
+            {
+                Position = position,
+                parentcharskins = parentcharskins,
+                playeridx = playeridx,
+                parentskinstrings = parentskinstrings,
+                IsSurvival = isSurvival
+            });
+
+            return output;
+        }
 
         public IState Perform()
         {
@@ -99,7 +144,7 @@ namespace SlaamMono.MatchCreation
                 InputComponent.Players[0].PressedAction2 &&
                 _state.SelectBoxes[0].Status == PlayerCharacterSelectBoxStatus.Computer)
             {
-                return GoBack();
+                return goBack();
             }
 
             for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
@@ -117,17 +162,15 @@ namespace SlaamMono.MatchCreation
             }
             if (_state._peopleIn > 0 && _state._peopleDone == _state._peopleIn)
             {
-                return GoForward();
+                return goForward();
             }
             return _state;
         }
-
-        public virtual IState GoBack()
+        private IState goBack()
         {
             return new MainMenuScreenState();
         }
-
-        public virtual IState GoForward()
+        private IState goForward()
         {
             if (_state.isForSurvival)
             {
@@ -167,51 +210,6 @@ namespace SlaamMono.MatchCreation
             _state.SelectBoxes = null;
         }
 
-        public virtual void ResetBoxes()
-        {
-            if (_state.isForSurvival)
-            {
-                _state.SelectBoxes = new PlayerCharacterSelectBoxState[1];
-                _state.SelectBoxes[0] = buildCharacterSelectBoxState(
-                    position: new Vector2(340, 427),
-                    parentcharskins: SkinLoadingFunctions.SkinTexture,
-                    playeridx: ExtendedPlayerIndex.One,
-                    parentskinstrings: SkinLoadingFunctions.Skins,
-                    isSurvival: true);
-            }
-            else
-            {
-                _state.SelectBoxes = new PlayerCharacterSelectBoxState[InputComponent.Players.Length];
-                for (int x = 0; x < InputComponent.Players.Length; x++)
-                {
-                    _state.SelectBoxes[0] = buildCharacterSelectBoxState(
-                        position: _boxPositions[x],
-                        parentcharskins: SkinLoadingFunctions.SkinTexture,
-                        playeridx: (ExtendedPlayerIndex)x,
-                        parentskinstrings: SkinLoadingFunctions.Skins);
-                }
-            }
-        }
 
-        private PlayerCharacterSelectBoxState buildCharacterSelectBoxState(
-            Vector2 position,
-            Texture2D[] parentcharskins,
-            ExtendedPlayerIndex playeridx,
-            List<string> parentskinstrings,
-            bool isSurvival = false)
-        {
-            PlayerCharacterSelectBoxState output;
-
-            output = _selectBoxStateResolver.Resolve(new PlayerCharacterSelectBoxRequest()
-            {
-                Position = position,
-                parentcharskins = parentcharskins,
-                playeridx = playeridx,
-                parentskinstrings = parentskinstrings,
-                IsSurvival = isSurvival
-            });
-
-            return output;
-        }
     }
 }
