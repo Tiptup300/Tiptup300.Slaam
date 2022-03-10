@@ -4,9 +4,9 @@ namespace SlaamMono.MatchCreation
 {
     public class BoardSelectionScreenRequestState : IState
     {
-        public LobbyScreenPerformer ParentScreen { get; private set; }
+        public LobbyScreenState ParentScreen { get; private set; }
 
-        public BoardSelectionScreenRequestState(LobbyScreenPerformer parentScreen)
+        public BoardSelectionScreenRequestState(LobbyScreenState parentScreen)
         {
             ParentScreen = parentScreen;
         }

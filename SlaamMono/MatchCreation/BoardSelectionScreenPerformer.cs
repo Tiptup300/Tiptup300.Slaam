@@ -76,7 +76,7 @@ namespace SlaamMono.MatchCreation
 
                 if (InputComponent.Players[0].PressedAction)
                 {
-                    _state.ParentLobbyScreen.LoadBoard(_state.ValidBoards[_state.Save]);
+                    LobbyScreenFunctions.LoadBoard(_state.ValidBoards[_state.Save], _state.ParentLobbyScreen);
                     // todo
                     //_screenManager.ChangeTo(_state.ParentLobbyScreen);
                 }

@@ -20,8 +20,6 @@ namespace SlaamMono.MatchCreation
 {
     public class LobbyScreenPerformer : IStatePerformer
     {
-        private static Texture2D _defaultBoard;
-
         private const int _maxPlayers = 4;
 
         private LobbyScreenState _state = new LobbyScreenState();
@@ -31,28 +29,19 @@ namespace SlaamMono.MatchCreation
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
-        private readonly IResolver<GameScreenRequestState, GameScreenPerformer> _gameScreenRequest;
-        private readonly IResolver<BoardSelectionScreenRequestState, BoardSelectionScreenPerformer> _boardSelectionScreenResolver;
-        private readonly IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreenPerformer> _characterSelectionScreenResolver;
 
         public LobbyScreenPerformer(
             ILogger logger,
             IScreenManager screenDirector,
             PlayerColorResolver playerColorResolver,
             IResources resources,
-            IRenderGraph renderGraphManager,
-            IResolver<GameScreenRequestState, GameScreenPerformer> gameScreenRequest,
-            IResolver<BoardSelectionScreenRequestState, BoardSelectionScreenPerformer> boardSelectionScreenResolver,
-            IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreenPerformer> characterSelectionScreenResolver)
+            IRenderGraph renderGraphManager)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _playerColorResolver = playerColorResolver;
             _resources = resources;
             _renderGraphManager = renderGraphManager;
-            _gameScreenRequest = gameScreenRequest;
-            _boardSelectionScreenResolver = boardSelectionScreenResolver;
-            _characterSelectionScreenResolver = characterSelectionScreenResolver;
         }
 
 
@@ -60,7 +49,6 @@ namespace SlaamMono.MatchCreation
         {
             _state.SetupCharacters = request.CharacterShells;
         }
-
         public void InitializeState()
         {
             _state.Dialogs = new string[2];
@@ -88,64 +76,44 @@ namespace SlaamMono.MatchCreation
 
             if (MatchSettings.CurrentMatchSettings.BoardLocation != null && MatchSettings.CurrentMatchSettings.BoardLocation.Trim() != "" && File.Exists(MatchSettings.CurrentMatchSettings.BoardLocation))
             {
-                LoadBoard(MatchSettings.CurrentMatchSettings.BoardLocation);
+                LobbyScreenFunctions.LoadBoard(MatchSettings.CurrentMatchSettings.BoardLocation, _state);
             }
             else
             {
-                BoardSelectionScreenPerformer viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequestState(this));
+                // This will need to be redone to accomidate the State/Logic system.
+                //BoardSelectionScreenPerformer viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequestState(_state));
+                BoardSelectionScreenPerformer viewer = null; // todo remove
                 viewer.InitializeState();
                 while (!viewer.x_HasFoundBoard)
                 {
                     viewer.Perform();
                 }
-                LoadBoard(viewer.x_IsValidBoard);
+                LobbyScreenFunctions.LoadBoard(viewer.x_IsValidBoard, _state);
                 viewer.Close();
             }
 
-            SetupZune();
+            LobbyScreenFunctions.SetupZune();
             if (_state.SetupCharacters.Count == 1)
             {
-                AddComputer();
+                addComputer();
                 _state.PlayerAmt++;
             }
         }
-
-        public static void SetupZune()
+        private void addComputer()
         {
-            SlaamGame.mainBlade.Status = ZBlade.BladeStatus.In;
-            SlaamGame.mainBlade.UserCanCloseMenu = false;
-
-            ZBlade.InfoBlade.BladeHiddenSetup = ZBlade.InfoBlade.BladeInSetup;
-            ZBlade.InfoBlade.BladeInSetup = new ZBlade.BladeSetup("Back", "Start", "Game Settings");
-        }
-
-        public static void ResetZune()
-        {
-            SlaamGame.mainBlade.Status = ZBlade.BladeStatus.Hidden;
-            ZBlade.InfoBlade.BladeInSetup = ZBlade.InfoBlade.BladeHiddenSetup;
-        }
-
-        public static Texture2D LoadQuickBoard()
-        {
-            if (_defaultBoard == null)
-            {
-                // todo: this will need fixed.
-                BoardSelectionScreenPerformer viewer = null;//= new BoardSelectionScreen(null, null);
-                new BoardSelectionScreenRequestState(null);
-                viewer.InitializeState();
-                while (!viewer.x_HasFoundBoard)
-                {
-                    viewer.Perform();
-                }
-                _defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.x_IsValidBoard);
-                viewer.Close();
-            }
-
-            return _defaultBoard;
+            _state.SetupCharacters.Add(
+                new CharacterShell(
+                    skinLocation: SkinLoadingFunctions.ReturnRandSkin(_logger),
+                    characterProfileIndex: ProfileManager.GetBotProfile(),
+                    playerIndex: (ExtendedPlayerIndex)_state.SetupCharacters.Count,
+                    playerType: PlayerType.Computer,
+                    playerColor: _playerColorResolver.GetColorByIndex(_state.SetupCharacters.Count)));
         }
 
         public IState Perform()
         {
+            IState output = _state;
+
             if (_state.ViewingSettings)
             {
                 if (InputComponent.Players[0].PressedDown)
@@ -181,20 +149,20 @@ namespace SlaamMono.MatchCreation
                             MatchSettings.CurrentMatchSettings = buildMatchSettings();
                             writeMatchSettingsToFile();
                             _state.ViewingSettings = false;
-                            SetupZune();
+                            LobbyScreenFunctions.SetupZune();
                         }
                         else if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Cancel")
                         {
                             readMatchSettingsFromFile();
                             MatchSettings.CurrentMatchSettings = buildMatchSettings();
                             _state.ViewingSettings = false;
-                            SetupZune();
+                            LobbyScreenFunctions.SetupZune();
                         }
                         else
                         {
-                            _screenDirector.ChangeTo(_boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequestState(this)));
+                            // @State/Logic - this will need to be changed to a Request -> State resolver.
+                            output = new BoardSelectionScreenRequestState(_state);
                         }
-
                     }
                 }
             }
@@ -202,14 +170,15 @@ namespace SlaamMono.MatchCreation
             {
                 if (InputComponent.Players[0].PressedAction2)
                 {
-                    _screenDirector.ChangeTo(_characterSelectionScreenResolver.Resolve(new CharacterSelectionScreenRequestState()));
+                    // @State/Logic - this will need to be changed to a Requaest -> State resolver.
+                    output = new CharacterSelectionScreenRequestState();
                     ProfileManager.ResetAllBots();
-                    ResetZune();
+                    LobbyScreenFunctions.SetupZune();
                 }
 
                 if (InputComponent.Players[0].PressedUp && _state.SetupCharacters.Count < _maxPlayers)
                 {
-                    AddComputer();
+                    addComputer();
                 }
                 if (InputComponent.Players[0].PressedDown && _state.SetupCharacters.Count > _state.PlayerAmt)
                 {
@@ -222,23 +191,21 @@ namespace SlaamMono.MatchCreation
                     MatchSettings matchSettings = buildMatchSettings();
                     MatchSettings.CurrentMatchSettings = matchSettings;
                     writeMatchSettingsToFile();
-                    _screenDirector.ChangeTo(_gameScreenRequest.Resolve(new GameScreenRequestState(_state.SetupCharacters, matchSettings)));
+                    // @State/Logic - this will need to be changed to a Request -> State resolver.
+                    output = new GameScreenRequestState(_state.SetupCharacters, matchSettings);
                     ProfileManager.ResetAllBots();
-                    ResetZune();
+                    LobbyScreenFunctions.SetupZune();
                 }
 
                 if (InputComponent.Players[0].PressedAction)
                 {
                     _state.ViewingSettings = true;
-                    ResetZune();
-
-
+                    LobbyScreenFunctions.SetupZune();
                 }
 
             }
             return _state;
         }
-
         private MatchSettings buildMatchSettings()
         {
             MatchSettings output;
@@ -310,7 +277,6 @@ namespace SlaamMono.MatchCreation
 
             return output;
         }
-
         private void writeMatchSettingsToFile()
         {
             XnaContentWriter writer = new XnaContentWriter(x_Di.Get<ProfileFileVersion>());
@@ -325,8 +291,7 @@ namespace SlaamMono.MatchCreation
 
             writer.Close();
         }
-
-        public void readMatchSettingsFromFile()
+        private void readMatchSettingsFromFile()
         {
             XnaContentReader reader;
 
@@ -383,7 +348,6 @@ namespace SlaamMono.MatchCreation
                 batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
             }
         }
-
         public void Close()
         {
             _state.CurrentBoardTexture = null;
@@ -391,53 +355,6 @@ namespace SlaamMono.MatchCreation
             _resources.GetTexture("LobbyCharBar").Unload();
             _resources.GetTexture("LobbyColorPreview").Unload();
             _resources.GetTexture("LobbyOverlay").Unload();
-        }
-
-        /// <summary>
-        /// Loads the new Board Texture and loads its name/creator.
-        /// </summary>
-        public void LoadBoard(string boardLocation)
-        {
-            if (_state.CurrentBoardTexture != null && _state.BoardLocation == boardLocation)
-            {
-                return;
-            }
-
-            try
-            {
-                _state.CurrentBoardTexture = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + boardLocation);
-                _state.BoardLocation = boardLocation;
-            }
-            catch (FileNotFoundException)
-            {
-
-            }
-            _state.Dialogs[0] = DialogStrings.CurrentBoard + _state.BoardLocation.Substring(_state.BoardLocation.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\", "");
-            if (_state.BoardLocation.IndexOf('_') >= 0)
-            {
-                _state.Dialogs[1] = DialogStrings.CreatedBy + _state.BoardLocation.Substring(0, _state.BoardLocation.IndexOf('_')).Replace(".png", "").Replace("boards\\", "");
-            }
-            else
-            {
-                _state.Dialogs[1] = "";
-            }
-
-            _defaultBoard = _state.CurrentBoardTexture;
-
-        }
-
-        /// <summary>
-        /// Adds a new computer player.
-        /// </summary>
-        private void AddComputer()
-        {
-            _state.SetupCharacters.Add(
-                new CharacterShell(
-                    skinLocation: SkinLoadingFunctions.ReturnRandSkin(_logger),
-                    characterProfileIndex: ProfileManager.GetBotProfile(),
-                    playerIndex: (ExtendedPlayerIndex)_state.SetupCharacters.Count,
-                    playerType: PlayerType.Computer,
-                    playerColor: _playerColorResolver.GetColorByIndex(_state.SetupCharacters.Count)));
         }
     }
 }
