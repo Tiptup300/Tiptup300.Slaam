@@ -120,7 +120,7 @@ namespace SlaamMono.Gameplay.Actors
                          gameScreenState.Characters[x].CurrentState != CharacterState.Dieing &&
                          gameScreenState.Characters[x].MarkingColor != MarkingColor)
                     {
-                        Vector2 pos = GameScreenPerformer.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true);
+                        Vector2 pos = GameScreenFunctions.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true);
                         if (pos != CurrentCoordinates)
                             Targets.Add(new BotTarget(x, pos, GetDistance(CurrentCoordinates, pos)));
 

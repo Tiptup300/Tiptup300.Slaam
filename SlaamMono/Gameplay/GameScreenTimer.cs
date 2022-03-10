@@ -71,7 +71,7 @@ namespace SlaamMono.Gameplay
                     if (state.CurrentStep >= state.StepSize)
                     {
                         state.CurrentStep -= state.StepSize;
-                        GameScreenPerformer.ShortenBoard(gameScreenState);
+                        GameScreenFunctions.ShortenBoard(gameScreenState);
                     }
 
                 }

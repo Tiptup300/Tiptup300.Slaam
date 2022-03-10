@@ -305,7 +305,7 @@ namespace SlaamMono.Gameplay.Actors
         /// <returns></returns>
         public bool IsClear(Vector2 CurrentCoords, Vector2 Movement, GameScreenState gameScreenState)
         {
-            Vector2 TilePosition = GameScreenPerformer.InterpretCoordinates(gameScreenState, new Vector2(CurrentCoords.X + Movement.X, CurrentCoords.Y + Movement.Y), true);
+            Vector2 TilePosition = GameScreenFunctions.InterpretCoordinates(gameScreenState, new Vector2(CurrentCoords.X + Movement.X, CurrentCoords.Y + Movement.Y), true);
 
             return IsClear(TilePosition, gameScreenState);
         }
@@ -434,7 +434,7 @@ namespace SlaamMono.Gameplay.Actors
 
             Deaths++;
 
-            GameScreenPerformer.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex, gameScreenState);
+            GameScreenFunctions.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex, gameScreenState);
 
             CurrentState = CharacterState.Dead;
             ReappearTime.Update(FrameRateDirector.MovementFactorTimeSpan);
