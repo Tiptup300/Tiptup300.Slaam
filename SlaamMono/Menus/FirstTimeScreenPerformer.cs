@@ -7,6 +7,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
+using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
@@ -18,12 +19,18 @@ namespace SlaamMono.Menus
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
+        private readonly IResolver<ProfileEditScreenRequestState, ProfileEditScreenState> _profileEditResolver;
 
-        public FirstTimeScreenPerformer(IScreenManager screenDirector, IResources resources, IRenderGraph renderGraphManager)
+        public FirstTimeScreenPerformer(
+            IScreenManager screenDirector,
+            IResources resources,
+            IRenderGraph renderGraphManager,
+            IResolver<ProfileEditScreenRequestState, ProfileEditScreenState> profileEditResolver)
         {
             _screenDirector = screenDirector;
             _resources = resources;
             _renderGraphManager = renderGraphManager;
+            _profileEditResolver = profileEditResolver;
         }
 
         public void InitializeState()
@@ -61,8 +68,7 @@ namespace SlaamMono.Menus
         {
             if (InputComponent.Players[0].PressedAction)
             {
-                ProfileEditScreenPerformer.Instance.SetupNewProfile = true;
-                _screenDirector.ChangeTo(ProfileEditScreenPerformer.Instance);
+                return _profileEditResolver.Resolve(new ProfileEditScreenRequestState() { CreateNewProfile = true });
             }
             return _state;
         }
