@@ -14,10 +14,10 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.PlayerProfiles
 {
-    public class ProfileEditScreen : IStatePerformer
+    public class ProfileEditScreenPerformer : IStatePerformer
     {
-        public static ProfileEditScreen Instance =
-            new ProfileEditScreen(
+        public static ProfileEditScreenPerformer Instance =
+            new ProfileEditScreenPerformer(
                 x_Di.Get<IScreenManager>(),
                 x_Di.Get<IResources>(),
                 x_Di.Get<IRenderGraph>());
@@ -29,7 +29,7 @@ namespace SlaamMono.PlayerProfiles
 
         private readonly IScreenManager _screenDirector;
 
-        public ProfileEditScreen(IScreenManager screenDirector, IResources resourcesManager, IRenderGraph renderGraphManager)
+        public ProfileEditScreenPerformer(IScreenManager screenDirector, IResources resourcesManager, IRenderGraph renderGraphManager)
         {
             _screenDirector = screenDirector;
             _state.MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), resourcesManager, renderGraphManager);

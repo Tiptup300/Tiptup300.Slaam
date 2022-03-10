@@ -24,7 +24,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreen : IStatePerformer
+    public class GameScreenPerformer : IStatePerformer
     {
         private GameScreenState _state = new GameScreenState();
         private SurvivalGameScreenState _survivalState = new SurvivalGameScreenState();
@@ -34,7 +34,7 @@ namespace SlaamMono.Gameplay
         private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
         private readonly ILogger _logger;
 
-        public GameScreen(
+        public GameScreenPerformer(
             IResources resources,
             IGraphicsState graphicsState,
             IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver,
@@ -192,7 +192,7 @@ namespace SlaamMono.Gameplay
             MatchSettings.CurrentMatchSettings.SpeedMultiplyer = 1f;
             MatchSettings.CurrentMatchSettings.RespawnTime = new TimeSpan(0, 0, 8);
             MatchSettings.CurrentMatchSettings.LivesAmt = 1;
-            _state.Tileset = LobbyScreen.LoadQuickBoard();
+            _state.Tileset = LobbyScreenPerformer.LoadQuickBoard();
 
             _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, _state.SetupCharacters[0].CharacterProfileIndex, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
             _state.Scoreboards.Add(

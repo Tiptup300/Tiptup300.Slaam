@@ -11,7 +11,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
-    public class FirstTimeScreen : IStatePerformer
+    public class FirstTimeScreenPerformer : IStatePerformer
     {
         public FirstTimeScreenState _state = new FirstTimeScreenState();
 
@@ -19,7 +19,7 @@ namespace SlaamMono.Menus
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
 
-        public FirstTimeScreen(IScreenManager screenDirector, IResources resources, IRenderGraph renderGraphManager)
+        public FirstTimeScreenPerformer(IScreenManager screenDirector, IResources resources, IRenderGraph renderGraphManager)
         {
             _screenDirector = screenDirector;
             _resources = resources;
@@ -61,8 +61,8 @@ namespace SlaamMono.Menus
         {
             if (InputComponent.Players[0].PressedAction)
             {
-                ProfileEditScreen.Instance.SetupNewProfile = true;
-                _screenDirector.ChangeTo(ProfileEditScreen.Instance);
+                ProfileEditScreenPerformer.Instance.SetupNewProfile = true;
+                _screenDirector.ChangeTo(ProfileEditScreenPerformer.Instance);
             }
             return _state;
         }

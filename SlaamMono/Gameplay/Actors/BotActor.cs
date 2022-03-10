@@ -14,7 +14,7 @@ namespace SlaamMono.Gameplay.Actors
 {
     public class BotActor : CharacterActor
     {
-        GameScreen ParentGameScreen;
+        GameScreenPerformer ParentGameScreen;
         InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
         Timer DiagonalMovementSwitch = new Timer(new TimeSpan(0, 0, 0, 0, 500));
         Timer LogicUpdateThreshold = new Timer(new TimeSpan(0, 0, 0, 0, 500));
@@ -29,7 +29,7 @@ namespace SlaamMono.Gameplay.Actors
         private readonly Vector2 NullVector2 = new Vector2(-2, -2);
         private BotTarget CurrentTarget;
         private bool SwitchMovements = false;
-        public BotActor(Texture2D skin, int profile, Vector2 pos, GameScreen parentgamescreen, Color markingcolor, int plyeridx, IResources resources) :
+        public BotActor(Texture2D skin, int profile, Vector2 pos, GameScreenPerformer parentgamescreen, Color markingcolor, int plyeridx, IResources resources) :
             base(skin, profile, pos, null, markingcolor, plyeridx, resources)
         {
             Gamepad = AIInput;
@@ -120,7 +120,7 @@ namespace SlaamMono.Gameplay.Actors
                          gameScreenState.Characters[x].CurrentState != CharacterState.Dieing &&
                          gameScreenState.Characters[x].MarkingColor != MarkingColor)
                     {
-                        Vector2 pos = GameScreen.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true);
+                        Vector2 pos = GameScreenPerformer.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true);
                         if (pos != CurrentCoordinates)
                             Targets.Add(new BotTarget(x, pos, GetDistance(CurrentCoordinates, pos)));
 

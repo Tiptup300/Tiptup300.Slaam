@@ -2,7 +2,7 @@ namespace SlaamMono.Gameplay
 {
     public class MatchScoreCollection
     {
-        public GameScreen ParentGameScreen;
+        public GameScreenPerformer ParentGameScreen;
         private readonly GameType _gameType;
         public int[][] Kills;
         public int[] BestSprees;
@@ -10,7 +10,7 @@ namespace SlaamMono.Gameplay
 
 
 
-        public MatchScoreCollection(GameScreen parentgamecreen, GameType gameType, GameScreenState gameScreenState)
+        public MatchScoreCollection(GameScreenPerformer parentgamecreen, GameType gameType, GameScreenState gameScreenState)
         {
             ParentGameScreen = parentgamecreen;
             _gameType = gameType;

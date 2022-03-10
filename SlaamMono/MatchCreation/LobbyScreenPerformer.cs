@@ -18,7 +18,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class LobbyScreen : IStatePerformer
+    public class LobbyScreenPerformer : IStatePerformer
     {
         private static Texture2D _defaultBoard;
 
@@ -31,19 +31,19 @@ namespace SlaamMono.MatchCreation
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraphManager;
-        private readonly IResolver<GameScreenRequestState, GameScreen> _gameScreenRequest;
-        private readonly IResolver<BoardSelectionScreenRequestState, BoardSelectionScreen> _boardSelectionScreenResolver;
-        private readonly IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreen> _characterSelectionScreenResolver;
+        private readonly IResolver<GameScreenRequestState, GameScreenPerformer> _gameScreenRequest;
+        private readonly IResolver<BoardSelectionScreenRequestState, BoardSelectionScreenPerformer> _boardSelectionScreenResolver;
+        private readonly IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreenPerformer> _characterSelectionScreenResolver;
 
-        public LobbyScreen(
+        public LobbyScreenPerformer(
             ILogger logger,
             IScreenManager screenDirector,
             PlayerColorResolver playerColorResolver,
             IResources resources,
             IRenderGraph renderGraphManager,
-            IResolver<GameScreenRequestState, GameScreen> gameScreenRequest,
-            IResolver<BoardSelectionScreenRequestState, BoardSelectionScreen> boardSelectionScreenResolver,
-            IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreen> characterSelectionScreenResolver)
+            IResolver<GameScreenRequestState, GameScreenPerformer> gameScreenRequest,
+            IResolver<BoardSelectionScreenRequestState, BoardSelectionScreenPerformer> boardSelectionScreenResolver,
+            IResolver<CharacterSelectionScreenRequestState, CharacterSelectionScreenPerformer> characterSelectionScreenResolver)
         {
             _logger = logger;
             _screenDirector = screenDirector;
@@ -92,7 +92,7 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                BoardSelectionScreen viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequestState(this));
+                BoardSelectionScreenPerformer viewer = _boardSelectionScreenResolver.Resolve(new BoardSelectionScreenRequestState(this));
                 viewer.InitializeState();
                 while (!viewer.x_HasFoundBoard)
                 {
@@ -130,7 +130,7 @@ namespace SlaamMono.MatchCreation
             if (_defaultBoard == null)
             {
                 // todo: this will need fixed.
-                BoardSelectionScreen viewer = null;//= new BoardSelectionScreen(null, null);
+                BoardSelectionScreenPerformer viewer = null;//= new BoardSelectionScreen(null, null);
                 new BoardSelectionScreenRequestState(null);
                 viewer.InitializeState();
                 while (!viewer.x_HasFoundBoard)

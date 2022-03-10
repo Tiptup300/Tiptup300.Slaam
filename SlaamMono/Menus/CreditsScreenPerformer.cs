@@ -11,7 +11,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
-    public partial class CreditsScreen : IStatePerformer
+    public partial class CreditsScreenPerformer : IStatePerformer
     {
         private const float MovementSpeed = 3f / 120f;
 
@@ -20,7 +20,7 @@ namespace SlaamMono.Menus
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
 
-        public CreditsScreen(IScreenManager screenDirector, IResources resources)
+        public CreditsScreenPerformer(IScreenManager screenDirector, IResources resources)
         {
             _screenDirector = screenDirector;
             _resources = resources;

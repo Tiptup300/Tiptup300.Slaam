@@ -11,7 +11,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
-    public class HighScoreScreen : IStatePerformer
+    public class HighScoreScreenPerformer : IStatePerformer
     {
         public const int MAX_HIGHSCORES = 7;
 
@@ -22,7 +22,7 @@ namespace SlaamMono.Menus
         private readonly IResources _resources;
         private readonly IRenderGraph _renderGraph;
 
-        public HighScoreScreen(ILogger logger, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
+        public HighScoreScreenPerformer(ILogger logger, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
         {
             _logger = logger;
             _screenDirector = screenDirector;

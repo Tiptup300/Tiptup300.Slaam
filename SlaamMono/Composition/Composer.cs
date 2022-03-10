@@ -61,14 +61,14 @@ namespace SlaamMono.Composition
         private void registerScreens()
         {
             _container.RegisterInstance(new Mut<ScreenTransitionState>(new ScreenTransitionState(null, null, false)));
-            _container.Register<IMainMenuScreen, MainMenuScreen>();
-            _container.Register<CreditsScreen>();
-            _container.Register<HighScoreScreen>();
-            _container.Register<ProfileEditScreen>();
-            _container.Register<CharacterSelectionScreen>();
+            _container.Register<IMainMenuScreen, MainMenuScreenPerformer>();
+            _container.Register<CreditsScreenPerformer>();
+            _container.Register<HighScoreScreenPerformer>();
+            _container.Register<ProfileEditScreenPerformer>();
+            _container.Register<CharacterSelectionScreenPerformer>();
             _container.Register<IScreenManager, ScreenManager>(Lifestyle.Singleton);
-            _container.Register<ILogoScreen, LogoScreen>();
-            _container.Register<GameScreen>();
+            _container.Register<ILogoScreen, LogoScreenPerformer>();
+            _container.Register<GameScreenPerformer>();
 
             // Register all IRequests
             _container.RegisterSingleton(typeof(IResolver<>), typeof(SlaamGameApp).Assembly);

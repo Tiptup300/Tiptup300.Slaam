@@ -11,7 +11,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
-    public class LogoScreen : ILogoScreen, IStatePerformer
+    public class LogoScreenPerformer : ILogoScreen, IStatePerformer
     {
         private const float _fadeInSeconds = 1f;
         private const float _holdSeconds = 3f;
@@ -23,7 +23,7 @@ namespace SlaamMono.Menus
         private readonly IResources _resources;
         private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
 
-        public LogoScreen(IScreenManager screenDirector, IResources resources, IResolver<TextureRequest, CachedTexture> textureRequest)
+        public LogoScreenPerformer(IScreenManager screenDirector, IResources resources, IResolver<TextureRequest, CachedTexture> textureRequest)
         {
             _screenDirector = screenDirector;
             _resources = resources;

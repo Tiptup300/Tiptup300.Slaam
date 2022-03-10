@@ -9,13 +9,13 @@ using ZzziveGameEngine.StateManagement.States;
 
 namespace SlaamMono.Menus
 {
-    public class MainMenuScreen : IMainMenuScreen, IStatePerformer
+    public class MainMenuScreenPerformer : IMainMenuScreen, IStatePerformer
     {
         private MainMenuScreenState _state;
 
         private readonly IScreenManager _screenManager;
 
-        public MainMenuScreen(IScreenManager screenDirector)
+        public MainMenuScreenPerformer(IScreenManager screenDirector)
         {
             _screenManager = screenDirector;
         }

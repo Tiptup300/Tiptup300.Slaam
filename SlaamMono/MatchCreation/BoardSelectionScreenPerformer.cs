@@ -12,7 +12,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class BoardSelectionScreen : IStatePerformer
+    public class BoardSelectionScreenPerformer : IStatePerformer
     {
         public bool x_HasFoundBoard { get => _state.HasFoundBoard; }
         public string x_IsValidBoard { get => _state.IsValidBoard; }
@@ -21,7 +21,7 @@ namespace SlaamMono.MatchCreation
 
         private readonly IResources _resources;
 
-        public BoardSelectionScreen(IResources resources)
+        public BoardSelectionScreenPerformer(IResources resources)
         {
             _resources = resources;
         }

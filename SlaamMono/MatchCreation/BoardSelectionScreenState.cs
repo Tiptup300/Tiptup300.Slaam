@@ -9,7 +9,7 @@ namespace SlaamMono.MatchCreation
 {
     public class BoardSelectionScreenState : IState
     {
-        public LobbyScreen ParentLobbyScreen;
+        public LobbyScreenPerformer ParentLobbyScreen;
         public int DrawSizeWidth = 75;
         public int DrawSizeHeight = 75;
         public List<Texture2D> BoardTextures = new List<Texture2D>();
