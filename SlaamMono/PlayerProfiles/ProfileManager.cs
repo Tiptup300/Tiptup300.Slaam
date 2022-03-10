@@ -14,6 +14,7 @@ namespace SlaamMono.PlayerProfiles
     /// </summary>
     public static class ProfileManager
     {
+        public static bool Initialized { get; private set; }
         public static List<PlayerProfile> AllProfiles;
         public static RedirectionList<PlayerProfile> PlayableProfiles;
         public static RedirectionList<PlayerProfile> BotProfiles;
@@ -32,6 +33,8 @@ namespace SlaamMono.PlayerProfiles
         {
             _logger = logger;
             _resources = resources;
+
+            Initialized = true;
 
             LoadProfiles();
             FirstTime = !filefound;

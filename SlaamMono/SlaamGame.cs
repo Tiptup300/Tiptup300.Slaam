@@ -29,7 +29,6 @@ namespace SlaamMono
         public static SlaamGame instance;
         public static bool ShowFPS = true;
 
-        private XnaContentManager _contentManager;
         private SpriteBatch gamebatch;
 
         private readonly ILogger _logger;
@@ -78,7 +77,6 @@ namespace SlaamMono
             _resources.LoadAll();
             SlaamGame.mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = InputComponent.Players[0];
-            _contentManager = new XnaContentManager(x_Di.Get<ILogger>());
             _renderGraph.LoadContent();
             _fpsRenderer.LoadContent();
 
@@ -102,9 +100,9 @@ namespace SlaamMono
         protected override void Update(GameTime gameTime)
         {
 
-            if (_contentManager.NeedsDevice)
+            if (ProfileManager.Initialized == false)
             {
-                _contentManager.Update();
+                ProfileManager.Initialize(_logger, _resources);
             }
             else
             {
