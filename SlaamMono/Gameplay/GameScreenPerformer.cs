@@ -240,7 +240,6 @@ namespace SlaamMono.Gameplay
             }
             return _state;
         }
-
         public void survival_Perform()
         {
             if (_state.CurrentGameStatus == GameStatus.Playing)
