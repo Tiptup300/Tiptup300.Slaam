@@ -4,6 +4,7 @@ using SlaamMono.Gameplay.Actors;
 using SlaamMono.Gameplay.Boards;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.SubClasses;
+using SlaamMono.Survival;
 using System;
 using System.Collections.Generic;
 using ZBlade;
@@ -41,5 +42,7 @@ namespace SlaamMono.Gameplay
         public List<CharacterActor> Characters { get; set; } = new List<CharacterActor>();
 
         public MatchSettings CurrentMatchSettings { get; set; }
+
+        public SurvivalGameScreenState SurvivalState { get; set; } = new SurvivalGameScreenState();
     }
 }

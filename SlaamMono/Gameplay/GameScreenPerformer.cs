@@ -27,7 +27,6 @@ namespace SlaamMono.Gameplay
     public class GameScreenPerformer : IStatePerformer
     {
         private GameScreenState _state = new GameScreenState();
-        private SurvivalGameScreenState _survivalState = new SurvivalGameScreenState();
 
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
@@ -246,17 +245,17 @@ namespace SlaamMono.Gameplay
         {
             if (_state.CurrentGameStatus == GameStatus.Playing)
             {
-                _survivalState.TimeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
-                if (_survivalState.TimeToAddBot.Active)
+                _state.SurvivalState.TimeToAddBot.Update(FrameRateDirector.MovementFactorTimeSpan);
+                if (_state.SurvivalState.TimeToAddBot.Active)
                 {
-                    for (int x = 0; x < _survivalState.BotsToAdd + 1; x++)
+                    for (int x = 0; x < _state.SurvivalState.BotsToAdd + 1; x++)
                     {
                         survival_AddNewBot(_state);
-                        _survivalState.BotsAdded++;
+                        _state.SurvivalState.BotsAdded++;
 
-                        if (_state.Rand.Next(0, _survivalState.BotsAdded - 1) == _survivalState.BotsAdded)
+                        if (_state.Rand.Next(0, _state.SurvivalState.BotsAdded - 1) == _state.SurvivalState.BotsAdded)
                         {
-                            _survivalState.BotsToAdd++;
+                            _state.SurvivalState.BotsToAdd++;
                         }
                     }
                 }
