@@ -48,7 +48,7 @@ namespace SlaamMono.Metrics
 
         public void Update(GameTime gameTime)
         {
-            _fpsText = FrameRateDirector.Instance.FUPS.ToString();
+            _fpsText = FrameRateDirector.Instance.GetLatestFrame().FUPS.ToString();
             Vector2 textSize = _font.MeasureString(_fpsText);
             _boxDestination = new Rectangle(0, 0, (int)textSize.X + 2, (int)textSize.Y);
             _textPosition = new Vector2(0, 0);

@@ -18,7 +18,7 @@ namespace SlaamMono.x_
 
         public void Update()
         {
-            _offset += (FrameRateDirector.Instance.MovementFactor * (10f / 100f)) % GameGlobals.DRAWING_GAME_HEIGHT;
+            _offset += (FrameRateDirector.Instance.GetLatestFrame().MovementFactor * (10f / 100f)) % GameGlobals.DRAWING_GAME_HEIGHT;
         }
 
         public void Draw(SpriteBatch batch)

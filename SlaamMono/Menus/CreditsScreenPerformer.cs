@@ -51,7 +51,7 @@ namespace SlaamMono.Menus
 
             if (_state.Active)
             {
-                _state.TextCoords = new Vector2(_state.TextCoords.X, _state.TextCoords.Y - MovementSpeed * FrameRateDirector.Instance.MovementFactor);
+                _state.TextCoords = new Vector2(_state.TextCoords.X, _state.TextCoords.Y - MovementSpeed * FrameRateDirector.Instance.GetLatestFrame().MovementFactor);
             }
 
             if (_state.TextCoords.Y < -_state.TextHeight - 50)

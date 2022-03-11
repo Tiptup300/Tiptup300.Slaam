@@ -48,7 +48,7 @@ namespace SlaamMono.MatchCreation
                 return _state;
             }
 
-            _state.Alpha += (_state.AlphaUp ? 1 : -1) * FrameRateDirector.Instance.MovementFactor * _state.MovementSpeed;
+            _state.Alpha += (_state.AlphaUp ? 1 : -1) * FrameRateDirector.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
             if (_state.AlphaUp && _state.Alpha >= 255f)
             {
@@ -63,7 +63,7 @@ namespace SlaamMono.MatchCreation
 
             if (_state.WasChosen)
             {
-                _state.Scale += FrameRateDirector.Instance.MovementFactor * .01f;
+                _state.Scale += FrameRateDirector.Instance.GetLatestFrame().MovementFactor * .01f;
 
                 if (_state.Scale >= 1.50f)
                 {
@@ -84,7 +84,7 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                _state.Scale -= FrameRateDirector.Instance.MovementFactor * .01f;
+                _state.Scale -= FrameRateDirector.Instance.GetLatestFrame().MovementFactor * .01f;
 
                 if (_state.Scale <= 1.00f)
                 {
@@ -111,7 +111,7 @@ namespace SlaamMono.MatchCreation
 
                 if (_state.Vertical == Direction.Down)
                 {
-                    _state.VerticalOffset -= FrameRateDirector.Instance.MovementFactor * _state.MovementSpeed;
+                    _state.VerticalOffset -= FrameRateDirector.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
                     if (_state.VerticalOffset <= -_state.DrawSizeHeight)
                     {
@@ -122,7 +122,7 @@ namespace SlaamMono.MatchCreation
                 }
                 else if (_state.Vertical == Direction.Up)
                 {
-                    _state.VerticalOffset += FrameRateDirector.Instance.MovementFactor * _state.MovementSpeed;
+                    _state.VerticalOffset += FrameRateDirector.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
                     if (_state.VerticalOffset >= _state.DrawSizeHeight)
                     {
@@ -134,7 +134,7 @@ namespace SlaamMono.MatchCreation
 
                 if (_state.Horizontal == Direction.Left)
                 {
-                    _state.HorizontalOffset += FrameRateDirector.Instance.MovementFactor * _state.MovementSpeed;
+                    _state.HorizontalOffset += FrameRateDirector.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
                     if (_state.HorizontalOffset >= _state.DrawSizeWidth)
                     {
@@ -145,7 +145,7 @@ namespace SlaamMono.MatchCreation
                 }
                 else if (_state.Horizontal == Direction.Right)
                 {
-                    _state.HorizontalOffset -= FrameRateDirector.Instance.MovementFactor * _state.MovementSpeed;
+                    _state.HorizontalOffset -= FrameRateDirector.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
                     if (_state.HorizontalOffset <= -_state.DrawSizeWidth)
                     {

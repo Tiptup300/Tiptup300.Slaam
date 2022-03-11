@@ -44,7 +44,7 @@ namespace SlaamMono.Gameplay
         {
             if (state.Moving)
             {
-                state.Position.X -= FrameRateDirector.Instance.MovementFactor * state.MovementSpeed;
+                state.Position.X -= FrameRateDirector.Instance.GetLatestFrame().MovementFactor * state.MovementSpeed;
                 if (state.Position.X <= 0)
                 {
                     state.Position.X = 0;
@@ -55,8 +55,8 @@ namespace SlaamMono.Gameplay
             {
                 if (state.TimeRemaining > TimeSpan.Zero || state.GameType == GameType.Spree || state.GameType == GameType.Classic || state.GameType == GameType.Survival)
                 {
-                    state.CurrentGameTime += FrameRateDirector.Instance.MovementFactorTimeSpan;
-                    state.TimeRemaining -= FrameRateDirector.Instance.MovementFactorTimeSpan;
+                    state.CurrentGameTime += FrameRateDirector.Instance.GetLatestFrame().MovementFactorTimeSpan;
+                    state.TimeRemaining -= FrameRateDirector.Instance.GetLatestFrame().MovementFactorTimeSpan;
                 }
 
                 if (state.TimeRemaining < TimeSpan.Zero)
@@ -66,7 +66,7 @@ namespace SlaamMono.Gameplay
 
                 if (state.GameType == GameType.TimedSpree)
                 {
-                    state.CurrentStep += FrameRateDirector.Instance.MovementFactor;
+                    state.CurrentStep += FrameRateDirector.Instance.GetLatestFrame().MovementFactor;
 
                     if (state.CurrentStep >= state.StepSize)
                     {

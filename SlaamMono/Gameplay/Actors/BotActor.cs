@@ -45,13 +45,13 @@ namespace SlaamMono.Gameplay.Actors
         {
             AIInput.PressedAction2 = false;
 
-            DiagonalMovementSwitch.Update(FrameRateDirector.Instance.MovementFactorTimeSpan);
+            DiagonalMovementSwitch.Update(FrameRateDirector.Instance.GetLatestFrame().MovementFactorTimeSpan);
             if (DiagonalMovementSwitch.Active)
             {
                 SwitchMovements = rand.Next(0, 2) == 1;
             }
 
-            LogicUpdateThreshold.Update(FrameRateDirector.Instance.MovementFactorTimeSpan);
+            LogicUpdateThreshold.Update(FrameRateDirector.Instance.GetLatestFrame().MovementFactorTimeSpan);
             if (LogicUpdateThreshold.Active)
             {
                 LogicUpdate(CurrentCoordinates, TilePos, gameScreenState);
@@ -203,7 +203,7 @@ namespace SlaamMono.Gameplay.Actors
                 if (!(characterActors[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
                     !(characterActors[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
                 {
-                    TargetTime.Update(FrameRateDirector.Instance.MovementFactorTimeSpan);
+                    TargetTime.Update(FrameRateDirector.Instance.GetLatestFrame().MovementFactorTimeSpan);
                     if (TargetTime.Active)
                         TargetTime.Reset();
                     else

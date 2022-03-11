@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SlaamMono.Library.Timing;
 using System;
 
 namespace SlaamMono.Library
@@ -7,10 +8,9 @@ namespace SlaamMono.Library
     {
         public static FrameRateDirector Instance { get; private set; }
 
-        public float MovementFactor { private set; get; }
-        public TimeSpan MovementFactorTimeSpan { get { return new TimeSpan(0, 0, 0, 0, (int)MovementFactor); } }
-        public int FDPS { private set; get; }
-        public int FUPS { private set; get; }
+        private FrameInfo _latestFrame;
+
+        public FrameInfo GetLatestFrame() => _latestFrame;
 
         private int _framesDrawn;
         private int _framesDrawnLast;
@@ -47,18 +47,17 @@ namespace SlaamMono.Library
                 _framesUpdated = 0;
             }
 
-            MovementFactor = gameTime.ElapsedGameTime.Milliseconds;
-
-            FDPS = _framesDrawnLast;
-            FUPS = _framesUpdatedLast;
-
-            base.Update(gameTime);
+            _latestFrame = new FrameInfo(
+                dateTime: DateTime.UtcNow,
+                movementFactor: gameTime.ElapsedGameTime.Milliseconds,
+                fDPS: _framesDrawnLast,
+                fUPS: _framesUpdatedLast
+            );
         }
 
         public override void Draw(GameTime gameTime)
         {
             _framesDrawn++;
-            base.Draw(gameTime);
         }
     }
 }
