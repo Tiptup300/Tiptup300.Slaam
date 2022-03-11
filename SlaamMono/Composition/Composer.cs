@@ -35,6 +35,8 @@ namespace SlaamMono.Composition
             registerResources();
             registerGameplay();
 
+            _container.Verify();
+
             return _container;
         }
 
@@ -67,13 +69,11 @@ namespace SlaamMono.Composition
 
         private void registerScreens()
         {
-            _container.RegisterInstance(new Mut<ScreenTransitionState>(new ScreenTransitionState(null, null, false)));
             _container.Register<IMainMenuScreen, MainMenuScreenPerformer>();
             _container.Register<CreditsScreenPerformer>();
             _container.Register<HighScoreScreenPerformer>();
             _container.Register<ProfileEditScreenPerformer>();
             _container.Register<CharacterSelectionScreenPerformer>();
-            _container.Register<IScreenManager, ScreenManager>(Lifestyle.Singleton);
             _container.Register<ILogoScreen, LogoScreenPerformer>();
             _container.Register<GameScreenPerformer>();
 

@@ -15,16 +15,15 @@ namespace SlaamMono.Menus
     {
         public FirstTimeScreenState _state = new FirstTimeScreenState();
 
-        private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IRenderService _renderGraphManager;
         private readonly IInputService _inputService;
 
         public FirstTimeScreenPerformer(
-            IScreenManager screenDirector, IResources resources, IRenderService renderGraphManager,
+            IResources resources,
+            IRenderService renderGraphManager,
             IInputService inputService)
         {
-            _screenDirector = screenDirector;
             _resources = resources;
             _renderGraphManager = renderGraphManager;
             _inputService = inputService;

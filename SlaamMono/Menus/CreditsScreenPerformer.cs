@@ -7,6 +7,7 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.x_;
 using System.Collections.Generic;
+using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
@@ -17,19 +18,21 @@ namespace SlaamMono.Menus
 
         private CreditsState _state = new CreditsState();
 
-        private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IInputService _inputService;
         private readonly IFrameTimeService _frameTimeService;
+        private readonly IResolver<IRequest, IState> _stateResolver;
 
-        public CreditsScreenPerformer(IScreenManager screenDirector, IResources resources,
+        public CreditsScreenPerformer(
+            IResources resources,
             IInputService inputService,
-            IFrameTimeService frameTimeService)
+            IFrameTimeService frameTimeService,
+            IResolver<IRequest, IState> stateResolver)
         {
-            _screenDirector = screenDirector;
             _resources = resources;
             _inputService = inputService;
             _frameTimeService = frameTimeService;
+            _stateResolver = stateResolver;
         }
 
         public void InitializeState()
@@ -67,7 +70,7 @@ namespace SlaamMono.Menus
 
             if (_inputService.GetPlayers()[0].PressedAction2)
             {
-                _screenDirector.ChangeTo<IMainMenuScreen>();
+                return _stateResolver.Resolve(new MainMenuRequest());
             }
             return _state;
         }

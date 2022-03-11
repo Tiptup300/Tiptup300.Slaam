@@ -19,13 +19,13 @@ namespace SlaamMono.PlayerProfiles
     {
         private ProfileEditScreenState _state = new ProfileEditScreenState();
 
-        private readonly IResolver<MainMenuRequest, MainMenuScreenState> _menuStateResolver;
+        private readonly IResolver<MainMenuRequest, IState> _menuStateResolver;
         private readonly IResources _resources;
         private readonly IRenderService _renderGraph;
         private readonly IInputService _inputService;
 
         public ProfileEditScreenPerformer(
-            IResolver<MainMenuRequest, MainMenuScreenState> menuStateResolver,
+            IResolver<MainMenuRequest, IState> menuStateResolver,
             IResources resources,
             IRenderService renderGraph,
             IInputService inputService)

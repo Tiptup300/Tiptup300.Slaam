@@ -13,13 +13,6 @@ namespace SlaamMono.Menus
     {
         private MainMenuScreenState _state;
 
-        private readonly IScreenManager _screenManager;
-
-        public MainMenuScreenPerformer(IScreenManager screenDirector)
-        {
-            _screenManager = screenDirector;
-        }
-
         public void InitializeState()
         {
             SlaamGame.mainBlade.Status = BladeStatus.Out;

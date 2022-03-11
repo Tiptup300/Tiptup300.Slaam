@@ -25,7 +25,6 @@ namespace SlaamMono.MatchCreation
         private LobbyScreenState _state = new LobbyScreenState();
 
         private readonly ILogger _logger;
-        private readonly IScreenManager _screenDirector;
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
         private readonly IRenderService _renderGraphManager;
@@ -33,14 +32,12 @@ namespace SlaamMono.MatchCreation
 
         public LobbyScreenPerformer(
             ILogger logger,
-            IScreenManager screenDirector,
             PlayerColorResolver playerColorResolver,
             IResources resources,
             IRenderService renderGraphManager,
             IInputService inputService)
         {
             _logger = logger;
-            _screenDirector = screenDirector;
             _playerColorResolver = playerColorResolver;
             _resources = resources;
             _renderGraphManager = renderGraphManager;

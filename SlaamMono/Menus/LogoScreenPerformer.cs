@@ -19,15 +19,15 @@ namespace SlaamMono.Menus
 
         private LogoScreenState _state;
 
-        private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
         private readonly IFrameTimeService _frameTimeService;
 
-        public LogoScreenPerformer(IScreenManager screenDirector, IResources resources, IResolver<TextureRequest, CachedTexture> textureRequest,
+        public LogoScreenPerformer(
+            IResources resources,
+            IResolver<TextureRequest, CachedTexture> textureRequest,
             IFrameTimeService frameTimeService)
         {
-            _screenDirector = screenDirector;
             _resources = resources;
             _textureRequest = textureRequest;
             _frameTimeService = frameTimeService;

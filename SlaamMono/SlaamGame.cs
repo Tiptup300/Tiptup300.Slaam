@@ -12,6 +12,8 @@ using SlaamMono.Metrics;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
 using ZBlade;
+using ZzziveGameEngine;
+using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono
 {
@@ -23,37 +25,37 @@ namespace SlaamMono
         new public static ContentManager Content;
         public static ZuneBlade mainBlade;
 
+        private IState _state = new SlaamGameState();
 
         private SpriteBatch gamebatch;
 
         private readonly ILogger _logger;
-        private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphicsState;
         private readonly RenderService _renderGraph;
         private readonly FpsRenderer _fpsRenderer;
         private readonly FrameTimeService _frameTimeService;
         private readonly InputService _inputService;
+        private readonly IResolver<IRequest, IState> _stateRequestResolver;
 
         public SlaamGame(
             ILogger logger,
-            IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphicsState,
             RenderService renderGraph,
             FpsRenderer fpsRenderer,
             FrameTimeService frameTimeService,
-            InputService inputService)
+            InputService inputService,
+            IResolver<IRequest, IState> stateRequestResolver)
         {
             _logger = logger;
-            _screenDirector = screenDirector;
             _resources = resources;
             _graphicsState = graphicsState;
             _renderGraph = renderGraph;
             _fpsRenderer = fpsRenderer;
             _frameTimeService = frameTimeService;
             _inputService = inputService;
-
+            _stateRequestResolver = stateRequestResolver;
 
             Content = new ContentManager(Services);
             configureGame();
@@ -77,7 +79,7 @@ namespace SlaamMono
 
             SetupZuneBlade();
 
-            _screenDirector.ChangeTo<ILogoScreen>();
+            _state = _stateRequestResolver.Resolve(new GameStartRequest());
         }
 
         protected override void LoadContent()
@@ -123,7 +125,8 @@ namespace SlaamMono
                 }
                 else
                 {
-                    _screenDirector.Update();
+                    // update the state using the state performer.
+                    //_state = _statePerformer.Resolve(_state;// update state
                 }
             }
         }
@@ -133,7 +136,9 @@ namespace SlaamMono
 
             _frameTimeService.Draw(gameTime);
             gamebatch.Begin(blendState: BlendState.NonPremultiplied);
-            _screenDirector.Draw(gamebatch);
+
+            // draw the state using the state renderer.
+            //_screenDirector.Draw(gamebatch);
 
             if (Qwerty.Active)
             {
