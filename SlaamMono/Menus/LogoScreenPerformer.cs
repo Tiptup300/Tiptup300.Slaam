@@ -20,16 +20,13 @@ namespace SlaamMono.Menus
         private LogoScreenState _state;
 
         private readonly IResources _resources;
-        private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
         private readonly IFrameTimeService _frameTimeService;
 
         public LogoScreenPerformer(
             IResources resources,
-            IResolver<TextureRequest, CachedTexture> textureRequest,
             IFrameTimeService frameTimeService)
         {
             _resources = resources;
-            _textureRequest = textureRequest;
             _frameTimeService = frameTimeService;
         }
 
@@ -38,26 +35,15 @@ namespace SlaamMono.Menus
             _state = new LogoScreenState();
         }
 
-
-
         public IState Perform()
         {
             switch (_state.StateIndex)
             {
-                default: return loadTextures(_state);
-                case 0: return initFadeInState(_state);
+                default: return initFadeInState(_state);
                 case 1: return fadeInState(_state);
                 case 2: return holdState(_state);
                 case 3: return fadeOutState(_state);
             }
-        }
-
-        private IState loadTextures(LogoScreenState state)
-        {
-            state.BackgroundTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogoBG"));
-            state.LogoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"));
-
-            return state;
         }
 
         private static IState initFadeInState(LogoScreenState state)

@@ -36,7 +36,7 @@ namespace SlaamMono
         private readonly FpsRenderer _fpsRenderer;
         private readonly FrameTimeService _frameTimeService;
         private readonly InputService _inputService;
-        private readonly IResolver<IRequest, IState> _stateRequestResolver;
+        private readonly IResolver<GameStartRequest, IState> _gameStartRequestResolver;
 
         public SlaamGame(
             ILogger logger,
@@ -46,7 +46,7 @@ namespace SlaamMono
             FpsRenderer fpsRenderer,
             FrameTimeService frameTimeService,
             InputService inputService,
-            IResolver<IRequest, IState> stateRequestResolver)
+            IResolver<GameStartRequest, IState> gameStartRequestResolver)
         {
             _logger = logger;
             _resources = resources;
@@ -55,7 +55,7 @@ namespace SlaamMono
             _fpsRenderer = fpsRenderer;
             _frameTimeService = frameTimeService;
             _inputService = inputService;
-            _stateRequestResolver = stateRequestResolver;
+            _gameStartRequestResolver = gameStartRequestResolver;
 
             Content = new ContentManager(Services);
             configureGame();
@@ -79,7 +79,7 @@ namespace SlaamMono
 
             SetupZuneBlade();
 
-            _state = _stateRequestResolver.Resolve(new GameStartRequest());
+            _state = _gameStartRequestResolver.Resolve(new GameStartRequest());
         }
 
         protected override void LoadContent()

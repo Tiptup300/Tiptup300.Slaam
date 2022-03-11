@@ -6,11 +6,11 @@ namespace SlaamMono
 {
     public class GameStartStateResolver : IResolver<GameStartRequest, IState>
     {
-        private readonly IResolver<IRequest, IState> _stateResolver;
+        private readonly IResolver<LogoScreenRequest, IState> _stateResolver;
 
-        public GameStartStateResolver(IResolver<IRequest, IState> stateResolver)
+        public GameStartStateResolver(IResolver<LogoScreenRequest, IState> logoScreenResolver)
         {
-            _stateResolver = stateResolver;
+            _stateResolver = logoScreenResolver;
         }
 
         public IState Resolve(GameStartRequest request)
