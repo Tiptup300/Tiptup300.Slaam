@@ -81,7 +81,7 @@ namespace SlaamMono
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             _resources.LoadAll();
             mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
-            Qwerty.CurrentPlayer = InputService.Instance.Players[0];
+            Qwerty.CurrentPlayer = InputService.Instance.GetPlayers()[0];
             _renderGraph.LoadContent();
             _fpsRenderer.LoadContent();
         }

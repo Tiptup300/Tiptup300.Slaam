@@ -60,7 +60,7 @@ namespace SlaamMono.Menus
 
         public IState Perform()
         {
-            if (InputService.Instance.Players[0].PressedAction)
+            if (InputService.Instance.GetPlayers()[0].PressedAction)
             {
                 new ProfileEditScreenRequestState() { CreateNewProfile = true };
             }

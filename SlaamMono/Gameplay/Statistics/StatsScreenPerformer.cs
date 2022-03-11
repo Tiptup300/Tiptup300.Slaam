@@ -131,24 +131,24 @@ namespace SlaamMono.Gameplay.Statistics
             if (_state.GameType != GameType.Survival)
             {
 
-                if (InputService.Instance.Players[0].PressedLeft)
+                if (InputService.Instance.GetPlayers()[0].PressedLeft)
                 {
                     _state.CurrentPage.Sub(1);
                 }
 
-                if (InputService.Instance.Players[0].PressedRight)
+                if (InputService.Instance.GetPlayers()[0].PressedRight)
                 {
                     _state.CurrentPage.Add(1);
                 }
 
                 if (_state.CurrentPage.Value == 2)
                 {
-                    if (InputService.Instance.Players[0].PressedUp)
+                    if (InputService.Instance.GetPlayers()[0].PressedUp)
                     {
                         _state.CurrentChar.Sub(1);
                         _state.PvP.ConstructGraph(_state.CurrentChar.Value);
                     }
-                    else if (InputService.Instance.Players[0].PressedDown)
+                    else if (InputService.Instance.GetPlayers()[0].PressedDown)
                     {
                         _state.CurrentChar.Add(1);
                         _state.PvP.ConstructGraph(_state.CurrentChar.Value);
@@ -157,7 +157,7 @@ namespace SlaamMono.Gameplay.Statistics
 
             }
 
-            if (InputService.Instance.Players[0].PressedAction)
+            if (InputService.Instance.GetPlayers()[0].PressedAction)
             {
                 new MainMenuScreenState();
                 //_screenDirector.ChangeTo<IMainMenuScreen>();

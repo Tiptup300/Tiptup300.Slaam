@@ -102,8 +102,8 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                _state.SelectBoxes = new PlayerCharacterSelectBoxState[InputService.Instance.Players.Length];
-                for (int x = 0; x < InputService.Instance.Players.Length; x++)
+                _state.SelectBoxes = new PlayerCharacterSelectBoxState[InputService.Instance.GetPlayers().Length];
+                for (int x = 0; x < InputService.Instance.GetPlayers().Length; x++)
                 {
                     _state.SelectBoxes[0] = buildCharacterSelectBoxState(
                         position: _boxPositions[x],
@@ -141,7 +141,7 @@ namespace SlaamMono.MatchCreation
 
             if (
                 _state._peopleIn == 0 &&
-                InputService.Instance.Players[0].PressedAction2 &&
+                InputService.Instance.GetPlayers()[0].PressedAction2 &&
                 _state.SelectBoxes[0].Status == PlayerCharacterSelectBoxStatus.Computer)
             {
                 return goBack();

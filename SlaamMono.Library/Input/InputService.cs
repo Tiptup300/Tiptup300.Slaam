@@ -2,21 +2,21 @@ using Microsoft.Xna.Framework;
 
 namespace SlaamMono.Library.Input
 {
-    public class InputService
+    public class InputService : IInputService
     {
-        public static InputService Instance = new InputService();
+        public static IInputService Instance;
 
-        public InputDevice[] Players;
+        private InputDevice[] _players;
 
         private GamePadHelper _playerOneGamePad = new GamePadHelper(PlayerIndex.One);
         private KeyboardHelper _keyboard = new KeyboardHelper();
 
         public void Initialize()
         {
-            Players = new InputDevice[1];
-            for (int x = 0; x < Players.Length; x++)
+            _players = new InputDevice[1];
+            for (int x = 0; x < _players.Length; x++)
             {
-                Players[x] = new InputDevice(InputDeviceType.Controller, (ExtendedPlayerIndex)x, -1);
+                _players[x] = new InputDevice(InputDeviceType.Controller, (ExtendedPlayerIndex)x, -1);
             }
 
             Instance = this;
@@ -27,10 +27,15 @@ namespace SlaamMono.Library.Input
             _playerOneGamePad.Update();
             _keyboard.Update();
 
-            for (int idx = 0; idx < Players.Length; idx++)
+            for (int idx = 0; idx < _players.Length; idx++)
             {
-                Players[idx].Update();
+                _players[idx].Update();
             }
+        }
+
+        public InputDevice[] GetPlayers()
+        {
+            return _players;
         }
 
         /// <summary>
@@ -40,9 +45,9 @@ namespace SlaamMono.Library.Input
         /// <returns></returns>
         public int GetIndex(ExtendedPlayerIndex playerIndex)
         {
-            for (int x = 0; x < Players.Length; x++)
+            for (int x = 0; x < _players.Length; x++)
             {
-                if (Players[x].PlayerIndex == playerIndex)
+                if (_players[x].PlayerIndex == playerIndex)
                 {
                     return x;
                 }
