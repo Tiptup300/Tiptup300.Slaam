@@ -4,32 +4,22 @@ namespace SlaamMono.Library.Input
 {
     public class InputService : IInputService
     {
-        public static IInputService Instance;
-
         private InputDevice[] _players;
-
-        private GamePadHelper _playerOneGamePad = new GamePadHelper(PlayerIndex.One);
-        private KeyboardHelper _keyboard = new KeyboardHelper();
 
         public void Initialize()
         {
             _players = new InputDevice[1];
-            for (int x = 0; x < _players.Length; x++)
+            for (int i = 0; i < _players.Length; i++)
             {
-                _players[x] = new InputDevice(InputDeviceType.Controller, (ExtendedPlayerIndex)x, -1);
+                _players[i] = new InputDevice(InputDeviceType.Controller, (ExtendedPlayerIndex)i, -1);
             }
-
-            Instance = this;
         }
 
         public void Update()
         {
-            _playerOneGamePad.Update();
-            _keyboard.Update();
-
-            for (int idx = 0; idx < _players.Length; idx++)
+            for (int i = 0; i < _players.Length; i++)
             {
-                _players[idx].Update();
+                _players[i].Update();
             }
         }
 
@@ -45,11 +35,11 @@ namespace SlaamMono.Library.Input
         /// <returns></returns>
         public int GetIndex(ExtendedPlayerIndex playerIndex)
         {
-            for (int x = 0; x < _players.Length; x++)
+            for (int i = 0; i < _players.Length; i++)
             {
-                if (_players[x].PlayerIndex == playerIndex)
+                if (_players[i].PlayerIndex == playerIndex)
                 {
-                    return x;
+                    return i;
                 }
             }
 

@@ -19,11 +19,14 @@ namespace SlaamMono.Menus
 
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
+        private readonly IInputService _inputService;
 
-        public CreditsScreenPerformer(IScreenManager screenDirector, IResources resources)
+        public CreditsScreenPerformer(IScreenManager screenDirector, IResources resources,
+            IInputService inputService)
         {
             _screenDirector = screenDirector;
             _resources = resources;
+            _inputService = inputService;
         }
 
         public void InitializeState()
@@ -44,7 +47,7 @@ namespace SlaamMono.Menus
         }
         public IState Perform()
         {
-            if (InputService.Instance.GetPlayers()[0].PressedAction)
+            if (_inputService.GetPlayers()[0].PressedAction)
             {
                 _state.Active = !_state.Active;
             }
@@ -59,7 +62,7 @@ namespace SlaamMono.Menus
                 _state.TextCoords = new Vector2(_state.TextCoords.X, GameGlobals.DRAWING_GAME_HEIGHT);
             }
 
-            if (InputService.Instance.GetPlayers()[0].PressedAction2)
+            if (_inputService.GetPlayers()[0].PressedAction2)
             {
                 _screenDirector.ChangeTo<IMainMenuScreen>();
             }

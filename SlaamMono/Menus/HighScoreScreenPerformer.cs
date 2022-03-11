@@ -21,13 +21,16 @@ namespace SlaamMono.Menus
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IRenderService _renderGraph;
+        private readonly IInputService _inputService;
 
-        public HighScoreScreenPerformer(ILogger logger, IScreenManager screenDirector, IResources resources, IRenderService renderGraph)
+        public HighScoreScreenPerformer(ILogger logger, IScreenManager screenDirector, IResources resources, IRenderService renderGraph,
+            IInputService inputService)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _resources = resources;
             _renderGraph = renderGraph;
+            _inputService = inputService;
         }
 
         public void InitializeState()
@@ -43,7 +46,7 @@ namespace SlaamMono.Menus
 
         public IState Perform()
         {
-            if (InputService.Instance.GetPlayers()[0].PressedAction2)
+            if (_inputService.GetPlayers()[0].PressedAction2)
             {
                 _screenDirector.ChangeTo<IMainMenuScreen>();
             }

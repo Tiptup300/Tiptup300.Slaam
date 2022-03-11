@@ -24,12 +24,14 @@ namespace SlaamMono.Gameplay.Statistics
         private readonly ILogger _logger;
         private readonly IResources _resources;
         private readonly IRenderService _renderGraph;
+        private readonly IInputService _inputService;
 
-        public StatsScreenPerformer(ILogger logger, IResources resources, IRenderService renderGraph)
+        public StatsScreenPerformer(ILogger logger, IResources resources, IRenderService renderGraph, IInputService inputService)
         {
             _logger = logger;
             _resources = resources;
             _renderGraph = renderGraph;
+            _inputService = inputService;
         }
 
         public void Initialize(StatsScreenRequestState request)
@@ -131,24 +133,24 @@ namespace SlaamMono.Gameplay.Statistics
             if (_state.GameType != GameType.Survival)
             {
 
-                if (InputService.Instance.GetPlayers()[0].PressedLeft)
+                if (_inputService.GetPlayers()[0].PressedLeft)
                 {
                     _state.CurrentPage.Sub(1);
                 }
 
-                if (InputService.Instance.GetPlayers()[0].PressedRight)
+                if (_inputService.GetPlayers()[0].PressedRight)
                 {
                     _state.CurrentPage.Add(1);
                 }
 
                 if (_state.CurrentPage.Value == 2)
                 {
-                    if (InputService.Instance.GetPlayers()[0].PressedUp)
+                    if (_inputService.GetPlayers()[0].PressedUp)
                     {
                         _state.CurrentChar.Sub(1);
                         _state.PvP.ConstructGraph(_state.CurrentChar.Value);
                     }
-                    else if (InputService.Instance.GetPlayers()[0].PressedDown)
+                    else if (_inputService.GetPlayers()[0].PressedDown)
                     {
                         _state.CurrentChar.Add(1);
                         _state.PvP.ConstructGraph(_state.CurrentChar.Value);
@@ -157,7 +159,7 @@ namespace SlaamMono.Gameplay.Statistics
 
             }
 
-            if (InputService.Instance.GetPlayers()[0].PressedAction)
+            if (_inputService.GetPlayers()[0].PressedAction)
             {
                 new MainMenuScreenState();
                 //_screenDirector.ChangeTo<IMainMenuScreen>();

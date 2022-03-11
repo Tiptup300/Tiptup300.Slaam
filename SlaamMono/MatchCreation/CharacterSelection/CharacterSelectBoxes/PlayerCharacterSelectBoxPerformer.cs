@@ -15,13 +15,16 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
     {
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
+        private readonly IInputService _inputService;
 
         public PlayerCharacterSelectBoxPerformer(
             PlayerColorResolver playerColorResolver,
-            IResources resources)
+            IResources resources,
+            IInputService inputService)
         {
             _playerColorResolver = playerColorResolver;
             _resources = resources;
+            _inputService = inputService;
         }
 
         public void ResetState(PlayerCharacterSelectBoxState state)
@@ -38,7 +41,7 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
             {
                 case PlayerCharacterSelectBoxStatus.Computer:
                     {
-                        if (InputService.Instance.GetPlayers()[state.PlayerIndex].PressedStart)
+                        if (_inputService.GetPlayers()[state.PlayerIndex].PressedStart)
                         {
                             state.Status = PlayerCharacterSelectBoxStatus.ProfileSelect;
                             state.MessageLines[1] = DialogStrings.SelectAProfile;
@@ -50,7 +53,7 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
 
                 case PlayerCharacterSelectBoxStatus.ProfileSelect:
                     {
-                        if (InputService.Instance.GetPlayers()[state.PlayerIndex].PressedAction2)
+                        if (_inputService.GetPlayers()[state.PlayerIndex].PressedAction2)
                         {
                             state.MessageLines[0] = DialogStrings.Player + (ExtendedPlayerIndex)state.PlayerIndex;
                             state.MessageLines[1] = DialogStrings.PressStartToJoin;
@@ -61,21 +64,21 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
                             state.Status = PlayerCharacterSelectBoxStatus.Computer;
                         }
 
-                        if (InputService.Instance.GetPlayers()[state.PlayerIndex].PressedUp)
+                        if (_inputService.GetPlayers()[state.PlayerIndex].PressedUp)
                         {
                             state.ChosenProfile.Add(1);
                             state.MessageLines[0] = ProfileManager.PlayableProfiles[state.ChosenProfile.Value].Name;
                             _resetStats(state);
                         }
 
-                        if (InputService.Instance.GetPlayers()[state.PlayerIndex].PressedDown)
+                        if (_inputService.GetPlayers()[state.PlayerIndex].PressedDown)
                         {
                             state.ChosenProfile.Sub(1);
                             state.MessageLines[0] = ProfileManager.PlayableProfiles[state.ChosenProfile.Value].Name;
                             _resetStats(state);
                         }
 
-                        if (InputService.Instance.GetPlayers()[state.PlayerIndex].PressedAction)
+                        if (_inputService.GetPlayers()[state.PlayerIndex].PressedAction)
                         {
                             state.Status = PlayerCharacterSelectBoxStatus.CharSelect;
                             _findSkin(ProfileManager.PlayableProfiles[state.ChosenProfile.Value].Skin, state);
@@ -86,22 +89,22 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
 
                 case PlayerCharacterSelectBoxStatus.CharSelect:
                     {
-                        if (InputService.Instance.GetPlayers()[state.PlayerIndex].PressedAction2)
+                        if (_inputService.GetPlayers()[state.PlayerIndex].PressedAction2)
                         {
                             state.MessageLines[1] = DialogStrings.SelectAProfile;
                             state.Status = PlayerCharacterSelectBoxStatus.ProfileSelect;
                         }
 
-                        if (InputService.Instance.GetPlayers()[state.PlayerIndex].PressingUp && state.MovementStatus == PlayerCharacterSelectBoxMovementStatus.Stationary)
+                        if (_inputService.GetPlayers()[state.PlayerIndex].PressingUp && state.MovementStatus == PlayerCharacterSelectBoxMovementStatus.Stationary)
                         {
                             state.MovementStatus = PlayerCharacterSelectBoxMovementStatus.Lowering;
                         }
-                        else if (InputService.Instance.GetPlayers()[state.PlayerIndex].PressingDown && state.MovementStatus == PlayerCharacterSelectBoxMovementStatus.Stationary)
+                        else if (_inputService.GetPlayers()[state.PlayerIndex].PressingDown && state.MovementStatus == PlayerCharacterSelectBoxMovementStatus.Stationary)
                         {
                             state.MovementStatus = PlayerCharacterSelectBoxMovementStatus.Raising;
                         }
 
-                        if (InputService.Instance.GetPlayers()[state.PlayerIndex].PressedAction && state.Status == PlayerCharacterSelectBoxStatus.CharSelect)
+                        if (_inputService.GetPlayers()[state.PlayerIndex].PressedAction && state.Status == PlayerCharacterSelectBoxStatus.CharSelect)
                         {
                             ProfileManager.PlayableProfiles[state.ChosenProfile.Value].Skin = state.ParentSkinStrings[state.ChosenSkin.Value];
                             ProfileManager.SaveProfiles();

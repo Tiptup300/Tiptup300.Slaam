@@ -17,10 +17,12 @@ namespace SlaamMono.MatchCreation
         private BoardSelectionScreenState _state = new BoardSelectionScreenState();
 
         private readonly IResources _resources;
+        private readonly IInputService _inputService;
 
-        public BoardSelectionScreenPerformer(IResources resources)
+        public BoardSelectionScreenPerformer(IResources resources, IInputService inputService)
         {
             _resources = resources;
+            _inputService = inputService;
         }
 
         public void Initialize(BoardSelectionScreenRequestState request)
@@ -70,14 +72,14 @@ namespace SlaamMono.MatchCreation
                     _state.Scale = 1.50f;
                 }
 
-                if (InputService.Instance.GetPlayers()[0].PressedAction)
+                if (_inputService.GetPlayers()[0].PressedAction)
                 {
                     LobbyScreenFunctions.LoadBoard(_state.ValidBoards[_state.Save], _state.ParentLobbyScreen);
                     // todo
                     //_screenManager.ChangeTo(_state.ParentLobbyScreen);
                 }
 
-                if (InputService.Instance.GetPlayers()[0].PressedAction2)
+                if (_inputService.GetPlayers()[0].PressedAction2)
                 {
                     _state.WasChosen = false;
                 }
@@ -91,20 +93,20 @@ namespace SlaamMono.MatchCreation
                     _state.Scale = 1.00f;
                 }
 
-                if (InputService.Instance.GetPlayers()[0].PressingDown)
+                if (_inputService.GetPlayers()[0].PressingDown)
                 {
                     _state.Vertical = Direction.Down;
                 }
-                if (InputService.Instance.GetPlayers()[0].PressingUp)
+                if (_inputService.GetPlayers()[0].PressingUp)
                 {
                     _state.Vertical = Direction.Up;
                 }
 
-                if (InputService.Instance.GetPlayers()[0].PressingRight)
+                if (_inputService.GetPlayers()[0].PressingRight)
                 {
                     _state.Horizontal = Direction.Right;
                 }
-                if (InputService.Instance.GetPlayers()[0].PressingLeft)
+                if (_inputService.GetPlayers()[0].PressingLeft)
                 {
                     _state.Horizontal = Direction.Left;
                 }
@@ -155,7 +157,7 @@ namespace SlaamMono.MatchCreation
                     }
                 }
 
-                if (_state.HorizontalOffset == 0 && _state.VerticalOffset == 0 && InputService.Instance.GetPlayers()[0].PressedAction)
+                if (_state.HorizontalOffset == 0 && _state.VerticalOffset == 0 && _inputService.GetPlayers()[0].PressedAction)
                 {
                     _state.WasChosen = true;
                 }

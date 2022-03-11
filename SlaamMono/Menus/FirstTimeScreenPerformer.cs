@@ -18,13 +18,16 @@ namespace SlaamMono.Menus
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IRenderService _renderGraphManager;
+        private readonly IInputService _inputService;
 
         public FirstTimeScreenPerformer(
-            IScreenManager screenDirector, IResources resources, IRenderService renderGraphManager)
+            IScreenManager screenDirector, IResources resources, IRenderService renderGraphManager,
+            IInputService inputService)
         {
             _screenDirector = screenDirector;
             _resources = resources;
             _renderGraphManager = renderGraphManager;
+            _inputService = inputService;
         }
 
         public void InitializeState()
@@ -60,7 +63,7 @@ namespace SlaamMono.Menus
 
         public IState Perform()
         {
-            if (InputService.Instance.GetPlayers()[0].PressedAction)
+            if (_inputService.GetPlayers()[0].PressedAction)
             {
                 new ProfileEditScreenRequestState() { CreateNewProfile = true };
             }

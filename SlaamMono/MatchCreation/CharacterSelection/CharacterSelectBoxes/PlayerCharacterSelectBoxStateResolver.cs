@@ -6,12 +6,19 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
 {
     public class PlayerCharacterSelectBoxStateResolver : IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState>
     {
+        private readonly IInputService _inputService;
+
+        public PlayerCharacterSelectBoxStateResolver(IInputService inputService)
+        {
+            _inputService = inputService;
+        }
+
         public PlayerCharacterSelectBoxState Resolve(PlayerCharacterSelectBoxRequest request)
         {
             PlayerCharacterSelectBoxState output;
 
             output = new PlayerCharacterSelectBoxState();
-            output.PlayerIndex = InputService.Instance.GetIndex(request.playeridx);
+            output.PlayerIndex = _inputService.GetIndex(request.playeridx);
             output.ParentCharSkins = request.parentcharskins;
             output.ParentSkinStrings = request.parentskinstrings;
             PlayerCharacterSelectBoxPerformer._refreshSkins(output);

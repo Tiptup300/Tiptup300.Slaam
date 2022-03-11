@@ -38,15 +38,17 @@ namespace SlaamMono.MatchCreation
         private readonly ILogger _logger;
         private readonly PlayerCharacterSelectBoxPerformer _playerCharacterSelectBox;
         private readonly IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState> _selectBoxStateResolver;
+        private readonly IInputService _inputService;
 
         public CharacterSelectionScreenPerformer(
             ILogger logger,
             PlayerCharacterSelectBoxPerformer playerCharacterSelectBoxPerformer,
-            IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState> selectBoxStateResolver)
+            IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState> selectBoxStateResolver, IInputService inputService)
         {
             _logger = logger;
             _playerCharacterSelectBox = playerCharacterSelectBoxPerformer;
             _selectBoxStateResolver = selectBoxStateResolver;
+            _inputService = inputService;
         }
 
         public void Initialize(CharacterSelectionScreenRequestState request)
@@ -102,8 +104,8 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                _state.SelectBoxes = new PlayerCharacterSelectBoxState[InputService.Instance.GetPlayers().Length];
-                for (int x = 0; x < InputService.Instance.GetPlayers().Length; x++)
+                _state.SelectBoxes = new PlayerCharacterSelectBoxState[_inputService.GetPlayers().Length];
+                for (int x = 0; x < _inputService.GetPlayers().Length; x++)
                 {
                     _state.SelectBoxes[0] = buildCharacterSelectBoxState(
                         position: _boxPositions[x],
@@ -141,7 +143,7 @@ namespace SlaamMono.MatchCreation
 
             if (
                 _state._peopleIn == 0 &&
-                InputService.Instance.GetPlayers()[0].PressedAction2 &&
+                _inputService.GetPlayers()[0].PressedAction2 &&
                 _state.SelectBoxes[0].Status == PlayerCharacterSelectBoxStatus.Computer)
             {
                 return goBack();

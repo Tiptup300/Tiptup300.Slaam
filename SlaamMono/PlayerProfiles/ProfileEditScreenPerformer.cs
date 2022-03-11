@@ -22,15 +22,18 @@ namespace SlaamMono.PlayerProfiles
         private readonly IResolver<MainMenuRequest, MainMenuScreenState> _menuStateResolver;
         private readonly IResources _resources;
         private readonly IRenderService _renderGraph;
+        private readonly IInputService _inputService;
 
         public ProfileEditScreenPerformer(
             IResolver<MainMenuRequest, MainMenuScreenState> menuStateResolver,
             IResources resources,
-            IRenderService renderGraph)
+            IRenderService renderGraph,
+            IInputService inputService)
         {
             _menuStateResolver = menuStateResolver;
             _resources = resources;
             _renderGraph = renderGraph;
+            _inputService = inputService;
         }
 
         public void InitializeState()
@@ -86,17 +89,17 @@ namespace SlaamMono.PlayerProfiles
                 }
                 else
                 {
-                    if (InputService.Instance.GetPlayers()[0].PressedUp)
+                    if (_inputService.GetPlayers()[0].PressedUp)
                     {
                         _state.CurrentMenuChoice.Sub(1);
                         _state.MainMenu.SetHighlight(_state.CurrentMenuChoice.Value);
                     }
-                    else if (InputService.Instance.GetPlayers()[0].PressedDown)
+                    else if (_inputService.GetPlayers()[0].PressedDown)
                     {
                         _state.CurrentMenuChoice.Add(1);
                         _state.MainMenu.SetHighlight(_state.CurrentMenuChoice.Value);
                     }
-                    if (InputService.Instance.GetPlayers()[0].PressedAction)
+                    if (_inputService.GetPlayers()[0].PressedAction)
                     {
                         if (_state.MainMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "new")
                         {
@@ -111,7 +114,7 @@ namespace SlaamMono.PlayerProfiles
                             _state.SubMenu.SetHighlight(0);
                         }
                     }
-                    if (InputService.Instance.GetPlayers()[0].PressedAction2)
+                    if (_inputService.GetPlayers()[0].PressedAction2)
                     {
                         return _menuStateResolver.Resolve(new MainMenuRequest());
                     }
@@ -134,17 +137,17 @@ namespace SlaamMono.PlayerProfiles
                 }
                 else
                 {
-                    if (InputService.Instance.GetPlayers()[0].PressedUp)
+                    if (_inputService.GetPlayers()[0].PressedUp)
                     {
                         _state.CurrentMenuChoice.Sub(1);
                         _state.SubMenu.SetHighlight(_state.CurrentMenuChoice.Value);
                     }
-                    else if (InputService.Instance.GetPlayers()[0].PressedDown)
+                    else if (_inputService.GetPlayers()[0].PressedDown)
                     {
                         _state.CurrentMenuChoice.Add(1);
                         _state.SubMenu.SetHighlight(_state.CurrentMenuChoice.Value);
                     }
-                    if (InputService.Instance.GetPlayers()[0].PressedAction)
+                    if (_inputService.GetPlayers()[0].PressedAction)
                     {
                         if (_state.SubMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "del")
                         {
@@ -171,7 +174,7 @@ namespace SlaamMono.PlayerProfiles
                             setupMainMenu();
                         }
                     }
-                    if (InputService.Instance.GetPlayers()[0].PressedAction2)
+                    if (_inputService.GetPlayers()[0].PressedAction2)
                     {
                         _state.CurrentMenu.Value = 0;
                         setupMainMenu();
