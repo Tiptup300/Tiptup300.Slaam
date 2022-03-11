@@ -11,7 +11,7 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
             PlayerCharacterSelectBoxState output;
 
             output = new PlayerCharacterSelectBoxState();
-            output.PlayerIndex = InputComponent.GetIndex(request.playeridx);
+            output.PlayerIndex = InputService.Instance.GetIndex(request.playeridx);
             output.ParentCharSkins = request.parentcharskins;
             output.ParentSkinStrings = request.parentskinstrings;
             PlayerCharacterSelectBoxPerformer._refreshSkins(output);

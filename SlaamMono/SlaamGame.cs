@@ -36,6 +36,7 @@ namespace SlaamMono
         private readonly RenderService _renderGraph;
         private readonly FpsRenderer _fpsRenderer;
         private readonly FrameTimeService _frameTimeService;
+        private readonly InputService _inputService;
 
         public SlaamGame(
             ILogger logger,
@@ -44,7 +45,8 @@ namespace SlaamMono
             IGraphicsState graphicsState,
             RenderService renderGraph,
             FpsRenderer fpsRenderer,
-            FrameTimeService frameTimeService)
+            FrameTimeService frameTimeService,
+            InputService inputService)
         {
             _logger = logger;
             _screenDirector = screenDirector;
@@ -52,6 +54,7 @@ namespace SlaamMono
             _renderGraph = renderGraph;
             _fpsRenderer = fpsRenderer;
             _frameTimeService = frameTimeService;
+            _inputService = inputService;
             _graphics = new GraphicsDeviceManager(this);
             graphicsState.Set(_graphics);
             Content = new ContentManager(Services);
@@ -65,14 +68,12 @@ namespace SlaamMono
 
         protected override void Initialize()
         {
-            Components.Add(new InputComponent(this));
+            _inputService.Initialize();
             _renderGraph.Initialize();
             _fpsRenderer.Initialize();
             SetupZuneBlade();
             gamebatch = new SpriteBatch(_graphics.GraphicsDevice);
             _screenDirector.ChangeTo<ILogoScreen>();
-
-            base.Initialize();
         }
 
         protected override void LoadContent()
@@ -80,11 +81,9 @@ namespace SlaamMono
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             _resources.LoadAll();
             mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
-            Qwerty.CurrentPlayer = InputComponent.Players[0];
+            Qwerty.CurrentPlayer = InputService.Instance.Players[0];
             _renderGraph.LoadContent();
             _fpsRenderer.LoadContent();
-
-            base.LoadContent();
         }
 
         public void SetupZuneBlade()
@@ -104,6 +103,7 @@ namespace SlaamMono
         protected override void Update(GameTime gameTime)
         {
             _frameTimeService.Update(gameTime);
+            _inputService.Update();
             if (ProfileManager.Initialized == false)
             {
                 ProfileManager.Initialize(_logger, _resources);
@@ -122,8 +122,6 @@ namespace SlaamMono
                     _screenDirector.Update();
                 }
             }
-
-            base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -140,8 +138,6 @@ namespace SlaamMono
             gamebatch.End();
             _renderGraph.Draw();
             _fpsRenderer.Draw();
-
-            base.Draw(gameTime);
         }
     }
 }

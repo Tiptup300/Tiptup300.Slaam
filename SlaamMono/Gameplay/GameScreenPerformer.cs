@@ -156,7 +156,7 @@ namespace SlaamMono.Gameplay
                                 SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[x].SkinLocation),
                                 _state.SetupCharacters[x].CharacterProfileIndex,
                                 new Vector2(-100, -100),
-                                InputComponent.Players[(int)_state.SetupCharacters[x].PlayerIndex],
+                                InputService.Instance.Players[(int)_state.SetupCharacters[x].PlayerIndex],
                                 _state.SetupCharacters[x].PlayerColor,
                                 x,
                                 x_Di.Get<IResources>()));
@@ -193,7 +193,7 @@ namespace SlaamMono.Gameplay
             MatchSettings.CurrentMatchSettings.LivesAmt = 1;
             _state.Tileset = LobbyScreenFunctions.LoadQuickBoard();
 
-            _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, _state.SetupCharacters[0].CharacterProfileIndex, new Vector2(-100, -100), InputComponent.Players[0], Color.White, 0, x_Di.Get<IResources>()));
+            _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation) /*Texture2D.FromFile(Game1.Graphics.GraphicsDevice, SetupChars[0].SkinLocation)*/, _state.SetupCharacters[0].CharacterProfileIndex, new Vector2(-100, -100), InputService.Instance.Players[0], Color.White, 0, x_Di.Get<IResources>()));
             _state.Scoreboards.Add(
                 _gameScreenScoreBoardResolver.Resolve(
                     new ScoreboardRequest(

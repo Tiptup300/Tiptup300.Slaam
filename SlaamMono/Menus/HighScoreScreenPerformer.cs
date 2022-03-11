@@ -43,7 +43,7 @@ namespace SlaamMono.Menus
 
         public IState Perform()
         {
-            if (InputComponent.Players[0].PressedAction2)
+            if (InputService.Instance.Players[0].PressedAction2)
             {
                 _screenDirector.ChangeTo<IMainMenuScreen>();
             }

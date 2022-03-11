@@ -44,7 +44,7 @@ namespace SlaamMono.Menus
         }
         public IState Perform()
         {
-            if (InputComponent.Players[0].PressedAction)
+            if (InputService.Instance.Players[0].PressedAction)
             {
                 _state.Active = !_state.Active;
             }
@@ -59,7 +59,7 @@ namespace SlaamMono.Menus
                 _state.TextCoords = new Vector2(_state.TextCoords.X, GameGlobals.DRAWING_GAME_HEIGHT);
             }
 
-            if (InputComponent.Players[0].PressedAction2)
+            if (InputService.Instance.Players[0].PressedAction2)
             {
                 _screenDirector.ChangeTo<IMainMenuScreen>();
             }

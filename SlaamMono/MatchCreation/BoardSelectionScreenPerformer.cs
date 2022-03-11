@@ -70,14 +70,14 @@ namespace SlaamMono.MatchCreation
                     _state.Scale = 1.50f;
                 }
 
-                if (InputComponent.Players[0].PressedAction)
+                if (InputService.Instance.Players[0].PressedAction)
                 {
                     LobbyScreenFunctions.LoadBoard(_state.ValidBoards[_state.Save], _state.ParentLobbyScreen);
                     // todo
                     //_screenManager.ChangeTo(_state.ParentLobbyScreen);
                 }
 
-                if (InputComponent.Players[0].PressedAction2)
+                if (InputService.Instance.Players[0].PressedAction2)
                 {
                     _state.WasChosen = false;
                 }
@@ -91,20 +91,20 @@ namespace SlaamMono.MatchCreation
                     _state.Scale = 1.00f;
                 }
 
-                if (InputComponent.Players[0].PressingDown)
+                if (InputService.Instance.Players[0].PressingDown)
                 {
                     _state.Vertical = Direction.Down;
                 }
-                if (InputComponent.Players[0].PressingUp)
+                if (InputService.Instance.Players[0].PressingUp)
                 {
                     _state.Vertical = Direction.Up;
                 }
 
-                if (InputComponent.Players[0].PressingRight)
+                if (InputService.Instance.Players[0].PressingRight)
                 {
                     _state.Horizontal = Direction.Right;
                 }
-                if (InputComponent.Players[0].PressingLeft)
+                if (InputService.Instance.Players[0].PressingLeft)
                 {
                     _state.Horizontal = Direction.Left;
                 }
@@ -155,7 +155,7 @@ namespace SlaamMono.MatchCreation
                     }
                 }
 
-                if (_state.HorizontalOffset == 0 && _state.VerticalOffset == 0 && InputComponent.Players[0].PressedAction)
+                if (_state.HorizontalOffset == 0 && _state.VerticalOffset == 0 && InputService.Instance.Players[0].PressedAction)
                 {
                     _state.WasChosen = true;
                 }
