@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using SlaamMono.Composition.x_;
-using SlaamMono.Library;
+using ZzziveGameEngine;
 
 namespace SlaamMono.Testing
 {
@@ -9,7 +9,7 @@ namespace SlaamMono.Testing
         [Test]
         public void CompositionWorks()
         {
-            x_Di.Get<IApp>();
+            x_Di.Get<IGameApp>();
         }
     }
 }

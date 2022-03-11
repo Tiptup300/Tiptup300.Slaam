@@ -43,7 +43,7 @@ namespace SlaamMono.Composition
         {
             _container.RegisterInstance(new ProfileFileVersion(new byte[] { 000, 000, 000, 002, }));
             _container.RegisterInstance(new GameConfig(true));
-            _container.Register<IApp, SlaamGameApp>(Lifestyle.Singleton);
+            _container.Register<IGameApp, SlaamGameApp>(Lifestyle.Singleton);
             _container.Register<ISlaamGame, SlaamGame>(Lifestyle.Singleton);
             _container.Register<IGraphicsState, GraphicsState>(Lifestyle.Singleton);
             _container.RegisterInstance(new GraphicsConfig(GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT, false, false));

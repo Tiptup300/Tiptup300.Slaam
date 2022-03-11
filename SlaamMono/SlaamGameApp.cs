@@ -1,10 +1,11 @@
 ﻿using SlaamMono.Library;
 using SlaamMono.Library.Logging;
 using System;
+using ZzziveGameEngine;
 
 namespace SlaamMono
 {
-    public class SlaamGameApp : IApp
+    public class SlaamGameApp : IGameApp
     {
         private readonly ILogger _logger;
         private readonly IGraphicsConfigurer _graphicsConfigurer;
