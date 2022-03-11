@@ -4,6 +4,6 @@ namespace SlaamMono.Library
 {
     public interface IFrameTimeService
     {
-        FrameInfo GetLatestFrame();
+        Frame GetLatestFrame();
     }
 }

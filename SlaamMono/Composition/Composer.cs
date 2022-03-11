@@ -4,6 +4,7 @@ using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Configurations;
+using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
@@ -53,7 +54,11 @@ namespace SlaamMono.Composition
         public void registerComponents()
         {
             _container.Register<RenderService>(Lifestyle.Singleton);
-            _container.Register<IRenderService, RenderService>(Lifestyle.Singleton);
+            _container.Register<IRenderService>(() => _container.GetInstance<RenderService>(), Lifestyle.Singleton);
+
+            _container.Register<InputService>(Lifestyle.Singleton);
+            _container.Register<IInputService>(() => _container.GetInstance<InputService>(), Lifestyle.Singleton);
+
             _container.Register<FpsRenderer>(Lifestyle.Singleton);
         }
 

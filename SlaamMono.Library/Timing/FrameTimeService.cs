@@ -8,9 +8,9 @@ namespace SlaamMono.Library
     {
         public static FrameTimeService Instance { get; private set; }
 
-        private FrameInfo _latestFrame;
+        private Frame _latestFrame;
 
-        public FrameInfo GetLatestFrame() => _latestFrame;
+        public Frame GetLatestFrame() => _latestFrame;
 
         private int _framesDrawn;
         private int _framesDrawnLast;
@@ -35,7 +35,7 @@ namespace SlaamMono.Library
                 _framesUpdated = 0;
             }
 
-            _latestFrame = new FrameInfo(
+            _latestFrame = new Frame(
                 dateTime: DateTime.UtcNow,
                 movementFactor: gameTime.ElapsedGameTime.Milliseconds,
                 fDPS: _framesDrawnLast,

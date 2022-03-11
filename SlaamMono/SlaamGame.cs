@@ -20,19 +20,16 @@ namespace SlaamMono
     /// </summary>
     public class SlaamGame : Game
     {
-
-        public Game Game => this;
-
-        private GraphicsDeviceManager _graphics;
         new public static ContentManager Content;
-
         public static ZuneBlade mainBlade;
+
 
         private SpriteBatch gamebatch;
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
+        private readonly IGraphicsState _graphicsState;
         private readonly RenderService _renderGraph;
         private readonly FpsRenderer _fpsRenderer;
         private readonly FrameTimeService _frameTimeService;
@@ -51,12 +48,13 @@ namespace SlaamMono
             _logger = logger;
             _screenDirector = screenDirector;
             _resources = resources;
+            _graphicsState = graphicsState;
             _renderGraph = renderGraph;
             _fpsRenderer = fpsRenderer;
             _frameTimeService = frameTimeService;
             _inputService = inputService;
-            _graphics = new GraphicsDeviceManager(this);
-            graphicsState.Set(_graphics);
+
+
             Content = new ContentManager(Services);
             configureGame();
         }
@@ -68,11 +66,13 @@ namespace SlaamMono
 
         protected override void Initialize()
         {
+            _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
+
             _inputService.Initialize();
             _renderGraph.Initialize();
             _fpsRenderer.Initialize();
             SetupZuneBlade();
-            gamebatch = new SpriteBatch(_graphics.GraphicsDevice);
+            gamebatch = new SpriteBatch(_g.GraphicsDevice);
             _screenDirector.ChangeTo<ILogoScreen>();
         }
 
@@ -125,8 +125,9 @@ namespace SlaamMono
         }
         protected override void Draw(GameTime gameTime)
         {
-            _frameTimeService.Draw(gameTime);
             GraphicsDevice.Clear(Color.Black);
+
+            _frameTimeService.Draw(gameTime);
             gamebatch.Begin(blendState: BlendState.NonPremultiplied);
             _screenDirector.Draw(gamebatch);
 
