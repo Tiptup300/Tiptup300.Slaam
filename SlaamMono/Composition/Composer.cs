@@ -11,6 +11,8 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.Menus;
+using SlaamMono.Menus.Credits;
+using SlaamMono.Menus.ZibithLogo;
 using SlaamMono.Metrics;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
@@ -70,11 +72,11 @@ namespace SlaamMono.Composition
         private void registerScreens()
         {
             _container.Register<IMainMenuScreen, MainMenuScreenPerformer>();
-            _container.Register<CreditsScreenPerformer>();
+            _container.Register<CreditsPerformer>();
             _container.Register<HighScoreScreenPerformer>();
             _container.Register<ProfileEditScreenPerformer>();
             _container.Register<CharacterSelectionScreenPerformer>();
-            _container.Register<ILogoScreen, LogoScreenPerformer>();
+            _container.Register<ILogoScreen, ZibithLogoPerformer>();
             _container.Register<GameScreenPerformer>();
 
             // Register all IRequests

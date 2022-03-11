@@ -3,9 +3,9 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Subclasses;
 using ZzziveGameEngine.StateManagement;
 
-namespace SlaamMono.Menus
+namespace SlaamMono.Menus.ZibithLogo
 {
-    public class LogoScreenState : IState
+    public class ZibithLogoState : IState
     {
         public int StateIndex { get; set; } = -1;
         public Transition StateTransition { get; set; }

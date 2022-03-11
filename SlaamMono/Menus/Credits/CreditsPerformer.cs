@@ -6,13 +6,12 @@ using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.x_;
-using System.Collections.Generic;
 using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
-namespace SlaamMono.Menus
+namespace SlaamMono.Menus.Credits
 {
-    public partial class CreditsScreenPerformer : IStatePerformer
+    public partial class CreditsPerformer : IStatePerformer
     {
         private const float MovementSpeed = 3f / 120f;
 
@@ -21,36 +20,25 @@ namespace SlaamMono.Menus
         private readonly IResources _resources;
         private readonly IInputService _inputService;
         private readonly IFrameTimeService _frameTimeService;
-        private readonly IResolver<IRequest, IState> _stateResolver;
+        private readonly IResolver<MainMenuRequest, IState> _mainMenuResolver;
 
-        public CreditsScreenPerformer(
+        public CreditsPerformer(
             IResources resources,
             IInputService inputService,
             IFrameTimeService frameTimeService,
-            IResolver<IRequest, IState> stateResolver)
+            IResolver<MainMenuRequest, IState> mainMenuResolver)
         {
             _resources = resources;
             _inputService = inputService;
             _frameTimeService = frameTimeService;
-            _stateResolver = stateResolver;
+            _mainMenuResolver = mainMenuResolver;
         }
 
         public void InitializeState()
         {
-            _state.credits = _resources.GetTextList("Credits").ToArray();
-
-            for (int x = 0; x < _state.credits.Length; x++)
-            {
-                string[] credinfo = _state.credits[x].Replace("\r", "").Split("|".ToCharArray());
-                string credname = credinfo[0];
-                List<string> credcreds = new List<string>();
-                for (int y = 1; y < credinfo.Length; y++)
-                {
-                    credcreds.Add(credinfo[y]);
-                }
-                _state.CreditsListings.Add(new CreditsListing(credname, credcreds));
-            }
+            // to remove
         }
+
         public IState Perform()
         {
             if (_inputService.GetPlayers()[0].PressedAction)
@@ -70,7 +58,7 @@ namespace SlaamMono.Menus
 
             if (_inputService.GetPlayers()[0].PressedAction2)
             {
-                return _stateResolver.Resolve(new MainMenuRequest());
+                return _mainMenuResolver.Resolve(new MainMenuRequest());
             }
             return _state;
         }
@@ -104,5 +92,6 @@ namespace SlaamMono.Menus
         {
 
         }
+
     }
 }

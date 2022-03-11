@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SlaamMono.Menus
+namespace SlaamMono.Menus.Credits
 {
     public struct CreditsListing
     {

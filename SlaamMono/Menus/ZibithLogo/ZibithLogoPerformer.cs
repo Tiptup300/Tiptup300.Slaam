@@ -6,23 +6,22 @@ using SlaamMono.Library.Screens;
 using SlaamMono.Subclasses;
 using SlaamMono.x_;
 using System;
-using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
-namespace SlaamMono.Menus
+namespace SlaamMono.Menus.ZibithLogo
 {
-    public class LogoScreenPerformer : ILogoScreen, IStatePerformer
+    public class ZibithLogoPerformer : ILogoScreen, IStatePerformer
     {
         private const float _fadeInSeconds = 1f;
         private const float _holdSeconds = 3f;
         private const float _fadeOutSeconds = 0.5f;
 
-        private LogoScreenState _state;
+        private ZibithLogoState _state;
 
         private readonly IResources _resources;
         private readonly IFrameTimeService _frameTimeService;
 
-        public LogoScreenPerformer(
+        public ZibithLogoPerformer(
             IResources resources,
             IFrameTimeService frameTimeService)
         {
@@ -32,7 +31,7 @@ namespace SlaamMono.Menus
 
         public void InitializeState()
         {
-            _state = new LogoScreenState();
+            // to remove
         }
 
         public IState Perform()
@@ -46,7 +45,7 @@ namespace SlaamMono.Menus
             }
         }
 
-        private static IState initFadeInState(LogoScreenState state)
+        private static IState initFadeInState(ZibithLogoState state)
         {
             state.StateIndex = 1;
             state.StateTransition = new Transition(TimeSpan.FromSeconds(_fadeInSeconds));
@@ -55,7 +54,7 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        private IState fadeInState(LogoScreenState state)
+        private IState fadeInState(ZibithLogoState state)
         {
             state.StateTransition.AddProgress(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             state.LogoColor = new Color(Color.White, MathHelper.SmoothStep(0f, 1f, state.StateTransition.Position));
@@ -67,7 +66,7 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        private static IState initHoldState(LogoScreenState state)
+        private static IState initHoldState(ZibithLogoState state)
         {
             state.StateIndex = 2;
             state.LogoColor = Color.White;
@@ -76,7 +75,7 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        private IState holdState(LogoScreenState state)
+        private IState holdState(ZibithLogoState state)
         {
             state.StateTransition.AddProgress(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             if (state.StateTransition.IsFinished)
@@ -87,7 +86,7 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        private IState initFadeOutState(LogoScreenState state)
+        private IState initFadeOutState(ZibithLogoState state)
         {
             state.StateIndex = 3;
             state.StateTransition.Reset(TimeSpan.FromSeconds(_fadeOutSeconds));
@@ -95,7 +94,7 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        private IState fadeOutState(LogoScreenState state)
+        private IState fadeOutState(ZibithLogoState state)
         {
             state.StateTransition.AddProgress(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             state.LogoColor = new Color(Color.White, MathHelper.SmoothStep(1f, 0f, state.StateTransition.Position));
@@ -117,7 +116,7 @@ namespace SlaamMono.Menus
             unloadTexturesFromState(_state);
         }
 
-        public static IState unloadTexturesFromState(LogoScreenState state)
+        public static IState unloadTexturesFromState(ZibithLogoState state)
         {
             state.BackgroundTexture.Unload();
             state.LogoTexture.Unload();

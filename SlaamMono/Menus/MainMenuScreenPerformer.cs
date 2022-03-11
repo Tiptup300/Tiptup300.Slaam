@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
+using SlaamMono.Menus.Credits;
 using SlaamMono.PlayerProfiles;
 using System;
 using ZBlade;
+using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 using ZzziveGameEngine.StateManagement.States;
 
@@ -12,6 +14,11 @@ namespace SlaamMono.Menus
     public class MainMenuScreenPerformer : IMainMenuScreen, IStatePerformer
     {
         private MainMenuScreenState _state;
+
+        public MainMenuScreenPerformer(IResolver<)
+        {
+
+        }
 
         public void InitializeState()
         {
@@ -39,7 +46,7 @@ namespace SlaamMono.Menus
             });
         }
 
-        private void selectedCredits(object sender, EventArgs e) => _state.NextState = new CreditsScreenRequestState();
+        private void selectedCredits(object sender, EventArgs e) => _state.NextState = new CreditsRequest();
         private void selectedHighscores(object sender, EventArgs e) => _state.NextState = new HighScoreScreenRequestState();
         private void selectedManageProfiles(object sender, EventArgs e) => _state.NextState = new ProfileEditScreenRequestState();
         private void selectedSurvival(object sender, EventArgs e) => _state.NextState = new CharacterSelectionScreenState() { isForSurvival = true };

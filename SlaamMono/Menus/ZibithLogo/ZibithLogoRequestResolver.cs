@@ -1,24 +1,23 @@
 ﻿using SlaamMono.Library.ResourceManagement;
-using System;
 using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
-namespace SlaamMono.Menus
+namespace SlaamMono.Menus.ZibithLogo
 {
-    public class LogoScreenRequestResolver : IResolver<LogoScreenRequest, IState>
+    public class ZibithLogoRequestResolver : IResolver<ZibithLogoRequest, IState>
     {
         private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
 
-        public LogoScreenRequestResolver(IResolver<TextureRequest, CachedTexture> textureRequest)
+        public ZibithLogoRequestResolver(IResolver<TextureRequest, CachedTexture> textureRequest)
         {
             _textureRequest = textureRequest;
         }
 
-        public IState Resolve(LogoScreenRequest request)
+        public IState Resolve(ZibithLogoRequest request)
         {
-            LogoScreenState output;
+            ZibithLogoState output;
 
-            output = new LogoScreenState()
+            output = new ZibithLogoState()
             {
                 StateIndex = 0,
                 BackgroundTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogoBG")),
