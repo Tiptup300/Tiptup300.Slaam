@@ -18,7 +18,7 @@ namespace SlaamMono
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class SlaamGame : Game, ISlaamGame
+    public class SlaamGame : Game
     {
 
         public Game Game => this;

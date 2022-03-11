@@ -9,9 +9,9 @@ namespace SlaamMono
     {
         private readonly ILogger _logger;
         private readonly IGraphicsConfigurer _graphicsConfigurer;
-        private readonly ISlaamGame _game;
+        private readonly SlaamGame _game;
 
-        public SlaamGameApp(ISlaamGame game, ILogger logger, IGraphicsConfigurer graphicsConfigurer)
+        public SlaamGameApp(SlaamGame game, ILogger logger, IGraphicsConfigurer graphicsConfigurer)
         {
             _game = game;
             _logger = logger;
