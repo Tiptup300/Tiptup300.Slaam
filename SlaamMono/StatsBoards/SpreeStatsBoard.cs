@@ -12,7 +12,7 @@ namespace SlaamMono.StatsBoards
     {
         public SpreePlayerStatsPageListing[] SpreeStatsPage;
 
-        public SpreeStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph, StatsScreenState statsScreenState)
+        public SpreeStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderService renderGraph, StatsScreenState statsScreenState)
             : base(scorekeeper, statsScreenState)
         {
             SpreeStatsPage = new SpreePlayerStatsPageListing[_statsScreenState.Characters.Count];

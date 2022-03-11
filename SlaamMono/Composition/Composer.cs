@@ -5,7 +5,6 @@ using SlaamMono.Gameplay;
 using SlaamMono.Library;
 using SlaamMono.Library.Configurations;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Metrics;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
@@ -15,7 +14,6 @@ using SlaamMono.Metrics;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
 using SlaamMono.ResourceManagement.Loading;
-using SlaamMono.Survival;
 using SlaamMono.x_;
 using ZzziveGameEngine;
 
@@ -43,7 +41,7 @@ namespace SlaamMono.Composition
         {
             _container.RegisterInstance(new ProfileFileVersion(new byte[] { 000, 000, 000, 002, }));
             _container.RegisterInstance(new GameConfig(true));
-            _container.Register<IZzzApp, SlaamGameApp>(Lifestyle.Singleton);
+            _container.Register<SlaamGameApp>(Lifestyle.Singleton);
             _container.Register<SlaamGame>(Lifestyle.Singleton);
             _container.Register<IGraphicsState, GraphicsState>(Lifestyle.Singleton);
             _container.RegisterInstance(new GraphicsConfig(GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT, false, false));
@@ -54,8 +52,9 @@ namespace SlaamMono.Composition
 
         public void registerComponents()
         {
-            _container.Register<IRenderGraph, RenderGraph>(Lifestyle.Singleton);
-            _container.Register<IFpsRenderer, FpsRenderer>(Lifestyle.Singleton);
+            _container.Register<RenderService>(Lifestyle.Singleton);
+            _container.Register<IRenderService, RenderService>(Lifestyle.Singleton);
+            _container.Register<FpsRenderer>(Lifestyle.Singleton);
         }
 
         private void registerScreens()

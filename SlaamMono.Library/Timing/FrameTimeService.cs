@@ -4,9 +4,9 @@ using System;
 
 namespace SlaamMono.Library
 {
-    public class FrameRateDirector : DrawableGameComponent
+    public class FrameTimeService : IFrameTimeService
     {
-        public static FrameRateDirector Instance { get; private set; }
+        public static FrameTimeService Instance { get; private set; }
 
         private FrameInfo _latestFrame;
 
@@ -20,19 +20,7 @@ namespace SlaamMono.Library
         private readonly TimeSpan _oneSecond = TimeSpan.FromSeconds(1);
         private TimeSpan _currentTimer = TimeSpan.Zero;
 
-        public static FrameRateDirector Init(Game game)
-        {
-            Instance = new FrameRateDirector(game);
-            return Instance;
-        }
-
-        public FrameRateDirector(Game game)
-            : base(game)
-        {
-
-        }
-
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             _framesUpdated++;
             _currentTimer += gameTime.ElapsedGameTime;
@@ -55,7 +43,7 @@ namespace SlaamMono.Library
             );
         }
 
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             _framesDrawn++;
         }

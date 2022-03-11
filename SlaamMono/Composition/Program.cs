@@ -1,5 +1,4 @@
 using SlaamMono.Composition.x_;
-using ZzziveGameEngine;
 
 namespace SlaamMono.Composition
 {
@@ -11,7 +10,7 @@ namespace SlaamMono.Composition
         /// </summary>
         static void Main(string[] args)
         {
-            x_Di.Get<IZzzApp>().Run();
+            x_Di.Get<SlaamGameApp>().Run();
         }
 
     }

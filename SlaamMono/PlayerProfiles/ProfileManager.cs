@@ -65,9 +65,13 @@ namespace SlaamMono.PlayerProfiles
                 {
                     AllProfiles.Add(new PlayerProfile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadString(), reader.ReadString(), reader.ReadBool(), reader.ReadInt32(), reader.ReadInt32()));
                     if (AllProfiles[AllProfiles.Count - 1].IsBot)
+                    {
                         BotProfiles.Add(AllProfiles.Count - 1);
+                    }
                     else
+                    {
                         PlayableProfiles.Add(AllProfiles.Count - 1);
+                    }
                 }
 
 #if ZUNE

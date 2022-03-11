@@ -2,13 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
 using SlaamMono.Library.Configurations;
-using SlaamMono.Library.Metrics;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 
 namespace SlaamMono.Metrics
 {
-    public class FpsRenderer : IFpsRenderer
+    public class FpsRenderer
     {
         private bool _loaded = false;
         private string _fpsText;
@@ -18,14 +17,21 @@ namespace SlaamMono.Metrics
 
         private readonly Color _backBoxColor = new Color(0, 0, 0, 100);
         private readonly IResources _resources;
-        private readonly IRenderGraph _renderGraph;
+        private readonly IRenderService _renderGraph;
         private readonly GameConfig _gameConfig;
+        private readonly FrameTimeService _frameTimeService;
 
-        public FpsRenderer(IResources resources, IRenderGraph renderGraph, GameConfig gameConfiguration)
+        public FpsRenderer(
+            IResources resources,
+            IRenderService renderGraph,
+            GameConfig gameConfiguration,
+            FrameTimeService frameTimeService
+            )
         {
             _resources = resources;
             _renderGraph = renderGraph;
             _gameConfig = gameConfiguration;
+            _frameTimeService = frameTimeService;
         }
 
         public void Initialize()
@@ -46,9 +52,9 @@ namespace SlaamMono.Metrics
         {
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            _fpsText = FrameRateDirector.Instance.GetLatestFrame().FUPS.ToString();
+            _fpsText = _frameTimeService.GetLatestFrame().FUPS.ToString();
             Vector2 textSize = _font.MeasureString(_fpsText);
             _boxDestination = new Rectangle(0, 0, (int)textSize.X + 2, (int)textSize.Y);
             _textPosition = new Vector2(0, 0);

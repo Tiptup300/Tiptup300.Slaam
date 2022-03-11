@@ -22,7 +22,7 @@ namespace SlaamMono.StatsBoards
         private int RowsToDraw;
 
         private ILogger _logger;
-        public SurvivalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, int rowstodraw, ILogger logger, IResources resources, IRenderGraph renderGraph, StatsScreenState statsScreenState)
+        public SurvivalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, int rowstodraw, ILogger logger, IResources resources, IRenderService renderGraph, StatsScreenState statsScreenState)
             : base(scorekeeper, statsScreenState)
         {
             _logger = logger;

@@ -17,9 +17,9 @@ namespace SlaamMono.Library.Graphing
         private int _gap;
 
         private readonly IResources _resourceManager;
-        private readonly IRenderGraph _renderGraphManager;
+        private readonly IRenderService _renderGraphManager;
 
-        public Graph(Rectangle graphrect, int gap, Color coltodraw, IResources resourceManager, IRenderGraph renderGraphManager)
+        public Graph(Rectangle graphrect, int gap, Color coltodraw, IResources resourceManager, IRenderService renderGraphManager)
         {
             _graphRectangle = graphrect;
             _gap = gap;
@@ -89,7 +89,7 @@ namespace SlaamMono.Library.Graphing
             _drawings.Draw(batch);
             for (int x = 0; x < _stringsToWrite.Count; x++)
             {
-                RenderGraph.Instance.RenderText(_stringsToWrite[x].Str, _stringsToWrite[x].Pos, _resourceManager.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, true);
+                RenderService.Instance.RenderText(_stringsToWrite[x].Str, _stringsToWrite[x].Pos, _resourceManager.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, true);
             }
         }
     }

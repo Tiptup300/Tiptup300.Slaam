@@ -12,7 +12,7 @@ namespace SlaamMono.StatsBoards
     {
         public List<PvPPageListing> PvPPage = new List<PvPPageListing>();
 
-        public PvPStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph, StatsScreenState statsScreenState)
+        public PvPStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderService renderGraph, StatsScreenState statsScreenState)
             : base(scorekeeper, statsScreenState)
         {
             MainBoard = new Graph(rect, 2, col, resources, renderGraph);

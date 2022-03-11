@@ -13,7 +13,7 @@ namespace SlaamMono.StatsBoards
     {
         public NormalPlayerStatsPageListing[] NormalStatsPage;
 
-        public NormalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderGraph renderGraph, StatsScreenState statsScreenState)
+        public NormalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderService renderGraph, StatsScreenState statsScreenState)
             : base(scorekeeper, statsScreenState)
         {
             NormalStatsPage = new NormalPlayerStatsPageListing[statsScreenState.Characters.Count];

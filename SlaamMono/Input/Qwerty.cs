@@ -26,7 +26,7 @@ namespace SlaamMono.Input
 
         public static string EditingString = "";
 
-        private static IRenderGraph _renderGraphManager;
+        private static IRenderService _renderGraphManager;
         private static IResources _resources;
 
         private static readonly Rectangle _boxRectangle = new Rectangle(0, 0, 1280, 1024);
@@ -35,13 +35,13 @@ namespace SlaamMono.Input
         static Qwerty()
         {
             x_init(
-                x_Di.Get<IRenderGraph>(),
+                x_Di.Get<IRenderService>(),
                 x_Di.Get<IResources>());
 
             InitKeys();
         }
 
-        private static void x_init(IRenderGraph renderGraphManager, IResources resources)
+        private static void x_init(IRenderService renderGraphManager, IResources resources)
         {
             _renderGraphManager = renderGraphManager;
             _resources = resources;
@@ -98,14 +98,14 @@ namespace SlaamMono.Input
         {
             if (Status == QwertyStatus.GoingUp)
             {
-                BoardPosition.Y -= FrameRateDirector.Instance.GetLatestFrame().MovementFactor * MovementSpeed;
+                BoardPosition.Y -= FrameTimeService.Instance.GetLatestFrame().MovementFactor * MovementSpeed;
 
                 if (BoardPosition.Y <= TargetPosition.Y)
                     Status = QwertyStatus.Normal;
             }
             else if (Status == QwertyStatus.GoingDown)
             {
-                BoardPosition.Y += FrameRateDirector.Instance.GetLatestFrame().MovementFactor * MovementSpeed;
+                BoardPosition.Y += FrameTimeService.Instance.GetLatestFrame().MovementFactor * MovementSpeed;
 
                 if (BoardPosition.Y >= 1024)
                     Active = false;
@@ -198,12 +198,12 @@ namespace SlaamMono.Input
                 for (int x = 0; x < 10; x++)
                 {
                     if (Keys[x, y].Type == QwertyKeyType.Normal)
-                        RenderGraph.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopCenter, true);
+                        RenderService.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopCenter, true);
                     else
-                        RenderGraph.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), _resources.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, false);
+                        RenderService.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), _resources.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, false);
                 }
             }
-            RenderGraph.Instance.RenderText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+            RenderService.Instance.RenderText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
 
             if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != QwertyKeyType.Space)
                 batch.Draw(_resources.GetTexture("KeyHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);

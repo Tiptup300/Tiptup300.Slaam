@@ -17,10 +17,10 @@ namespace SlaamMono.Menus
 
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
-        private readonly IRenderGraph _renderGraphManager;
+        private readonly IRenderService _renderGraphManager;
 
         public FirstTimeScreenPerformer(
-            IScreenManager screenDirector, IResources resources, IRenderGraph renderGraphManager)
+            IScreenManager screenDirector, IResources resources, IRenderService renderGraphManager)
         {
             _screenDirector = screenDirector;
             _resources = resources;

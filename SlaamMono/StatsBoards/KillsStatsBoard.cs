@@ -12,7 +12,7 @@ namespace SlaamMono.StatsBoards
     {
         public List<KillsPageListing> KillsPage = new List<KillsPageListing>();
 
-        public KillsStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resourcesManager, IRenderGraph renderGraphManager, StatsScreenState statsScreenState)
+        public KillsStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resourcesManager, IRenderService renderGraphManager, StatsScreenState statsScreenState)
             : base(scorekeeper, statsScreenState)
         {
             MainBoard = new Graph(rect, 2, col, resourcesManager, renderGraphManager);

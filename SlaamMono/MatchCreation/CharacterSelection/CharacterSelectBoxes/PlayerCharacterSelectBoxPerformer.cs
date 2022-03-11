@@ -112,11 +112,11 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
                         {
                             if (state.MovementStatus == PlayerCharacterSelectBoxMovementStatus.Lowering)
                             {
-                                state.Offset -= FrameRateDirector.Instance.GetLatestFrame().MovementFactor * state.ScrollSpeed;
+                                state.Offset -= FrameTimeService.Instance.GetLatestFrame().MovementFactor * state.ScrollSpeed;
                             }
                             else
                             {
-                                state.Offset += FrameRateDirector.Instance.GetLatestFrame().MovementFactor * state.ScrollSpeed;
+                                state.Offset += FrameTimeService.Instance.GetLatestFrame().MovementFactor * state.ScrollSpeed;
                             }
 
                             state.Positions[1] = new Vector2(state.Positions[0].X + 75, state.Positions[0].Y + 125 - 30 + state.Offset - 70);
@@ -166,8 +166,8 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
                 temp = temp.Substring(DialogStrings.PlayingAs.Length);
             }
 
-            RenderGraph.Instance.RenderText(temp, new Vector2(31, 141), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
-            RenderGraph.Instance.RenderText(state.MessageLines[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+            RenderService.Instance.RenderText(temp, new Vector2(31, 141), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+            RenderService.Instance.RenderText(state.MessageLines[0], new Vector2(20, 70), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
         }
 
         public static void _refreshSkins(PlayerCharacterSelectBoxState state)

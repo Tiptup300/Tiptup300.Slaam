@@ -7,9 +7,9 @@ using ZzziveGameEngine;
 
 namespace SlaamMono.Library.Rendering
 {
-    public class RenderGraph : IRenderGraph
+    public class RenderService : IRenderService
     {
-        public static IRenderGraph Instance;
+        public static IRenderService Instance;
 
         private SpriteBatch _batch;
         private List<TextEntry> _textToDraw = new List<TextEntry>();
@@ -22,7 +22,7 @@ namespace SlaamMono.Library.Rendering
         private readonly IResolver<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IGraphicsState _graphicsState;
 
-        public RenderGraph(
+        public RenderService(
             IResolver<WhitePixelRequest, Texture2D> whitePixelResolver,
             IGraphicsState graphicsState)
         {
@@ -60,7 +60,7 @@ namespace SlaamMono.Library.Rendering
             _textToDraw.Add(new TextEntry(font, position + _shadowOffset2, text, alignment, _shadowColor));
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             _batch = new SpriteBatch(_graphicsState.Get().GraphicsDevice);
         }

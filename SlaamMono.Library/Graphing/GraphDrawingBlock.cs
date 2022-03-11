@@ -9,9 +9,9 @@ namespace SlaamMono.Library.Graphing
     {
         private Rectangle DrawingRectangle;
         private Color DrawingColor;
-        private readonly IRenderGraph _renderGraphManager;
+        private readonly IRenderService _renderGraphManager;
 
-        public GraphDrawingBlock(Rectangle drawingrect, Color drawingcol, IRenderGraph renderGraphManager)
+        public GraphDrawingBlock(Rectangle drawingrect, Color drawingcol, IRenderService renderGraphManager)
         {
             DrawingRectangle = drawingrect;
             DrawingColor = drawingcol;

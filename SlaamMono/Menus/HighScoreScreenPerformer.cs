@@ -20,9 +20,9 @@ namespace SlaamMono.Menus
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
-        private readonly IRenderGraph _renderGraph;
+        private readonly IRenderService _renderGraph;
 
-        public HighScoreScreenPerformer(ILogger logger, IScreenManager screenDirector, IResources resources, IRenderGraph renderGraph)
+        public HighScoreScreenPerformer(ILogger logger, IScreenManager screenDirector, IResources resources, IRenderService renderGraph)
         {
             _logger = logger;
             _screenDirector = screenDirector;

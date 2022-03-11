@@ -5,10 +5,10 @@ using SlaamMono.Input;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Metrics;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
+using SlaamMono.Metrics;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
 using ZBlade;
@@ -27,32 +27,31 @@ namespace SlaamMono
         new public static ContentManager Content;
 
         public static ZuneBlade mainBlade;
-        public static SlaamGame Instance { get { return instance; } }
-        public static SlaamGame instance;
-        public static bool ShowFPS = true;
 
         private SpriteBatch gamebatch;
 
         private readonly ILogger _logger;
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
-        private readonly IRenderGraph _renderGraph;
-        private readonly IFpsRenderer _fpsRenderer;
+        private readonly RenderService _renderGraph;
+        private readonly FpsRenderer _fpsRenderer;
+        private readonly FrameTimeService _frameTimeService;
 
         public SlaamGame(
             ILogger logger,
             IScreenManager screenDirector,
             IResources resources,
             IGraphicsState graphicsState,
-            IRenderGraph renderGraph,
-            IFpsRenderer fpsRenderer)
+            RenderService renderGraph,
+            FpsRenderer fpsRenderer,
+            FrameTimeService frameTimeService)
         {
             _logger = logger;
             _screenDirector = screenDirector;
             _resources = resources;
             _renderGraph = renderGraph;
             _fpsRenderer = fpsRenderer;
-
+            _frameTimeService = frameTimeService;
             _graphics = new GraphicsDeviceManager(this);
             graphicsState.Set(_graphics);
             Content = new ContentManager(Services);
@@ -66,13 +65,11 @@ namespace SlaamMono
 
         protected override void Initialize()
         {
-            Components.Insert(0, FrameRateDirector.Init(this));
             Components.Add(new InputComponent(this));
             _renderGraph.Initialize();
             _fpsRenderer.Initialize();
             SetupZuneBlade();
             gamebatch = new SpriteBatch(_graphics.GraphicsDevice);
-            instance = this;
             _screenDirector.ChangeTo<ILogoScreen>();
 
             base.Initialize();
@@ -106,16 +103,15 @@ namespace SlaamMono
         }
         protected override void Update(GameTime gameTime)
         {
-
+            _frameTimeService.Update(gameTime);
             if (ProfileManager.Initialized == false)
             {
                 ProfileManager.Initialize(_logger, _resources);
             }
             else
             {
-
-                _renderGraph.Update(gameTime);
-                _fpsRenderer.Update(gameTime);
+                _renderGraph.Update();
+                _fpsRenderer.Update();
 
                 if (Qwerty.Active)
                 {
@@ -131,6 +127,7 @@ namespace SlaamMono
         }
         protected override void Draw(GameTime gameTime)
         {
+            _frameTimeService.Draw(gameTime);
             GraphicsDevice.Clear(Color.Black);
             gamebatch.Begin(blendState: BlendState.NonPremultiplied);
             _screenDirector.Draw(gamebatch);

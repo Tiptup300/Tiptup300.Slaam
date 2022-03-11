@@ -21,12 +21,12 @@ namespace SlaamMono.PlayerProfiles
 
         private readonly IResolver<MainMenuRequest, MainMenuScreenState> _menuStateResolver;
         private readonly IResources _resources;
-        private readonly IRenderGraph _renderGraph;
+        private readonly IRenderService _renderGraph;
 
         public ProfileEditScreenPerformer(
             IResolver<MainMenuRequest, MainMenuScreenState> menuStateResolver,
             IResources resources,
-            IRenderGraph renderGraph)
+            IRenderService renderGraph)
         {
             _menuStateResolver = menuStateResolver;
             _resources = resources;

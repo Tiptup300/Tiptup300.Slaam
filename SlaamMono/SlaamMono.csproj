@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SlaamMono.Library\SlaamMono.Library.csproj" />
     <ProjectReference Include="..\ZBlade\ZBlade.csproj" />
+    <ProjectReference Include="..\ZzziveGameEngine.MonoGame\ZzziveGameEngine.MonoGame.csproj" />
     <ProjectReference Include="..\ZzziveGameEngine\ZzziveGameEngine.csproj" />
   </ItemGroup>
   <ItemGroup>

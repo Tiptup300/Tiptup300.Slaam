@@ -23,9 +23,9 @@ namespace SlaamMono.Gameplay.Statistics
 
         private readonly ILogger _logger;
         private readonly IResources _resources;
-        private readonly IRenderGraph _renderGraph;
+        private readonly IRenderService _renderGraph;
 
-        public StatsScreenPerformer(ILogger logger, IResources resources, IRenderGraph renderGraph)
+        public StatsScreenPerformer(ILogger logger, IResources resources, IRenderService renderGraph)
         {
             _logger = logger;
             _resources = resources;

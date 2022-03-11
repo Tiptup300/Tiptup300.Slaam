@@ -44,7 +44,7 @@ namespace SlaamMono.Gameplay
         {
             if (state.Moving)
             {
-                state.Position.X -= FrameRateDirector.Instance.GetLatestFrame().MovementFactor * state.MovementSpeed;
+                state.Position.X -= FrameTimeService.Instance.GetLatestFrame().MovementFactor * state.MovementSpeed;
                 if (state.Position.X <= 0)
                 {
                     state.Position.X = 0;
@@ -55,8 +55,8 @@ namespace SlaamMono.Gameplay
             {
                 if (state.TimeRemaining > TimeSpan.Zero || state.GameType == GameType.Spree || state.GameType == GameType.Classic || state.GameType == GameType.Survival)
                 {
-                    state.CurrentGameTime += FrameRateDirector.Instance.GetLatestFrame().MovementFactorTimeSpan;
-                    state.TimeRemaining -= FrameRateDirector.Instance.GetLatestFrame().MovementFactorTimeSpan;
+                    state.CurrentGameTime += FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan;
+                    state.TimeRemaining -= FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan;
                 }
 
                 if (state.TimeRemaining < TimeSpan.Zero)
@@ -66,7 +66,7 @@ namespace SlaamMono.Gameplay
 
                 if (state.GameType == GameType.TimedSpree)
                 {
-                    state.CurrentStep += FrameRateDirector.Instance.GetLatestFrame().MovementFactor;
+                    state.CurrentStep += FrameTimeService.Instance.GetLatestFrame().MovementFactor;
 
                     if (state.CurrentStep >= state.StepSize)
                     {
@@ -84,16 +84,16 @@ namespace SlaamMono.Gameplay
         public void drawState(SpriteBatch batch, GameScreenTimerState state)
         {
             batch.Draw(_resources.GetTexture("TopGameBoard").Texture, new Vector2(1280 - _resources.GetTexture("TopGameBoard").Width + state.Position.X, 0), Color.White);
-            RenderGraph.Instance.RenderText(state.GameMatchTime.Minutes.ToString("00"), new Vector2(1181.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
-            RenderGraph.Instance.RenderText(state.GameMatchTime.Seconds.ToString("00"), new Vector2(1219.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
-            RenderGraph.Instance.RenderText(state.GameMatchTime.Milliseconds.ToString("00"), new Vector2(1257.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
+            RenderService.Instance.RenderText(state.GameMatchTime.Minutes.ToString("00"), new Vector2(1181.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
+            RenderService.Instance.RenderText(state.GameMatchTime.Seconds.ToString("00"), new Vector2(1219.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
+            RenderService.Instance.RenderText(state.GameMatchTime.Milliseconds.ToString("00"), new Vector2(1257.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
             if (state.GameType == GameType.Classic || state.GameType == GameType.Spree || state.GameType == GameType.Survival)
             {
-                RenderGraph.Instance.RenderText("Time Elapsed", new Vector2(state.Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
+                RenderService.Instance.RenderText("Time Elapsed", new Vector2(state.Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
             }
             else if (state.GameType == GameType.TimedSpree)
             {
-                RenderGraph.Instance.RenderText("Time Remaining", new Vector2(state.Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
+                RenderService.Instance.RenderText("Time Remaining", new Vector2(state.Position.X + 1270, 30), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopRight, true);
             }
         }
 
