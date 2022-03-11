@@ -5,7 +5,7 @@ using ZzziveGameEngine;
 
 namespace SlaamMono
 {
-    public class SlaamGameApp : IGameApp
+    public class SlaamGameApp : IZzzApp
     {
         private readonly ILogger _logger;
         private readonly IGraphicsConfigurer _graphicsConfigurer;

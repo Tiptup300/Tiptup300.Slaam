@@ -9,7 +9,7 @@ namespace SlaamMono.Testing
         [Test]
         public void CompositionWorks()
         {
-            x_Di.Get<IGameApp>();
+            x_Di.Get<IZzzApp>();
         }
     }
 }

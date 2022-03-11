@@ -11,7 +11,7 @@ namespace SlaamMono.Composition
         /// </summary>
         static void Main(string[] args)
         {
-            x_Di.Get<IGameApp>().Run();
+            x_Di.Get<IZzzApp>().Run();
         }
 
     }

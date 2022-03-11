@@ -2,7 +2,7 @@
 
 namespace ZzziveGameEngine.MonoGame
 {
-    public class ZzzMonoGameRunner
+    public class ZzzMonoGameRunner : IZzzApp
     {
         private readonly ZzzMonoGame _game;
         private readonly IEnumerable<ZzzMonoGameComponent> _components;

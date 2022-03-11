@@ -1,6 +1,6 @@
 ﻿namespace ZzziveGameEngine
 {
-    public interface IGameApp
+    public interface IZzzApp
     {
         void Run();
     }
