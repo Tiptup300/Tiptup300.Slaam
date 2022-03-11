@@ -13,11 +13,13 @@ namespace SlaamMono.Gameplay.Powerups
     {
         private int PowerupIndex = 0;
         private int CharacterIndex;
+        private readonly IFrameTimeService _frameTimeService;
         private const float Multiplier = -1f;
         private readonly TimeSpan TimeLasting = new TimeSpan(0, 0, 10);
         private TimeSpan CurrentTime;
 
-        public Inversion(int charindex, IResources resources)
+        public Inversion(int charindex, IResources resources,
+            IFrameTimeService frameTimeService)
             : base(
                   DialogStrings.InversionName,
                   new CachedTexture[] {
@@ -26,6 +28,7 @@ namespace SlaamMono.Gameplay.Powerups
                   PowerupUse.Strategy)
         {
             CharacterIndex = charindex;
+            _frameTimeService = frameTimeService;
         }
 
         public override void BeginAttack(Vector2 charposition, Direction chardirection, GameScreenState gameScreenState)
@@ -47,7 +50,7 @@ namespace SlaamMono.Gameplay.Powerups
                     gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
             }
 
-            CurrentTime -= FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan;
+            CurrentTime -= _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
 
             if (CurrentTime <= TimeSpan.Zero)
             {

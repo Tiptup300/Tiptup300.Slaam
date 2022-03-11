@@ -24,12 +24,15 @@ namespace SlaamMono.Gameplay
         private float Alpha = 255f;
 
         private readonly IResolver<WhitePixelRequest, Texture2D> _whitePixelResolver;
+        private readonly IFrameTimeService _frameTimeService;
         private readonly IResources _resources;
 
-        public Scoreboard(IResources resources, IResolver<WhitePixelRequest, Texture2D> whitePixelResolver)
+        public Scoreboard(IResources resources, IResolver<WhitePixelRequest, Texture2D> whitePixelResolver,
+            IFrameTimeService frameTimeService)
         {
             _resources = resources;
             _whitePixelResolver = whitePixelResolver;
+            _frameTimeService = frameTimeService;
         }
 
         public void Initialize(ScoreboardRequest request)
@@ -43,7 +46,7 @@ namespace SlaamMono.Gameplay
         {
             if (Moving)
             {
-                Position.X += FrameTimeService.Instance.GetLatestFrame().MovementFactor * MovementSpeed;
+                Position.X += _frameTimeService.GetLatestFrame().MovementFactor * MovementSpeed;
                 if (Position.X >= 0)
                 {
                     Position.X = 0;
@@ -53,7 +56,7 @@ namespace SlaamMono.Gameplay
             }
             if (Character.CurrentPowerup != null && Character.CurrentPowerup.Active)
             {
-                Alpha += (AlphaUp ? 1 : -1) * FrameTimeService.Instance.GetLatestFrame().MovementFactor;
+                Alpha += (AlphaUp ? 1 : -1) * _frameTimeService.GetLatestFrame().MovementFactor;
 
                 if (AlphaUp && Alpha >= 255f)
                 {

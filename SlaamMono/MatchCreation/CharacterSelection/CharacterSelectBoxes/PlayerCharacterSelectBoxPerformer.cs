@@ -16,15 +16,18 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
         private readonly IInputService _inputService;
+        private readonly IFrameTimeService _frameTimeService;
 
         public PlayerCharacterSelectBoxPerformer(
             PlayerColorResolver playerColorResolver,
             IResources resources,
-            IInputService inputService)
+            IInputService inputService,
+            IFrameTimeService frameTimeService)
         {
             _playerColorResolver = playerColorResolver;
             _resources = resources;
             _inputService = inputService;
+            _frameTimeService = frameTimeService;
         }
 
         public void ResetState(PlayerCharacterSelectBoxState state)
@@ -115,11 +118,11 @@ namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes
                         {
                             if (state.MovementStatus == PlayerCharacterSelectBoxMovementStatus.Lowering)
                             {
-                                state.Offset -= FrameTimeService.Instance.GetLatestFrame().MovementFactor * state.ScrollSpeed;
+                                state.Offset -= _frameTimeService.GetLatestFrame().MovementFactor * state.ScrollSpeed;
                             }
                             else
                             {
-                                state.Offset += FrameTimeService.Instance.GetLatestFrame().MovementFactor * state.ScrollSpeed;
+                                state.Offset += _frameTimeService.GetLatestFrame().MovementFactor * state.ScrollSpeed;
                             }
 
                             state.Positions[1] = new Vector2(state.Positions[0].X + 75, state.Positions[0].Y + 125 - 30 + state.Offset - 70);

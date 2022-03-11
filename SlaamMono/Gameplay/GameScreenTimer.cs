@@ -17,10 +17,13 @@ namespace SlaamMono.Gameplay
         private GameScreenTimerState _state = new GameScreenTimerState();
 
         private readonly IResources _resources;
+        private readonly IFrameTimeService _frameTimeService;
 
-        public GameScreenTimer(IResources resources, Vector2 position, GameType gameType)
+        public GameScreenTimer(IResources resources, Vector2 position, GameType gameType,
+            IFrameTimeService frameTimeService)
         {
             _resources = resources;
+            _frameTimeService = frameTimeService;
             _state = InitializeState(position, gameType);
         }
 
@@ -40,11 +43,11 @@ namespace SlaamMono.Gameplay
 
         public void Update(GameScreenState gameScreenState) => updateState(gameScreenState, _state);
 
-        public static void updateState(GameScreenState gameScreenState, GameScreenTimerState state)
+        public void updateState(GameScreenState gameScreenState, GameScreenTimerState state)
         {
             if (state.Moving)
             {
-                state.Position.X -= FrameTimeService.Instance.GetLatestFrame().MovementFactor * state.MovementSpeed;
+                state.Position.X -= _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
                 if (state.Position.X <= 0)
                 {
                     state.Position.X = 0;
@@ -55,8 +58,8 @@ namespace SlaamMono.Gameplay
             {
                 if (state.TimeRemaining > TimeSpan.Zero || state.GameType == GameType.Spree || state.GameType == GameType.Classic || state.GameType == GameType.Survival)
                 {
-                    state.CurrentGameTime += FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan;
-                    state.TimeRemaining -= FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan;
+                    state.CurrentGameTime += _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
+                    state.TimeRemaining -= _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
                 }
 
                 if (state.TimeRemaining < TimeSpan.Zero)
@@ -66,12 +69,12 @@ namespace SlaamMono.Gameplay
 
                 if (state.GameType == GameType.TimedSpree)
                 {
-                    state.CurrentStep += FrameTimeService.Instance.GetLatestFrame().MovementFactor;
+                    state.CurrentStep += _frameTimeService.GetLatestFrame().MovementFactor;
 
                     if (state.CurrentStep >= state.StepSize)
                     {
                         state.CurrentStep -= state.StepSize;
-                        GameScreenFunctions.ShortenBoard(gameScreenState);
+                        GameScreenFunctions.ShortenBoard(gameScreenState, _frameTimeService);
                     }
 
                 }

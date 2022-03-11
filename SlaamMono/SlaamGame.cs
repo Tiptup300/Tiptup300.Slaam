@@ -67,12 +67,16 @@ namespace SlaamMono
         protected override void Initialize()
         {
             _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
+            gamebatch = new SpriteBatch(_graphicsState.Get().GraphicsDevice);
 
             _inputService.Initialize();
             _renderGraph.Initialize();
             _fpsRenderer.Initialize();
+
+            // Does the things necessary to run the zBlade
+
             SetupZuneBlade();
-            gamebatch = new SpriteBatch(_g.GraphicsDevice);
+
             _screenDirector.ChangeTo<ILogoScreen>();
         }
 

@@ -59,6 +59,9 @@ namespace SlaamMono.Composition
             _container.Register<InputService>(Lifestyle.Singleton);
             _container.Register<IInputService>(() => _container.GetInstance<InputService>(), Lifestyle.Singleton);
 
+            _container.Register<FrameTimeService>(Lifestyle.Singleton);
+            _container.Register<IFrameTimeService>(() => _container.GetInstance<FrameTimeService>(), Lifestyle.Singleton);
+
             _container.Register<FpsRenderer>(Lifestyle.Singleton);
         }
 

@@ -13,15 +13,18 @@ namespace SlaamMono.Gameplay.Powerups
     {
         private int PowerupIndex = 1;
         private CharacterActor ParentCharacter;
+        private readonly IFrameTimeService _frameTimeService;
         private TimeSpan CurrentTime;
 
         private const float Multiplyer = 1.5f;
         private readonly TimeSpan TimeLasting = new TimeSpan(0, 0, 10);
 
-        public SpeedUp(CharacterActor parent, IResources resources)
+        public SpeedUp(CharacterActor parent, IResources resources,
+            IFrameTimeService frameTimeService)
             : base(DialogStrings.SpeedUpName, new CachedTexture[] { resources.GetTexture("SpeedUp"), resources.GetTexture("SpeedUp0") }, PowerupUse.Evasion)
         {
             ParentCharacter = parent;
+            _frameTimeService = frameTimeService;
         }
 
         public override void BeginAttack(Vector2 charposition, Direction chardirection, GameScreenState gameScreenState)
@@ -33,7 +36,7 @@ namespace SlaamMono.Gameplay.Powerups
 
         public override void UpdateAttack(GameScreenState gameScreenState)
         {
-            CurrentTime -= FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan;
+            CurrentTime -= _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
 
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
 

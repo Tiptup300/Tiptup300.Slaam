@@ -31,20 +31,24 @@ namespace SlaamMono.Input
 
         private static readonly Rectangle _boxRectangle = new Rectangle(0, 0, 1280, 1024);
         private static readonly Color _boxColor = new Color(0, 0, 0, 200);
+        private static IFrameTimeService _frameTimeService;
 
         static Qwerty()
         {
             x_init(
                 x_Di.Get<IRenderService>(),
-                x_Di.Get<IResources>());
+                x_Di.Get<IResources>(),
+                x_Di.Get<IFrameTimeService>());
 
             InitKeys();
         }
 
-        private static void x_init(IRenderService renderGraphManager, IResources resources)
+        private static void x_init(IRenderService renderGraphManager, IResources resources,
+            IFrameTimeService frameTimeService)
         {
             _renderGraphManager = renderGraphManager;
             _resources = resources;
+            _frameTimeService = frameTimeService;
         }
 
         public static void InitKeys()
@@ -98,14 +102,14 @@ namespace SlaamMono.Input
         {
             if (Status == QwertyStatus.GoingUp)
             {
-                BoardPosition.Y -= FrameTimeService.Instance.GetLatestFrame().MovementFactor * MovementSpeed;
+                BoardPosition.Y -= _frameTimeService.GetLatestFrame().MovementFactor * MovementSpeed;
 
                 if (BoardPosition.Y <= TargetPosition.Y)
                     Status = QwertyStatus.Normal;
             }
             else if (Status == QwertyStatus.GoingDown)
             {
-                BoardPosition.Y += FrameTimeService.Instance.GetLatestFrame().MovementFactor * MovementSpeed;
+                BoardPosition.Y += _frameTimeService.GetLatestFrame().MovementFactor * MovementSpeed;
 
                 if (BoardPosition.Y >= 1024)
                     Active = false;

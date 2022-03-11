@@ -11,15 +11,18 @@ namespace SlaamMono.Gameplay.Powerups
     public class SpeedDown : Powerup
     {
         private int CharacterIndex;
+        private readonly IFrameTimeService _frameTimeService;
         private int PowerupIndex = 2;
         private const float Multiplier = .50f;
         private readonly TimeSpan TimeLasting = new TimeSpan(0, 0, 10);
         private TimeSpan CurrentTime;
 
-        public SpeedDown(int charindex, IResources resources)
+        public SpeedDown(int charindex, IResources resources,
+            IFrameTimeService frameTimeService)
             : base(DialogStrings.SpeedDoownName, new CachedTexture[] { resources.GetTexture("SpeedDown"), resources.GetTexture("SpeedDown0") }, PowerupUse.Strategy)
         {
             CharacterIndex = charindex;
+            _frameTimeService = frameTimeService;
         }
 
         public override void BeginAttack(Vector2 charposition, Direction chardirection, GameScreenState gameScreenState)
@@ -42,7 +45,7 @@ namespace SlaamMono.Gameplay.Powerups
                     gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
             }
 
-            CurrentTime -= FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan;
+            CurrentTime -= _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
 
             if (CurrentTime <= TimeSpan.Zero)
             {

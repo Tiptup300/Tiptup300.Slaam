@@ -50,8 +50,10 @@ namespace SlaamMono.Gameplay.Actors
 
 
         private readonly IResources _resources;
+        private readonly IFrameTimeService _frameTimeService;
 
-        public CharacterActor(Texture2D skin, int profileidx, Vector2 pos, InputDevice gamepad, Color markingcolor, int idx, IResources resources)
+        public CharacterActor(Texture2D skin, int profileidx, Vector2 pos, InputDevice gamepad, Color markingcolor, int idx, IResources resources,
+            IFrameTimeService frameTimeService)
         {
             WalkingAnimationChange.MakeUpTime = false;
             AttackingAnimationChange.MakeUpTime = false;
@@ -63,7 +65,7 @@ namespace SlaamMono.Gameplay.Actors
             MarkingColor = markingcolor;
             PlayerIndex = idx;
             _resources = resources;
-
+            _frameTimeService = frameTimeService;
             for (int x = 0; x < SpeedMultiplyer.Length; x++)
             {
                 SpeedMultiplyer[x] = 1f;
@@ -80,7 +82,7 @@ namespace SlaamMono.Gameplay.Actors
 
             if (Lives > 0)
             {
-                TimeAlive += FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan;
+                TimeAlive += _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
             }
 
             if (CurrentCoordinates.X >= GameGlobals.BOARD_WIDTH || CurrentCoordinates.Y >= GameGlobals.BOARD_HEIGHT || CurrentCoordinates.X < 0 || CurrentCoordinates.Y < 0)
@@ -103,14 +105,14 @@ namespace SlaamMono.Gameplay.Actors
 
             if (CurrentState == CharacterState.Normal)
             {
-                float Movement = FrameTimeService.Instance.GetLatestFrame().MovementFactor * SpeedOfMovement;
+                float Movement = _frameTimeService.GetLatestFrame().MovementFactor * SpeedOfMovement;
 
                 for (int x = 0; x < SpeedMultiplyer.Length; x++)
                 {
                     Movement *= SpeedMultiplyer[x];
                 }
 
-                WalkingAnimationChange.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                WalkingAnimationChange.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
 
                 if (Movement < 50f)
                 {
@@ -183,13 +185,13 @@ namespace SlaamMono.Gameplay.Actors
                 {
                     CurrentState = CharacterState.Attacking;
                     currAni = new IntRange(3, 3, 4);
-                    AttackingAnimationChange.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                    AttackingAnimationChange.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 }
 
             }
             else if (CurrentState == CharacterState.Attacking)
             {
-                AttackingAnimationChange.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                AttackingAnimationChange.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 if (AttackingAnimationChange.Active)
                 {
                     currAni.Add(1);
@@ -247,7 +249,7 @@ namespace SlaamMono.Gameplay.Actors
             {
                 currAni.Value = 3;
                 Row = 0;
-                FadeThrottle.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                FadeThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 if (FadeThrottle.Active)
                 {
                     Alpha -= 10.625f;
@@ -264,7 +266,7 @@ namespace SlaamMono.Gameplay.Actors
             }
             else if (CurrentState == CharacterState.Dead && Lives > 0)
             {
-                ReappearTime.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                ReappearTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 if (ReappearTime.Active)
                 {
                     CurrentState = CharacterState.Respawning;
@@ -363,15 +365,15 @@ namespace SlaamMono.Gameplay.Actors
             switch (currtile.CurrentPowerupType)
             {
                 case PowerupType.SpeedUp:
-                    CurrentPowerup = new SpeedUp(this, x_Di.Get<IResources>());
+                    CurrentPowerup = new SpeedUp(this, x_Di.Get<IResources>(), _frameTimeService);
                     break;
 
                 case PowerupType.SpeedDown:
-                    CurrentPowerup = new SpeedDown(PlayerIndex, x_Di.Get<IResources>());
+                    CurrentPowerup = new SpeedDown(PlayerIndex, x_Di.Get<IResources>(), _frameTimeService);
                     break;
 
                 case PowerupType.Inversion:
-                    CurrentPowerup = new Inversion(PlayerIndex, x_Di.Get<IResources>());
+                    CurrentPowerup = new Inversion(PlayerIndex, x_Di.Get<IResources>(), _frameTimeService);
                     break;
 
                 case PowerupType.Slaam:
@@ -418,7 +420,7 @@ namespace SlaamMono.Gameplay.Actors
                     )
                 {
                     CurrentState = CharacterState.Dieing;
-                    FadeThrottle.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                    FadeThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 }
         }
 
@@ -434,10 +436,10 @@ namespace SlaamMono.Gameplay.Actors
 
             Deaths++;
 
-            GameScreenFunctions.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex, gameScreenState);
+            GameScreenFunctions.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex, gameScreenState, _frameTimeService);
 
             CurrentState = CharacterState.Dead;
-            ReappearTime.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+            ReappearTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
         }
 
         /// <summary>

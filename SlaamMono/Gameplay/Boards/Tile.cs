@@ -23,14 +23,16 @@ namespace SlaamMono.Gameplay.Boards
 
         private readonly IResources _resources;
         private readonly IRenderService _renderGraph;
-
+        private readonly IFrameTimeService _frameTimeService;
         private readonly static TimeSpan FadeOutTime = new TimeSpan(0, 0, 0, 0, 25);
 
 
-        public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, IResources resources, IRenderService renderGraph)
+        public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, IResources resources, IRenderService renderGraph,
+            IFrameTimeService frameTimeService)
         {
             _resources = resources;
             _renderGraph = renderGraph;
+            _frameTimeService = frameTimeService;
             _state = IntializeState(Boardpos, TileLoc, tiletex, FadeOutTime);
         }
         public static TileState IntializeState(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, TimeSpan fadeOutTime)
@@ -48,7 +50,7 @@ namespace SlaamMono.Gameplay.Boards
 
 
         public void Update(GameScreenState gameScreenState) => updateState(gameScreenState, _state);
-        public static void updateState(GameScreenState gameScreenState, TileState tileState)
+        public void updateState(GameScreenState gameScreenState, TileState tileState)
         {
             if (tileState.CurrentTileCondition == TileCondition.RespawnPoint)
             {
@@ -62,7 +64,7 @@ namespace SlaamMono.Gameplay.Boards
                         }
                     }
                 }
-                tileState.FallSpeed.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                tileState.FallSpeed.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 if (tileState.FallSpeed.Active)
                 {
                     tileState.CurrentTileCondition = TileCondition.Normal;
@@ -70,7 +72,7 @@ namespace SlaamMono.Gameplay.Boards
             }
             if (tileState.CurrentTileCondition == TileCondition.Marked)
             {
-                tileState.FallSpeed.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                tileState.FallSpeed.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 if (tileState.FallSpeed.Active)
                 {
                     tileState.CurrentTileCondition = TileCondition.Clearing;
@@ -78,7 +80,7 @@ namespace SlaamMono.Gameplay.Boards
             }
             if (tileState.CurrentTileCondition == TileCondition.Clearing)
             {
-                tileState.FadeThrottle.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                tileState.FadeThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 if (tileState.FadeThrottle.Active)
                 {
                     tileState.Alpha -= 12.75f;
@@ -89,7 +91,7 @@ namespace SlaamMono.Gameplay.Boards
             }
             if (tileState.CurrentTileCondition == TileCondition.Clear && !tileState.Dead)
             {
-                tileState.ReappearSpeed.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                tileState.ReappearSpeed.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 if (tileState.ReappearSpeed.Active)
                 {
                     ResetTile(tileState);
@@ -98,7 +100,7 @@ namespace SlaamMono.Gameplay.Boards
             if (tileState.Alpha <= 0 && tileState.CurrentTileCondition == TileCondition.Clearing)
             {
                 tileState.CurrentTileCondition = TileCondition.Clear;
-                tileState.ReappearSpeed.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                tileState.ReappearSpeed.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             }
         }
 
@@ -146,13 +148,13 @@ namespace SlaamMono.Gameplay.Boards
         {
             markTileForRespawn(_state, markingcolor, Delay, idx);
         }
-        private static void markTileForRespawn(TileState tileState, Color markingcolor, TimeSpan Delay, int idx)
+        private void markTileForRespawn(TileState tileState, Color markingcolor, TimeSpan Delay, int idx)
         {
             tileState.MarkedIndex = idx;
             tileState.MarkedColor = markingcolor;
             tileState.CurrentTileCondition = TileCondition.RespawnPoint;
             tileState.FallSpeed.Threshold = Delay;
-            tileState.FallSpeed.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+            tileState.FallSpeed.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             tileState.TileColor = Color.White;
         }
 
@@ -171,7 +173,7 @@ namespace SlaamMono.Gameplay.Boards
         {
             markTile(_state, markingcolor, FallDelay, cominback, IDX);
         }
-        private static void markTile(TileState tileState, Color markingcolor, TimeSpan FallDelay, bool cominback, int IDX)
+        private void markTile(TileState tileState, Color markingcolor, TimeSpan FallDelay, bool cominback, int IDX)
         {
             if (tileState.CurrentTileCondition == TileCondition.Normal || tileState.CurrentTileCondition == TileCondition.RespawnPoint && cominback)
             {
@@ -180,7 +182,7 @@ namespace SlaamMono.Gameplay.Boards
                 tileState.TileOverlayColor = new Color(markingcolor.R, markingcolor.G, markingcolor.B, (byte)127);
                 tileState.CurrentTileCondition = TileCondition.Marked;
                 tileState.FallSpeed.Threshold = FallDelay;
-                tileState.FallSpeed.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                tileState.FallSpeed.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                 tileState.TileColor = Color.White;
                 tileState.Dead = cominback;
             }

@@ -10,15 +10,18 @@ namespace SlaamMono.x_
         private float _offset = 0f;
 
         private readonly CachedTexture _groundTexture;
+        private readonly IFrameTimeService _frameTimeService;
 
-        public BattleBackground(IResources resourceManager)
+        public BattleBackground(IResources resourceManager,
+            IFrameTimeService frameTimeService)
         {
             _groundTexture = resourceManager.GetTexture("BattleBG");
+            _frameTimeService = frameTimeService;
         }
 
         public void Update()
         {
-            _offset += (FrameTimeService.Instance.GetLatestFrame().MovementFactor * (10f / 100f)) % GameGlobals.DRAWING_GAME_HEIGHT;
+            _offset += (_frameTimeService.GetLatestFrame().MovementFactor * (10f / 100f)) % GameGlobals.DRAWING_GAME_HEIGHT;
         }
 
         public void Draw(SpriteBatch batch)

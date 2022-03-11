@@ -22,12 +22,15 @@ namespace SlaamMono.Menus
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
+        private readonly IFrameTimeService _frameTimeService;
 
-        public LogoScreenPerformer(IScreenManager screenDirector, IResources resources, IResolver<TextureRequest, CachedTexture> textureRequest)
+        public LogoScreenPerformer(IScreenManager screenDirector, IResources resources, IResolver<TextureRequest, CachedTexture> textureRequest,
+            IFrameTimeService frameTimeService)
         {
             _screenDirector = screenDirector;
             _resources = resources;
             _textureRequest = textureRequest;
+            _frameTimeService = frameTimeService;
         }
 
         public void InitializeState()
@@ -66,9 +69,9 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        private static IState fadeInState(LogoScreenState state)
+        private IState fadeInState(LogoScreenState state)
         {
-            state.StateTransition.AddProgress(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+            state.StateTransition.AddProgress(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             state.LogoColor = new Color(Color.White, MathHelper.SmoothStep(0f, 1f, state.StateTransition.Position));
             if (state.StateTransition.IsFinished)
             {
@@ -87,9 +90,9 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        private static IState holdState(LogoScreenState state)
+        private IState holdState(LogoScreenState state)
         {
-            state.StateTransition.AddProgress(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+            state.StateTransition.AddProgress(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             if (state.StateTransition.IsFinished)
             {
                 return initFadeOutState(state);
@@ -98,7 +101,7 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        private static IState initFadeOutState(LogoScreenState state)
+        private IState initFadeOutState(LogoScreenState state)
         {
             state.StateIndex = 3;
             state.StateTransition.Reset(TimeSpan.FromSeconds(_fadeOutSeconds));
@@ -106,9 +109,9 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        private static IState fadeOutState(LogoScreenState state)
+        private IState fadeOutState(LogoScreenState state)
         {
-            state.StateTransition.AddProgress(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+            state.StateTransition.AddProgress(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             state.LogoColor = new Color(Color.White, MathHelper.SmoothStep(1f, 0f, state.StateTransition.Position));
             if (state.StateTransition.IsFinished)
             {

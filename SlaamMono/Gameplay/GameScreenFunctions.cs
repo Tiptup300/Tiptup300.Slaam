@@ -20,7 +20,8 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public static void ShortenBoard(GameScreenState gameScreenState)
+        public static void ShortenBoard(GameScreenState gameScreenState,
+            IFrameTimeService _frameTimeService)
         {
             TimeSpan ShortenTime = new TimeSpan(0, 0, 0, 2);
             if (gameScreenState.BoardSize < 6)
@@ -33,7 +34,7 @@ namespace SlaamMono.Gameplay
             {
                 gameScreenState.CurrentGameStatus = GameStatus.Over;
                 gameScreenState.ReadySetGoPart = 3;
-                gameScreenState.ReadySetGoThrottle.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                gameScreenState.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             }
         }
         public static void RespawnCharacter(GameScreenState gameScreenState, int characterIndex)
@@ -73,17 +74,17 @@ namespace SlaamMono.Gameplay
         }
 
         // to remove
-        public static void ReportKilling(int Killer, int Killee, GameScreenState gameScreenState)
+        public static void ReportKilling(int Killer, int Killee, GameScreenState gameScreenState, IFrameTimeService frameTimeService)
         {
             if (gameScreenState.GameType == GameType.Survival)
             {
-                survival_ReportKilling(Killer, Killee, gameScreenState);
+                survival_ReportKilling(Killer, Killee, gameScreenState, frameTimeService);
             }
             else
             {
                 if (gameScreenState.Characters[Killee].Lives == 0 && gameScreenState.GameType == GameType.Classic)
                 {
-                    ShortenBoard(gameScreenState);
+                    ShortenBoard(gameScreenState, frameTimeService);
                 }
 
                 if (Killer != -2 && Killer < gameScreenState.Characters.Count)
@@ -108,7 +109,7 @@ namespace SlaamMono.Gameplay
                             }
                             else
                             {
-                                ShortenBoard(gameScreenState);
+                                ShortenBoard(gameScreenState, frameTimeService);
                                 int TimesShortened = 100 - gameScreenState.StepsRemaining;
                             }
                         }
@@ -116,14 +117,14 @@ namespace SlaamMono.Gameplay
                         if (gameScreenState.Characters[Killer].Kills == gameScreenState.KillsToWin)
                         {
                             gameScreenState.StepsRemaining = 1;
-                            ShortenBoard(gameScreenState);
+                            ShortenBoard(gameScreenState, frameTimeService);
                         }
                     }
                 }
             }
         }
 
-        public static void survival_ReportKilling(int Killer, int Killee, GameScreenState gameScreenState)
+        public static void survival_ReportKilling(int Killer, int Killee, GameScreenState gameScreenState, IFrameTimeService frameTimeService)
         {
             if (Killer == 0)
             {
@@ -134,7 +135,7 @@ namespace SlaamMono.Gameplay
             {
                 gameScreenState.CurrentGameStatus = GameStatus.Over;
                 gameScreenState.ReadySetGoPart = 3;
-                gameScreenState.ReadySetGoThrottle.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                gameScreenState.ReadySetGoThrottle.Update(frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             }
         }
     }

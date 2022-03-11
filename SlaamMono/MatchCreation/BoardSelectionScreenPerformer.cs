@@ -18,11 +18,14 @@ namespace SlaamMono.MatchCreation
 
         private readonly IResources _resources;
         private readonly IInputService _inputService;
+        private readonly IFrameTimeService _frameTimeService;
 
-        public BoardSelectionScreenPerformer(IResources resources, IInputService inputService)
+        public BoardSelectionScreenPerformer(IResources resources, IInputService inputService,
+            IFrameTimeService frameTimeService)
         {
             _resources = resources;
             _inputService = inputService;
+            _frameTimeService = frameTimeService;
         }
 
         public void Initialize(BoardSelectionScreenRequestState request)
@@ -50,7 +53,7 @@ namespace SlaamMono.MatchCreation
                 return _state;
             }
 
-            _state.Alpha += (_state.AlphaUp ? 1 : -1) * FrameTimeService.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+            _state.Alpha += (_state.AlphaUp ? 1 : -1) * _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
             if (_state.AlphaUp && _state.Alpha >= 255f)
             {
@@ -65,7 +68,7 @@ namespace SlaamMono.MatchCreation
 
             if (_state.WasChosen)
             {
-                _state.Scale += FrameTimeService.Instance.GetLatestFrame().MovementFactor * .01f;
+                _state.Scale += _frameTimeService.GetLatestFrame().MovementFactor * .01f;
 
                 if (_state.Scale >= 1.50f)
                 {
@@ -86,7 +89,7 @@ namespace SlaamMono.MatchCreation
             }
             else
             {
-                _state.Scale -= FrameTimeService.Instance.GetLatestFrame().MovementFactor * .01f;
+                _state.Scale -= _frameTimeService.GetLatestFrame().MovementFactor * .01f;
 
                 if (_state.Scale <= 1.00f)
                 {
@@ -113,7 +116,7 @@ namespace SlaamMono.MatchCreation
 
                 if (_state.Vertical == Direction.Down)
                 {
-                    _state.VerticalOffset -= FrameTimeService.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+                    _state.VerticalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
                     if (_state.VerticalOffset <= -_state.DrawSizeHeight)
                     {
@@ -124,7 +127,7 @@ namespace SlaamMono.MatchCreation
                 }
                 else if (_state.Vertical == Direction.Up)
                 {
-                    _state.VerticalOffset += FrameTimeService.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+                    _state.VerticalOffset += _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
                     if (_state.VerticalOffset >= _state.DrawSizeHeight)
                     {
@@ -136,7 +139,7 @@ namespace SlaamMono.MatchCreation
 
                 if (_state.Horizontal == Direction.Left)
                 {
-                    _state.HorizontalOffset += FrameTimeService.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+                    _state.HorizontalOffset += _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
                     if (_state.HorizontalOffset >= _state.DrawSizeWidth)
                     {
@@ -147,7 +150,7 @@ namespace SlaamMono.MatchCreation
                 }
                 else if (_state.Horizontal == Direction.Right)
                 {
-                    _state.HorizontalOffset -= FrameTimeService.Instance.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+                    _state.HorizontalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
 
                     if (_state.HorizontalOffset <= -_state.DrawSizeWidth)
                     {

@@ -15,6 +15,7 @@ namespace SlaamMono.Gameplay.Actors
     public class BotActor : CharacterActor
     {
         GameScreenPerformer ParentGameScreen;
+        private readonly IFrameTimeService _frameTimeService;
         InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
         Timer DiagonalMovementSwitch = new Timer(new TimeSpan(0, 0, 0, 0, 500));
         Timer LogicUpdateThreshold = new Timer(new TimeSpan(0, 0, 0, 0, 500));
@@ -29,11 +30,13 @@ namespace SlaamMono.Gameplay.Actors
         private readonly Vector2 NullVector2 = new Vector2(-2, -2);
         private BotTarget CurrentTarget;
         private bool SwitchMovements = false;
-        public BotActor(Texture2D skin, int profile, Vector2 pos, GameScreenPerformer parentgamescreen, Color markingcolor, int plyeridx, IResources resources) :
-            base(skin, profile, pos, null, markingcolor, plyeridx, resources)
+        public BotActor(Texture2D skin, int profile, Vector2 pos, GameScreenPerformer parentgamescreen, Color markingcolor, int plyeridx, IResources resources,
+            IFrameTimeService frameTimeService) :
+            base(skin, profile, pos, null, markingcolor, plyeridx, resources, frameTimeService)
         {
             Gamepad = AIInput;
             ParentGameScreen = parentgamescreen;
+            _frameTimeService = frameTimeService;
             IsBot = true;
 
             PlacesToGo.Add(new int[] { 0, 1 });
@@ -45,13 +48,13 @@ namespace SlaamMono.Gameplay.Actors
         {
             AIInput.PressedAction2 = false;
 
-            DiagonalMovementSwitch.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+            DiagonalMovementSwitch.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             if (DiagonalMovementSwitch.Active)
             {
                 SwitchMovements = rand.Next(0, 2) == 1;
             }
 
-            LogicUpdateThreshold.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+            LogicUpdateThreshold.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             if (LogicUpdateThreshold.Active)
             {
                 LogicUpdate(CurrentCoordinates, TilePos, gameScreenState);
@@ -203,7 +206,7 @@ namespace SlaamMono.Gameplay.Actors
                 if (!(characterActors[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
                     !(characterActors[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
                 {
-                    TargetTime.Update(FrameTimeService.Instance.GetLatestFrame().MovementFactorTimeSpan);
+                    TargetTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
                     if (TargetTime.Active)
                         TargetTime.Reset();
                     else

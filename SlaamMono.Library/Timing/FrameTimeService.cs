@@ -6,46 +6,41 @@ namespace SlaamMono.Library
 {
     public class FrameTimeService : IFrameTimeService
     {
-        public static FrameTimeService Instance { get; private set; }
+        private FrameTimeServiceState _state = new FrameTimeServiceState();
 
-        private Frame _latestFrame;
+        private readonly TimeSpan ONE_SECOND = TimeSpan.FromSeconds(1);
 
-        public Frame GetLatestFrame() => _latestFrame;
-
-        private int _framesDrawn;
-        private int _framesDrawnLast;
-        private int _framesUpdated;
-        private int _framesUpdatedLast;
-
-        private readonly TimeSpan _oneSecond = TimeSpan.FromSeconds(1);
-        private TimeSpan _currentTimer = TimeSpan.Zero;
+        public Frame GetLatestFrame()
+        {
+            return _state._latestFrame;
+        }
 
         public void Update(GameTime gameTime)
         {
-            _framesUpdated++;
-            _currentTimer += gameTime.ElapsedGameTime;
+            _state._framesUpdated++;
+            _state._currentTimer += gameTime.ElapsedGameTime;
 
-            if (_currentTimer >= _oneSecond)
+            if (_state._currentTimer >= ONE_SECOND)
             {
-                _currentTimer -= _oneSecond;
-                _framesUpdatedLast = _framesUpdated;
-                _framesDrawnLast = _framesDrawn;
+                _state._currentTimer -= ONE_SECOND;
+                _state._framesUpdatedLast = _state._framesUpdated;
+                _state._framesDrawnLast = _state._framesDrawn;
 
-                _framesDrawn = 0;
-                _framesUpdated = 0;
+                _state._framesDrawn = 0;
+                _state._framesUpdated = 0;
             }
 
-            _latestFrame = new Frame(
+            _state._latestFrame = new Frame(
                 dateTime: DateTime.UtcNow,
                 movementFactor: gameTime.ElapsedGameTime.Milliseconds,
-                fDPS: _framesDrawnLast,
-                fUPS: _framesUpdatedLast
+                fDPS: _state._framesDrawnLast,
+                fUPS: _state._framesUpdatedLast
             );
         }
 
         public void Draw(GameTime gameTime)
         {
-            _framesDrawn++;
+            _state._framesDrawn++;
         }
     }
 }

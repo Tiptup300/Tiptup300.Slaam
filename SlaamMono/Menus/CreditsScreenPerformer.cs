@@ -20,13 +20,16 @@ namespace SlaamMono.Menus
         private readonly IScreenManager _screenDirector;
         private readonly IResources _resources;
         private readonly IInputService _inputService;
+        private readonly IFrameTimeService _frameTimeService;
 
         public CreditsScreenPerformer(IScreenManager screenDirector, IResources resources,
-            IInputService inputService)
+            IInputService inputService,
+            IFrameTimeService frameTimeService)
         {
             _screenDirector = screenDirector;
             _resources = resources;
             _inputService = inputService;
+            _frameTimeService = frameTimeService;
         }
 
         public void InitializeState()
@@ -54,7 +57,7 @@ namespace SlaamMono.Menus
 
             if (_state.Active)
             {
-                _state.TextCoords = new Vector2(_state.TextCoords.X, _state.TextCoords.Y - MovementSpeed * FrameTimeService.Instance.GetLatestFrame().MovementFactor);
+                _state.TextCoords = new Vector2(_state.TextCoords.X, _state.TextCoords.Y - MovementSpeed * _frameTimeService.GetLatestFrame().MovementFactor);
             }
 
             if (_state.TextCoords.Y < -_state.TextHeight - 50)
