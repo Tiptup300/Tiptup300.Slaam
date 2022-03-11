@@ -54,6 +54,11 @@ namespace SlaamMono
             _graphics = new GraphicsDeviceManager(this);
             graphicsState.Set(_graphics);
             Content = new ContentManager(Services);
+            configureGame();
+        }
+
+        private void configureGame()
+        {
             this.IsFixedTimeStep = false;
         }
 
