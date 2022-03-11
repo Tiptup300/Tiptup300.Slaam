@@ -1,10 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using SlaamMono.Library;
+﻿using SlaamMono.Library;
 using SlaamMono.Library.Logging;
-using SlaamMono.Library.Rendering;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SlaamMono
 {
@@ -27,12 +23,21 @@ namespace SlaamMono
             configureGraphics();
             runGame();
         }
-
+        private void startLog()
+        {
+            _logger.Begin();
+            _logger.Log("=======================================");
+            _logger.Log("Slaam! - Logfile (for errors)");
+            _logger.Log(" Created by Tiptup300");
+            _logger.Log("=======================================");
+            _logger.Log("");
+            _logger.Log("Program executed;");
+            _logger.Log("XNA Starting...");
+        }
         private void configureGraphics()
         {
             _graphicsConfigurer.ConfigureGraphics();
         }
-
         private void runGame()
         {
             try
@@ -49,17 +54,6 @@ namespace SlaamMono
             }
         }
 
-        private void startLog()
-        {
-            _logger.Begin();
-            _logger.Log("=======================================");
-            _logger.Log("Slaam! - Logfile (for errors)");
-            _logger.Log(" Created by Tiptup300");
-            _logger.Log("=======================================");
-            _logger.Log("");
-            _logger.Log("Program executed;");
-            _logger.Log("XNA Starting...");
-        }
 
         private void logError(Exception e)
         {

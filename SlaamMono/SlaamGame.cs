@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Composition.x_;
 using SlaamMono.Input;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
@@ -21,6 +20,9 @@ namespace SlaamMono
     /// </summary>
     public class SlaamGame : Game, ISlaamGame
     {
+
+        public Game Game => this;
+
         private GraphicsDeviceManager _graphics;
         new public static ContentManager Content;
 
@@ -80,7 +82,7 @@ namespace SlaamMono
         {
             _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             _resources.LoadAll();
-            SlaamGame.mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
+            mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = InputComponent.Players[0];
             _renderGraph.LoadContent();
             _fpsRenderer.LoadContent();
@@ -144,7 +146,5 @@ namespace SlaamMono
 
             base.Draw(gameTime);
         }
-
-        public Game Game => this;
     }
 }
