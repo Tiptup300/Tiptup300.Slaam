@@ -21,7 +21,7 @@ namespace SlaamMono.PlayerProfiles
 
         private readonly IResolver<MainMenuRequest, IState> _menuStateResolver;
         private readonly IResources _resources;
-        private readonly IRenderService _renderGraph;
+        private readonly IRenderService _renderService;
         private readonly IInputService _inputService;
 
         public ProfileEditScreenPerformer(
@@ -32,14 +32,14 @@ namespace SlaamMono.PlayerProfiles
         {
             _menuStateResolver = menuStateResolver;
             _resources = resources;
-            _renderGraph = renderGraph;
+            _renderService = renderGraph;
             _inputService = inputService;
         }
 
         public void InitializeState()
         {
-            _state.MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), _resources, _renderGraph);
-            _state.SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), _resources, _renderGraph);
+            _state.MainMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), _resources, _renderService);
+            _state.SubMenu = new Graph(new Rectangle(100, 200, GameGlobals.DRAWING_GAME_WIDTH - 100, 624), 2, new Color(0, 0, 0, 150), _resources, _renderService);
             setupMainMenu();
             resetSubMenu();
             if (_state.SetupNewProfile)
@@ -184,13 +184,19 @@ namespace SlaamMono.PlayerProfiles
             return _state;
         }
 
-        public void RenderState(SpriteBatch batch)
+        public void RenderState()
         {
-
-            if (_state.CurrentMenu.Value == 0)
-                _state.MainMenu.Draw(batch);
-            else
-                _state.SubMenu.Draw(batch);
+            _renderService.Render(batch =>
+            {
+                if (_state.CurrentMenu.Value == 0)
+                {
+                    _state.MainMenu.Draw(batch);
+                }
+                else
+                {
+                    _state.SubMenu.Draw(batch);
+                }
+            });
         }
 
         public void Close()

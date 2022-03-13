@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
+using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Library.Screens;
 using SlaamMono.Subclasses;
@@ -18,13 +19,16 @@ namespace SlaamMono.Menus.ZibithLogo
 
         private readonly IResources _resources;
         private readonly IFrameTimeService _frameTimeService;
+        private readonly IRenderService _renderService;
 
         public ZibithLogoPerformer(
             IResources resources,
-            IFrameTimeService frameTimeService)
+            IFrameTimeService frameTimeService,
+            IRenderService renderService)
         {
             _resources = resources;
             _frameTimeService = frameTimeService;
+            _renderService = renderService;
         }
 
         public void InitializeState()
@@ -104,11 +108,14 @@ namespace SlaamMono.Menus.ZibithLogo
             return state;
         }
 
-        public void RenderState(SpriteBatch batch)
+        public void RenderState()
         {
-            ZibithLogoState _state = null;
-            batch.Draw(_state.BackgroundTexture.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-            batch.Draw(_state.LogoTexture.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), _state.LogoColor);
+            _renderService.Render(batch =>
+            {
+                ZibithLogoState _state = null;
+                batch.Draw(_state.BackgroundTexture.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
+                batch.Draw(_state.LogoTexture.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), _state.LogoColor);
+            });
         }
 
         public void Close()

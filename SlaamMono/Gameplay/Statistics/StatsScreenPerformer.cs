@@ -23,14 +23,14 @@ namespace SlaamMono.Gameplay.Statistics
 
         private readonly ILogger _logger;
         private readonly IResources _resources;
-        private readonly IRenderService _renderGraph;
+        private readonly IRenderService _renderService;
         private readonly IInputService _inputService;
 
         public StatsScreenPerformer(ILogger logger, IResources resources, IRenderService renderGraph, IInputService inputService)
         {
             _logger = logger;
             _resources = resources;
-            _renderGraph = renderGraph;
+            _renderService = renderGraph;
             _inputService = inputService;
         }
 
@@ -45,15 +45,15 @@ namespace SlaamMono.Gameplay.Statistics
             _state._statsButtons = setStatsButtons();
             if (_state.GameType == GameType.Classic)
             {
-                _state.PlayerStats = new NormalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph, _state);
+                _state.PlayerStats = new NormalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderService, _state);
             }
             else if (_state.GameType == GameType.Spree || _state.GameType == GameType.TimedSpree)
             {
-                _state.PlayerStats = new SpreeStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph, _state);
+                _state.PlayerStats = new SpreeStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderService, _state);
             }
             else if (_state.GameType == GameType.Survival)
             {
-                _state.PlayerStats = new SurvivalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderGraph, _state);
+                _state.PlayerStats = new SurvivalStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, MAX_HIGHSCORES, _logger, _resources, _renderService, _state);
             }
 
             _state.PlayerStats.CalculateStats();
@@ -62,11 +62,11 @@ namespace SlaamMono.Gameplay.Statistics
             if (_state.GameType != GameType.Survival)
             {
 
-                _state.Kills = new KillsStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph, _state);
+                _state.Kills = new KillsStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderService, _state);
                 _state.Kills.CalculateStats();
                 _state.Kills.ConstructGraph(0);
 
-                _state.PvP = new PvPStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderGraph, _state);
+                _state.PvP = new PvPStatsBoard(_state.ScoreCollection, _statsRectangle, _statsColor, _resources, _renderService, _state);
                 _state.PvP.CalculateStats();
                 _state.PvP.ConstructGraph(0);
 
@@ -167,28 +167,31 @@ namespace SlaamMono.Gameplay.Statistics
             return _state;
         }
 
-        public void RenderState(SpriteBatch batch)
+        public void RenderState()
         {
-            Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("StatsBoard").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("StatsBoard").Height / 2);
+            _renderService.Render(batch => 
+            {
+                Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("StatsBoard").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("StatsBoard").Height / 2);
 
-            for (int x = 0; x < 3; x++)
-            {
-                batch.Draw(_state._statsButtons[x].Texture, Statsboard, x == _state.CurrentPage.Value ? Color.LightSkyBlue : _state.GameType == GameType.Survival ? Color.DarkGray : Color.White);
-            }
-            batch.Draw(_resources.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
+                for (int x = 0; x < 3; x++)
+                {
+                    batch.Draw(_state._statsButtons[x].Texture, Statsboard, x == _state.CurrentPage.Value ? Color.LightSkyBlue : _state.GameType == GameType.Survival ? Color.DarkGray : Color.White);
+                }
+                batch.Draw(_resources.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
 
-            if (_state.CurrentPage.Value == 0)
-            {
-                _state.PlayerStats.MainBoard.Draw(batch);
-            }
-            else if (_state.CurrentPage.Value == 1)
-            {
-                _state.Kills.MainBoard.Draw(batch);
-            }
-            else
-            {
-                _state.PvP.MainBoard.Draw(batch);
-            }
+                if (_state.CurrentPage.Value == 0)
+                {
+                    _state.PlayerStats.MainBoard.Draw(batch);
+                }
+                else if (_state.CurrentPage.Value == 1)
+                {
+                    _state.Kills.MainBoard.Draw(batch);
+                }
+                else
+                {
+                    _state.PvP.MainBoard.Draw(batch);
+                }
+            });
         }
 
         public void Close()

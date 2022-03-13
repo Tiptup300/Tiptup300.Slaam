@@ -27,7 +27,7 @@ namespace SlaamMono.MatchCreation
         private readonly ILogger _logger;
         private readonly PlayerColorResolver _playerColorResolver;
         private readonly IResources _resources;
-        private readonly IRenderService _renderGraphManager;
+        private readonly IRenderService _renderService;
         private readonly IInputService _inputService;
 
         public LobbyScreenPerformer(
@@ -40,7 +40,7 @@ namespace SlaamMono.MatchCreation
             _logger = logger;
             _playerColorResolver = playerColorResolver;
             _resources = resources;
-            _renderGraphManager = renderGraphManager;
+            _renderService = renderGraphManager;
             _inputService = inputService;
         }
 
@@ -55,7 +55,7 @@ namespace SlaamMono.MatchCreation
             _state.ViewingSettings = false;
 
             _state.PlayerAmt = _state.SetupCharacters.Count;
-            _state.MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), _resources, _renderGraphManager);
+            _state.MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), _resources, _renderService);
             _state.MainMenu.Items.Columns.Add("SETTING");
             _state.MainMenu.Items.Columns.Add("SETTING");
             _state.MainMenu.Items.Add(true,
@@ -326,28 +326,32 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public void RenderState(SpriteBatch batch)
+        public void RenderState()
         {
-            if (_state.ViewingSettings)
+            _renderService.Render(batch =>
             {
-                _state.MainMenu.Draw(batch);
-            }
-            else
-            {
-                batch.Draw(_resources.GetTexture("LobbyUnderlay").Texture, Vector2.Zero, Color.White);
-                float YOffset = 75;
-
-                for (int x = 0; x < _state.SetupCharacters.Count; x++)
+                if (_state.ViewingSettings)
                 {
-                    batch.Draw(_resources.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
-                    batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), _state.SetupCharacters[x].PlayerColor);
-                    if (_state.SetupCharacters[x].PlayerType == PlayerType.Player)
-                        RenderService.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
-                    else
-                        RenderService.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
+                    _state.MainMenu.Draw(batch);
                 }
-                batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
-            }
+                else
+                {
+                    batch.Draw(_resources.GetTexture("LobbyUnderlay").Texture, Vector2.Zero, Color.White);
+                    float YOffset = 75;
+
+                    for (int x = 0; x < _state.SetupCharacters.Count; x++)
+                    {
+                        batch.Draw(_resources.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
+                        batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), _state.SetupCharacters[x].PlayerColor);
+                        if (_state.SetupCharacters[x].PlayerType == PlayerType.Player)
+                            RenderService.Instance.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+                        else
+                            RenderService.Instance.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
+                    }
+                    batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
+                }
+
+            });
         }
         public void Close()
         {

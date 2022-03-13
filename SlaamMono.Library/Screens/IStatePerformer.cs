@@ -9,6 +9,6 @@ namespace SlaamMono.Library.Screens
 
         IState Perform();
 
-        void RenderState(SpriteBatch batch);
+        void RenderState();
     }
 }

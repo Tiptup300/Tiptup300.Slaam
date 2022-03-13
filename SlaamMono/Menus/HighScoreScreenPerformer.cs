@@ -20,7 +20,7 @@ namespace SlaamMono.Menus
 
         private readonly ILogger _logger;
         private readonly IResources _resources;
-        private readonly IRenderService _renderGraph;
+        private readonly IRenderService _renderService;
         private readonly IInputService _inputService;
         private readonly IResolver<IRequest, IState> _stateResolver;
 
@@ -33,7 +33,7 @@ namespace SlaamMono.Menus
         {
             _logger = logger;
             _resources = resources;
-            _renderGraph = renderGraph;
+            _renderService = renderGraph;
             _inputService = inputService;
             _stateResolver = stateResolver;
         }
@@ -41,7 +41,7 @@ namespace SlaamMono.Menus
         public void InitializeState()
         {
             _state._statsboard = new SurvivalStatsBoard(
-                null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderGraph,
+                null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderService,
                 null // this will not cause problems, but it's still ugly.
                 );
 
@@ -58,9 +58,12 @@ namespace SlaamMono.Menus
             return _state;
         }
 
-        public void RenderState(SpriteBatch batch)
+        public void RenderState()
         {
-            _state._statsboard.MainBoard.Draw(batch);
+            _renderService.Render(batch =>
+            {
+                _state._statsboard.MainBoard.Draw(batch);
+            });
         }
 
         public void Close()

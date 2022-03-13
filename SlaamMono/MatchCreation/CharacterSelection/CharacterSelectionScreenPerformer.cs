@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Gameplay;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
+using SlaamMono.Library.Rendering;
 using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes;
 using SlaamMono.Menus;
@@ -35,16 +36,20 @@ namespace SlaamMono.MatchCreation
         private readonly PlayerCharacterSelectBoxPerformer _playerCharacterSelectBox;
         private readonly IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState> _selectBoxStateResolver;
         private readonly IInputService _inputService;
+        private readonly IRenderService _renderService;
 
         public CharacterSelectionScreenPerformer(
             ILogger logger,
             PlayerCharacterSelectBoxPerformer playerCharacterSelectBoxPerformer,
-            IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState> selectBoxStateResolver, IInputService inputService)
+            IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState> selectBoxStateResolver, 
+            IInputService inputService,
+            IRenderService renderService)
         {
             _logger = logger;
             _playerCharacterSelectBox = playerCharacterSelectBoxPerformer;
             _selectBoxStateResolver = selectBoxStateResolver;
             _inputService = inputService;
+            _renderService = renderService;
         }
 
         public void Initialize(CharacterSelectionScreenRequestState request)
@@ -192,15 +197,18 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public void RenderState(SpriteBatch batch)
+        public void RenderState()
         {
-            for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
+            _renderService.Render(batch =>
             {
-                if (_state.SelectBoxes[idx] != null)
+                for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
                 {
-                    _playerCharacterSelectBox.Draw(_state.SelectBoxes[idx], batch);
+                    if (_state.SelectBoxes[idx] != null)
+                    {
+                        _playerCharacterSelectBox.Draw(_state.SelectBoxes[idx], batch);
+                    }
                 }
-            }
+            });
         }
 
         public void Close()

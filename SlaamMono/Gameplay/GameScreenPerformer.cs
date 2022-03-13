@@ -33,6 +33,7 @@ namespace SlaamMono.Gameplay
         private readonly ILogger _logger;
         private readonly IInputService _inputService;
         private readonly IFrameTimeService _frameTimeService;
+        private readonly IRenderService _renderService;
 
         public GameScreenPerformer(
             IResources resources,
@@ -40,7 +41,8 @@ namespace SlaamMono.Gameplay
             IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver,
             ILogger logger,
             IInputService inputService,
-            IFrameTimeService frameTimeService)
+            IFrameTimeService frameTimeService,
+            IRenderService renderService)
         {
             _resources = resources;
             _graphics = graphicsState;
@@ -48,6 +50,7 @@ namespace SlaamMono.Gameplay
             _logger = logger;
             _inputService = inputService;
             _frameTimeService = frameTimeService;
+            _renderService = renderService;
         }
 
         public void Initialize(GameScreenRequestState gameScreenRequest)
@@ -416,54 +419,57 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public void RenderState(SpriteBatch batch)
+        public void RenderState()
         {
-            if (_state.IsPaused)
+            _renderService.Render(batch =>
             {
-                return;
-            }
-            for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
-            {
-                for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
+                if (_state.IsPaused)
                 {
-                    _state.Tiles[x, y].Draw(batch);
+                    return;
                 }
-            }
-
-            float PlayersDrawn = 0, CurrY = 0;
-
-            int CurrPlayer = -1;
-
-            while (PlayersDrawn < _state.Characters.Count - _state.NullChars)
-            {
-                CurrY = 1280;
-                CurrPlayer = -1;
-                for (int x = 0; x < _state.Characters.Count; x++)
+                for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
                 {
-                    if (_state.Characters[x] != null && !_state.Characters[x].Drawn && _state.Characters[x].Position.Y <= CurrY)
+                    for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                     {
-                        CurrY = _state.Characters[x].Position.Y;
-                        CurrPlayer = x;
+                        _state.Tiles[x, y].Draw(batch);
                     }
                 }
-                _state.Characters[CurrPlayer].Drawn = true;
-                _state.Characters[CurrPlayer].Draw(batch);
-                PlayersDrawn++;
-            }
 
-            resetCharactersDrawnStatus();
+                float PlayersDrawn = 0, CurrY = 0;
 
-            for (int x = 0; x < _state.Characters.Count; x++)
-            {
-                if (_state.Characters[x] != null)
+                int CurrPlayer = -1;
+
+                while (PlayersDrawn < _state.Characters.Count - _state.NullChars)
                 {
-                    _state.Characters[x].Drawn = false;
+                    CurrY = 1280;
+                    CurrPlayer = -1;
+                    for (int x = 0; x < _state.Characters.Count; x++)
+                    {
+                        if (_state.Characters[x] != null && !_state.Characters[x].Drawn && _state.Characters[x].Position.Y <= CurrY)
+                        {
+                            CurrY = _state.Characters[x].Position.Y;
+                            CurrPlayer = x;
+                        }
+                    }
+                    _state.Characters[CurrPlayer].Drawn = true;
+                    _state.Characters[CurrPlayer].Draw(batch);
+                    PlayersDrawn++;
                 }
-            }
-            if (_state.CurrentGameStatus == GameStatus.Waiting || _state.CurrentGameStatus == GameStatus.Over)
-            {
-                batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)_state.Rand.NextDouble() * (1 + _state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)_state.Rand.NextDouble() * (1 + _state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, _state.ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
-            }
+
+                resetCharactersDrawnStatus();
+
+                for (int x = 0; x < _state.Characters.Count; x++)
+                {
+                    if (_state.Characters[x] != null)
+                    {
+                        _state.Characters[x].Drawn = false;
+                    }
+                }
+                if (_state.CurrentGameStatus == GameStatus.Waiting || _state.CurrentGameStatus == GameStatus.Over)
+                {
+                    batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)_state.Rand.NextDouble() * (1 + _state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)_state.Rand.NextDouble() * (1 + _state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, _state.ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
+                }
+            });           
         }
         private void resetCharactersDrawnStatus()
         {

@@ -16,7 +16,7 @@ namespace SlaamMono.Menus
         public FirstTimeScreenState _state = new FirstTimeScreenState();
 
         private readonly IResources _resources;
-        private readonly IRenderService _renderGraphManager;
+        private readonly IRenderService _renderService;
         private readonly IInputService _inputService;
 
         public FirstTimeScreenPerformer(
@@ -25,7 +25,7 @@ namespace SlaamMono.Menus
             IInputService inputService)
         {
             _resources = resources;
-            _renderGraphManager = renderGraphManager;
+            _renderService = renderGraphManager;
             _inputService = inputService;
         }
 
@@ -42,7 +42,7 @@ namespace SlaamMono.Menus
                 new Rectangle(50, 350, GameGlobals.DRAWING_GAME_WIDTH - 100, 500), 2,
                 new Color(0, 0, 0, 150),
                 _resources,
-                _renderGraphManager);
+                _renderService);
 
             output.Items.Columns.Add("");
             output.Items.Columns.Add("Gamepad");
@@ -69,10 +69,13 @@ namespace SlaamMono.Menus
             return _state;
         }
 
-        public void RenderState(SpriteBatch batch)
+        public void RenderState()
         {
-            batch.Draw(_resources.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
-            _state.ControlsGraph.Draw(batch);
+            _renderService.Render(batch =>
+            {
+                batch.Draw(_resources.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
+                _state.ControlsGraph.Draw(batch);
+            });
         }
 
         public void Close()

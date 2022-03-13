@@ -66,7 +66,7 @@ namespace SlaamMono.Menus
                 return _state;
             }
         }
-        public void RenderState(SpriteBatch batch) { }
+        public void RenderState() { }
 
         public void Close()
         {
