@@ -16,8 +16,6 @@ namespace SlaamMono.Menus.ZibithLogo
         private const float _holdSeconds = 3f;
         private const float _fadeOutSeconds = 0.5f;
 
-        private ZibithLogoState _state;
-
         private readonly IResources _resources;
         private readonly IFrameTimeService _frameTimeService;
 
@@ -36,6 +34,7 @@ namespace SlaamMono.Menus.ZibithLogo
 
         public IState Perform()
         {
+            ZibithLogoState _state = null; //TODO
             switch (_state.StateIndex)
             {
                 default: return initFadeInState(_state);
@@ -107,12 +106,14 @@ namespace SlaamMono.Menus.ZibithLogo
 
         public void RenderState(SpriteBatch batch)
         {
+            ZibithLogoState _state = null;
             batch.Draw(_state.BackgroundTexture.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
             batch.Draw(_state.LogoTexture.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), _state.LogoColor);
         }
 
         public void Close()
         {
+            ZibithLogoState _state = null;
             unloadTexturesFromState(_state);
         }
 

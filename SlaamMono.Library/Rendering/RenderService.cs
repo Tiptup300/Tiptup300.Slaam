@@ -94,5 +94,9 @@ namespace SlaamMono.Library.Rendering
         public void LoadContent() { }
         public void UnloadContent() { }
 
+        public void Render(Action<SpriteBatch> batch)
+        {
+            batch.Invoke(_batch);
+        }
     }
 }

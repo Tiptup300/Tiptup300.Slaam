@@ -14,10 +14,11 @@ namespace SlaamMono.Menus
     public class MainMenuScreenPerformer : IMainMenuScreen, IStatePerformer
     {
         private MainMenuScreenState _state;
+        private readonly IResolver<IRequest, IState> _stateResolver;
 
-        public MainMenuScreenPerformer(IResolver<)
+        public MainMenuScreenPerformer(IResolver<IRequest, IState> stateResolver)
         {
-
+            _stateResolver = stateResolver;
         }
 
         public void InitializeState()
@@ -46,7 +47,7 @@ namespace SlaamMono.Menus
             });
         }
 
-        private void selectedCredits(object sender, EventArgs e) => _state.NextState = new CreditsRequest();
+        private void selectedCredits(object sender, EventArgs e) => _state.NextState = _stateResolver.Resolve(new CreditsRequest());
         private void selectedHighscores(object sender, EventArgs e) => _state.NextState = new HighScoreScreenRequestState();
         private void selectedManageProfiles(object sender, EventArgs e) => _state.NextState = new ProfileEditScreenRequestState();
         private void selectedSurvival(object sender, EventArgs e) => _state.NextState = new CharacterSelectionScreenState() { isForSurvival = true };

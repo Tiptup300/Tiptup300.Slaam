@@ -14,6 +14,11 @@
     <DefineConstants>TRACE;ZUNE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Survival\**" />
+    <EmbeddedResource Remove="Survival\**" />
+    <None Remove="Survival\**" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
     <EmbeddedResource Include="Icon.bmp" />
   </ItemGroup>
@@ -188,8 +193,5 @@
     <None Update="Content\Textures.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Survival\" />
   </ItemGroup>
 </Project>
