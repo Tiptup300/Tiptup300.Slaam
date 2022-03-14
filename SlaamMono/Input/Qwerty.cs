@@ -180,39 +180,50 @@ namespace SlaamMono.Input
             }
         }
 
-        public static void Draw(SpriteBatch batch)
+        public static void Draw()
         {
             _renderGraphManager.RenderBox(_boxRectangle, _boxColor);
-            batch.Draw(_resources.GetTexture("KeyboardBG").Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);
-            for (int y = 0; y < 4; y++)
+            _renderGraphManager.Render(batch =>
             {
-                for (int x = 0; x < 10; x++)
+                batch.Draw(_resources.GetTexture("KeyboardBG").Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);
+                for (int y = 0; y < 4; y++)
                 {
-                    if (Keys[x, y].Type != QwertyKeyType.Space && Keys[x, y].Type != QwertyKeyType.Blank)
-                        batch.Draw(_resources.GetTexture("Key").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
-                    else if (Keys[x, y].Type == QwertyKeyType.Space)
-                        batch.Draw(_resources.GetTexture("Spacebar").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
+                    for (int x = 0; x < 10; x++)
+                    {
+                        if (Keys[x, y].Type != QwertyKeyType.Space && Keys[x, y].Type != QwertyKeyType.Blank)
+                            batch.Draw(_resources.GetTexture("Key").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
+                        else if (Keys[x, y].Type == QwertyKeyType.Space)
+                            batch.Draw(_resources.GetTexture("Spacebar").Texture, new Vector2(BoardPosition.X + x * 54, BoardPosition.Y + y * 54), Color.White);
+                    }
                 }
-            }
 
-            batch.Draw(_resources.GetTexture("Textbox").Texture, new Vector2(BoardPosition.X + 91.5f, BoardPosition.Y - 60f), Color.White);
+                batch.Draw(_resources.GetTexture("Textbox").Texture, new Vector2(BoardPosition.X + 91.5f, BoardPosition.Y - 60f), Color.White);
 
-            for (int y = 0; y < 4; y++)
-            {
-                for (int x = 0; x < 10; x++)
+                for (int y = 0; y < 4; y++)
                 {
-                    if (Keys[x, y].Type == QwertyKeyType.Normal)
-                        RenderService.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopCenter, true);
-                    else
-                        RenderService.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), _resources.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, false);
+                    for (int x = 0; x < 10; x++)
+                    {
+                        if (Keys[x, y].Type == QwertyKeyType.Normal)
+                        {
+                            RenderService.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 35 + (y * 54)), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopCenter, true);
+                        }
+                        else
+                        {
+                            RenderService.Instance.RenderText(Keys[x, y].Chars, new Vector2(BoardPosition.X + 27 + (x * 54), BoardPosition.Y + 40 + (y * 54)), _resources.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, false);
+                        }
+                    }
                 }
-            }
-            RenderService.Instance.RenderText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+                RenderService.Instance.RenderText(EditingString, new Vector2(BoardPosition.X + 131.5f, BoardPosition.Y - 32f), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
 
-            if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != QwertyKeyType.Space)
-                batch.Draw(_resources.GetTexture("KeyHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
-            else
-                batch.Draw(_resources.GetTexture("SpaceHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
+                if (Keys[(int)SelectedPosition.X, (int)SelectedPosition.Y].Type != QwertyKeyType.Space)
+                {
+                    batch.Draw(_resources.GetTexture("KeyHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
+                }
+                else
+                {
+                    batch.Draw(_resources.GetTexture("SpaceHT").Texture, new Vector2(BoardPosition.X + SelectedPosition.X * 54, BoardPosition.Y + SelectedPosition.Y * 54), Color.White);
+                }
+            });
         }
 
         /// <summary>

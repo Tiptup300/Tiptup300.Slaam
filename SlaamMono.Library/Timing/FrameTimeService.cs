@@ -15,7 +15,7 @@ namespace SlaamMono.Library
             return _state._latestFrame;
         }
 
-        public void Update(GameTime gameTime)
+        public void AddUpdate(GameTime gameTime)
         {
             _state._framesUpdated++;
             _state._currentTimer += gameTime.ElapsedGameTime;
@@ -38,7 +38,7 @@ namespace SlaamMono.Library
             );
         }
 
-        public void Draw(GameTime gameTime)
+        public void AddDraw(GameTime gameTime)
         {
             _state._framesDrawn++;
         }

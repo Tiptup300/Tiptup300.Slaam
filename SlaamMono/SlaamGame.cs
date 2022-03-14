@@ -27,8 +27,6 @@ namespace SlaamMono
 
         private IState _state = new SlaamGameState();
 
-        private SpriteBatch gamebatch;
-
         private readonly ILogger _logger;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphicsState;
@@ -69,7 +67,6 @@ namespace SlaamMono
         protected override void Initialize()
         {
             _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
-            gamebatch = new SpriteBatch(_graphicsState.Get().GraphicsDevice);
 
             _inputService.Initialize();
             _renderGraph.Initialize();
@@ -108,7 +105,7 @@ namespace SlaamMono
         }
         protected override void Update(GameTime gameTime)
         {
-            _frameTimeService.Update(gameTime);
+            _frameTimeService.AddUpdate(gameTime);
             _inputService.Update();
             if (ProfileManager.Initialized == false)
             {
@@ -132,20 +129,18 @@ namespace SlaamMono
         }
         protected override void Draw(GameTime gameTime)
         {
+            _frameTimeService.AddDraw(gameTime);
+
             GraphicsDevice.Clear(Color.Black);
 
-            _frameTimeService.Draw(gameTime);
-            gamebatch.Begin(blendState: BlendState.NonPremultiplied);
 
             // draw the state using the state renderer.
             //_screenDirector.Draw(gamebatch);
 
             if (Qwerty.Active)
             {
-                Qwerty.Draw(gamebatch);
+                Qwerty.Draw();
             }
-
-            gamebatch.End();
             _renderGraph.Draw();
             _fpsRenderer.Draw();
         }
