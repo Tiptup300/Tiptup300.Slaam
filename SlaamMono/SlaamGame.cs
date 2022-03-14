@@ -30,7 +30,7 @@ namespace SlaamMono
         private readonly ILogger _logger;
         private readonly IResources _resources;
         private readonly IGraphicsState _graphicsState;
-        private readonly RenderService _renderGraph;
+        private readonly RenderService _renderService;
         private readonly FpsRenderer _fpsRenderer;
         private readonly FrameTimeService _frameTimeService;
         private readonly InputService _inputService;
@@ -40,7 +40,7 @@ namespace SlaamMono
             ILogger logger,
             IResources resources,
             IGraphicsState graphicsState,
-            RenderService renderGraph,
+            RenderService renderService,
             FpsRenderer fpsRenderer,
             FrameTimeService frameTimeService,
             InputService inputService,
@@ -49,7 +49,7 @@ namespace SlaamMono
             _logger = logger;
             _resources = resources;
             _graphicsState = graphicsState;
-            _renderGraph = renderGraph;
+            _renderService = renderService;
             _fpsRenderer = fpsRenderer;
             _frameTimeService = frameTimeService;
             _inputService = inputService;
@@ -69,7 +69,7 @@ namespace SlaamMono
             _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
 
             _inputService.Initialize();
-            _renderGraph.Initialize();
+            _renderService.Initialize();
             _fpsRenderer.Initialize();
 
             // Does the things necessary to run the zBlade
@@ -85,7 +85,7 @@ namespace SlaamMono
             _resources.LoadAll();
             mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = _inputService.GetPlayers()[0];
-            _renderGraph.LoadContent();
+            _renderService.LoadContent();
             _fpsRenderer.LoadContent();
         }
 
@@ -113,7 +113,7 @@ namespace SlaamMono
             }
             else
             {
-                _renderGraph.Update();
+                _renderService.Update();
                 _fpsRenderer.Update();
 
                 if (Qwerty.Active)
@@ -141,7 +141,7 @@ namespace SlaamMono
             {
                 Qwerty.Draw();
             }
-            _renderGraph.Draw();
+            _renderService.Draw();
             _fpsRenderer.Draw();
         }
     }

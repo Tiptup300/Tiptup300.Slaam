@@ -17,7 +17,7 @@ namespace SlaamMono.Library.Graphing
         private int _gap;
 
         private readonly IResources _resourceManager;
-        private readonly IRenderService _renderGraphManager;
+        private readonly IRenderService _renderService;
 
         public Graph(Rectangle graphrect, int gap, Color coltodraw, IResources resourceManager, IRenderService renderGraphManager)
         {
@@ -25,7 +25,7 @@ namespace SlaamMono.Library.Graphing
             _gap = gap;
             _colorToDraw = coltodraw;
             _resourceManager = resourceManager;
-            _renderGraphManager = renderGraphManager;
+            _renderService = renderGraphManager;
         }
 
         public void CalculateBlocks()
@@ -47,7 +47,7 @@ namespace SlaamMono.Library.Graphing
 
                 if (Items.Columns[x].Trim() != "")
                 {
-                    _drawings.Add(new GraphDrawingBlock(NewBlock, _colorToDraw, _renderGraphManager));
+                    _drawings.Add(new GraphDrawingBlock(NewBlock, _colorToDraw, _renderService));
 
                     _stringsToWrite.Add(new GraphWritingString(Items.Columns[x],
                         new Vector2(NewBlock.X + NewBlock.Width / 2, NewBlock.Y + NewBlock.Height / 2)));
@@ -64,9 +64,9 @@ namespace SlaamMono.Library.Graphing
                         {
                             Rectangle NewBlock = new Rectangle(_graphRectangle.X + XOffset * y, _graphRectangle.Y + YOffset * (1 + x), ColumnWidth, RowHeight);
                             if (Items[x].Highlight)
-                                _drawings.Add(new GraphDrawingBlock(NewBlock, new Color((byte)135, (byte)206, (byte)250, _colorToDraw.A), _renderGraphManager));
+                                _drawings.Add(new GraphDrawingBlock(NewBlock, new Color((byte)135, (byte)206, (byte)250, _colorToDraw.A), _renderService));
                             else
-                                _drawings.Add(new GraphDrawingBlock(NewBlock, _colorToDraw, _renderGraphManager));
+                                _drawings.Add(new GraphDrawingBlock(NewBlock, _colorToDraw, _renderService));
 
                             _stringsToWrite.Add(new GraphWritingString(Items[x].Details[y],
                                 new Vector2(NewBlock.X + NewBlock.Width / 2, NewBlock.Y + NewBlock.Height / 2)));
@@ -89,7 +89,7 @@ namespace SlaamMono.Library.Graphing
             _drawings.Draw(batch);
             for (int x = 0; x < _stringsToWrite.Count; x++)
             {
-                RenderService.Instance.RenderText(_stringsToWrite[x].Str, _stringsToWrite[x].Pos, _resourceManager.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, true);
+                _renderService.RenderText(_stringsToWrite[x].Str, _stringsToWrite[x].Pos, _resourceManager.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, true);
             }
         }
     }
