@@ -114,18 +114,10 @@ namespace SlaamMono.Menus.ZibithLogo
             });
         }
 
-        public void Close()
+        public void unloadTexturesFromState()
         {
-            ZibithLogoState _state = null;
-            unloadTexturesFromState(_state);
-        }
-
-        public static IState unloadTexturesFromState(ZibithLogoState state)
-        {
-            state.BackgroundTexture.Unload();
-            state.LogoTexture.Unload();
-
-            return state;
+            //state.BackgroundTexture.Unload();
+            //state.LogoTexture.Unload();
         }
     }
 }
