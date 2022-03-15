@@ -182,7 +182,7 @@ namespace SlaamMono.Input
 
         public static void Draw()
         {
-            _renderService.RenderBox(_boxRectangle, _boxColor);
+            _renderService.RenderRectangle(_boxRectangle, _boxColor);
             _renderService.Render(batch =>
             {
                 batch.Draw(_resources.GetTexture("KeyboardBG").Texture, new Vector2(BoardPosition.X - 10, BoardPosition.Y - 10), Color.White);

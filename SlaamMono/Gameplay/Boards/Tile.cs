@@ -137,7 +137,7 @@ namespace SlaamMono.Gameplay.Boards
         {
             if (tileState.CurrentTileCondition != TileCondition.Clear)
             {
-                _renderGraph.RenderBox(
+                _renderGraph.RenderRectangle(
                     destinationRectangle: new Rectangle((int)tileState.AbsTileloc.X + 10, (int)tileState.AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE),
                     color: new Color(0, 0, 0, 50));
             }

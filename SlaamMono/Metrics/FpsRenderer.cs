@@ -63,7 +63,7 @@ namespace SlaamMono.Metrics
         {
             if (_gameConfig.ShowFPS)
             {
-                _renderGraph.RenderBox(
+                _renderGraph.RenderRectangle(
                     destinationRectangle: _boxDestination,
                     color: _backBoxColor);
 

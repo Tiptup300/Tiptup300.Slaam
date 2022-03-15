@@ -5,7 +5,6 @@ using SlaamMono.Library;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using System;
-using ZzziveGameEngine;
 
 namespace SlaamMono.Gameplay
 {
@@ -86,7 +85,7 @@ namespace SlaamMono.Gameplay
                 RenderService.Instance.RenderText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), _resources.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, true);
             }
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
-            RenderService.Instance.RenderBox(
+            RenderService.Instance.RenderRectangle(
                 destinationRectangle: new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33),
                 color: Character.MarkingColor);
             if (Character.CurrentPowerup != null && !Character.CurrentPowerup.Used)
