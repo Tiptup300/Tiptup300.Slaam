@@ -56,7 +56,7 @@ namespace SlaamMono
             _gameStartRequestResolver = gameStartRequestResolver;
 
             Content = new ContentManager(Services);
-            configureGame();
+            _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
         }
 
         private void configureGame()
@@ -66,7 +66,7 @@ namespace SlaamMono
 
         protected override void Initialize()
         {
-            _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
+            configureGame();
 
             _inputService.Initialize();
             _renderService.Initialize();
