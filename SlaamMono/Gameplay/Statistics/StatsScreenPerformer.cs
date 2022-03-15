@@ -128,32 +128,32 @@ namespace SlaamMono.Gameplay.Statistics
             return output;
         }
 
-        public IState Perform()
+        public IState Perform(StatsScreenState state)
         {
-            if (_state.GameType != GameType.Survival)
+            if (state.GameType != GameType.Survival)
             {
 
                 if (_inputService.GetPlayers()[0].PressedLeft)
                 {
-                    _state.CurrentPage.Sub(1);
+                    state.CurrentPage.Sub(1);
                 }
 
                 if (_inputService.GetPlayers()[0].PressedRight)
                 {
-                    _state.CurrentPage.Add(1);
+                    state.CurrentPage.Add(1);
                 }
 
-                if (_state.CurrentPage.Value == 2)
+                if (state.CurrentPage.Value == 2)
                 {
                     if (_inputService.GetPlayers()[0].PressedUp)
                     {
-                        _state.CurrentChar.Sub(1);
-                        _state.PvP.ConstructGraph(_state.CurrentChar.Value);
+                        state.CurrentChar.Sub(1);
+                        state.PvP.ConstructGraph(state.CurrentChar.Value);
                     }
                     else if (_inputService.GetPlayers()[0].PressedDown)
                     {
-                        _state.CurrentChar.Add(1);
-                        _state.PvP.ConstructGraph(_state.CurrentChar.Value);
+                        state.CurrentChar.Add(1);
+                        state.PvP.ConstructGraph(state.CurrentChar.Value);
                     }
                 }
 
@@ -164,7 +164,7 @@ namespace SlaamMono.Gameplay.Statistics
                 new MainMenuScreenState();
                 //_screenDirector.ChangeTo<IMainMenuScreen>();
             }
-            return _state;
+            return state;
         }
 
         public void RenderState()

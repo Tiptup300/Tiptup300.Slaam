@@ -71,18 +71,18 @@ namespace SlaamMono.PlayerProfiles
             _state.SubMenu.CalculateBlocks();
         }
 
-        public IState Perform()
+        public IState Perform(ProfileEditScreenState state)
         {
-            if (_state.CurrentMenu.Value == 0)
+            if (state.CurrentMenu.Value == 0)
             {
-                if (_state.WaitingForQwerty)
+                if (state.WaitingForQwerty)
                 {
                     if (Qwerty.EditingString.Trim() != "")
                     {
                         ProfileManager.AddNewProfile(new PlayerProfile(Qwerty.EditingString, false));
 
                     }
-                    _state.WaitingForQwerty = false;
+                    state.WaitingForQwerty = false;
                     Qwerty.EditingString = "";
                     setupMainMenu();
                 }
@@ -90,27 +90,27 @@ namespace SlaamMono.PlayerProfiles
                 {
                     if (_inputService.GetPlayers()[0].PressedUp)
                     {
-                        _state.CurrentMenuChoice.Sub(1);
-                        _state.MainMenu.SetHighlight(_state.CurrentMenuChoice.Value);
+                        state.CurrentMenuChoice.Sub(1);
+                        state.MainMenu.SetHighlight(state.CurrentMenuChoice.Value);
                     }
                     else if (_inputService.GetPlayers()[0].PressedDown)
                     {
-                        _state.CurrentMenuChoice.Add(1);
-                        _state.MainMenu.SetHighlight(_state.CurrentMenuChoice.Value);
+                        state.CurrentMenuChoice.Add(1);
+                        state.MainMenu.SetHighlight(state.CurrentMenuChoice.Value);
                     }
                     if (_inputService.GetPlayers()[0].PressedAction)
                     {
-                        if (_state.MainMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "new")
+                        if (state.MainMenu.Items[state.CurrentMenuChoice.Value].Details[1] == "new")
                         {
                             Qwerty.DisplayBoard("");
-                            _state.WaitingForQwerty = true;
+                            state.WaitingForQwerty = true;
                         }
                         else
                         {
-                            _state.EditingProfile = int.Parse(_state.MainMenu.Items[_state.CurrentMenuChoice.Value].Details[1]);
-                            _state.CurrentMenu.Value = 1;
-                            _state.CurrentMenuChoice = new IntRange(0, 0, 2);
-                            _state.SubMenu.SetHighlight(0);
+                            state.EditingProfile = int.Parse(state.MainMenu.Items[state.CurrentMenuChoice.Value].Details[1]);
+                            state.CurrentMenu.Value = 1;
+                            state.CurrentMenuChoice = new IntRange(0, 0, 2);
+                            state.SubMenu.SetHighlight(0);
                         }
                     }
                     if (_inputService.GetPlayers()[0].PressedAction2)
@@ -119,68 +119,68 @@ namespace SlaamMono.PlayerProfiles
                     }
                 }
             }
-            else if (_state.CurrentMenu.Value == 1)
+            else if (state.CurrentMenu.Value == 1)
             {
-                if (_state.WaitingForQwerty)
+                if (state.WaitingForQwerty)
                 {
                     if (Qwerty.EditingString.Trim() != "")
                     {
-                        ProfileManager.PlayableProfiles[_state.EditingProfile].Name = Qwerty.EditingString;
+                        ProfileManager.PlayableProfiles[state.EditingProfile].Name = Qwerty.EditingString;
                         ProfileManager.SaveProfiles();
                     }
-                    _state.WaitingForQwerty = false;
+                    state.WaitingForQwerty = false;
                     Qwerty.EditingString = "";
 
-                    _state.CurrentMenu.Value = 0;
+                    state.CurrentMenu.Value = 0;
                     setupMainMenu();
                 }
                 else
                 {
                     if (_inputService.GetPlayers()[0].PressedUp)
                     {
-                        _state.CurrentMenuChoice.Sub(1);
-                        _state.SubMenu.SetHighlight(_state.CurrentMenuChoice.Value);
+                        state.CurrentMenuChoice.Sub(1);
+                        state.SubMenu.SetHighlight(state.CurrentMenuChoice.Value);
                     }
                     else if (_inputService.GetPlayers()[0].PressedDown)
                     {
-                        _state.CurrentMenuChoice.Add(1);
-                        _state.SubMenu.SetHighlight(_state.CurrentMenuChoice.Value);
+                        state.CurrentMenuChoice.Add(1);
+                        state.SubMenu.SetHighlight(state.CurrentMenuChoice.Value);
                     }
                     if (_inputService.GetPlayers()[0].PressedAction)
                     {
-                        if (_state.SubMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "del")
+                        if (state.SubMenu.Items[state.CurrentMenuChoice.Value].Details[1] == "del")
                         {
-                            ProfileManager.RemovePlayer(ProfileManager.PlayableProfiles.GetRealIndex(_state.EditingProfile));
-                            _state.EditingProfile = -1;
-                            _state.CurrentMenu.Value = 0;
+                            ProfileManager.RemovePlayer(ProfileManager.PlayableProfiles.GetRealIndex(state.EditingProfile));
+                            state.EditingProfile = -1;
+                            state.CurrentMenu.Value = 0;
                             setupMainMenu();
                         }
-                        else if (_state.SubMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "ren")
+                        else if (state.SubMenu.Items[state.CurrentMenuChoice.Value].Details[1] == "ren")
                         {
-                            Qwerty.DisplayBoard(ProfileManager.PlayableProfiles[_state.EditingProfile].Name);
-                            _state.WaitingForQwerty = true;
+                            Qwerty.DisplayBoard(ProfileManager.PlayableProfiles[state.EditingProfile].Name);
+                            state.WaitingForQwerty = true;
                         }
-                        else if (_state.SubMenu.Items[_state.CurrentMenuChoice.Value].Details[1] == "clr")
+                        else if (state.SubMenu.Items[state.CurrentMenuChoice.Value].Details[1] == "clr")
                         {
-                            ProfileManager.PlayableProfiles[_state.EditingProfile].TotalDeaths = 0;
-                            ProfileManager.PlayableProfiles[_state.EditingProfile].TotalGames = 0;
-                            ProfileManager.PlayableProfiles[_state.EditingProfile].TotalKills = 0;
-                            ProfileManager.PlayableProfiles[_state.EditingProfile].TotalPowerups = 0;
-                            ProfileManager.PlayableProfiles[_state.EditingProfile].BestGame = TimeSpan.Zero;
+                            ProfileManager.PlayableProfiles[state.EditingProfile].TotalDeaths = 0;
+                            ProfileManager.PlayableProfiles[state.EditingProfile].TotalGames = 0;
+                            ProfileManager.PlayableProfiles[state.EditingProfile].TotalKills = 0;
+                            ProfileManager.PlayableProfiles[state.EditingProfile].TotalPowerups = 0;
+                            ProfileManager.PlayableProfiles[state.EditingProfile].BestGame = TimeSpan.Zero;
                             ProfileManager.SaveProfiles();
-                            _state.EditingProfile = -1;
-                            _state.CurrentMenu.Value = 0;
+                            state.EditingProfile = -1;
+                            state.CurrentMenu.Value = 0;
                             setupMainMenu();
                         }
                     }
                     if (_inputService.GetPlayers()[0].PressedAction2)
                     {
-                        _state.CurrentMenu.Value = 0;
+                        state.CurrentMenu.Value = 0;
                         setupMainMenu();
                     }
                 }
             }
-            return _state;
+            return state;
         }
 
         public void RenderState()

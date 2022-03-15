@@ -137,37 +137,37 @@ namespace SlaamMono.MatchCreation
             return output;
         }
 
-        public IState Perform()
+        public IState Perform(CharacterSelectionScreenState state)
         {
-            _state._peopleDone = 0;
-            _state._peopleIn = 0;
+            state._peopleDone = 0;
+            state._peopleIn = 0;
 
             if (
-                _state._peopleIn == 0 &&
+                state._peopleIn == 0 &&
                 _inputService.GetPlayers()[0].PressedAction2 &&
-                _state.SelectBoxes[0].Status == PlayerCharacterSelectBoxStatus.Computer)
+                state.SelectBoxes[0].Status == PlayerCharacterSelectBoxStatus.Computer)
             {
                 return goBack();
             }
 
-            for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
+            for (int idx = 0; idx < state.SelectBoxes.Length; idx++)
             {
-                _playerCharacterSelectBox.Update(_state.SelectBoxes[idx]);
-                if (_state.SelectBoxes[idx].Status == PlayerCharacterSelectBoxStatus.Done)
+                _playerCharacterSelectBox.Update(state.SelectBoxes[idx]);
+                if (state.SelectBoxes[idx].Status == PlayerCharacterSelectBoxStatus.Done)
                 {
-                    _state._peopleDone++;
+                    state._peopleDone++;
                 }
 
-                if (_state.SelectBoxes[idx].Status != PlayerCharacterSelectBoxStatus.Computer)
+                if (state.SelectBoxes[idx].Status != PlayerCharacterSelectBoxStatus.Computer)
                 {
-                    _state._peopleIn++;
+                    state._peopleIn++;
                 }
             }
-            if (_state._peopleIn > 0 && _state._peopleDone == _state._peopleIn)
+            if (state._peopleIn > 0 && state._peopleDone == state._peopleIn)
             {
                 return goForward();
             }
-            return _state;
+            return state;
         }
         private IState goBack()
         {

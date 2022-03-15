@@ -41,28 +41,28 @@ namespace SlaamMono.Menus.Credits
             // to remove
         }
 
-        public IState Perform()
+        public IState Perform(CreditsState state)
         {
             if (_inputService.GetPlayers()[0].PressedAction)
             {
-                _state.Active = !_state.Active;
+                state.Active = !state.Active;
             }
 
-            if (_state.Active)
+            if (state.Active)
             {
-                _state.TextCoords = new Vector2(_state.TextCoords.X, _state.TextCoords.Y - MovementSpeed * _frameTimeService.GetLatestFrame().MovementFactor);
+                state.TextCoords = new Vector2(state.TextCoords.X, state.TextCoords.Y - MovementSpeed * _frameTimeService.GetLatestFrame().MovementFactor);
             }
 
-            if (_state.TextCoords.Y < -_state.TextHeight - 50)
+            if (state.TextCoords.Y < -state.TextHeight - 50)
             {
-                _state.TextCoords = new Vector2(_state.TextCoords.X, GameGlobals.DRAWING_GAME_HEIGHT);
+                state.TextCoords = new Vector2(state.TextCoords.X, GameGlobals.DRAWING_GAME_HEIGHT);
             }
 
             if (_inputService.GetPlayers()[0].PressedAction2)
             {
                 return _mainMenuResolver.Resolve(new MainMenuRequest());
             }
-            return _state;
+            return state;
         }
 
         public void RenderState()

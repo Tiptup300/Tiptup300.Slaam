@@ -55,15 +55,15 @@ namespace SlaamMono.Menus
         private void exitGame(object sender, EventArgs e) => _state.NextState = new GameExitState();
 
 
-        public IState Perform()
+        public IState Perform(MainMenuScreenState state)
         {
-            if (_state.NextState != null)
+            if (state.NextState != null)
             {
-                return _state.NextState;
+                return state.NextState;
             }
             else
             {
-                return _state;
+                return state;
             }
         }
         public void RenderState() { }

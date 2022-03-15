@@ -48,13 +48,13 @@ namespace SlaamMono.Menus
             _state._statsboard.ConstructGraph(25);
         }
 
-        public IState Perform()
+        public IState Perform(HighScoreScreenState state)
         {
             if (_inputService.GetPlayers()[0].PressedAction2)
             {
                 return _stateResolver.Resolve(new MainMenuRequest());
             }
-            return _state;
+            return state;
         }
 
         public void RenderState()

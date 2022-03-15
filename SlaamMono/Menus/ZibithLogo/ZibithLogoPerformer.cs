@@ -36,15 +36,14 @@ namespace SlaamMono.Menus.ZibithLogo
             // to remove
         }
 
-        public IState Perform()
+        public IState Perform(ZibithLogoState state)
         {
-            ZibithLogoState _state = null; //TODO
-            switch (_state.StateIndex)
+            switch (state.StateIndex)
             {
-                default: return initFadeInState(_state);
-                case 1: return fadeInState(_state);
-                case 2: return holdState(_state);
-                case 3: return fadeOutState(_state);
+                default: return initFadeInState(state);
+                case 1: return fadeInState(state);
+                case 2: return holdState(state);
+                case 3: return fadeOutState(state);
             }
         }
 

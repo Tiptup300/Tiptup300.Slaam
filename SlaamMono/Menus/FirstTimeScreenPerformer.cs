@@ -59,13 +59,13 @@ namespace SlaamMono.Menus
             return _state.ControlsGraph;
         }
 
-        public IState Perform()
+        public IState Perform(FirstTimeScreenState state)
         {
             if (_inputService.GetPlayers()[0].PressedAction)
             {
                 new ProfileEditScreenRequestState() { CreateNewProfile = true };
             }
-            return _state;
+            return state;
         }
 
         public void RenderState()

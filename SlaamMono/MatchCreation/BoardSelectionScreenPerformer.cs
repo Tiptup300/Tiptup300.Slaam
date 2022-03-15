@@ -50,128 +50,128 @@ namespace SlaamMono.MatchCreation
             _state.HorizontalBoardOffset = new IntRange(-_state.BoardNames.Count);
         }
 
-        public IState Perform()
+        public IState Perform(BoardSelectionScreenState state)
         {
-            if (_state.IsStillLoadingBoards)
+            if (state.IsStillLoadingBoards)
             {
                 continueLoadingBoards();
-                return _state;
+                return state;
             }
 
-            _state.Alpha += (_state.AlphaUp ? 1 : -1) * _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+            state.Alpha += (state.AlphaUp ? 1 : -1) * _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
 
-            if (_state.AlphaUp && _state.Alpha >= 255f)
+            if (state.AlphaUp && state.Alpha >= 255f)
             {
-                _state.AlphaUp = !_state.AlphaUp;
-                _state.Alpha = 255f;
+                state.AlphaUp = !state.AlphaUp;
+                state.Alpha = 255f;
             }
-            else if (!_state.AlphaUp && _state.Alpha <= 0f)
+            else if (!state.AlphaUp && state.Alpha <= 0f)
             {
-                _state.AlphaUp = !_state.AlphaUp;
-                _state.Alpha = 0f;
+                state.AlphaUp = !state.AlphaUp;
+                state.Alpha = 0f;
             }
 
-            if (_state.WasChosen)
+            if (state.WasChosen)
             {
-                _state.Scale += _frameTimeService.GetLatestFrame().MovementFactor * .01f;
+                state.Scale += _frameTimeService.GetLatestFrame().MovementFactor * .01f;
 
-                if (_state.Scale >= 1.50f)
+                if (state.Scale >= 1.50f)
                 {
-                    _state.Scale = 1.50f;
+                    state.Scale = 1.50f;
                 }
 
                 if (_inputService.GetPlayers()[0].PressedAction)
                 {
-                    LobbyScreenFunctions.LoadBoard(_state.ValidBoards[_state.Save], _state.ParentLobbyScreen);
+                    LobbyScreenFunctions.LoadBoard(state.ValidBoards[state.Save], state.ParentLobbyScreen);
                     // todo
                     //_screenManager.ChangeTo(_state.ParentLobbyScreen);
                 }
 
                 if (_inputService.GetPlayers()[0].PressedAction2)
                 {
-                    _state.WasChosen = false;
+                    state.WasChosen = false;
                 }
             }
             else
             {
-                _state.Scale -= _frameTimeService.GetLatestFrame().MovementFactor * .01f;
+                state.Scale -= _frameTimeService.GetLatestFrame().MovementFactor * .01f;
 
-                if (_state.Scale <= 1.00f)
+                if (state.Scale <= 1.00f)
                 {
-                    _state.Scale = 1.00f;
+                    state.Scale = 1.00f;
                 }
 
                 if (_inputService.GetPlayers()[0].PressingDown)
                 {
-                    _state.Vertical = Direction.Down;
+                    state.Vertical = Direction.Down;
                 }
                 if (_inputService.GetPlayers()[0].PressingUp)
                 {
-                    _state.Vertical = Direction.Up;
+                    state.Vertical = Direction.Up;
                 }
 
                 if (_inputService.GetPlayers()[0].PressingRight)
                 {
-                    _state.Horizontal = Direction.Right;
+                    state.Horizontal = Direction.Right;
                 }
                 if (_inputService.GetPlayers()[0].PressingLeft)
                 {
-                    _state.Horizontal = Direction.Left;
+                    state.Horizontal = Direction.Left;
                 }
 
-                if (_state.Vertical == Direction.Down)
+                if (state.Vertical == Direction.Down)
                 {
-                    _state.VerticalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+                    state.VerticalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
 
-                    if (_state.VerticalOffset <= -_state.DrawSizeHeight)
+                    if (state.VerticalOffset <= -state.DrawSizeHeight)
                     {
-                        _state.VerticalBoardOffset.Add(1);
-                        _state.VerticalOffset = 0;
-                        _state.Vertical = Direction.None;
+                        state.VerticalBoardOffset.Add(1);
+                        state.VerticalOffset = 0;
+                        state.Vertical = Direction.None;
                     }
                 }
-                else if (_state.Vertical == Direction.Up)
+                else if (state.Vertical == Direction.Up)
                 {
-                    _state.VerticalOffset += _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+                    state.VerticalOffset += _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
 
-                    if (_state.VerticalOffset >= _state.DrawSizeHeight)
+                    if (state.VerticalOffset >= state.DrawSizeHeight)
                     {
-                        _state.VerticalBoardOffset.Sub(1);
-                        _state.VerticalOffset = 0;
-                        _state.Vertical = Direction.None;
-                    }
-                }
-
-                if (_state.Horizontal == Direction.Left)
-                {
-                    _state.HorizontalOffset += _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
-
-                    if (_state.HorizontalOffset >= _state.DrawSizeWidth)
-                    {
-                        _state.HorizontalBoardOffset.Add(1);
-                        _state.HorizontalOffset = 0;
-                        _state.Horizontal = Direction.None;
-                    }
-                }
-                else if (_state.Horizontal == Direction.Right)
-                {
-                    _state.HorizontalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
-
-                    if (_state.HorizontalOffset <= -_state.DrawSizeWidth)
-                    {
-                        _state.HorizontalBoardOffset.Sub(1);
-                        _state.HorizontalOffset = 0;
-                        _state.Horizontal = Direction.None;
+                        state.VerticalBoardOffset.Sub(1);
+                        state.VerticalOffset = 0;
+                        state.Vertical = Direction.None;
                     }
                 }
 
-                if (_state.HorizontalOffset == 0 && _state.VerticalOffset == 0 && _inputService.GetPlayers()[0].PressedAction)
+                if (state.Horizontal == Direction.Left)
                 {
-                    _state.WasChosen = true;
+                    state.HorizontalOffset += _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
+
+                    if (state.HorizontalOffset >= state.DrawSizeWidth)
+                    {
+                        state.HorizontalBoardOffset.Add(1);
+                        state.HorizontalOffset = 0;
+                        state.Horizontal = Direction.None;
+                    }
+                }
+                else if (state.Horizontal == Direction.Right)
+                {
+                    state.HorizontalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
+
+                    if (state.HorizontalOffset <= -state.DrawSizeWidth)
+                    {
+                        state.HorizontalBoardOffset.Sub(1);
+                        state.HorizontalOffset = 0;
+                        state.Horizontal = Direction.None;
+                    }
+                }
+
+                if (state.HorizontalOffset == 0 && state.VerticalOffset == 0 && _inputService.GetPlayers()[0].PressedAction)
+                {
+                    state.WasChosen = true;
                 }
 
             }
-            return _state;
+            return state;
         }
         private void continueLoadingBoards()
         {

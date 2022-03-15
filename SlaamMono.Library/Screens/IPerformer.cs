@@ -6,7 +6,7 @@ namespace SlaamMono.Library.Screens
     {
         void InitializeState();
 
-        IState Perform();
+        IState Perform(TState state);
 
         void RenderState();
     }

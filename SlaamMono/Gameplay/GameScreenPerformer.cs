@@ -213,43 +213,43 @@ namespace SlaamMono.Gameplay
                         _state.GameType)));
         }
 
-        public IState Perform()
+        public IState Perform(GameScreenState state)
         {
-            if (_state.GameType == GameType.Survival)
+            if (state.GameType == GameType.Survival)
             {
                 survival_Perform();
             }
-            if (_state.IsPaused)
+            if (state.IsPaused)
             {
 
                 SlaamGame.mainBlade.Status = BladeStatus.Out;
-                return _state;
+                return state;
             }
 
-            _state.Timer.Update(_state);
+            state.Timer.Update(state);
             updateScoreBoards();
 
-            if (_state.CurrentGameStatus == GameStatus.MovingBoard)
+            if (state.CurrentGameStatus == GameStatus.MovingBoard)
             {
                 updateMovingBoardState();
             }
-            else if (_state.CurrentGameStatus == GameStatus.Respawning)
+            else if (state.CurrentGameStatus == GameStatus.Respawning)
             {
                 updateRespawningGameState();
             }
-            else if (_state.CurrentGameStatus == GameStatus.Waiting)
+            else if (state.CurrentGameStatus == GameStatus.Waiting)
             {
                 updateWaitingGameState();
             }
-            else if (_state.CurrentGameStatus == GameStatus.Playing)
+            else if (state.CurrentGameStatus == GameStatus.Playing)
             {
                 updatePlayingGameState();
             }
-            else if (_state.CurrentGameStatus == GameStatus.Over)
+            else if (state.CurrentGameStatus == GameStatus.Over)
             {
                 updateOverGameState();
             }
-            return _state;
+            return state;
         }
         public void survival_Perform()
         {
