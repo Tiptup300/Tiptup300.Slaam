@@ -76,17 +76,18 @@ namespace SlaamMono
 
             SetupZuneBlade();
 
-            _state = _gameStartRequestResolver.Resolve(new GameStartRequest());
+            base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             _resources.LoadAll();
             mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = _inputService.GetPlayers()[0];
             _renderService.LoadContent();
             _fpsRenderer.LoadContent();
+
+            base.LoadContent();
         }
 
         public void SetupZuneBlade()
@@ -105,11 +106,15 @@ namespace SlaamMono
         }
         protected override void Update(GameTime gameTime)
         {
+            if (_state is null)
+            {
+                _state = _gameStartRequestResolver.Resolve(new GameStartRequest());
+            }
             _frameTimeService.AddUpdate(gameTime);
             _inputService.Update();
             if (ProfileManager.Initialized == false)
             {
-                ProfileManager.Initialize(_logger, _resources);
+                //  ProfileManager.Initialize(_logger, _resources);
             }
             else
             {
@@ -126,6 +131,8 @@ namespace SlaamMono
                     //_state = _statePerformer.Resolve(_state;// update state
                 }
             }
+
+            base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -143,6 +150,8 @@ namespace SlaamMono
             }
             _renderService.Draw();
             _fpsRenderer.Draw();
+
+            base.Draw(gameTime);
         }
     }
 }
