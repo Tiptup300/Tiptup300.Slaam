@@ -65,32 +65,32 @@ namespace SlaamMono.Menus.Credits
             return state;
         }
 
-        public void RenderState()
+        public void RenderState(CreditsState state)
         {
             _renderService.Render(batch =>
             {
 
                 float Offset = 0;
 
-                for (int CurrentCredit = 0; CurrentCredit < _state.CreditsListings.Count; CurrentCredit++)
+                for (int CurrentCredit = 0; CurrentCredit < state.CreditsListings.Count; CurrentCredit++)
                 {
-                    if (_state.TextCoords.Y + Offset > 0 && _state.TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx32pt").MeasureString(_state.CreditsListings[CurrentCredit].Name).Y)
+                    if (state.TextCoords.Y + Offset > 0 && state.TextCoords.Y + Offset + 20 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx32pt").MeasureString(state.CreditsListings[CurrentCredit].Name).Y)
                     {
-                        _renderService.RenderText(_state.CreditsListings[CurrentCredit].Name, new Vector2(_state.TextCoords.X, _state.TextCoords.Y + Offset), _resources.GetFont("SegoeUIx32pt"), _state.MainCreditColor, Alignment.TopLeft, false);
+                        _renderService.RenderText(state.CreditsListings[CurrentCredit].Name, new Vector2(state.TextCoords.X, state.TextCoords.Y + Offset), _resources.GetFont("SegoeUIx32pt"), state.MainCreditColor, Alignment.TopLeft, false);
                     }
-                    Offset += _resources.GetFont("SegoeUIx32pt").MeasureString(_state.CreditsListings[CurrentCredit].Name).Y / 1.5f;
-                    for (int x = 0; x < _state.CreditsListings[CurrentCredit].Credits.Count; x++)
+                    Offset += _resources.GetFont("SegoeUIx32pt").MeasureString(state.CreditsListings[CurrentCredit].Name).Y / 1.5f;
+                    for (int x = 0; x < state.CreditsListings[CurrentCredit].Credits.Count; x++)
                     {
-                        if (_state.TextCoords.Y + Offset > 0 && _state.TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx14pt").MeasureString(_state.CreditsListings[CurrentCredit].Credits[x]).Y)
+                        if (state.TextCoords.Y + Offset > 0 && state.TextCoords.Y + Offset + 10 < GameGlobals.DRAWING_GAME_HEIGHT + _resources.GetFont("SegoeUIx14pt").MeasureString(state.CreditsListings[CurrentCredit].Credits[x]).Y)
                         {
-                            _renderService.RenderText(_state.CreditsListings[CurrentCredit].Credits[x], new Vector2(_state.TextCoords.X + 10, _state.TextCoords.Y + Offset), _resources.GetFont("SegoeUIx14pt"), _state.SubCreditColor, Alignment.TopLeft, false);
+                            _renderService.RenderText(state.CreditsListings[CurrentCredit].Credits[x], new Vector2(state.TextCoords.X + 10, state.TextCoords.Y + Offset), _resources.GetFont("SegoeUIx14pt"), state.SubCreditColor, Alignment.TopLeft, false);
                         }
-                        Offset += (int)_resources.GetFont("SegoeUIx14pt").MeasureString(_state.CreditsListings[CurrentCredit].Credits[x]).Y;
+                        Offset += (int)_resources.GetFont("SegoeUIx14pt").MeasureString(state.CreditsListings[CurrentCredit].Credits[x]).Y;
                     }
                     Offset += 20;
                 }
 
-                _state.TextHeight = Offset;
+                state.TextHeight = Offset;
             });
         }
 

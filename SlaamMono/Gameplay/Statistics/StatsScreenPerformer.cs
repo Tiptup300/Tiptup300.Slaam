@@ -167,7 +167,7 @@ namespace SlaamMono.Gameplay.Statistics
             return state;
         }
 
-        public void RenderState()
+        public void RenderState(StatsScreenState state)
         {
             _renderService.Render(batch =>
             {
@@ -175,21 +175,21 @@ namespace SlaamMono.Gameplay.Statistics
 
                 for (int x = 0; x < 3; x++)
                 {
-                    batch.Draw(_state._statsButtons[x].Texture, Statsboard, x == _state.CurrentPage.Value ? Color.LightSkyBlue : _state.GameType == GameType.Survival ? Color.DarkGray : Color.White);
+                    batch.Draw(state._statsButtons[x].Texture, Statsboard, x == state.CurrentPage.Value ? Color.LightSkyBlue : state.GameType == GameType.Survival ? Color.DarkGray : Color.White);
                 }
                 batch.Draw(_resources.GetTexture("StatsBoard").Texture, Statsboard, Color.White);
 
-                if (_state.CurrentPage.Value == 0)
+                if (state.CurrentPage.Value == 0)
                 {
-                    _state.PlayerStats.MainBoard.Draw(batch);
+                    state.PlayerStats.MainBoard.Draw(batch);
                 }
-                else if (_state.CurrentPage.Value == 1)
+                else if (state.CurrentPage.Value == 1)
                 {
-                    _state.Kills.MainBoard.Draw(batch);
+                    state.Kills.MainBoard.Draw(batch);
                 }
                 else
                 {
-                    _state.PvP.MainBoard.Draw(batch);
+                    state.PvP.MainBoard.Draw(batch);
                 }
             });
         }

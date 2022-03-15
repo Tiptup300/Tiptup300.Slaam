@@ -203,45 +203,45 @@ namespace SlaamMono.MatchCreation
             _state.HorizontalBoardOffset = new IntRange(-_state.BoardTextures.Count, -_state.BoardTextures.Count, -1);
         }
 
-        public void RenderState()
+        public void RenderState(BoardSelectionScreenState state)
         {
             _renderService.Render(batch =>
             {
 
-                _state.DrawingBoardIndex.Value = _state.VerticalBoardOffset.Value;
-                for (int x = _state.HorizontalBoardOffset.Value; x < 8; x++)
+                state.DrawingBoardIndex.Value = state.VerticalBoardOffset.Value;
+                for (int x = state.HorizontalBoardOffset.Value; x < 8; x++)
                 {
                     for (int y = 0; y < 11; y++)
                     {
-                        Vector2 Pos = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _state.DrawSizeWidth / 2 + x * _state.DrawSizeWidth + _state.HorizontalOffset - _state.DrawSizeWidth * 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _state.DrawSizeHeight / 2 + y * _state.DrawSizeHeight + _state.VerticalOffset - _state.DrawSizeHeight * 2);
-                        if (!(Pos.X < -_state.DrawSizeWidth || Pos.X > GameGlobals.DRAWING_GAME_WIDTH || Pos.Y < -_state.DrawSizeHeight || Pos.Y > GameGlobals.DRAWING_GAME_HEIGHT))
+                        Vector2 Pos = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - state.DrawSizeWidth / 2 + x * state.DrawSizeWidth + state.HorizontalOffset - state.DrawSizeWidth * 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - state.DrawSizeHeight / 2 + y * state.DrawSizeHeight + state.VerticalOffset - state.DrawSizeHeight * 2);
+                        if (!(Pos.X < -state.DrawSizeWidth || Pos.X > GameGlobals.DRAWING_GAME_WIDTH || Pos.Y < -state.DrawSizeHeight || Pos.Y > GameGlobals.DRAWING_GAME_HEIGHT))
                         {
-                            if (_state.DrawingBoardIndex.Value < _state.BoardTextures.Count && _state.BoardTextures[_state.DrawingBoardIndex.Value] != null)
+                            if (state.DrawingBoardIndex.Value < state.BoardTextures.Count && state.BoardTextures[state.DrawingBoardIndex.Value] != null)
                             {
-                                batch.Draw(_state.BoardTextures[_state.DrawingBoardIndex.Value], new Rectangle((int)Pos.X, (int)Pos.Y, _state.DrawSizeWidth, _state.DrawSizeHeight), Color.White);
+                                batch.Draw(state.BoardTextures[state.DrawingBoardIndex.Value], new Rectangle((int)Pos.X, (int)Pos.Y, state.DrawSizeWidth, state.DrawSizeHeight), Color.White);
                             }
                             else
                             {
                                 batch.Draw(_resources.GetTexture("NowLoading").Texture, Pos, Color.White);
                             }
                         }
-                        if (Pos == new Vector2(_state.CenteredRectangle.X, _state.CenteredRectangle.Y))
+                        if (Pos == new Vector2(state.CenteredRectangle.X, state.CenteredRectangle.Y))
                         {
-                            _state.Save = _state.DrawingBoardIndex.Value;
+                            state.Save = state.DrawingBoardIndex.Value;
                         }
-                        _state.DrawingBoardIndex.Add(1);
+                        state.DrawingBoardIndex.Add(1);
                     }
                 }
                 batch.Draw(_resources.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
-                if (!_state.IsStillLoadingBoards)
+                if (!state.IsStillLoadingBoards)
                 {
-                    _state.CenteredRectangle = centerRectangle(new Rectangle(0, 0, (int)(_state.Scale * _state.DrawSizeWidth), (int)(_state.Scale * _state.DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
-                    if (_state.WasChosen)
+                    state.CenteredRectangle = centerRectangle(new Rectangle(0, 0, (int)(state.Scale * state.DrawSizeWidth), (int)(state.Scale * state.DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
+                    if (state.WasChosen)
                     {
-                        batch.Draw(_state.BoardTextures[_state.Save], _state.CenteredRectangle, Color.White);
+                        batch.Draw(state.BoardTextures[state.Save], state.CenteredRectangle, Color.White);
                     }
-                    batch.Draw(_resources.GetTexture("BoardSelect").Texture, _state.CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)_state.Alpha));
-                    _renderService.RenderText(DialogStrings.CleanMapName(_state.ValidBoards[_state.Save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
+                    batch.Draw(_resources.GetTexture("BoardSelect").Texture, state.CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)state.Alpha));
+                    _renderService.RenderText(DialogStrings.CleanMapName(state.ValidBoards[state.Save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
                 }
             });
         }

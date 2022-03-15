@@ -68,12 +68,12 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        public void RenderState()
+        public void RenderState(FirstTimeScreenState state)
         {
             _renderService.Render(batch =>
             {
                 batch.Draw(_resources.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
-                _state.ControlsGraph.Draw(batch);
+                state.ControlsGraph.Draw(batch);
             });
         }
 

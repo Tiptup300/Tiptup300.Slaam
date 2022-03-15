@@ -66,7 +66,7 @@ namespace SlaamMono.Menus
                 return state;
             }
         }
-        public void RenderState() { }
+        public void RenderState(MainMenuScreenState state) { }
 
         public void Close()
         {

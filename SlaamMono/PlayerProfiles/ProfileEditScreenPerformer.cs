@@ -183,17 +183,17 @@ namespace SlaamMono.PlayerProfiles
             return state;
         }
 
-        public void RenderState()
+        public void RenderState(ProfileEditScreenState state)
         {
             _renderService.Render(batch =>
             {
-                if (_state.CurrentMenu.Value == 0)
+                if (state.CurrentMenu.Value == 0)
                 {
-                    _state.MainMenu.Draw(batch);
+                    state.MainMenu.Draw(batch);
                 }
                 else
                 {
-                    _state.SubMenu.Draw(batch);
+                    state.SubMenu.Draw(batch);
                 }
             });
         }

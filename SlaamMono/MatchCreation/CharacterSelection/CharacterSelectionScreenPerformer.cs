@@ -197,15 +197,15 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public void RenderState()
+        public void RenderState(CharacterSelectionScreenState state)
         {
             _renderService.Render(batch =>
             {
-                for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
+                for (int idx = 0; idx < state.SelectBoxes.Length; idx++)
                 {
-                    if (_state.SelectBoxes[idx] != null)
+                    if (state.SelectBoxes[idx] != null)
                     {
-                        _playerCharacterSelectBox.Draw(_state.SelectBoxes[idx], batch);
+                        _playerCharacterSelectBox.Draw(state.SelectBoxes[idx], batch);
                     }
                 }
             });
