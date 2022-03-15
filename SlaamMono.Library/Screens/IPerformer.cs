@@ -1,9 +1,8 @@
-using Microsoft.Xna.Framework.Graphics;
 using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Library.Screens
 {
-    public interface IStatePerformer
+    public interface IPerformer<TState> where TState : IState
     {
         void InitializeState();
 

@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Input;
 using SlaamMono.Library;
 using SlaamMono.Library.Graphing;
@@ -15,7 +14,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.PlayerProfiles
 {
-    public class ProfileEditScreenPerformer : IStatePerformer
+    public class ProfileEditScreenPerformer : IPerformer<ProfileEditScreenState>
     {
         private ProfileEditScreenState _state = new ProfileEditScreenState();
 

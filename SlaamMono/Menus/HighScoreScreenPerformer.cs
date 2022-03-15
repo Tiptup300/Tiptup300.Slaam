@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
@@ -12,7 +11,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
-    public class HighScoreScreenPerformer : IStatePerformer
+    public class HighScoreScreenPerformer : IPerformer<HighScoreScreenState>
     {
         public const int MAX_HIGHSCORES = 7;
 

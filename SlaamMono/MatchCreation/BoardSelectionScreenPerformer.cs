@@ -12,7 +12,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class BoardSelectionScreenPerformer : IStatePerformer
+    public class BoardSelectionScreenPerformer : IPerformer<BoardSelectionScreenState>
     {
         private BoardSelectionScreenState _state = new BoardSelectionScreenState();
 

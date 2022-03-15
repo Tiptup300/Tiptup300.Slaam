@@ -11,7 +11,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus.ZibithLogo
 {
-    public class ZibithLogoPerformer : ILogoScreen, IStatePerformer
+    public class ZibithLogoPerformer : IPerformer<ZibithLogoState>
     {
         private const float _fadeInSeconds = 1f;
         private const float _holdSeconds = 3f;

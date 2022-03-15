@@ -71,14 +71,6 @@ namespace SlaamMono.Composition
 
         private void registerScreens()
         {
-            _container.Register<IMainMenuScreen, MainMenuScreenPerformer>();
-            _container.Register<CreditsPerformer>();
-            _container.Register<HighScoreScreenPerformer>();
-            _container.Register<ProfileEditScreenPerformer>();
-            _container.Register<CharacterSelectionScreenPerformer>();
-            _container.Register<ILogoScreen, ZibithLogoPerformer>();
-            _container.Register<GameScreenPerformer>();
-
             // Register all IRequests
             _container.RegisterSingleton(typeof(IResolver<>), typeof(SlaamGameApp).Assembly);
             _container.RegisterSingleton(typeof(IResolver<,>), typeof(SlaamGameApp).Assembly);

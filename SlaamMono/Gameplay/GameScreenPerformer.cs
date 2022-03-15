@@ -23,7 +23,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreenPerformer : IStatePerformer
+    public class GameScreenPerformer : IPerformer<GameScreenState>
     {
         private GameScreenState _state = new GameScreenState();
 
@@ -469,7 +469,7 @@ namespace SlaamMono.Gameplay
                 {
                     batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)_state.Rand.NextDouble() * (1 + _state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)_state.Rand.NextDouble() * (1 + _state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, _state.ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
                 }
-            });           
+            });
         }
         private void resetCharactersDrawnStatus()
         {

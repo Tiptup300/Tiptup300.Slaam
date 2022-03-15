@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
@@ -11,7 +10,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
-    public class FirstTimeScreenPerformer : IStatePerformer
+    public class FirstTimeScreenPerformer : IPerformer<FirstTimeScreenState>
     {
         public FirstTimeScreenState _state = new FirstTimeScreenState();
 

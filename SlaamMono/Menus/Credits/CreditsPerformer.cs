@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
@@ -11,7 +10,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus.Credits
 {
-    public partial class CreditsPerformer : IStatePerformer
+    public partial class CreditsPerformer : IPerformer<CreditsState>
     {
         private const float MovementSpeed = 3f / 120f;
 

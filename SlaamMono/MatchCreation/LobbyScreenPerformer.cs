@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
@@ -13,12 +12,11 @@ using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
 using System;
 using System.IO;
-using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class LobbyScreenPerformer : IStatePerformer
+    public class LobbyScreenPerformer : IPerformer<LobbyScreenState>
     {
         private const int _maxPlayers = 4;
 
