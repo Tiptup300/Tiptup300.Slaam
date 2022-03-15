@@ -12,9 +12,7 @@ namespace SlaamMono.Menus.Credits
 {
     public partial class CreditsPerformer : IPerformer<CreditsState>
     {
-        private const float MovementSpeed = 3f / 120f;
-
-        private CreditsState _state = new CreditsState();
+        private const float PIXELS_PER_MINUTE = 1.5f / 60f;
 
         private readonly IResources _resources;
         private readonly IInputService _inputService;
@@ -50,7 +48,7 @@ namespace SlaamMono.Menus.Credits
 
             if (state.Active)
             {
-                state.TextCoords = new Vector2(state.TextCoords.X, state.TextCoords.Y - MovementSpeed * _frameTimeService.GetLatestFrame().MovementFactor);
+                state.TextCoords = new Vector2(state.TextCoords.X, state.TextCoords.Y - PIXELS_PER_MINUTE * _frameTimeService.GetLatestFrame().MovementFactor);
             }
 
             if (state.TextCoords.Y < -state.TextHeight - 50)
@@ -65,7 +63,7 @@ namespace SlaamMono.Menus.Credits
             return state;
         }
 
-        public void RenderState(CreditsState state)
+        public void Render(CreditsState state)
         {
             _renderService.Render(batch =>
             {
@@ -92,11 +90,6 @@ namespace SlaamMono.Menus.Credits
 
                 state.TextHeight = Offset;
             });
-        }
-
-        public void Close()
-        {
-
         }
 
     }

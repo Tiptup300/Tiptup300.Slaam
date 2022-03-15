@@ -57,17 +57,12 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        public void RenderState(HighScoreScreenState state)
+        public void Render(HighScoreScreenState state)
         {
             _renderService.Render(batch =>
             {
                 state._statsboard.MainBoard.Draw(batch);
             });
-        }
-
-        public void Close()
-        {
-
         }
     }
 }

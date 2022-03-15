@@ -68,7 +68,7 @@ namespace SlaamMono.Menus
             return state;
         }
 
-        public void RenderState(FirstTimeScreenState state)
+        public void Render(FirstTimeScreenState state)
         {
             _renderService.Render(batch =>
             {
@@ -77,7 +77,7 @@ namespace SlaamMono.Menus
             });
         }
 
-        public void Close()
+        private void unloadContent()
         {
             _resources.GetTexture("FirstTime").Unload();
         }

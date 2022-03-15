@@ -66,9 +66,9 @@ namespace SlaamMono.Menus
                 return state;
             }
         }
-        public void RenderState(MainMenuScreenState state) { }
+        public void Render(MainMenuScreenState state) { }
 
-        public void Close()
+        public void hideZBlade()
         {
             SlaamGame.mainBlade.Status = BladeStatus.Hidden;
             SlaamGame.mainBlade.TopMenu = null;

@@ -183,7 +183,7 @@ namespace SlaamMono.PlayerProfiles
             return state;
         }
 
-        public void RenderState(ProfileEditScreenState state)
+        public void Render(ProfileEditScreenState state)
         {
             _renderService.Render(batch =>
             {
@@ -197,12 +197,5 @@ namespace SlaamMono.PlayerProfiles
                 }
             });
         }
-
-        public void Close()
-        {
-
-        }
-
-
     }
 }

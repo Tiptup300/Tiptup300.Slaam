@@ -323,7 +323,7 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public void RenderState(LobbyScreenState state)
+        public void Render(LobbyScreenState state)
         {
             _renderService.Render(batch =>
             {
@@ -350,9 +350,8 @@ namespace SlaamMono.MatchCreation
 
             });
         }
-        public void Close()
+        private void unloadContent()
         {
-            _state.CurrentBoardTexture = null;
             _resources.GetTexture("LobbyUnderlay").Unload();
             _resources.GetTexture("LobbyCharBar").Unload();
             _resources.GetTexture("LobbyColorPreview").Unload();

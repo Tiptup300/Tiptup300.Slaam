@@ -167,7 +167,7 @@ namespace SlaamMono.Gameplay.Statistics
             return state;
         }
 
-        public void RenderState(StatsScreenState state)
+        public void Render(StatsScreenState state)
         {
             _renderService.Render(batch =>
             {
@@ -192,11 +192,6 @@ namespace SlaamMono.Gameplay.Statistics
                     state.PvP.MainBoard.Draw(batch);
                 }
             });
-        }
-
-        public void Close()
-        {
-
         }
     }
 }

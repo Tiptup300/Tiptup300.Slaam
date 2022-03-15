@@ -8,6 +8,6 @@ namespace SlaamMono.Library.Screens
 
         IState Perform(TState state);
 
-        void RenderState(TState state);
+        void Render(TState state);
     }
 }

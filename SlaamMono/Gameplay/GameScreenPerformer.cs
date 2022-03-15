@@ -419,7 +419,7 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public void RenderState(GameScreenState state)
+        public void Render(GameScreenState state)
         {
             _renderService.Render(batch =>
             {
@@ -479,7 +479,7 @@ namespace SlaamMono.Gameplay
                 .ForEach(character => character.Drawn = false);
         }
 
-        public void Close()
+        private void unloadContent()
         {
             _resources.GetTexture("ReadySetGo").Unload();
             _resources.GetTexture("BattleBG").Unload();

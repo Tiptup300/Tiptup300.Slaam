@@ -107,7 +107,7 @@ namespace SlaamMono.Menus.ZibithLogo
             return state;
         }
 
-        public void RenderState(ZibithLogoState state)
+        public void Render(ZibithLogoState state)
         {
             _renderService.Render(batch =>
             {

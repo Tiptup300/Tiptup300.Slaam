@@ -203,7 +203,7 @@ namespace SlaamMono.MatchCreation
             _state.HorizontalBoardOffset = new IntRange(-_state.BoardTextures.Count, -_state.BoardTextures.Count, -1);
         }
 
-        public void RenderState(BoardSelectionScreenState state)
+        public void Render(BoardSelectionScreenState state)
         {
             _renderService.Render(batch =>
             {
@@ -248,13 +248,6 @@ namespace SlaamMono.MatchCreation
         private Rectangle centerRectangle(Rectangle rect, Vector2 pos)
         {
             return new Rectangle((int)pos.X - rect.Width / 2, (int)pos.Y - rect.Height / 2, rect.Width, rect.Height);
-        }
-
-        public void Close()
-        {
-            _state.BoardTextures = null;
-            _state.ValidBoards = null;
-            GC.Collect();
         }
     }
 }

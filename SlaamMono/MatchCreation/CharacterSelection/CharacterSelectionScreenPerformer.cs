@@ -197,7 +197,7 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public void RenderState(CharacterSelectionScreenState state)
+        public void Render(CharacterSelectionScreenState state)
         {
             _renderService.Render(batch =>
             {
@@ -210,12 +210,5 @@ namespace SlaamMono.MatchCreation
                 }
             });
         }
-
-        public void Close()
-        {
-            _state.SelectBoxes = null;
-        }
-
-
     }
 }
