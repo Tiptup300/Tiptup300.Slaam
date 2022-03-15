@@ -22,7 +22,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreenPerformer : IPerformer<GameScreenState>
+    public class GameScreenPerformer : IPerformer<GameScreenState>, IRenderer<GameScreenState>
     {
         private GameScreenState _state = new GameScreenState();
 

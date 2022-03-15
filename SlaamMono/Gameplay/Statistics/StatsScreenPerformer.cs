@@ -11,7 +11,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay.Statistics
 {
-    public class StatsScreenPerformer : IPerformer<StatsScreenState>
+    public class StatsScreenPerformer : IPerformer<StatsScreenState>, IRenderer<StatsScreenState>
     {
         public const int MAX_HIGHSCORES = 5;
         private readonly Rectangle _statsRectangle = new Rectangle(20, 110, GameGlobals.DRAWING_GAME_WIDTH - 40, GameGlobals.DRAWING_GAME_HEIGHT);

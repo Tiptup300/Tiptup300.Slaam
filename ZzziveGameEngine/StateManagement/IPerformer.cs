@@ -5,7 +5,5 @@ namespace ZzziveGameEngine.StateManagement
         void InitializeState();
 
         IState Perform(TState state);
-
-        void Render(TState state);
     }
 }

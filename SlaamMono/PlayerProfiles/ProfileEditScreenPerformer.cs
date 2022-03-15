@@ -13,7 +13,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.PlayerProfiles
 {
-    public class ProfileEditScreenPerformer : IPerformer<ProfileEditScreenState>
+    public class ProfileEditScreenPerformer : IPerformer<ProfileEditScreenState>, IRenderer<ProfileEditScreenState>
     {
         private ProfileEditScreenState _state = new ProfileEditScreenState();
 

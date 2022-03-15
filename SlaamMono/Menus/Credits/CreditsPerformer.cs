@@ -9,7 +9,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus.Credits
 {
-    public partial class CreditsPerformer : IPerformer<CreditsState>
+    public partial class CreditsPerformer : IPerformer<CreditsState>, IRenderer<CreditsState>
     {
         private const float PIXELS_PER_MINUTE = 1.5f / 60f;
 

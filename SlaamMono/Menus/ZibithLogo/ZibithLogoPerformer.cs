@@ -9,7 +9,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus.ZibithLogo
 {
-    public class ZibithLogoPerformer : IPerformer<ZibithLogoState>
+    public class ZibithLogoPerformer : IPerformer<ZibithLogoState>, IRenderer<ZibithLogoState>
     {
         private const float _fadeInSeconds = 1f;
         private const float _holdSeconds = 3f;

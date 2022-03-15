@@ -15,7 +15,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class LobbyScreenPerformer : IPerformer<LobbyScreenState>
+    public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<LobbyScreenState>
     {
         private const int _maxPlayers = 4;
 

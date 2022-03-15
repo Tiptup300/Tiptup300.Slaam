@@ -10,7 +10,7 @@ using ZzziveGameEngine.StateManagement.States;
 
 namespace SlaamMono.Menus
 {
-    public class MainMenuScreenPerformer : IPerformer<MainMenuScreenState>
+    public class MainMenuScreenPerformer : IPerformer<MainMenuScreenState>, IRenderer<MainMenuScreenState>
     {
         private MainMenuScreenState _state;
         private readonly IResolver<IRequest, IState> _stateResolver;

@@ -9,7 +9,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
-    public class FirstTimeScreenPerformer : IPerformer<FirstTimeScreenState>
+    public class FirstTimeScreenPerformer : IPerformer<FirstTimeScreenState>, IRenderer<FirstTimeScreenState>
     {
         public FirstTimeScreenState _state = new FirstTimeScreenState();
 

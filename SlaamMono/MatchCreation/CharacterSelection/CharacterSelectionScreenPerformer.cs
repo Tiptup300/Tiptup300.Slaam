@@ -15,7 +15,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class CharacterSelectionScreenPerformer : IPerformer<CharacterSelectionScreenState>
+    public class CharacterSelectionScreenPerformer : IPerformer<CharacterSelectionScreenState>, IRenderer<CharacterSelectionScreenState>
     {
         private const float _verticalOffset = 195f;
         private const float _horizontalOffset = 40f;
