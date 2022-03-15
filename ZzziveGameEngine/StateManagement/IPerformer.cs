@@ -1,6 +1,4 @@
-using ZzziveGameEngine.StateManagement;
-
-namespace SlaamMono.Library.Screens
+namespace ZzziveGameEngine.StateManagement
 {
     public interface IPerformer<TState> where TState : IState
     {

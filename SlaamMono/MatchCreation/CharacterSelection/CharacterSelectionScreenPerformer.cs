@@ -4,7 +4,6 @@ using SlaamMono.Gameplay;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes;
 using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;

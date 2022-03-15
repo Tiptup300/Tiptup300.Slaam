@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Library.Screens;
 using SlaamMono.Subclasses;
 using SlaamMono.x_;
 using System;

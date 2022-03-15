@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.Menus.Credits;
 using SlaamMono.PlayerProfiles;
