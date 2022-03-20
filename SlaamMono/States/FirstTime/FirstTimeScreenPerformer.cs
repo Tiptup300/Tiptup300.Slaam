@@ -1,17 +1,15 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Graphing;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
 using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
-    public class FirstTimeScreenPerformer : IStatePerformer
+    public class FirstTimeScreenPerformer : IPerformer<FirstTimeScreenState>, IRenderer<FirstTimeScreenState>
     {
         public FirstTimeScreenState _state = new FirstTimeScreenState();
 
@@ -60,25 +58,25 @@ namespace SlaamMono.Menus
             return _state.ControlsGraph;
         }
 
-        public IState Perform()
+        public IState Perform(FirstTimeScreenState state)
         {
             if (_inputService.GetPlayers()[0].PressedAction)
             {
                 new ProfileEditScreenRequestState() { CreateNewProfile = true };
             }
-            return _state;
+            return state;
         }
 
-        public void RenderState()
+        public void Render(FirstTimeScreenState state)
         {
             _renderService.Render(batch =>
             {
                 batch.Draw(_resources.GetTexture("FirstTime").Texture, Vector2.Zero, Color.White);
-                _state.ControlsGraph.Draw(batch);
+                state.ControlsGraph.Draw(batch);
             });
         }
 
-        public void Close()
+        private void unloadContent()
         {
             _resources.GetTexture("FirstTime").Unload();
         }

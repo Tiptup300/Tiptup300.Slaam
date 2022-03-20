@@ -5,14 +5,13 @@ using SlaamMono.Library;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Library.Screens;
 using SlaamMono.x_;
 using System;
 using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class BoardSelectionScreenPerformer : IStatePerformer
+    public class BoardSelectionScreenPerformer : IPerformer<BoardSelectionScreenState>, IRenderer<BoardSelectionScreenState>
     {
         private BoardSelectionScreenState _state = new BoardSelectionScreenState();
 
@@ -50,128 +49,128 @@ namespace SlaamMono.MatchCreation
             _state.HorizontalBoardOffset = new IntRange(-_state.BoardNames.Count);
         }
 
-        public IState Perform()
+        public IState Perform(BoardSelectionScreenState state)
         {
-            if (_state.IsStillLoadingBoards)
+            if (state.IsStillLoadingBoards)
             {
                 continueLoadingBoards();
-                return _state;
+                return state;
             }
 
-            _state.Alpha += (_state.AlphaUp ? 1 : -1) * _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+            state.Alpha += (state.AlphaUp ? 1 : -1) * _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
 
-            if (_state.AlphaUp && _state.Alpha >= 255f)
+            if (state.AlphaUp && state.Alpha >= 255f)
             {
-                _state.AlphaUp = !_state.AlphaUp;
-                _state.Alpha = 255f;
+                state.AlphaUp = !state.AlphaUp;
+                state.Alpha = 255f;
             }
-            else if (!_state.AlphaUp && _state.Alpha <= 0f)
+            else if (!state.AlphaUp && state.Alpha <= 0f)
             {
-                _state.AlphaUp = !_state.AlphaUp;
-                _state.Alpha = 0f;
+                state.AlphaUp = !state.AlphaUp;
+                state.Alpha = 0f;
             }
 
-            if (_state.WasChosen)
+            if (state.WasChosen)
             {
-                _state.Scale += _frameTimeService.GetLatestFrame().MovementFactor * .01f;
+                state.Scale += _frameTimeService.GetLatestFrame().MovementFactor * .01f;
 
-                if (_state.Scale >= 1.50f)
+                if (state.Scale >= 1.50f)
                 {
-                    _state.Scale = 1.50f;
+                    state.Scale = 1.50f;
                 }
 
                 if (_inputService.GetPlayers()[0].PressedAction)
                 {
-                    LobbyScreenFunctions.LoadBoard(_state.ValidBoards[_state.Save], _state.ParentLobbyScreen);
+                    LobbyScreenFunctions.LoadBoard(state.ValidBoards[state.Save], state.ParentLobbyScreen);
                     // todo
                     //_screenManager.ChangeTo(_state.ParentLobbyScreen);
                 }
 
                 if (_inputService.GetPlayers()[0].PressedAction2)
                 {
-                    _state.WasChosen = false;
+                    state.WasChosen = false;
                 }
             }
             else
             {
-                _state.Scale -= _frameTimeService.GetLatestFrame().MovementFactor * .01f;
+                state.Scale -= _frameTimeService.GetLatestFrame().MovementFactor * .01f;
 
-                if (_state.Scale <= 1.00f)
+                if (state.Scale <= 1.00f)
                 {
-                    _state.Scale = 1.00f;
+                    state.Scale = 1.00f;
                 }
 
                 if (_inputService.GetPlayers()[0].PressingDown)
                 {
-                    _state.Vertical = Direction.Down;
+                    state.Vertical = Direction.Down;
                 }
                 if (_inputService.GetPlayers()[0].PressingUp)
                 {
-                    _state.Vertical = Direction.Up;
+                    state.Vertical = Direction.Up;
                 }
 
                 if (_inputService.GetPlayers()[0].PressingRight)
                 {
-                    _state.Horizontal = Direction.Right;
+                    state.Horizontal = Direction.Right;
                 }
                 if (_inputService.GetPlayers()[0].PressingLeft)
                 {
-                    _state.Horizontal = Direction.Left;
+                    state.Horizontal = Direction.Left;
                 }
 
-                if (_state.Vertical == Direction.Down)
+                if (state.Vertical == Direction.Down)
                 {
-                    _state.VerticalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+                    state.VerticalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
 
-                    if (_state.VerticalOffset <= -_state.DrawSizeHeight)
+                    if (state.VerticalOffset <= -state.DrawSizeHeight)
                     {
-                        _state.VerticalBoardOffset.Add(1);
-                        _state.VerticalOffset = 0;
-                        _state.Vertical = Direction.None;
+                        state.VerticalBoardOffset.Add(1);
+                        state.VerticalOffset = 0;
+                        state.Vertical = Direction.None;
                     }
                 }
-                else if (_state.Vertical == Direction.Up)
+                else if (state.Vertical == Direction.Up)
                 {
-                    _state.VerticalOffset += _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
+                    state.VerticalOffset += _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
 
-                    if (_state.VerticalOffset >= _state.DrawSizeHeight)
+                    if (state.VerticalOffset >= state.DrawSizeHeight)
                     {
-                        _state.VerticalBoardOffset.Sub(1);
-                        _state.VerticalOffset = 0;
-                        _state.Vertical = Direction.None;
-                    }
-                }
-
-                if (_state.Horizontal == Direction.Left)
-                {
-                    _state.HorizontalOffset += _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
-
-                    if (_state.HorizontalOffset >= _state.DrawSizeWidth)
-                    {
-                        _state.HorizontalBoardOffset.Add(1);
-                        _state.HorizontalOffset = 0;
-                        _state.Horizontal = Direction.None;
-                    }
-                }
-                else if (_state.Horizontal == Direction.Right)
-                {
-                    _state.HorizontalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * _state.MovementSpeed;
-
-                    if (_state.HorizontalOffset <= -_state.DrawSizeWidth)
-                    {
-                        _state.HorizontalBoardOffset.Sub(1);
-                        _state.HorizontalOffset = 0;
-                        _state.Horizontal = Direction.None;
+                        state.VerticalBoardOffset.Sub(1);
+                        state.VerticalOffset = 0;
+                        state.Vertical = Direction.None;
                     }
                 }
 
-                if (_state.HorizontalOffset == 0 && _state.VerticalOffset == 0 && _inputService.GetPlayers()[0].PressedAction)
+                if (state.Horizontal == Direction.Left)
                 {
-                    _state.WasChosen = true;
+                    state.HorizontalOffset += _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
+
+                    if (state.HorizontalOffset >= state.DrawSizeWidth)
+                    {
+                        state.HorizontalBoardOffset.Add(1);
+                        state.HorizontalOffset = 0;
+                        state.Horizontal = Direction.None;
+                    }
+                }
+                else if (state.Horizontal == Direction.Right)
+                {
+                    state.HorizontalOffset -= _frameTimeService.GetLatestFrame().MovementFactor * state.MovementSpeed;
+
+                    if (state.HorizontalOffset <= -state.DrawSizeWidth)
+                    {
+                        state.HorizontalBoardOffset.Sub(1);
+                        state.HorizontalOffset = 0;
+                        state.Horizontal = Direction.None;
+                    }
+                }
+
+                if (state.HorizontalOffset == 0 && state.VerticalOffset == 0 && _inputService.GetPlayers()[0].PressedAction)
+                {
+                    state.WasChosen = true;
                 }
 
             }
-            return _state;
+            return state;
         }
         private void continueLoadingBoards()
         {
@@ -203,58 +202,51 @@ namespace SlaamMono.MatchCreation
             _state.HorizontalBoardOffset = new IntRange(-_state.BoardTextures.Count, -_state.BoardTextures.Count, -1);
         }
 
-        public void RenderState()
+        public void Render(BoardSelectionScreenState state)
         {
             _renderService.Render(batch =>
             {
 
-                _state.DrawingBoardIndex.Value = _state.VerticalBoardOffset.Value;
-                for (int x = _state.HorizontalBoardOffset.Value; x < 8; x++)
+                state.DrawingBoardIndex.Value = state.VerticalBoardOffset.Value;
+                for (int x = state.HorizontalBoardOffset.Value; x < 8; x++)
                 {
                     for (int y = 0; y < 11; y++)
                     {
-                        Vector2 Pos = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _state.DrawSizeWidth / 2 + x * _state.DrawSizeWidth + _state.HorizontalOffset - _state.DrawSizeWidth * 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _state.DrawSizeHeight / 2 + y * _state.DrawSizeHeight + _state.VerticalOffset - _state.DrawSizeHeight * 2);
-                        if (!(Pos.X < -_state.DrawSizeWidth || Pos.X > GameGlobals.DRAWING_GAME_WIDTH || Pos.Y < -_state.DrawSizeHeight || Pos.Y > GameGlobals.DRAWING_GAME_HEIGHT))
+                        Vector2 Pos = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - state.DrawSizeWidth / 2 + x * state.DrawSizeWidth + state.HorizontalOffset - state.DrawSizeWidth * 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - state.DrawSizeHeight / 2 + y * state.DrawSizeHeight + state.VerticalOffset - state.DrawSizeHeight * 2);
+                        if (!(Pos.X < -state.DrawSizeWidth || Pos.X > GameGlobals.DRAWING_GAME_WIDTH || Pos.Y < -state.DrawSizeHeight || Pos.Y > GameGlobals.DRAWING_GAME_HEIGHT))
                         {
-                            if (_state.DrawingBoardIndex.Value < _state.BoardTextures.Count && _state.BoardTextures[_state.DrawingBoardIndex.Value] != null)
+                            if (state.DrawingBoardIndex.Value < state.BoardTextures.Count && state.BoardTextures[state.DrawingBoardIndex.Value] != null)
                             {
-                                batch.Draw(_state.BoardTextures[_state.DrawingBoardIndex.Value], new Rectangle((int)Pos.X, (int)Pos.Y, _state.DrawSizeWidth, _state.DrawSizeHeight), Color.White);
+                                batch.Draw(state.BoardTextures[state.DrawingBoardIndex.Value], new Rectangle((int)Pos.X, (int)Pos.Y, state.DrawSizeWidth, state.DrawSizeHeight), Color.White);
                             }
                             else
                             {
                                 batch.Draw(_resources.GetTexture("NowLoading").Texture, Pos, Color.White);
                             }
                         }
-                        if (Pos == new Vector2(_state.CenteredRectangle.X, _state.CenteredRectangle.Y))
+                        if (Pos == new Vector2(state.CenteredRectangle.X, state.CenteredRectangle.Y))
                         {
-                            _state.Save = _state.DrawingBoardIndex.Value;
+                            state.Save = state.DrawingBoardIndex.Value;
                         }
-                        _state.DrawingBoardIndex.Add(1);
+                        state.DrawingBoardIndex.Add(1);
                     }
                 }
                 batch.Draw(_resources.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
-                if (!_state.IsStillLoadingBoards)
+                if (!state.IsStillLoadingBoards)
                 {
-                    _state.CenteredRectangle = centerRectangle(new Rectangle(0, 0, (int)(_state.Scale * _state.DrawSizeWidth), (int)(_state.Scale * _state.DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
-                    if (_state.WasChosen)
+                    state.CenteredRectangle = centerRectangle(new Rectangle(0, 0, (int)(state.Scale * state.DrawSizeWidth), (int)(state.Scale * state.DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
+                    if (state.WasChosen)
                     {
-                        batch.Draw(_state.BoardTextures[_state.Save], _state.CenteredRectangle, Color.White);
+                        batch.Draw(state.BoardTextures[state.Save], state.CenteredRectangle, Color.White);
                     }
-                    batch.Draw(_resources.GetTexture("BoardSelect").Texture, _state.CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)_state.Alpha));
-                    _renderService.RenderText(DialogStrings.CleanMapName(_state.ValidBoards[_state.Save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
+                    batch.Draw(_resources.GetTexture("BoardSelect").Texture, state.CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)state.Alpha));
+                    _renderService.RenderText(DialogStrings.CleanMapName(state.ValidBoards[state.Save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
                 }
             });
         }
         private Rectangle centerRectangle(Rectangle rect, Vector2 pos)
         {
             return new Rectangle((int)pos.X - rect.Width / 2, (int)pos.Y - rect.Height / 2, rect.Width, rect.Height);
-        }
-
-        public void Close()
-        {
-            _state.BoardTextures = null;
-            _state.ValidBoards = null;
-            GC.Collect();
         }
     }
 }

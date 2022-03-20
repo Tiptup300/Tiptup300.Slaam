@@ -8,11 +8,6 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Library.Screens;
-using SlaamMono.MatchCreation;
-using SlaamMono.Menus;
-using SlaamMono.Menus.Credits;
-using SlaamMono.Menus.ZibithLogo;
 using SlaamMono.Metrics;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
@@ -71,14 +66,6 @@ namespace SlaamMono.Composition
 
         private void registerScreens()
         {
-            _container.Register<IMainMenuScreen, MainMenuScreenPerformer>();
-            _container.Register<CreditsPerformer>();
-            _container.Register<HighScoreScreenPerformer>();
-            _container.Register<ProfileEditScreenPerformer>();
-            _container.Register<CharacterSelectionScreenPerformer>();
-            _container.Register<ILogoScreen, ZibithLogoPerformer>();
-            _container.Register<MatchPerformer>();
-
             // Register all IRequests
             _container.RegisterSingleton(typeof(IResolver<>), typeof(SlaamGameApp).Assembly);
             _container.RegisterSingleton(typeof(IResolver<,>), typeof(SlaamGameApp).Assembly);

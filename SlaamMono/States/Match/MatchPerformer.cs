@@ -10,7 +10,6 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.SubClasses;
@@ -157,7 +156,7 @@ namespace SlaamMono.Gameplay
                         _state.GameType)));
         }
 
-        public IState Perform()
+        public IState Perform(GameScreenState state)
         {
             if(_state.EndGameSelected)
             {
@@ -167,37 +166,37 @@ namespace SlaamMono.Gameplay
             {
                 survival_Perform();
             }
-            if (_state.IsPaused)
+            if (state.IsPaused)
             {
 
                 SlaamGame.mainBlade.Status = BladeStatus.Out;
-                return _state;
+                return state;
             }
 
-            _state.Timer.Update(_state);
+            state.Timer.Update(state);
             updateScoreBoards();
 
-            if (_state.CurrentGameStatus == GameStatus.MovingBoard)
+            if (state.CurrentGameStatus == GameStatus.MovingBoard)
             {
                 updateMovingBoardState();
             }
-            else if (_state.CurrentGameStatus == GameStatus.Respawning)
+            else if (state.CurrentGameStatus == GameStatus.Respawning)
             {
                 updateRespawningGameState();
             }
-            else if (_state.CurrentGameStatus == GameStatus.Waiting)
+            else if (state.CurrentGameStatus == GameStatus.Waiting)
             {
                 updateWaitingGameState();
             }
-            else if (_state.CurrentGameStatus == GameStatus.Playing)
+            else if (state.CurrentGameStatus == GameStatus.Playing)
             {
                 updatePlayingGameState();
             }
-            else if (_state.CurrentGameStatus == GameStatus.Over)
+            else if (state.CurrentGameStatus == GameStatus.Over)
             {
                 updateOverGameState();
             }
-            return _state;
+            return state;
         }
         public void survival_Perform()
         {
@@ -368,11 +367,11 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public void RenderState()
+        public void Render(GameScreenState state)
         {
             _renderService.Render(batch =>
             {
-                if (_state.IsPaused)
+                if (state.IsPaused)
                 {
                     return;
                 }
@@ -380,7 +379,7 @@ namespace SlaamMono.Gameplay
                 {
                     for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                     {
-                        _state.Tiles[x, y].Draw(batch);
+                        state.Tiles[x, y].Draw(batch);
                     }
                 }
 
@@ -388,37 +387,37 @@ namespace SlaamMono.Gameplay
 
                 int CurrPlayer = -1;
 
-                while (PlayersDrawn < _state.Characters.Count - _state.NullChars)
+                while (PlayersDrawn < state.Characters.Count - state.NullChars)
                 {
                     CurrY = 1280;
                     CurrPlayer = -1;
-                    for (int x = 0; x < _state.Characters.Count; x++)
+                    for (int x = 0; x < state.Characters.Count; x++)
                     {
-                        if (_state.Characters[x] != null && !_state.Characters[x].Drawn && _state.Characters[x].Position.Y <= CurrY)
+                        if (state.Characters[x] != null && !state.Characters[x].Drawn && state.Characters[x].Position.Y <= CurrY)
                         {
-                            CurrY = _state.Characters[x].Position.Y;
+                            CurrY = state.Characters[x].Position.Y;
                             CurrPlayer = x;
                         }
                     }
-                    _state.Characters[CurrPlayer].Drawn = true;
-                    _state.Characters[CurrPlayer].Draw(batch);
+                    state.Characters[CurrPlayer].Drawn = true;
+                    state.Characters[CurrPlayer].Draw(batch);
                     PlayersDrawn++;
                 }
 
                 resetCharactersDrawnStatus();
 
-                for (int x = 0; x < _state.Characters.Count; x++)
+                for (int x = 0; x < state.Characters.Count; x++)
                 {
-                    if (_state.Characters[x] != null)
+                    if (state.Characters[x] != null)
                     {
-                        _state.Characters[x].Drawn = false;
+                        state.Characters[x].Drawn = false;
                     }
                 }
-                if (_state.CurrentGameStatus == GameStatus.Waiting || _state.CurrentGameStatus == GameStatus.Over)
+                if (state.CurrentGameStatus == GameStatus.Waiting || state.CurrentGameStatus == GameStatus.Over)
                 {
-                    batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)_state.Rand.NextDouble() * (1 + _state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)_state.Rand.NextDouble() * (1 + _state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, _state.ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
+                    batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)state.Rand.NextDouble() * (1 + state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)state.Rand.NextDouble() * (1 + state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, state.ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
                 }
-            });           
+            });
         }
         private void resetCharactersDrawnStatus()
         {
@@ -428,7 +427,7 @@ namespace SlaamMono.Gameplay
                 .ForEach(character => character.Drawn = false);
         }
 
-        public void Close()
+        private void unloadContent()
         {
             _resources.GetTexture("ReadySetGo").Unload();
             _resources.GetTexture("BattleBG").Unload();

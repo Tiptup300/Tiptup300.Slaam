@@ -7,7 +7,6 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Library.Screens;
 using SlaamMono.Metrics;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
@@ -56,7 +55,7 @@ namespace SlaamMono
             _gameStartRequestResolver = gameStartRequestResolver;
 
             Content = new ContentManager(Services);
-            configureGame();
+            _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
         }
 
         private void configureGame()
@@ -66,7 +65,7 @@ namespace SlaamMono
 
         protected override void Initialize()
         {
-            _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
+            configureGame();
 
             _inputService.Initialize();
             _renderService.Initialize();
@@ -76,17 +75,18 @@ namespace SlaamMono
 
             SetupZuneBlade();
 
-            _state = _gameStartRequestResolver.Resolve(new GameStartRequest());
+            base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            _logger.Log("Set Graphics Settings (1280x1024 No MultiSampling);");
             _resources.LoadAll();
             mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
             Qwerty.CurrentPlayer = _inputService.GetPlayers()[0];
             _renderService.LoadContent();
             _fpsRenderer.LoadContent();
+
+            base.LoadContent();
         }
 
         public void SetupZuneBlade()
@@ -105,6 +105,10 @@ namespace SlaamMono
         }
         protected override void Update(GameTime gameTime)
         {
+            if (_state is null)
+            {
+                _state = _gameStartRequestResolver.Resolve(new GameStartRequest());
+            }
             _frameTimeService.AddUpdate(gameTime);
             _inputService.Update();
             if (ProfileManager.Initialized == false)
@@ -126,6 +130,8 @@ namespace SlaamMono
                     //_state = _statePerformer.Resolve(_state;// update state
                 }
             }
+
+            base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -143,6 +149,8 @@ namespace SlaamMono
             }
             _renderService.Draw();
             _fpsRenderer.Draw();
+
+            base.Draw(gameTime);
         }
     }
 }

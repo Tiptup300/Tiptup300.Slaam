@@ -25,7 +25,7 @@ namespace SlaamMono.Library.Graphing
 
         public void Draw(SpriteBatch batch, Vector2 Offset)
         {
-            _renderGraphManager.RenderBox(
+            _renderGraphManager.RenderRectangle(
                 new Rectangle(DrawingRectangle.X + (int)Offset.X, DrawingRectangle.Y + (int)Offset.Y, DrawingRectangle.Width, DrawingRectangle.Height),
                 DrawingColor);
         }

@@ -5,7 +5,6 @@ using SlaamMono.Library;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using System;
-using ZzziveGameEngine;
 
 namespace SlaamMono.Gameplay
 {
@@ -23,7 +22,6 @@ namespace SlaamMono.Gameplay
         private bool AlphaUp = false;
         private float Alpha = 255f;
 
-        private readonly IResolver<WhitePixelRequest, Texture2D> _whitePixelResolver;
         private readonly IFrameTimeService _frameTimeService;
         private readonly IResources _resources;
 
@@ -31,7 +29,6 @@ namespace SlaamMono.Gameplay
             IFrameTimeService frameTimeService)
         {
             _resources = resources;
-            _whitePixelResolver = whitePixelResolver;
             _frameTimeService = frameTimeService;
         }
 
@@ -52,7 +49,6 @@ namespace SlaamMono.Gameplay
                     Position.X = 0;
                     Moving = false;
                 }
-
             }
             if (Character.CurrentPowerup != null && Character.CurrentPowerup.Active)
             {
@@ -70,7 +66,9 @@ namespace SlaamMono.Gameplay
                 }
             }
             else
+            {
                 Alpha = 255f;
+            }
         }
 
         public void Draw(SpriteBatch batch)
@@ -87,10 +85,9 @@ namespace SlaamMono.Gameplay
                 RenderService.Instance.RenderText("inf.", new Vector2(73 + Position.X, 68 + Position.Y), _resources.GetFont("SegoeUIx14pt"), Color.White, Alignment.TopCenter, true);
             }
             Character.Draw(batch, new Vector2(184 + Position.X, 61 + Position.Y));
-            batch.Draw(
-                _whitePixelResolver.Resolve(new WhitePixelRequest()),
-                new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33),
-                Character.MarkingColor);
+            RenderService.Instance.RenderRectangle(
+                destinationRectangle: new Rectangle((int)Math.Round(12 + Position.X), (int)Math.Round(30 + Position.Y), 5, 33),
+                color: Character.MarkingColor);
             if (Character.CurrentPowerup != null && !Character.CurrentPowerup.Used)
             {
                 batch.Draw(Character.CurrentPowerup.SmallTex, new Vector2(125 + Position.X - Character.CurrentPowerup.SmallTex.Width / 2, 42 + Position.Y - Character.CurrentPowerup.SmallTex.Height / 2), new Color((byte)255, (byte)255, (byte)255, (byte)Alpha));

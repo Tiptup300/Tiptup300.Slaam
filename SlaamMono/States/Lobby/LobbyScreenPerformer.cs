@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Composition.x_;
 using SlaamMono.Gameplay;
 using SlaamMono.Library;
@@ -8,17 +7,15 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Library.Screens;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
 using System;
 using System.IO;
-using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class LobbyScreenPerformer : IStatePerformer
+    public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<LobbyScreenState>
     {
         private const int _maxPlayers = 4;
 
@@ -111,47 +108,46 @@ namespace SlaamMono.MatchCreation
                     playerColor: _playerColorResolver.GetColorByIndex(_state.SetupCharacters.Count)));
         }
 
-        public IState Perform()
+        public IState Perform(LobbyScreenState state)
         {
-            IState output = _state;
 
-            if (_state.ViewingSettings)
+            if (state.ViewingSettings)
             {
                 if (_inputService.GetPlayers()[0].PressedDown)
                 {
-                    _state.MenuChoice.Add(1);
-                    _state.MainMenu.SetHighlight(_state.MenuChoice.Value);
+                    state.MenuChoice.Add(1);
+                    state.MainMenu.SetHighlight(state.MenuChoice.Value);
                 }
                 if (_inputService.GetPlayers()[0].PressedUp)
                 {
-                    _state.MenuChoice.Sub(1);
-                    _state.MainMenu.SetHighlight(_state.MenuChoice.Value);
+                    state.MenuChoice.Sub(1);
+                    state.MainMenu.SetHighlight(state.MenuChoice.Value);
                 }
 
-                if (_state.MainMenu.Items[_state.MenuChoice.Value].GetType() == typeof(GraphItemSetting))
+                if (state.MainMenu.Items[state.MenuChoice.Value].GetType() == typeof(GraphItemSetting))
                 {
                     if (_inputService.GetPlayers()[0].PressedLeft)
                     {
-                        _state.MainMenu.Items[_state.MenuChoice.Value].ToSetting().ChangeValue(false);
-                        _state.MainMenu.CalculateBlocks();
+                        state.MainMenu.Items[state.MenuChoice.Value].ToSetting().ChangeValue(false);
+                        state.MainMenu.CalculateBlocks();
                     }
                     else if (_inputService.GetPlayers()[0].PressedRight)
                     {
-                        _state.MainMenu.Items[_state.MenuChoice.Value].ToSetting().ChangeValue(true);
-                        _state.MainMenu.CalculateBlocks();
+                        state.MainMenu.Items[state.MenuChoice.Value].ToSetting().ChangeValue(true);
+                        state.MainMenu.CalculateBlocks();
                     }
                 }
                 else
                 {
                     if (_inputService.GetPlayers()[0].PressedAction)
                     {
-                        if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Save")
+                        if (state.MainMenu.Items[state.MenuChoice.Value].Details[1] == "Save")
                         {
                             writeMatchSettingsToFile();
-                            _state.ViewingSettings = false;
+                            state.ViewingSettings = false;
                             LobbyScreenFunctions.SetupZune();
                         }
-                        else if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Cancel")
+                        else if (state.MainMenu.Items[state.MenuChoice.Value].Details[1] == "Cancel")
                         {
                             readMatchSettingsFromFile();
                             _state.ViewingSettings = false;
@@ -160,7 +156,7 @@ namespace SlaamMono.MatchCreation
                         else
                         {
                             // @State/Logic - this will need to be changed to a Request -> State resolver.
-                            output = new BoardSelectionScreenRequestState(_state);
+                            return new BoardSelectionScreenRequestState(state);
                         }
                     }
                 }
@@ -169,20 +165,20 @@ namespace SlaamMono.MatchCreation
             {
                 if (_inputService.GetPlayers()[0].PressedAction2)
                 {
-                    // @State/Logic - this will need to be changed to a Requaest -> State resolver.
-                    output = new CharacterSelectionScreenRequestState();
                     ProfileManager.ResetAllBots();
                     LobbyScreenFunctions.SetupZune();
+                    // @State/Logic - this will need to be changed to a Requaest -> State resolver.
+                    return new CharacterSelectionScreenRequestState();
                 }
 
-                if (_inputService.GetPlayers()[0].PressedUp && _state.SetupCharacters.Count < _maxPlayers)
+                if (_inputService.GetPlayers()[0].PressedUp && state.SetupCharacters.Count < _maxPlayers)
                 {
                     addComputer();
                 }
-                if (_inputService.GetPlayers()[0].PressedDown && _state.SetupCharacters.Count > _state.PlayerAmt)
+                if (_inputService.GetPlayers()[0].PressedDown && state.SetupCharacters.Count > state.PlayerAmt)
                 {
-                    ProfileManager.ResetBot(_state.SetupCharacters[_state.SetupCharacters.Count - 1].CharacterProfileIndex);
-                    _state.SetupCharacters.RemoveAt(_state.SetupCharacters.Count - 1);
+                    ProfileManager.ResetBot(state.SetupCharacters[state.SetupCharacters.Count - 1].CharacterProfileIndex);
+                    state.SetupCharacters.RemoveAt(state.SetupCharacters.Count - 1);
                 }
 
                 if (_inputService.GetPlayers()[0].PressedStart)
@@ -193,16 +189,18 @@ namespace SlaamMono.MatchCreation
                     output = new MatchRequest(_state.SetupCharacters, matchSettings);
                     ProfileManager.ResetAllBots();
                     LobbyScreenFunctions.SetupZune();
+                    // @State/Logic - this will need to be changed to a Request -> State resolver.
+                    return new GameScreenRequestState(state.SetupCharacters, matchSettings);
                 }
 
                 if (_inputService.GetPlayers()[0].PressedAction)
                 {
-                    _state.ViewingSettings = true;
+                    state.ViewingSettings = true;
                     LobbyScreenFunctions.SetupZune();
                 }
 
             }
-            return _state;
+            return state;
         }
         private MatchSettings buildMatchSettings()
         {
@@ -321,36 +319,35 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public void RenderState()
+        public void Render(LobbyScreenState state)
         {
             _renderService.Render(batch =>
             {
-                if (_state.ViewingSettings)
+                if (state.ViewingSettings)
                 {
-                    _state.MainMenu.Draw(batch);
+                    state.MainMenu.Draw(batch);
                 }
                 else
                 {
                     batch.Draw(_resources.GetTexture("LobbyUnderlay").Texture, Vector2.Zero, Color.White);
                     float YOffset = 75;
 
-                    for (int x = 0; x < _state.SetupCharacters.Count; x++)
+                    for (int x = 0; x < state.SetupCharacters.Count; x++)
                     {
                         batch.Draw(_resources.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
-                        batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), _state.SetupCharacters[x].PlayerColor);
-                        if (_state.SetupCharacters[x].PlayerType == PlayerType.Player)
-                            _renderService.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+                        batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), state.SetupCharacters[x].PlayerColor);
+                        if (state.SetupCharacters[x].PlayerType == PlayerType.Player)
+                            _renderService.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
                         else
-                            _renderService.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
+                            _renderService.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
                     }
                     batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
                 }
 
             });
         }
-        public void Close()
+        private void unloadContent()
         {
-            _state.CurrentBoardTexture = null;
             _resources.GetTexture("LobbyUnderlay").Unload();
             _resources.GetTexture("LobbyCharBar").Unload();
             _resources.GetTexture("LobbyColorPreview").Unload();

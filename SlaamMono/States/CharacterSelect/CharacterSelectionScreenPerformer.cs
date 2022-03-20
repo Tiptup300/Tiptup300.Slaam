@@ -4,7 +4,6 @@ using SlaamMono.Gameplay;
 using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
-using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes;
 using SlaamMono.Menus;
 using SlaamMono.PlayerProfiles;
@@ -16,7 +15,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
 {
-    public class CharacterSelectionScreenPerformer : IStatePerformer
+    public class CharacterSelectionScreenPerformer : IPerformer<CharacterSelectionScreenState>, IRenderer<CharacterSelectionScreenState>
     {
         private const float _verticalOffset = 195f;
         private const float _horizontalOffset = 40f;
@@ -41,7 +40,7 @@ namespace SlaamMono.MatchCreation
         public CharacterSelectionScreenPerformer(
             ILogger logger,
             PlayerCharacterSelectBoxPerformer playerCharacterSelectBoxPerformer,
-            IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState> selectBoxStateResolver, 
+            IResolver<PlayerCharacterSelectBoxRequest, PlayerCharacterSelectBoxState> selectBoxStateResolver,
             IInputService inputService,
             IRenderService renderService)
         {
@@ -137,37 +136,37 @@ namespace SlaamMono.MatchCreation
             return output;
         }
 
-        public IState Perform()
+        public IState Perform(CharacterSelectionScreenState state)
         {
-            _state._peopleDone = 0;
-            _state._peopleIn = 0;
+            state._peopleDone = 0;
+            state._peopleIn = 0;
 
             if (
-                _state._peopleIn == 0 &&
+                state._peopleIn == 0 &&
                 _inputService.GetPlayers()[0].PressedAction2 &&
-                _state.SelectBoxes[0].Status == PlayerCharacterSelectBoxStatus.Computer)
+                state.SelectBoxes[0].Status == PlayerCharacterSelectBoxStatus.Computer)
             {
                 return goBack();
             }
 
-            for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
+            for (int idx = 0; idx < state.SelectBoxes.Length; idx++)
             {
-                _playerCharacterSelectBox.Update(_state.SelectBoxes[idx]);
-                if (_state.SelectBoxes[idx].Status == PlayerCharacterSelectBoxStatus.Done)
+                _playerCharacterSelectBox.Update(state.SelectBoxes[idx]);
+                if (state.SelectBoxes[idx].Status == PlayerCharacterSelectBoxStatus.Done)
                 {
-                    _state._peopleDone++;
+                    state._peopleDone++;
                 }
 
-                if (_state.SelectBoxes[idx].Status != PlayerCharacterSelectBoxStatus.Computer)
+                if (state.SelectBoxes[idx].Status != PlayerCharacterSelectBoxStatus.Computer)
                 {
-                    _state._peopleIn++;
+                    state._peopleIn++;
                 }
             }
-            if (_state._peopleIn > 0 && _state._peopleDone == _state._peopleIn)
+            if (state._peopleIn > 0 && state._peopleDone == state._peopleIn)
             {
                 return goForward();
             }
-            return _state;
+            return state;
         }
         private IState goBack()
         {
@@ -197,25 +196,18 @@ namespace SlaamMono.MatchCreation
             }
         }
 
-        public void RenderState()
+        public void Render(CharacterSelectionScreenState state)
         {
             _renderService.Render(batch =>
             {
-                for (int idx = 0; idx < _state.SelectBoxes.Length; idx++)
+                for (int idx = 0; idx < state.SelectBoxes.Length; idx++)
                 {
-                    if (_state.SelectBoxes[idx] != null)
+                    if (state.SelectBoxes[idx] != null)
                     {
-                        _playerCharacterSelectBox.Draw(_state.SelectBoxes[idx], batch);
+                        _playerCharacterSelectBox.Draw(state.SelectBoxes[idx], batch);
                     }
                 }
             });
         }
-
-        public void Close()
-        {
-            _state.SelectBoxes = null;
-        }
-
-
     }
 }

@@ -8,6 +8,6 @@ namespace SlaamMono.Library.Rendering
     {
         void Render(Action<SpriteBatch> batch);
         void RenderText(string text, Vector2 position, SpriteFont font, Color? color = null, Alignment alignment = Alignment.TopLeft, bool addShadow = false);
-        void RenderBox(Rectangle destinationRectangle, Color? color = null, Alignment alignment = Alignment.TopLeft);
+        void RenderRectangle(Rectangle destinationRectangle, Color? color = null, Alignment alignment = Alignment.TopLeft);
     }
 }

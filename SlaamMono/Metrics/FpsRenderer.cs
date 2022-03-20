@@ -36,7 +36,7 @@ namespace SlaamMono.Metrics
 
         public void Initialize()
         {
-
+            _fpsText = "";
         }
 
         public void LoadContent()
@@ -61,9 +61,9 @@ namespace SlaamMono.Metrics
         }
         public void Draw()
         {
-            if (_gameConfig.ShowFPS)
+            if (_gameConfig.ShowFPS && _fpsText != null)
             {
-                _renderGraph.RenderBox(
+                _renderGraph.RenderRectangle(
                     destinationRectangle: _boxDestination,
                     color: _backBoxColor);
 

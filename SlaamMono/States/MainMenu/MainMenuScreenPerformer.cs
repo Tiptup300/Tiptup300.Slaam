@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Screens;
 using SlaamMono.MatchCreation;
 using SlaamMono.Menus.Credits;
 using SlaamMono.PlayerProfiles;
@@ -11,7 +10,7 @@ using ZzziveGameEngine.StateManagement.States;
 
 namespace SlaamMono.Menus
 {
-    public class MainMenuScreenPerformer : IMainMenuScreen, IStatePerformer
+    public class MainMenuScreenPerformer : IPerformer<MainMenuScreenState>, IRenderer<MainMenuScreenState>
     {
         private MainMenuScreenState _state;
         private readonly IResolver<IRequest, IState> _stateResolver;
@@ -55,20 +54,20 @@ namespace SlaamMono.Menus
         private void exitGame(object sender, EventArgs e) => _state.NextState = new GameExitState();
 
 
-        public IState Perform()
+        public IState Perform(MainMenuScreenState state)
         {
-            if (_state.NextState != null)
+            if (state.NextState != null)
             {
-                return _state.NextState;
+                return state.NextState;
             }
             else
             {
-                return _state;
+                return state;
             }
         }
-        public void RenderState() { }
+        public void Render(MainMenuScreenState state) { }
 
-        public void Close()
+        public void hideZBlade()
         {
             SlaamGame.mainBlade.Status = BladeStatus.Hidden;
             SlaamGame.mainBlade.TopMenu = null;

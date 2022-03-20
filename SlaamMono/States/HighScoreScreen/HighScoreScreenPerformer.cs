@@ -3,7 +3,6 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Library.Screens;
 using SlaamMono.StatsBoards;
 using SlaamMono.x_;
 using ZzziveGameEngine;
@@ -11,7 +10,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Menus
 {
-    public class HighScoreScreenPerformer : IStatePerformer
+    public class HighScoreScreenPerformer : IPerformer<HighScoreScreenState>, IRenderer<HighScoreScreenState>
     {
         public const int MAX_HIGHSCORES = 7;
 
@@ -48,26 +47,21 @@ namespace SlaamMono.Menus
             _state._statsboard.ConstructGraph(25);
         }
 
-        public IState Perform()
+        public IState Perform(HighScoreScreenState state)
         {
             if (_inputService.GetPlayers()[0].PressedAction2)
             {
                 return _stateResolver.Resolve(new MainMenuRequest());
             }
-            return _state;
+            return state;
         }
 
-        public void RenderState()
+        public void Render(HighScoreScreenState state)
         {
             _renderService.Render(batch =>
             {
-                _state._statsboard.MainBoard.Draw(batch);
+                state._statsboard.MainBoard.Draw(batch);
             });
-        }
-
-        public void Close()
-        {
-
         }
     }
 }

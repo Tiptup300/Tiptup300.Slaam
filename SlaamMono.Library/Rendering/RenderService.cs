@@ -36,7 +36,7 @@ namespace SlaamMono.Library.Rendering
             _batch = new SpriteBatch(_graphicsState.Get().GraphicsDevice);
         }
 
-        public void RenderBox(Rectangle destinationRectangle, Color? color = null, Alignment alignment = Alignment.TopLeft)
+        public void RenderRectangle(Rectangle destinationRectangle, Color? color = null, Alignment alignment = Alignment.TopLeft)
         {
             _boxesToDraw.Add(
                 new Box(
