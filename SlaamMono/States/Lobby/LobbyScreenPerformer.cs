@@ -71,12 +71,12 @@ namespace SlaamMono.MatchCreation
             );
             _state.MenuChoice = new IntRange(0, 0, _state.MainMenu.Items.Count - 1);
             readMatchSettingsFromFile();
-            MatchSettings.CurrentMatchSettings = buildMatchSettings();
+            MatchSettings matchSettings = buildMatchSettings();
             _state.MainMenu.SetHighlight(_state.MenuChoice.Value);
 
-            if (MatchSettings.CurrentMatchSettings.BoardLocation != null && MatchSettings.CurrentMatchSettings.BoardLocation.Trim() != "" && File.Exists(MatchSettings.CurrentMatchSettings.BoardLocation))
+            if (matchSettings.BoardLocation != null && matchSettings.BoardLocation.Trim() != "" && File.Exists(matchSettings.BoardLocation))
             {
-                LobbyScreenFunctions.LoadBoard(MatchSettings.CurrentMatchSettings.BoardLocation, _state);
+                LobbyScreenFunctions.LoadBoard(matchSettings.BoardLocation, _state);
             }
             else
             {
@@ -147,7 +147,6 @@ namespace SlaamMono.MatchCreation
                     {
                         if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Save")
                         {
-                            MatchSettings.CurrentMatchSettings = buildMatchSettings();
                             writeMatchSettingsToFile();
                             _state.ViewingSettings = false;
                             LobbyScreenFunctions.SetupZune();
@@ -155,7 +154,6 @@ namespace SlaamMono.MatchCreation
                         else if (_state.MainMenu.Items[_state.MenuChoice.Value].Details[1] == "Cancel")
                         {
                             readMatchSettingsFromFile();
-                            MatchSettings.CurrentMatchSettings = buildMatchSettings();
                             _state.ViewingSettings = false;
                             LobbyScreenFunctions.SetupZune();
                         }
@@ -190,7 +188,6 @@ namespace SlaamMono.MatchCreation
                 if (_inputService.GetPlayers()[0].PressedStart)
                 {
                     MatchSettings matchSettings = buildMatchSettings();
-                    MatchSettings.CurrentMatchSettings = matchSettings;
                     writeMatchSettingsToFile();
                     // @State/Logic - this will need to be changed to a Request -> State resolver.
                     output = new GameScreenRequestState(_state.SetupCharacters, matchSettings);
@@ -304,7 +301,6 @@ namespace SlaamMono.MatchCreation
 
                 if (reader.IsWrongVersion())
                 {
-                    MatchSettings.CurrentMatchSettings = buildMatchSettings();
                     throw new EndOfStreamException();
                 }
 
@@ -322,7 +318,6 @@ namespace SlaamMono.MatchCreation
             finally
             {
                 reader.Close();
-                MatchSettings.CurrentMatchSettings = buildMatchSettings();
             }
         }
 

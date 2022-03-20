@@ -4,8 +4,6 @@ namespace SlaamMono.Gameplay
 {
     public class MatchSettings
     {
-        public static MatchSettings CurrentMatchSettings;
-
         public GameType GameType { get; set; }
         public int LivesAmt { get; set; }
         public float SpeedMultiplyer { get; set; }
