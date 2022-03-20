@@ -25,7 +25,6 @@ namespace SlaamMono.Gameplay
 {
     public class MatchPerformer : IStatePerformer
     {
-        private MatchState _state = new MatchState();
 
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
@@ -53,64 +52,7 @@ namespace SlaamMono.Gameplay
             _renderService = renderService;
         }
 
-        public void Initialize(MatchRequest gameScreenRequest)
-        {
-            _state.SetupCharacters = gameScreenRequest.SetupCharacters;
-            _state.CurrentMatchSettings = gameScreenRequest.MatchSettings;
-        }
 
-        public void InitializeState()
-        {
-            _state.PowerupTime = new Timer(new TimeSpan(0, 0, 0, 15));
-            _state.ReadySetGoThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 325));
-            _state.Tiles = new Tile[GameGlobals.BOARD_WIDTH, GameGlobals.BOARD_HEIGHT];
-            _state.CurrentGameStatus = GameStatus.Waiting;
-            _state.GameType = _state.CurrentMatchSettings.GameType;
-            SetupTheBoard(_state.CurrentMatchSettings.BoardLocation);
-            _state.CurrentGameStatus = GameStatus.MovingBoard;
-            _resources.GetTexture("ReadySetGo").Load();
-            _resources.GetTexture("BattleBG").Load();
-
-            _state.Boardpos = new Vector2(calcFinalBoardPosition().X, -_state.Tileset.Height);
-
-            _state.Timer = new MatchTimer(
-                x_Di.Get<IResources>(),
-                new Vector2(1024, 0),
-                _state.CurrentMatchSettings, _frameTimeService);
-
-            for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
-            {
-                for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
-                {
-                    _state.Tiles[x, y] = new Tile(
-                        _state.Boardpos,
-                        new Vector2(x, y),
-                        _state.Tileset,
-                        x_Di.Get<IResources>(),
-                        x_Di.Get<IRenderService>(),
-                        _frameTimeService);
-                }
-            }
-            _state.ScoreKeeper = new MatchScoreCollection(this, _state.GameType, _state);
-            _state.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-            if (_state.GameType == GameType.Classic)
-            {
-                _state.StepsRemaining = _state.SetupCharacters.Count - 1;
-            }
-            else if (_state.GameType == GameType.TimedSpree)
-            {
-                _state.StepsRemaining = 7;
-            }
-            else if (_state.GameType == GameType.Spree)
-            {
-                _state.StepsRemaining = 100;
-                _state.KillsToWin = _state.CurrentMatchSettings.KillsToWin;
-                _state.SpreeStepSize = 10;
-                _state.SpreeCurrentStep = 0;
-            }
-
-            setupPauseMenu();
-        }
 
         private Vector2 calcFinalBoardPosition()
         {
@@ -217,6 +159,10 @@ namespace SlaamMono.Gameplay
 
         public IState Perform()
         {
+            if(_state.EndGameSelected)
+            {
+                return endGame();
+            }
             if (_state.GameType == GameType.Survival)
             {
                 survival_Perform();

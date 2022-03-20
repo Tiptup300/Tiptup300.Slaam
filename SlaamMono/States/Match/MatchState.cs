@@ -44,5 +44,7 @@ namespace SlaamMono.Gameplay
         public MatchSettings CurrentMatchSettings { get; set; }
 
         public SurvivalGameScreenState SurvivalState { get; set; } = new SurvivalGameScreenState();
+
+        public bool EndGameSelected { get; set; }
     }
 }
