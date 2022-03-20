@@ -150,7 +150,6 @@ namespace SlaamMono.MatchCreation
                         else if (state.MainMenu.Items[state.MenuChoice.Value].Details[1] == "Cancel")
                         {
                             readMatchSettingsFromFile();
-                            MatchSettings.CurrentMatchSettings = buildMatchSettings();
                             _state.ViewingSettings = false;
                             LobbyScreenFunctions.SetupZune();
                         }
