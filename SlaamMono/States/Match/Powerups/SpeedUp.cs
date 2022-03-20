@@ -27,14 +27,14 @@ namespace SlaamMono.Gameplay.Powerups
             _frameTimeService = frameTimeService;
         }
 
-        public override void BeginAttack(Vector2 charposition, Direction chardirection, GameScreenState gameScreenState)
+        public override void BeginAttack(Vector2 charposition, Direction chardirection, MatchState gameScreenState)
         {
             Active = true;
             CurrentTime = TimeLasting;
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
         }
 
-        public override void UpdateAttack(GameScreenState gameScreenState)
+        public override void UpdateAttack(MatchState gameScreenState)
         {
             CurrentTime -= _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
 
@@ -44,7 +44,7 @@ namespace SlaamMono.Gameplay.Powerups
                 EndAttack(gameScreenState);
         }
 
-        public override void EndAttack(GameScreenState gameScreenState)
+        public override void EndAttack(MatchState gameScreenState)
         {
             Active = false;
             ParentCharacter.SpeedMultiplyer[PowerupIndex] = 1f;

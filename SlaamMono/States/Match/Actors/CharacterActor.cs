@@ -76,7 +76,7 @@ namespace SlaamMono.Gameplay.Actors
 
         }
 
-        public virtual void Update(Vector2 CurrentCoordinates, Vector2 TilePos, GameScreenState gameScreenState)
+        public virtual void Update(Vector2 CurrentCoordinates, Vector2 TilePos, MatchState gameScreenState)
         {
 
             if (Gamepad.PressedStart)
@@ -309,14 +309,14 @@ namespace SlaamMono.Gameplay.Actors
         /// <param name="x">X Tile Position Offset</param>
         /// <param name="y">Y Tile Position Offset</param>
         /// <returns></returns>
-        public bool IsClear(Vector2 CurrentCoords, Vector2 Movement, GameScreenState gameScreenState)
+        public bool IsClear(Vector2 CurrentCoords, Vector2 Movement, MatchState gameScreenState)
         {
-            Vector2 TilePosition = GameScreenFunctions.InterpretCoordinates(gameScreenState, new Vector2(CurrentCoords.X + Movement.X, CurrentCoords.Y + Movement.Y), true);
+            Vector2 TilePosition = MatchFunctions.InterpretCoordinates(gameScreenState, new Vector2(CurrentCoords.X + Movement.X, CurrentCoords.Y + Movement.Y), true);
 
             return IsClear(TilePosition, gameScreenState);
         }
 
-        public bool IsClear(Vector2 TilePosition, GameScreenState gameScreenState)
+        public bool IsClear(Vector2 TilePosition, MatchState gameScreenState)
         {
             if (TilePosition.X < 0 || TilePosition.Y < 0 || TilePosition.X >= GameGlobals.BOARD_WIDTH || TilePosition.Y >= GameGlobals.BOARD_HEIGHT)
                 return false;
@@ -331,7 +331,7 @@ namespace SlaamMono.Gameplay.Actors
             return true;
         }
 
-        public bool IsSafeAndClear(Vector2 TilePosition, GameScreenState gameScreenState)
+        public bool IsSafeAndClear(Vector2 TilePosition, MatchState gameScreenState)
         {
             if (!IsClear(TilePosition, gameScreenState))
                 return false;
@@ -357,7 +357,7 @@ namespace SlaamMono.Gameplay.Actors
             return true;
         }
 
-        private void GetPowerup(Tile currtile, GameScreenState gameScreenState)
+        private void GetPowerup(Tile currtile, MatchState gameScreenState)
         {
             if (CurrentPowerup != null && !CurrentPowerup.Used)
             {
@@ -433,14 +433,14 @@ namespace SlaamMono.Gameplay.Actors
         /// </summary>
         /// <param name="tiles">Listing of all tiles on the board.</param>
         /// <param name="coors">Current Coordinates of the player.</param>
-        public void ReportDeath(Tile[,] tiles, Vector2 coors, GameType gameType, GameScreenState gameScreenState)
+        public void ReportDeath(Tile[,] tiles, Vector2 coors, GameType gameType, MatchState gameScreenState)
         {
             if (gameType == GameType.Classic || gameType == GameType.Survival)
                 Lives--;
 
             Deaths++;
 
-            GameScreenFunctions.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex, gameScreenState, _frameTimeService);
+            MatchFunctions.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex, gameScreenState, _frameTimeService);
 
             CurrentState = CharacterState.Dead;
             ReappearTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);

@@ -77,7 +77,7 @@ namespace SlaamMono.Composition
             _container.Register<ProfileEditScreenPerformer>();
             _container.Register<CharacterSelectionScreenPerformer>();
             _container.Register<ILogoScreen, ZibithLogoPerformer>();
-            _container.Register<GameScreenPerformer>();
+            _container.Register<MatchPerformer>();
 
             // Register all IRequests
             _container.RegisterSingleton(typeof(IResolver<>), typeof(SlaamGameApp).Assembly);

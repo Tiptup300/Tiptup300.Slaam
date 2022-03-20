@@ -184,7 +184,7 @@ namespace SlaamMono.MatchCreation
                 List<CharacterShell> list = new List<CharacterShell>();
                 list.Add(_playerCharacterSelectBox.GetShell(_state.SelectBoxes[0]));
 
-                return new GameScreenRequestState(list, matchSettings);
+                return new MatchRequest(list, matchSettings);
             }
             else
             {

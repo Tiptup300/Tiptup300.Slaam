@@ -190,7 +190,7 @@ namespace SlaamMono.MatchCreation
                     MatchSettings matchSettings = buildMatchSettings();
                     writeMatchSettingsToFile();
                     // @State/Logic - this will need to be changed to a Request -> State resolver.
-                    output = new GameScreenRequestState(_state.SetupCharacters, matchSettings);
+                    output = new MatchRequest(_state.SetupCharacters, matchSettings);
                     ProfileManager.ResetAllBots();
                     LobbyScreenFunctions.SetupZune();
                 }

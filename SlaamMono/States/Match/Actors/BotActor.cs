@@ -14,7 +14,7 @@ namespace SlaamMono.Gameplay.Actors
 {
     public class BotActor : CharacterActor
     {
-        GameScreenPerformer ParentGameScreen;
+        MatchPerformer ParentGameScreen;
         private readonly IFrameTimeService _frameTimeService;
         InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
         Timer DiagonalMovementSwitch = new Timer(new TimeSpan(0, 0, 0, 0, 500));
@@ -30,7 +30,7 @@ namespace SlaamMono.Gameplay.Actors
         private readonly Vector2 NullVector2 = new Vector2(-2, -2);
         private BotTarget CurrentTarget;
         private bool SwitchMovements = false;
-        public BotActor(Texture2D skin, int profile, Vector2 pos, GameScreenPerformer parentgamescreen, Color markingcolor, int plyeridx, IResources resources,
+        public BotActor(Texture2D skin, int profile, Vector2 pos, MatchPerformer parentgamescreen, Color markingcolor, int plyeridx, IResources resources,
             IFrameTimeService frameTimeService, MatchSettings matchSettings) :
             base(skin, profile, pos, null, markingcolor, plyeridx, resources, frameTimeService, matchSettings)
         {
@@ -44,7 +44,7 @@ namespace SlaamMono.Gameplay.Actors
             PlacesToGo.Add(new int[] { 1, 0 });
             PlacesToGo.Add(new int[] { -1, 0 });
         }
-        public override void Update(Vector2 CurrentCoordinates, Vector2 TilePos, GameScreenState gameScreenState)
+        public override void Update(Vector2 CurrentCoordinates, Vector2 TilePos, MatchState gameScreenState)
         {
             AIInput.PressedAction2 = false;
 
@@ -68,7 +68,7 @@ namespace SlaamMono.Gameplay.Actors
             ClearInput();
         }
 
-        private void LogicUpdate(Vector2 CurrentCoordinates, Vector2 TilePos, GameScreenState gameScreenState)
+        private void LogicUpdate(Vector2 CurrentCoordinates, Vector2 TilePos, MatchState gameScreenState)
         {
             Tile CurrentTile = gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
             bool Moving = true, Attacking = false, InDanger = CurrentTile.CurrentTileCondition != TileCondition.Normal && CurrentTile.CurrentTileCondition != TileCondition.RespawnPoint;
@@ -123,7 +123,7 @@ namespace SlaamMono.Gameplay.Actors
                          gameScreenState.Characters[x].CurrentState != CharacterState.Dieing &&
                          gameScreenState.Characters[x].MarkingColor != MarkingColor)
                     {
-                        Vector2 pos = GameScreenFunctions.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true);
+                        Vector2 pos = MatchFunctions.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true);
                         if (pos != CurrentCoordinates)
                             Targets.Add(new BotTarget(x, pos, GetDistance(CurrentCoordinates, pos)));
 
@@ -278,7 +278,7 @@ namespace SlaamMono.Gameplay.Actors
             }
         }
 
-        private Vector2 FindSafePlace(Vector2 CurrentCoordinates, GameScreenState gameScreenState)
+        private Vector2 FindSafePlace(Vector2 CurrentCoordinates, MatchState gameScreenState)
         {
             PlacesToGo.RandomizeList();
 

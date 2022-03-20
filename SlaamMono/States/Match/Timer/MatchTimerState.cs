@@ -4,7 +4,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreenTimerState : IState
+    public class MatchTimerState : IState
     {
         public TimeSpan CurrentGameTime = new TimeSpan();
         public bool Moving = false;

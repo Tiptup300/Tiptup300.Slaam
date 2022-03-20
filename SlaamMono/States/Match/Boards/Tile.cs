@@ -49,8 +49,8 @@ namespace SlaamMono.Gameplay.Boards
         }
 
 
-        public void Update(GameScreenState gameScreenState) => updateState(gameScreenState, _state);
-        public void updateState(GameScreenState gameScreenState, TileState tileState)
+        public void Update(MatchState gameScreenState) => updateState(gameScreenState, _state);
+        public void updateState(MatchState gameScreenState, TileState tileState)
         {
             if (tileState.CurrentTileCondition == TileCondition.RespawnPoint)
             {
@@ -58,7 +58,7 @@ namespace SlaamMono.Gameplay.Boards
                 {
                     if (x == tileState.MarkedIndex)
                     {
-                        if (GameScreenFunctions.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true) != tileState.TileCoors)
+                        if (MatchFunctions.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true) != tileState.TileCoors)
                         {
                             tileState.CurrentTileCondition = TileCondition.Normal;
                         }

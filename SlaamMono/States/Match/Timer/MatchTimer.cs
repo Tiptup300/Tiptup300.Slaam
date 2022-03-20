@@ -10,16 +10,16 @@ namespace SlaamMono.Gameplay
     /// <summary>
     /// Scoreboards for the players in a game.
     /// </summary>
-    public class GameScreenTimer
+    public class MatchTimer
     {
         public TimeSpan CurrentGameTime { get => _state.CurrentGameTime; }
         public bool Moving { get => _state.Moving; set { _state.Moving = value; } }
-        private GameScreenTimerState _state = new GameScreenTimerState();
+        private MatchTimerState _state = new MatchTimerState();
 
         private readonly IResources _resources;
         private readonly IFrameTimeService _frameTimeService;
 
-        public GameScreenTimer(IResources resources, Vector2 position, MatchSettings matchSettings,
+        public MatchTimer(IResources resources, Vector2 position, MatchSettings matchSettings,
             IFrameTimeService frameTimeService)
         {
             _resources = resources;
@@ -27,11 +27,11 @@ namespace SlaamMono.Gameplay
             _state = InitializeState(position, matchSettings);
         }
 
-        public static GameScreenTimerState InitializeState(Vector2 position, MatchSettings matchSettings)
+        public static MatchTimerState InitializeState(Vector2 position, MatchSettings matchSettings)
         {
-            GameScreenTimerState output;
+            MatchTimerState output;
 
-            output = new GameScreenTimerState();
+            output = new MatchTimerState();
             output.Position = position;
             output.GameType = matchSettings.GameType;
             output.EndingTime = matchSettings.TimeOfMatch;
@@ -42,9 +42,9 @@ namespace SlaamMono.Gameplay
             return output;
         }
 
-        public void Update(GameScreenState gameScreenState) => updateState(gameScreenState, _state);
+        public void Update(MatchState gameScreenState) => updateState(gameScreenState, _state);
 
-        public void updateState(GameScreenState gameScreenState, GameScreenTimerState state)
+        public void updateState(MatchState gameScreenState, MatchTimerState state)
         {
             if (state.Moving)
             {
@@ -75,7 +75,7 @@ namespace SlaamMono.Gameplay
                     if (state.CurrentStep >= state.StepSize)
                     {
                         state.CurrentStep -= state.StepSize;
-                        GameScreenFunctions.ShortenBoard(gameScreenState, _frameTimeService);
+                        MatchFunctions.ShortenBoard(gameScreenState, _frameTimeService);
                     }
 
                 }
@@ -85,7 +85,7 @@ namespace SlaamMono.Gameplay
 
         public void Draw(SpriteBatch batch) => drawState(batch, _state);
 
-        public void drawState(SpriteBatch batch, GameScreenTimerState state)
+        public void drawState(SpriteBatch batch, MatchTimerState state)
         {
             batch.Draw(_resources.GetTexture("TopGameBoard").Texture, new Vector2(1280 - _resources.GetTexture("TopGameBoard").Width + state.Position.X, 0), Color.White);
             RenderService.Instance.RenderText(state.GameMatchTime.Minutes.ToString("00"), new Vector2(1181.5f + state.Position.X, 64), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopCenter, false);
@@ -101,7 +101,7 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        private static TimeSpan getGameMatchTime(GameScreenTimerState state)
+        private static TimeSpan getGameMatchTime(MatchTimerState state)
         {
             switch (state.GameType)
             {

@@ -23,22 +23,22 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreenPerformer : IStatePerformer
+    public class MatchPerformer : IStatePerformer
     {
-        private GameScreenState _state = new GameScreenState();
+        private MatchState _state = new MatchState();
 
         private readonly IResources _resources;
         private readonly IGraphicsState _graphics;
-        private readonly IResolver<ScoreboardRequest, Scoreboard> _gameScreenScoreBoardResolver;
+        private readonly IResolver<MatchScoreboardRequest, MatchScoreboard> _gameScreenScoreBoardResolver;
         private readonly ILogger _logger;
         private readonly IInputService _inputService;
         private readonly IFrameTimeService _frameTimeService;
         private readonly IRenderService _renderService;
 
-        public GameScreenPerformer(
+        public MatchPerformer(
             IResources resources,
             IGraphicsState graphicsState,
-            IResolver<ScoreboardRequest, Scoreboard> gameScreenScoreBoardResolver,
+            IResolver<MatchScoreboardRequest, MatchScoreboard> gameScreenScoreBoardResolver,
             ILogger logger,
             IInputService inputService,
             IFrameTimeService frameTimeService,
@@ -53,7 +53,7 @@ namespace SlaamMono.Gameplay
             _renderService = renderService;
         }
 
-        public void Initialize(GameScreenRequestState gameScreenRequest)
+        public void Initialize(MatchRequest gameScreenRequest)
         {
             _state.SetupCharacters = gameScreenRequest.SetupCharacters;
             _state.CurrentMatchSettings = gameScreenRequest.MatchSettings;
@@ -73,7 +73,7 @@ namespace SlaamMono.Gameplay
 
             _state.Boardpos = new Vector2(calcFinalBoardPosition().X, -_state.Tileset.Height);
 
-            _state.Timer = new GameScreenTimer(
+            _state.Timer = new MatchTimer(
                 x_Di.Get<IResources>(),
                 new Vector2(1024, 0),
                 _state.CurrentMatchSettings, _frameTimeService);
@@ -190,7 +190,7 @@ namespace SlaamMono.Gameplay
 
                     _state.Scoreboards.Add(
                         _gameScreenScoreBoardResolver.Resolve(
-                            new ScoreboardRequest(
+                            new MatchScoreboardRequest(
                                 Vector2.Zero,
                                 _state.Characters[_state.Characters.Count - 1],
                                 _state.GameType)));
@@ -209,7 +209,7 @@ namespace SlaamMono.Gameplay
             _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation), _state.SetupCharacters[0].CharacterProfileIndex, new Vector2(-100, -100), _inputService.GetPlayers()[0], Color.White, 0, x_Di.Get<IResources>(), _frameTimeService,_state.CurrentMatchSettings));
             _state.Scoreboards.Add(
                 _gameScreenScoreBoardResolver.Resolve(
-                    new ScoreboardRequest(
+                    new MatchScoreboardRequest(
                         new Vector2(-250, 10),
                         _state.Characters[0],
                         _state.GameType)));
@@ -288,7 +288,7 @@ namespace SlaamMono.Gameplay
                 survival_AddNewBot(_state);
             }
         }
-        private void survival_AddNewBot(GameScreenState gameScreenState)
+        private void survival_AddNewBot(MatchState gameScreenState)
         {
             _state.Characters.Add(
                 new BotActor(
@@ -303,7 +303,7 @@ namespace SlaamMono.Gameplay
                     _state.CurrentMatchSettings));
 
             ProfileManager.ResetAllBots();
-            GameScreenFunctions.RespawnCharacter(gameScreenState, _state.Characters.Count - 1);
+            MatchFunctions.RespawnCharacter(gameScreenState, _state.Characters.Count - 1);
         }
 
         private void updateOverGameState()
@@ -328,7 +328,7 @@ namespace SlaamMono.Gameplay
                     _state.Characters[x].Update(new Vector2(X, Y), new Vector2(X1, Y1), _state);
                     if (_state.Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
                     {
-                        GameScreenFunctions.RespawnCharacter(_state, x);
+                        MatchFunctions.RespawnCharacter(_state, x);
                     }
                 }
             }
@@ -385,7 +385,7 @@ namespace SlaamMono.Gameplay
             if (_state.ReadySetGoThrottle.Active)
             {
                 _state.Scoreboards[_state.ReadySetGoPart].Moving = true;
-                GameScreenFunctions.RespawnCharacter(_state, _state.ReadySetGoPart++);
+                MatchFunctions.RespawnCharacter(_state, _state.ReadySetGoPart++);
                 if (_state.ReadySetGoPart == _state.Characters.Count)
                 {
                     _state.CurrentGameStatus = GameStatus.Waiting;

@@ -24,18 +24,18 @@ namespace SlaamMono.Gameplay.Powerups
             AttackingInLine = false;
         }
 
-        public override void BeginAttack(Vector2 charposition, Direction chardirection, GameScreenState gameScreenState)
+        public override void BeginAttack(Vector2 charposition, Direction chardirection, MatchState gameScreenState)
         {
             Active = true;
         }
 
-        public override void UpdateAttack(GameScreenState gameScreenState)
+        public override void UpdateAttack(MatchState gameScreenState)
         {
         }
 
-        public override void EndAttack(GameScreenState gameScreenState)
+        public override void EndAttack(MatchState gameScreenState)
         {
-            Vector2 Charpos = GameScreenFunctions.InterpretCoordinates(gameScreenState, ParentCharacter.Position, true);
+            Vector2 Charpos = MatchFunctions.InterpretCoordinates(gameScreenState, ParentCharacter.Position, true);
 
             for (int x = (int)Charpos.X - (size - 1); x < Charpos.X + size; x++)
             {

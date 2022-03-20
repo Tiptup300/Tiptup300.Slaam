@@ -4,12 +4,12 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreenRequestState : IState
+    public class MatchRequest : IState
     {
         public List<CharacterShell> SetupCharacters { get; private set; }
         public MatchSettings MatchSettings { get; private set; }
 
-        public GameScreenRequestState(List<CharacterShell> chars, MatchSettings matchSettings)
+        public MatchRequest(List<CharacterShell> chars, MatchSettings matchSettings)
         {
             SetupCharacters = chars;
             MatchSettings = matchSettings;

@@ -12,7 +12,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
-    public class GameScreenState : IState
+    public class MatchState : IState
     {
         public bool IsTiming { get; set; } = false;
         public bool IsPaused { get; set; } = false;
@@ -26,10 +26,10 @@ namespace SlaamMono.Gameplay
         public int BoardSize { get; set; } = 0;
 
         public Texture2D Tileset { get; set; }
-        public GameScreenTimer Timer { get; set; }
+        public MatchTimer Timer { get; set; }
         public List<CharacterShell> SetupCharacters { get; set; }
         public int NullChars { get; set; } = 0;
-        public List<Scoreboard> Scoreboards { get; set; } = new List<Scoreboard>();
+        public List<MatchScoreboard> Scoreboards { get; set; } = new List<MatchScoreboard>();
         public Random Rand { get; set; } = new Random();
         public GameStatus CurrentGameStatus { get; set; }
         public int ReadySetGoPart { get; set; } = 0;

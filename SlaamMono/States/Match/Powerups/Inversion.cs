@@ -31,7 +31,7 @@ namespace SlaamMono.Gameplay.Powerups
             _frameTimeService = frameTimeService;
         }
 
-        public override void BeginAttack(Vector2 charposition, Direction chardirection, GameScreenState gameScreenState)
+        public override void BeginAttack(Vector2 charposition, Direction chardirection, MatchState gameScreenState)
         {
             Active = true;
             CurrentTime = TimeLasting;
@@ -42,7 +42,7 @@ namespace SlaamMono.Gameplay.Powerups
             }
         }
 
-        public override void UpdateAttack(GameScreenState gameScreenState)
+        public override void UpdateAttack(MatchState gameScreenState)
         {
             for (int x = 0; x < gameScreenState.Characters.Count; x++)
             {
@@ -58,7 +58,7 @@ namespace SlaamMono.Gameplay.Powerups
             }
         }
 
-        public override void EndAttack(GameScreenState gameScreenState)
+        public override void EndAttack(MatchState gameScreenState)
         {
             Active = false;
             for (int x = 0; x < gameScreenState.Characters.Count; x++)

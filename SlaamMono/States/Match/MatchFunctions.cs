@@ -6,7 +6,7 @@ using System;
 
 namespace SlaamMono.Gameplay
 {
-    public static class GameScreenFunctions
+    public static class MatchFunctions
     {
         private static void markBoardOutline()
         {
@@ -20,7 +20,7 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public static void ShortenBoard(GameScreenState gameScreenState,
+        public static void ShortenBoard(MatchState gameScreenState,
             IFrameTimeService _frameTimeService)
         {
             TimeSpan ShortenTime = new TimeSpan(0, 0, 0, 2);
@@ -37,7 +37,7 @@ namespace SlaamMono.Gameplay
                 gameScreenState.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
             }
         }
-        public static void RespawnCharacter(GameScreenState gameScreenState, int characterIndex)
+        public static void RespawnCharacter(MatchState gameScreenState, int characterIndex)
         {
             int newx = gameScreenState.Rand.Next(0, GameGlobals.BOARD_WIDTH);
             int newy = gameScreenState.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
@@ -50,7 +50,7 @@ namespace SlaamMono.Gameplay
             Vector2 newCharPos = InterpretCoordinates(gameScreenState, new Vector2(newx, newy), false);
             gameScreenState.Characters[characterIndex].Respawn(new Vector2(newCharPos.X + GameGlobals.TILE_SIZE / 2f, newCharPos.Y + GameGlobals.TILE_SIZE / 2f), new Vector2(newx, newy), gameScreenState.Tiles);
         }
-        public static Vector2 InterpretCoordinates(GameScreenState gameScreenState, Vector2 position, bool flip)
+        public static Vector2 InterpretCoordinates(MatchState gameScreenState, Vector2 position, bool flip)
         {
             if (!flip)
             {
@@ -74,7 +74,7 @@ namespace SlaamMono.Gameplay
         }
 
         // to remove
-        public static void ReportKilling(int Killer, int Killee, GameScreenState gameScreenState, IFrameTimeService frameTimeService)
+        public static void ReportKilling(int Killer, int Killee, MatchState gameScreenState, IFrameTimeService frameTimeService)
         {
             if (gameScreenState.GameType == GameType.Survival)
             {
@@ -124,7 +124,7 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public static void survival_ReportKilling(int Killer, int Killee, GameScreenState gameScreenState, IFrameTimeService frameTimeService)
+        public static void survival_ReportKilling(int Killer, int Killee, MatchState gameScreenState, IFrameTimeService frameTimeService)
         {
             if (Killer == 0)
             {

@@ -2,7 +2,7 @@ namespace SlaamMono.Gameplay
 {
     public class MatchScoreCollection
     {
-        public GameScreenPerformer ParentGameScreen;
+        public MatchPerformer ParentGameScreen;
         private readonly GameType _gameType;
         public int[][] Kills;
         public int[] BestSprees;
@@ -10,7 +10,7 @@ namespace SlaamMono.Gameplay
 
 
 
-        public MatchScoreCollection(GameScreenPerformer parentgamecreen, GameType gameType, GameScreenState gameScreenState)
+        public MatchScoreCollection(MatchPerformer parentgamecreen, GameType gameType, MatchState gameScreenState)
         {
             ParentGameScreen = parentgamecreen;
             _gameType = gameType;
@@ -23,7 +23,7 @@ namespace SlaamMono.Gameplay
             }
         }
 
-        public void CalcTotals(GameScreenState gameScreenState)
+        public void CalcTotals(MatchState gameScreenState)
         {
             if (_gameType != GameType.Survival)
             {
@@ -40,7 +40,7 @@ namespace SlaamMono.Gameplay
         /// </summary>
         /// <param name="Killer">Index of who killed.</param>
         /// <param name="Killee">Index of who was killed.</param>
-        public void ReportKilling(int Killer, int Killee, GameScreenState gameScreenState)
+        public void ReportKilling(int Killer, int Killee, MatchState gameScreenState)
         {
             if (_gameType == GameType.Survival)
             {
