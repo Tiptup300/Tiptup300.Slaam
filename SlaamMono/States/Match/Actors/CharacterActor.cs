@@ -21,7 +21,7 @@ namespace SlaamMono.Gameplay.Actors
         public int ProfileIndex;
         public Vector2 Position;
         public Color MarkingColor;
-        public int Lives = MatchSettings.CurrentMatchSettings.LivesAmt;
+        public int Lives;
         public int Kills = 0;
         public Powerup CurrentPowerup;
         public bool IsBot = false;
@@ -32,7 +32,7 @@ namespace SlaamMono.Gameplay.Actors
 
         private int PowerupsUsed = 0;
         private int Deaths = 0;
-        private readonly float SpeedOfMovement = GameGlobals.TILE_SIZE / 50f * (5f / 30f) * MatchSettings.CurrentMatchSettings.SpeedMultiplyer;
+        private readonly float SpeedOfMovement;
         private Texture2D CharacterSkin;
         private Timer WalkingAnimationChange = new Timer(new TimeSpan(0, 0, 0, 0, 60));
         private Timer AttackingAnimationChange = new Timer(new TimeSpan(0, 0, 0, 0, (int)(GameGlobals.TILE_SIZE / 50f * 300)));
@@ -42,7 +42,7 @@ namespace SlaamMono.Gameplay.Actors
         private bool currentlymoving;
         private Color SpriteColor = Color.White;
 
-        private Timer ReappearTime = new Timer(MatchSettings.CurrentMatchSettings.RespawnTime);
+        private Timer ReappearTime;
         private Timer FadeThrottle = new Timer(new TimeSpan(0, 0, 0, 0, 25));
         private float Alpha = 255;
 
@@ -53,7 +53,7 @@ namespace SlaamMono.Gameplay.Actors
         private readonly IFrameTimeService _frameTimeService;
 
         public CharacterActor(Texture2D skin, int profileidx, Vector2 pos, InputDevice gamepad, Color markingcolor, int idx, IResources resources,
-            IFrameTimeService frameTimeService)
+            IFrameTimeService frameTimeService, MatchSettings matchSettings)
         {
             WalkingAnimationChange.MakeUpTime = false;
             AttackingAnimationChange.MakeUpTime = false;
@@ -70,6 +70,10 @@ namespace SlaamMono.Gameplay.Actors
             {
                 SpeedMultiplyer[x] = 1f;
             }
+            Lives = matchSettings.LivesAmt;
+            SpeedOfMovement = GameGlobals.TILE_SIZE / 50f * (5f / 30f) * matchSettings.SpeedMultiplyer;
+            ReappearTime = new Timer(matchSettings.RespawnTime);
+
         }
 
         public virtual void Update(Vector2 CurrentCoordinates, Vector2 TilePos, GameScreenState gameScreenState)

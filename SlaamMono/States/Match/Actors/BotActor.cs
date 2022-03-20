@@ -31,8 +31,8 @@ namespace SlaamMono.Gameplay.Actors
         private BotTarget CurrentTarget;
         private bool SwitchMovements = false;
         public BotActor(Texture2D skin, int profile, Vector2 pos, GameScreenPerformer parentgamescreen, Color markingcolor, int plyeridx, IResources resources,
-            IFrameTimeService frameTimeService) :
-            base(skin, profile, pos, null, markingcolor, plyeridx, resources, frameTimeService)
+            IFrameTimeService frameTimeService, MatchSettings matchSettings) :
+            base(skin, profile, pos, null, markingcolor, plyeridx, resources, frameTimeService, matchSettings)
         {
             Gamepad = AIInput;
             ParentGameScreen = parentgamescreen;

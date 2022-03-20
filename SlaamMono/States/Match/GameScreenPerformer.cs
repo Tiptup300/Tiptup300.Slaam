@@ -169,7 +169,8 @@ namespace SlaamMono.Gameplay
                                 _state.SetupCharacters[x].PlayerColor,
                                 x,
                                 x_Di.Get<IResources>(),
-                                _frameTimeService));
+                                _frameTimeService,
+                                _state.CurrentMatchSettings));
                     }
                     else
                     {
@@ -183,7 +184,8 @@ namespace SlaamMono.Gameplay
                                 _state.SetupCharacters[x].PlayerColor,
                                 _state.Characters.Count,
                                 x_Di.Get<IResources>(),
-                                _frameTimeService));
+                                _frameTimeService,
+                                _state.CurrentMatchSettings));
                     }
 
                     _state.Scoreboards.Add(
@@ -204,7 +206,7 @@ namespace SlaamMono.Gameplay
             _state.CurrentMatchSettings.LivesAmt = 1;
             _state.Tileset = LobbyScreenFunctions.LoadQuickBoard();
 
-            _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation), _state.SetupCharacters[0].CharacterProfileIndex, new Vector2(-100, -100), _inputService.GetPlayers()[0], Color.White, 0, x_Di.Get<IResources>(), _frameTimeService));
+            _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation), _state.SetupCharacters[0].CharacterProfileIndex, new Vector2(-100, -100), _inputService.GetPlayers()[0], Color.White, 0, x_Di.Get<IResources>(), _frameTimeService,_state.CurrentMatchSettings));
             _state.Scoreboards.Add(
                 _gameScreenScoreBoardResolver.Resolve(
                     new ScoreboardRequest(
@@ -297,7 +299,8 @@ namespace SlaamMono.Gameplay
                     Color.Black,
                     _state.Characters.Count,
                     x_Di.Get<IResources>(),
-                    _frameTimeService));
+                    _frameTimeService,
+                    _state.CurrentMatchSettings));
 
             ProfileManager.ResetAllBots();
             GameScreenFunctions.RespawnCharacter(gameScreenState, _state.Characters.Count - 1);
