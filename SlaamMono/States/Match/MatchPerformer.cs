@@ -22,7 +22,7 @@ using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.Gameplay
 {
-    public class MatchPerformer : IStatePerformer
+    public class MatchPerformer : IPerformer<MatchState>
     {
 
         private readonly IResources _resources;
@@ -51,7 +51,7 @@ namespace SlaamMono.Gameplay
             _renderService = renderService;
         }
 
-
+        public void InitializeState() { }
 
         private Vector2 calcFinalBoardPosition()
         {
@@ -63,14 +63,14 @@ namespace SlaamMono.Gameplay
             return new Vector2(width - boardWidth / 2f, height - boardHeight / 2f);
         }
 
-        private void setupPauseMenu()
+        private void setupPauseMenu(MatchState state)
         {
             SlaamGame.mainBlade.UserCanNavigateMenu = true;
             SlaamGame.mainBlade.UserCanCloseMenu = false;
             MenuTextItem resume = new MenuTextItem("Resume Game");
             resume.Activated += delegate
             {
-                _state.IsPaused = false;
+                state.IsPaused = false;
                 SlaamGame.mainBlade.Status = BladeStatus.Hidden;
             };
             MenuTextItem quit = new MenuTextItem("Quit Game");
@@ -78,93 +78,93 @@ namespace SlaamMono.Gameplay
             quit.Activated += delegate
             {
                 SlaamGame.mainBlade.Status = BladeStatus.Hidden;
-                endGame();
+                endGame(state);
             };
 
-            _state.main.Nodes.Add(resume);
-            _state.main.Nodes.Add(quit);
+            state.main.Nodes.Add(resume);
+            state.main.Nodes.Add(quit);
 
-            SlaamGame.mainBlade.TopMenu = _state.main;
+            SlaamGame.mainBlade.TopMenu = state.main;
         }
 
-        private void SetupTheBoard(string BoardLoc)
+        private void SetupTheBoard(string BoardLoc, MatchState state)
         {
-            if (_state.GameType == GameType.Survival)
+            if (state.GameType == GameType.Survival)
             {
-                survival_SetupTheBoard(BoardLoc);
+                survival_SetupTheBoard(BoardLoc, state);
             }
             else
             {
-                _state.Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);
+                state.Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);
 
-                for (int x = 0; x < _state.SetupCharacters.Count; x++)
+                for (int x = 0; x < state.SetupCharacters.Count; x++)
                 {
-                    if (_state.SetupCharacters[x].PlayerType == PlayerType.Player)
+                    if (state.SetupCharacters[x].PlayerType == PlayerType.Player)
                     {
-                        _state.Characters.Add(
+                        state.Characters.Add(
                             new CharacterActor(
-                                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[x].SkinLocation),
-                                _state.SetupCharacters[x].CharacterProfileIndex,
+                                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + state.SetupCharacters[x].SkinLocation),
+                                state.SetupCharacters[x].CharacterProfileIndex,
                                 new Vector2(-100, -100),
-                                _inputService.GetPlayers()[(int)_state.SetupCharacters[x].PlayerIndex],
-                                _state.SetupCharacters[x].PlayerColor,
+                                _inputService.GetPlayers()[(int)state.SetupCharacters[x].PlayerIndex],
+                                state.SetupCharacters[x].PlayerColor,
                                 x,
                                 x_Di.Get<IResources>(),
                                 _frameTimeService,
-                                _state.CurrentMatchSettings));
+                                state.CurrentMatchSettings));
                     }
                     else
                     {
-                        ProfileManager.AllProfiles[_state.SetupCharacters[x].CharacterProfileIndex].Skin = _state.SetupCharacters[x].SkinLocation;
-                        _state.Characters.Add(
+                        ProfileManager.AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Skin = state.SetupCharacters[x].SkinLocation;
+                        state.Characters.Add(
                             new BotActor(
-                                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[x].SkinLocation),
-                                _state.SetupCharacters[x].CharacterProfileIndex,
+                                SlaamGame.Content.Load<Texture2D>("content\\skins\\" + state.SetupCharacters[x].SkinLocation),
+                                state.SetupCharacters[x].CharacterProfileIndex,
                                 new Vector2(-100, -100),
                                 this,
-                                _state.SetupCharacters[x].PlayerColor,
-                                _state.Characters.Count,
+                                state.SetupCharacters[x].PlayerColor,
+                                state.Characters.Count,
                                 x_Di.Get<IResources>(),
                                 _frameTimeService,
-                                _state.CurrentMatchSettings));
+                                state.CurrentMatchSettings));
                     }
 
-                    _state.Scoreboards.Add(
+                    state.Scoreboards.Add(
                         _gameScreenScoreBoardResolver.Resolve(
                             new MatchScoreboardRequest(
                                 Vector2.Zero,
-                                _state.Characters[_state.Characters.Count - 1],
-                                _state.GameType)));
+                                state.Characters[state.Characters.Count - 1],
+                                state.GameType)));
                 }
             }
         }
-        private void survival_SetupTheBoard(string BoardLoc)
+        private void survival_SetupTheBoard(string BoardLoc, MatchState state)
         {
-            _state.GameType = GameType.Survival;
-            _state.CurrentMatchSettings.GameType = GameType.Survival;
-            _state.CurrentMatchSettings.SpeedMultiplyer = 1f;
-            _state.CurrentMatchSettings.RespawnTime = new TimeSpan(0, 0, 8);
-            _state.CurrentMatchSettings.LivesAmt = 1;
-            _state.Tileset = LobbyScreenFunctions.LoadQuickBoard();
+            state.GameType = GameType.Survival;
+            state.CurrentMatchSettings.GameType = GameType.Survival;
+            state.CurrentMatchSettings.SpeedMultiplyer = 1f;
+            state.CurrentMatchSettings.RespawnTime = new TimeSpan(0, 0, 8);
+            state.CurrentMatchSettings.LivesAmt = 1;
+            state.Tileset = LobbyScreenFunctions.LoadQuickBoard();
 
-            _state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + _state.SetupCharacters[0].SkinLocation), _state.SetupCharacters[0].CharacterProfileIndex, new Vector2(-100, -100), _inputService.GetPlayers()[0], Color.White, 0, x_Di.Get<IResources>(), _frameTimeService,_state.CurrentMatchSettings));
-            _state.Scoreboards.Add(
+            state.Characters.Add(new CharacterActor(SlaamGame.Content.Load<Texture2D>("content\\skins\\" + state.SetupCharacters[0].SkinLocation), state.SetupCharacters[0].CharacterProfileIndex, new Vector2(-100, -100), _inputService.GetPlayers()[0], Color.White, 0, x_Di.Get<IResources>(), _frameTimeService, state.CurrentMatchSettings));
+            state.Scoreboards.Add(
                 _gameScreenScoreBoardResolver.Resolve(
                     new MatchScoreboardRequest(
                         new Vector2(-250, 10),
-                        _state.Characters[0],
-                        _state.GameType)));
+                        state.Characters[0],
+                        state.GameType)));
         }
 
-        public IState Perform(GameScreenState state)
+        public IState Perform(MatchState state)
         {
-            if(_state.EndGameSelected)
+            if (state.EndGameSelected)
             {
-                return endGame();
+                return endGame(state);
             }
-            if (_state.GameType == GameType.Survival)
+            if (state.GameType == GameType.Survival)
             {
-                survival_Perform();
+                survival_Perform(state);
             }
             if (state.IsPaused)
             {
@@ -174,31 +174,31 @@ namespace SlaamMono.Gameplay
             }
 
             state.Timer.Update(state);
-            updateScoreBoards();
+            updateScoreBoards(state);
 
             if (state.CurrentGameStatus == GameStatus.MovingBoard)
             {
-                updateMovingBoardState();
+                updateMovingBoardState(state);
             }
             else if (state.CurrentGameStatus == GameStatus.Respawning)
             {
-                updateRespawningGameState();
+                updateRespawningGameState(state);
             }
             else if (state.CurrentGameStatus == GameStatus.Waiting)
             {
-                updateWaitingGameState();
+                updateWaitingGameState(state);
             }
             else if (state.CurrentGameStatus == GameStatus.Playing)
             {
-                updatePlayingGameState();
+                updatePlayingGameState(state);
             }
             else if (state.CurrentGameStatus == GameStatus.Over)
             {
-                updateOverGameState();
+                updateOverGameState(state);
             }
             return state;
         }
-        public void survival_Perform()
+        public void survival_Perform(MatchState _state)
         {
             if (_state.CurrentGameStatus == GameStatus.Playing)
             {
@@ -233,7 +233,7 @@ namespace SlaamMono.Gameplay
                 survival_AddNewBot(_state);
             }
         }
-        private void survival_AddNewBot(MatchState gameScreenState)
+        private void survival_AddNewBot(MatchState _state)
         {
             _state.Characters.Add(
                 new BotActor(
@@ -248,32 +248,32 @@ namespace SlaamMono.Gameplay
                     _state.CurrentMatchSettings));
 
             ProfileManager.ResetAllBots();
-            MatchFunctions.RespawnCharacter(gameScreenState, _state.Characters.Count - 1);
+            MatchFunctions.RespawnCharacter(_state, _state.Characters.Count - 1);
         }
 
-        private void updateOverGameState()
+        private void updateOverGameState(MatchState state)
         {
-            _state.IsTiming = false;
-            _state.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-            if (_state.ReadySetGoThrottle.Active)
+            state.IsTiming = false;
+            state.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+            if (state.ReadySetGoThrottle.Active)
             {
-                endGame();
+                endGame(state);
             }
         }
-        private void updatePlayingGameState()
+        private void updatePlayingGameState(MatchState state)
         {
-            for (int x = 0; x < _state.Characters.Count; x++)
+            for (int x = 0; x < state.Characters.Count; x++)
             {
-                if (_state.Characters[x] != null)
+                if (state.Characters[x] != null)
                 {
-                    int X1 = (int)((_state.Characters[x].Position.X - _state.Boardpos.X) % GameGlobals.TILE_SIZE);
-                    int Y1 = (int)((_state.Characters[x].Position.Y - _state.Boardpos.Y) % GameGlobals.TILE_SIZE);
-                    int X = (int)((_state.Characters[x].Position.X - _state.Boardpos.X - X1) / GameGlobals.TILE_SIZE);
-                    int Y = (int)((_state.Characters[x].Position.Y - _state.Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
-                    _state.Characters[x].Update(new Vector2(X, Y), new Vector2(X1, Y1), _state);
-                    if (_state.Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
+                    int X1 = (int)((state.Characters[x].Position.X - state.Boardpos.X) % GameGlobals.TILE_SIZE);
+                    int Y1 = (int)((state.Characters[x].Position.Y - state.Boardpos.Y) % GameGlobals.TILE_SIZE);
+                    int X = (int)((state.Characters[x].Position.X - state.Boardpos.X - X1) / GameGlobals.TILE_SIZE);
+                    int Y = (int)((state.Characters[x].Position.Y - state.Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
+                    state.Characters[x].Update(new Vector2(X, Y), new Vector2(X1, Y1), state);
+                    if (state.Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
                     {
-                        MatchFunctions.RespawnCharacter(_state, x);
+                        MatchFunctions.RespawnCharacter(state, x);
                     }
                 }
             }
@@ -281,21 +281,21 @@ namespace SlaamMono.Gameplay
             {
                 for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    _state.Tiles[x, y].Update(_state);
+                    state.Tiles[x, y].Update(state);
                 }
             }
-            _state.PowerupTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-            if (_state.PowerupTime.Active)
+            state.PowerupTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+            if (state.PowerupTime.Active)
             {
                 bool found = true;
-                int newx = _state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
-                int newy = _state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
+                int newx = state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
+                int newy = state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
                 int ct = 0;
 
-                while (_state.Tiles[newx, newy].CurrentTileCondition != TileCondition.Normal)
+                while (state.Tiles[newx, newy].CurrentTileCondition != TileCondition.Normal)
                 {
-                    newx = _state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
-                    newy = _state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
+                    newx = state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
+                    newy = state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
                     ct++;
                     if (ct > 100)
                     {
@@ -305,69 +305,69 @@ namespace SlaamMono.Gameplay
                 }
                 if (found)
                 {
-                    _state.Tiles[newx, newy].MarkWithPowerup(PowerupManager.Instance.GetRandomPowerup());
+                    state.Tiles[newx, newy].MarkWithPowerup(PowerupManager.Instance.GetRandomPowerup());
                 }
             }
         }
-        private void updateWaitingGameState()
+        private void updateWaitingGameState(MatchState state)
         {
-            _state.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-            if (_state.ReadySetGoThrottle.Active)
+            state.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+            if (state.ReadySetGoThrottle.Active)
             {
-                _state.ReadySetGoPart++;
-                if (_state.ReadySetGoPart > 2)
+                state.ReadySetGoPart++;
+                if (state.ReadySetGoPart > 2)
                 {
-                    _state.CurrentGameStatus = GameStatus.Playing;
-                    _state.ReadySetGoPart = 2;
-                    _state.ReadySetGoThrottle.Reset();
-                    _state.IsTiming = true;
+                    state.CurrentGameStatus = GameStatus.Playing;
+                    state.ReadySetGoPart = 2;
+                    state.ReadySetGoThrottle.Reset();
+                    state.IsTiming = true;
                 }
             }
         }
-        private void updateRespawningGameState()
+        private void updateRespawningGameState(MatchState state)
         {
-            _state.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-            if (_state.ReadySetGoThrottle.Active)
+            state.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+            if (state.ReadySetGoThrottle.Active)
             {
-                _state.Scoreboards[_state.ReadySetGoPart].Moving = true;
-                MatchFunctions.RespawnCharacter(_state, _state.ReadySetGoPart++);
-                if (_state.ReadySetGoPart == _state.Characters.Count)
+                state.Scoreboards[state.ReadySetGoPart].Moving = true;
+                MatchFunctions.RespawnCharacter(state, state.ReadySetGoPart++);
+                if (state.ReadySetGoPart == state.Characters.Count)
                 {
-                    _state.CurrentGameStatus = GameStatus.Waiting;
-                    _state.ReadySetGoThrottle.Threshold = new TimeSpan(0, 0, 0, 1, 300);
-                    _state.ReadySetGoThrottle.Reset();
-                    _state.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-                    _state.ReadySetGoPart = 0;
-                    _state.Timer.Moving = true;
+                    state.CurrentGameStatus = GameStatus.Waiting;
+                    state.ReadySetGoThrottle.Threshold = new TimeSpan(0, 0, 0, 1, 300);
+                    state.ReadySetGoThrottle.Reset();
+                    state.ReadySetGoThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+                    state.ReadySetGoPart = 0;
+                    state.Timer.Moving = true;
                 }
             }
         }
-        private void updateMovingBoardState()
+        private void updateMovingBoardState(MatchState state)
         {
-            _state.Boardpos = new Vector2(_state.Boardpos.X, _state.Boardpos.Y + _frameTimeService.GetLatestFrame().MovementFactor * (10f / 100f));
+            state.Boardpos = new Vector2(state.Boardpos.X, state.Boardpos.Y + _frameTimeService.GetLatestFrame().MovementFactor * (10f / 100f));
 
-            if (_state.Boardpos.Y >= calcFinalBoardPosition().Y)
+            if (state.Boardpos.Y >= calcFinalBoardPosition().Y)
             {
-                _state.Boardpos = calcFinalBoardPosition();
-                _state.CurrentGameStatus = GameStatus.Respawning;
+                state.Boardpos = calcFinalBoardPosition();
+                state.CurrentGameStatus = GameStatus.Respawning;
             }
             for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
             {
                 for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
                 {
-                    _state.Tiles[x, y].ResetTileLocation(_state.Boardpos, new Vector2(x, y));
+                    state.Tiles[x, y].ResetTileLocation(state.Boardpos, new Vector2(x, y));
                 }
             }
         }
-        private void updateScoreBoards()
+        private void updateScoreBoards(MatchState state)
         {
-            for (int x = 0; x < _state.Scoreboards.Count; x++)
+            for (int x = 0; x < state.Scoreboards.Count; x++)
             {
-                _state.Scoreboards[x].Update();
+                state.Scoreboards[x].Update();
             }
         }
 
-        public void Render(GameScreenState state)
+        public void Render(MatchState state)
         {
             _renderService.Render(batch =>
             {
@@ -404,7 +404,7 @@ namespace SlaamMono.Gameplay
                     PlayersDrawn++;
                 }
 
-                resetCharactersDrawnStatus();
+                resetCharactersDrawnStatus(state);
 
                 for (int x = 0; x < state.Characters.Count; x++)
                 {
@@ -419,9 +419,9 @@ namespace SlaamMono.Gameplay
                 }
             });
         }
-        private void resetCharactersDrawnStatus()
+        private void resetCharactersDrawnStatus(MatchState state)
         {
-            _state.Characters
+            state.Characters
                 .Where(character => character != null)
                 .ToList()
                 .ForEach(character => character.Drawn = false);
@@ -437,11 +437,11 @@ namespace SlaamMono.Gameplay
 
 
 
-        private IState endGame()
+        private IState endGame(MatchState _state)
         {
             if (_state.GameType == GameType.Survival)
             {
-                return survival_EndGame();
+                return survival_EndGame(_state);
             }
             else
             {
@@ -454,7 +454,7 @@ namespace SlaamMono.Gameplay
                 return new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
             }
         }
-        private IState survival_EndGame()
+        private IState survival_EndGame(MatchState _state)
         {
             if (ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame < _state.Timer.CurrentGameTime)
             {
