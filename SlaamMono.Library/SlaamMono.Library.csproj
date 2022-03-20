@@ -9,11 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
+    <Compile Remove="Rendering\Textures\**" />
+    <EmbeddedResource Remove="Rendering\Textures\**" />
+    <None Remove="Rendering\Textures\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Rendering\Textures\" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
   </ItemGroup>
 
   <ItemGroup>
