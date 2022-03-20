@@ -16,7 +16,7 @@ namespace SlaamMono.Gameplay
         public GameType GameType;
         public float StepSize;
         public float CurrentStep;
-        public readonly TimeSpan EndingTime = MatchSettings.CurrentMatchSettings.TimeOfMatch;
+        public TimeSpan EndingTime;
 
     }
 }
