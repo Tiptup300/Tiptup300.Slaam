@@ -19,21 +19,22 @@ namespace SlaamMono.Gameplay
         private readonly IResources _resources;
         private readonly IFrameTimeService _frameTimeService;
 
-        public GameScreenTimer(IResources resources, Vector2 position, GameType gameType,
+        public GameScreenTimer(IResources resources, Vector2 position, MatchSettings matchSettings,
             IFrameTimeService frameTimeService)
         {
             _resources = resources;
             _frameTimeService = frameTimeService;
-            _state = InitializeState(position, gameType);
+            _state = InitializeState(position, matchSettings);
         }
 
-        public static GameScreenTimerState InitializeState(Vector2 position, GameType gameType)
+        public static GameScreenTimerState InitializeState(Vector2 position, MatchSettings matchSettings)
         {
             GameScreenTimerState output;
 
             output = new GameScreenTimerState();
             output.Position = position;
-            output.GameType = gameType;
+            output.GameType = matchSettings.GameType;
+            output.EndingTime = matchSettings.TimeOfMatch;
             output.TimeRemaining = output.EndingTime;
             output.StepSize = (float)output.TimeRemaining.TotalMilliseconds / 7f;
             output.GameMatchTime = getGameMatchTime(output);
