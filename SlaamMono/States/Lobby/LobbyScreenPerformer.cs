@@ -172,7 +172,7 @@ namespace SlaamMono.MatchCreation
                     ProfileManager.ResetAllBots();
                     LobbyScreenFunctions.SetupZune();
                     // @State/Logic - this will need to be changed to a Requaest -> State resolver.
-                    return new CharacterSelectionScreenRequestState();
+                    return _stateResolver.Resolve(new CharacterSelectionScreenRequest());
                 }
 
                 if (_inputService.GetPlayers()[0].PressedUp && state.SetupCharacters.Count < _maxPlayers)
