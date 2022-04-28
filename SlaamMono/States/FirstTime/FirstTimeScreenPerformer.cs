@@ -62,7 +62,7 @@ namespace SlaamMono.Menus
         {
             if (_inputService.GetPlayers()[0].PressedAction)
             {
-                new ProfileEditScreenRequestState() { CreateNewProfile = true };
+                new ProfileEditScreenRequest() { CreateNewProfile = true };
             }
             return state;
         }

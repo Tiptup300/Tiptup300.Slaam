@@ -43,15 +43,18 @@ namespace SlaamMono.Menus.Credits
             List<CreditsListing> output;
 
             output = credits
-                .Select(line => {
-                     var elements = line
-                          .Replace("\r","")
-                          .Split('|');
+                .Select(line =>
+                {
+                    var elements = line
+                         .Replace("\r", "")
+                         .Split('|');
 
-                     return new CreditsListing(
-                          name: elements[0],
-                          credits: elements.Skip(1).ToList());
-            });
+                    return new CreditsListing(
+                         name: elements[0],
+                         credits: elements.Skip(1).ToList()
+                   );
+                })
+                .ToList();
 
             return output;
         }

@@ -48,7 +48,7 @@ namespace SlaamMono.Menus
 
         private void selectedCredits(object sender, EventArgs e) => _state.NextState = _stateResolver.Resolve(new CreditsRequest());
         private void selectedHighscores(object sender, EventArgs e) => _state.NextState = new HighScoreScreenRequestState();
-        private void selectedManageProfiles(object sender, EventArgs e) => _state.NextState = new ProfileEditScreenRequestState();
+        private void selectedManageProfiles(object sender, EventArgs e) => _state.NextState = _stateResolver.Resolve(new ProfileEditScreenRequest());
         private void selectedSurvival(object sender, EventArgs e) => _state.NextState = new CharacterSelectionScreenState() { isForSurvival = true };
         private void selectedClassicMode(object sender, EventArgs e) => _state.NextState = new CharacterSelectionScreenRequestState();
         private void exitGame(object sender, EventArgs e) => _state.NextState = new GameExitState();
