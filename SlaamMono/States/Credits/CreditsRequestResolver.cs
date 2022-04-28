@@ -32,24 +32,29 @@ namespace SlaamMono.Menus.Credits
 
 
             output.Credits = _resources.GetTextList("Credits").ToArray();
-            processCreditListings(output);
+            output.CreditsListings = generateCreditListings(output.Credits);
 
             return output;
         }
 
-        private static void processCreditListings(CreditsState output)
+        private static List<CreditsListing> generateCreditListings(string[] credits)
         {
-            for (int x = 0; x < output.Credits.Length; x++)
+            List<CreditsListing> output;
+
+            output = new List<CreditsListing>();
+            for (int x = 0; x < credits.Length; x++)
             {
-                string[] credinfo = output.Credits[x].Replace("\r", "").Split("|".ToCharArray());
+                string[] credinfo = credits[x].Replace("\r", "").Split("|".ToCharArray());
                 string credname = credinfo[0];
                 List<string> credcreds = new List<string>();
                 for (int y = 1; y < credinfo.Length; y++)
                 {
                     credcreds.Add(credinfo[y]);
                 }
-                output.CreditsListings.Add(new CreditsListing(credname, credcreds));
+                output.Add(new CreditsListing(credname, credcreds));
             }
+
+            return output;
         }
     }
 }
