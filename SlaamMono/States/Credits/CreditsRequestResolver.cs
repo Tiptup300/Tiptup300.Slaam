@@ -44,13 +44,12 @@ namespace SlaamMono.Menus.Credits
             output = new List<CreditsListing>();
             for (int x = 0; x < credits.Length; x++)
             {
-                string[] credinfo = credits[x].Replace("\r", "").Split("|".ToCharArray());
+                string[] credinfo = credits[x]
+                    .Replace("\r", "")
+                    .Split("|".ToCharArray());
+
                 string credname = credinfo[0];
-                List<string> credcreds = new List<string>();
-                for (int y = 1; y < credinfo.Length; y++)
-                {
-                    credcreds.Add(credinfo[y]);
-                }
+                var credcreds = credinfo.Skip(1).ToList();
                 output.Add(new CreditsListing(credname, credcreds));
             }
 
