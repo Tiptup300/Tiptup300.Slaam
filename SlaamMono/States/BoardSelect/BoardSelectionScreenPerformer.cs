@@ -13,7 +13,6 @@ namespace SlaamMono.MatchCreation
 {
     public class BoardSelectionScreenPerformer : IPerformer<BoardSelectionScreenState>, IRenderer<BoardSelectionScreenState>
     {
-        private BoardSelectionScreenState _state = new BoardSelectionScreenState();
 
         private readonly IResources _resources;
         private readonly IInputService _inputService;
@@ -32,28 +31,15 @@ namespace SlaamMono.MatchCreation
             _renderService = renderService;
         }
 
-        public void Initialize(BoardSelectionScreenRequestState request)
-        {
-            _state.ParentLobbyScreen = request.ParentScreen;
-        }
-
         public void InitializeState()
         {
-            _state.BoardNames = _resources.GetTextList("Boards");
-            setBoardIndexs();
-        }
-        private void setBoardIndexs()
-        {
-            _state.DrawingBoardIndex = new IntRange(0, 0, _state.BoardNames.Count - 1);
-            _state.VerticalBoardOffset = new IntRange(0);
-            _state.HorizontalBoardOffset = new IntRange(-_state.BoardNames.Count);
         }
 
         public IState Perform(BoardSelectionScreenState state)
         {
             if (state.IsStillLoadingBoards)
             {
-                continueLoadingBoards();
+                continueLoadingBoards(state);
                 return state;
             }
 
@@ -172,7 +158,7 @@ namespace SlaamMono.MatchCreation
             }
             return state;
         }
-        private void continueLoadingBoards()
+        private void continueLoadingBoards(BoardSelectionScreenState _state)
         {
             try
             {
@@ -191,10 +177,10 @@ namespace SlaamMono.MatchCreation
             _state.CurrentBoardLoading++;
             if (_state.CurrentBoardLoading == _state.BoardNames.Count)
             {
-                finishLoadingBoards();
+                finishLoadingBoards(_state);
             }
         }
-        private void finishLoadingBoards()
+        private void finishLoadingBoards(BoardSelectionScreenState _state)
         {
             _state.IsStillLoadingBoards = false;
             _state.DrawingBoardIndex = new IntRange(0, 0, _state.BoardTextures.Count - 1);

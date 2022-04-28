@@ -11,6 +11,7 @@ using SlaamMono.PlayerProfiles;
 using SlaamMono.x_;
 using System;
 using System.IO;
+using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
 namespace SlaamMono.MatchCreation
@@ -26,19 +27,22 @@ namespace SlaamMono.MatchCreation
         private readonly IResources _resources;
         private readonly IRenderService _renderService;
         private readonly IInputService _inputService;
+        private readonly IResolver<IRequest, IState> _stateResolver;
 
         public LobbyScreenPerformer(
             ILogger logger,
             PlayerColorResolver playerColorResolver,
             IResources resources,
             IRenderService renderGraphManager,
-            IInputService inputService)
+            IInputService inputService,
+            IResolver<IRequest, IState> stateResolver)
         {
             _logger = logger;
             _playerColorResolver = playerColorResolver;
             _resources = resources;
             _renderService = renderGraphManager;
             _inputService = inputService;
+            _stateResolver = stateResolver;
         }
 
 
@@ -156,7 +160,7 @@ namespace SlaamMono.MatchCreation
                         else
                         {
                             // @State/Logic - this will need to be changed to a Request -> State resolver.
-                            return new BoardSelectionScreenRequestState(state);
+                            return _stateResolver.Resolve(new BoardSelectionScreenRequest(state));
                         }
                     }
                 }
