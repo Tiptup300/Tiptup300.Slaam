@@ -10,7 +10,7 @@ namespace SlaamMono.Testing.Logging
          TestLoggingDevice testLoggingDevice = new TestLoggingDevice();
          Logger logger = new Logger(testLoggingDevice);
 
-         logger.Begin();
+         logger.Initialize();
          Assert.True(testLoggingDevice.__Begin__Ran);
       }
 

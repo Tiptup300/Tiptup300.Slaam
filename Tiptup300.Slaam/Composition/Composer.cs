@@ -9,6 +9,7 @@ using SlaamMono.Library.Input;
 using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
+using SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes;
 using SlaamMono.Metrics;
 using SlaamMono.PlayerProfiles;
 using SlaamMono.ResourceManagement;
@@ -19,7 +20,7 @@ namespace SlaamMono.Composition
 {
    public class Composer
    {
-      private Container _container;
+      private Container? _container;
 
       public Container BuildContainer(ServiceLocator resolver)
       {
@@ -87,6 +88,7 @@ namespace SlaamMono.Composition
       private void registerGameplay()
       {
          _container.Register<PlayerColorResolver>(Lifestyle.Singleton);
+         _container.Register<PlayerCharacterSelectBoxPerformer>(Lifestyle.Singleton);
       }
    }
 }

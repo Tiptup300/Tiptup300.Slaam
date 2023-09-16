@@ -2,7 +2,7 @@
 {
     public interface ILogger
     {
-        void Begin();
+        void Initialize();
         void End();
         void Log(string str);
     }

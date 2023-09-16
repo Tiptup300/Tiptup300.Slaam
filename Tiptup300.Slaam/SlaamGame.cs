@@ -65,6 +65,7 @@ namespace SlaamMono
       {
          configureGame();
 
+         _logger.Initialize();
          _inputService.Initialize();
          _renderService.Initialize();
          _fpsRenderer.Initialize();

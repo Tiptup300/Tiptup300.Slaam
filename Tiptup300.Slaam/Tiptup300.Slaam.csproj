@@ -16,4 +16,10 @@
     <ProjectReference Include="..\Tiptup300.Slaam.Library\Tiptup300.Slaam.Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Content\BotNames.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
