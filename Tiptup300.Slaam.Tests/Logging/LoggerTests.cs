@@ -1,41 +1,40 @@
-﻿using NUnit.Framework;
-using SlaamMono.Library.Logging;
+﻿using SlaamMono.Library.Logging;
 
 namespace SlaamMono.Testing.Logging
 {
-    public class LoggerTests
-    {
-        [Test]
-        public void DoesBeginWork()
-        {
-            TestLoggingDevice testLoggingDevice = new TestLoggingDevice();
-            Logger logger = new Logger(testLoggingDevice);
+   public class LoggerTests
+   {
+      [Fact]
+      public void DoesBeginWork()
+      {
+         TestLoggingDevice testLoggingDevice = new TestLoggingDevice();
+         Logger logger = new Logger(testLoggingDevice);
 
-            logger.Begin();
-            Assert.True(testLoggingDevice.__Begin__Ran);
-        }
+         logger.Begin();
+         Assert.True(testLoggingDevice.__Begin__Ran);
+      }
 
-        [Test]
-        public void DoesLogWork()
-        {
-            string expected = "Hello There";
-            TestLoggingDevice testLoggingDevice = new TestLoggingDevice();
-            Logger logger = new Logger(testLoggingDevice);
+      [Fact]
+      public void DoesLogWork()
+      {
+         string expected = "Hello There";
+         TestLoggingDevice testLoggingDevice = new TestLoggingDevice();
+         Logger logger = new Logger(testLoggingDevice);
 
-            logger.Log("Hello There");
-            Assert.True(testLoggingDevice.__Log_Ran);
-            Assert.AreEqual(expected, testLoggingDevice.__Log__Param__line);
-        }
+         logger.Log("Hello There");
+         Assert.True(testLoggingDevice.__Log_Ran);
+         Assert.Equal(expected, testLoggingDevice.__Log__Param__line);
+      }
 
-        [Test]
-        public void DoesEndWork()
-        {
+      [Fact]
+      public void DoesEndWork()
+      {
 
-            TestLoggingDevice testLoggingDevice = new TestLoggingDevice();
-            Logger logger = new Logger(testLoggingDevice);
+         TestLoggingDevice testLoggingDevice = new TestLoggingDevice();
+         Logger logger = new Logger(testLoggingDevice);
 
-            logger.End();
-            Assert.True(testLoggingDevice.__End__Ran);
-        }
-    }
+         logger.End();
+         Assert.True(testLoggingDevice.__End__Ran);
+      }
+   }
 }

@@ -36,9 +36,9 @@ namespace SlaamMono.Input
         static Qwerty()
         {
             x_init(
-                ServiceLocator.GetService<IRenderService>(),
-                ServiceLocator.GetService<IResources>(),
-                ServiceLocator.GetService<IFrameTimeService>());
+                ServiceLocator.Instance.GetService<IRenderService>(),
+                ServiceLocator.Instance.GetService<IResources>(),
+                ServiceLocator.Instance.GetService<IFrameTimeService>());
 
             InitKeys();
         }

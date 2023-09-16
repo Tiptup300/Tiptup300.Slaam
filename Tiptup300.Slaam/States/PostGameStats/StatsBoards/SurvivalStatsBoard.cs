@@ -145,7 +145,7 @@ namespace SlaamMono.States.PostGameStats.StatsBoards
 
         public void XNALoadHighScores()
         {
-            XnaContentReader reader = new XnaContentReader(_logger, ServiceLocator.GetService<ProfileFileVersion>());
+            XnaContentReader reader = new XnaContentReader(_logger, ServiceLocator.Instance.GetService<ProfileFileVersion>());
             reader.Initialize(DialogStrings.SurvivalScoresFilename);
             reader.IsWrongVersion();
 
@@ -179,7 +179,7 @@ namespace SlaamMono.States.PostGameStats.StatsBoards
 
         public void XNASaveHighScores()
         {
-            XnaContentWriter writer = new XnaContentWriter(ServiceLocator.GetService<ProfileFileVersion>());
+            XnaContentWriter writer = new XnaContentWriter(ServiceLocator.Instance.GetService<ProfileFileVersion>());
             writer.Initialize(DialogStrings.SurvivalScoresFilename);
             writer.Write(PeopleToCompare.Length);
 

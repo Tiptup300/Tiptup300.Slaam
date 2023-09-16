@@ -5,6 +5,7 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.Menus;
+using SlaamMono.States.PostGameStats.StatsBoards;
 using SlaamMono.x_;
 using ZzziveGameEngine.StateManagement;
 

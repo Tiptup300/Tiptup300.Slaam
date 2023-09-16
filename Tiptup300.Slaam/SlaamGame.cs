@@ -69,9 +69,6 @@ namespace SlaamMono
          _renderService.Initialize();
          _fpsRenderer.Initialize();
 
-         // Does the things necessary to run the zBlade
-
-         SetupZuneBlade();
 
          base.Initialize();
       }
@@ -79,7 +76,6 @@ namespace SlaamMono
       protected override void LoadContent()
       {
          _resources.LoadAll();
-         mainBlade.CurrentGameInfo.GameIcon = _resources.GetTexture("ZBladeGameIcon").Texture;
          Qwerty.CurrentPlayer = _inputService.GetPlayers()[0];
          _renderService.LoadContent();
          _fpsRenderer.LoadContent();
