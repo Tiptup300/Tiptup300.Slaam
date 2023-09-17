@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tiptup300.Slaam.Library", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tiptup300.MonoGame", "Tiptup300.MonoGame\Tiptup300.MonoGame.csproj", "{F146FF3C-D710-4A36-9535-C683933DE9D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tiptup300.Slaam.Tests", "Tiptup300.Slaam.Tests\Tiptup300.Slaam.Tests.csproj", "{BCD237F1-2BF4-4D3C-9691-E9D917FD3402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tiptup300.Slaam.Tests", "Tiptup300.Slaam.Tests\Tiptup300.Slaam.Tests.csproj", "{BCD237F1-2BF4-4D3C-9691-E9D917FD3402}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
