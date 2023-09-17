@@ -81,7 +81,7 @@ namespace SlaamMono.PlayerProfiles
          }
 
          reader.Close();
-         if (BotProfiles.Count != _resources.GetTextList("BotNames").Count)
+         if (BotProfiles.Count != _resources.GetTextList("botnames").Count)
          {
             for (int x = 0; x < AllProfiles.Count; x++)
             {
@@ -92,9 +92,9 @@ namespace SlaamMono.PlayerProfiles
                }
             }
             BotProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
-            for (int x = 0; x < _resources.GetTextList("BotNames").Count; x++)
+            for (int x = 0; x < _resources.GetTextList("botnames").Count; x++)
             {
-               AllProfiles.Add(new PlayerProfile(_resources.GetTextList("BotNames")[x].Replace("\r", ""), true));
+               AllProfiles.Add(new PlayerProfile(_resources.GetTextList("botnames")[x].Replace("\r", ""), true));
                BotProfiles.Add(AllProfiles.Count - 1);
             }
          }

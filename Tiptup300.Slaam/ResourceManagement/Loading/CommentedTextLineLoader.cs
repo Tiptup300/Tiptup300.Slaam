@@ -6,9 +6,7 @@ namespace SlaamMono.ResourceManagement.Loading
    {
       public object Load(string baseName)
       {
-         return File.ReadAllLines(baseName)
-             .Where(line => line.StartsWith("//") == false)
-             .ToArray();
+         return System.Text.Json.JsonSerializer.Deserialize<string[]>(File.ReadAllText(baseName));
       }
    }
 }
