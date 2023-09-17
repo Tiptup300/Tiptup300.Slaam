@@ -1,23 +1,23 @@
-﻿using ZzziveGameEngine;
+﻿using System.Tiptup300.Primitives;
 
-namespace SlaamMono.Library.ResourceManagement;
+namespace Tiptup300.Slaam.Library.ResourceManagement;
 
- public class CachedTextureRequestHandler : IResolver<TextureRequest, CachedTexture>
- {
-     private readonly Mut<ResourcesState> _resourcesState;
+public class CachedTextureRequestHandler : IResolver<TextureRequest, CachedTexture>
+{
+   private readonly Mut<ResourcesState> _resourcesState;
 
-     public CachedTextureRequestHandler(Mut<ResourcesState> resourcesState)
-     {
-         _resourcesState = resourcesState;
-     }
+   public CachedTextureRequestHandler(Mut<ResourcesState> resourcesState)
+   {
+      _resourcesState = resourcesState;
+   }
 
-     public CachedTexture Resolve(TextureRequest request)
-     {
-         CachedTexture output;
+   public CachedTexture Resolve(TextureRequest request)
+   {
+      CachedTexture output;
 
-         output = _resourcesState.Get().Textures[request.TextureName];
-         output.Load();
+      output = _resourcesState.Get().Textures[request.TextureName];
+      output.Load();
 
-         return output;
-     }
- }
+      return output;
+   }
+}

@@ -1,13 +1,13 @@
-﻿using ZzziveGameEngine;
+﻿using System.Tiptup300.Primitives;
 
-namespace SlaamMono.Library.ResourceManagement;
+namespace Tiptup300.Slaam.Library.ResourceManagement;
 
- public class TextureRequest : IRequest
- {
-     public string TextureName { get; private set; }
+public class TextureRequest : IRequest
+{
+   public string TextureName { get; private set; }
 
-     public TextureRequest(string textureName)
-     {
-         TextureName = textureName;
-     }
- }
+   public TextureRequest(string textureName)
+   {
+      TextureName = textureName;
+   }
+}

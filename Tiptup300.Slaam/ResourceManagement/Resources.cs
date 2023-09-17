@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.ResourceManagement.Loading;
-using ZzziveGameEngine;
+using System.Tiptup300.Primitives;
+using Tiptup300.Slaam.Library.Logging;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.ResourceManagement.Loading;
 
-namespace SlaamMono.ResourceManagement;
+namespace Tiptup300.Slaam.ResourceManagement;
 
 public class Resources : IResources
 {
@@ -62,7 +62,7 @@ public class Resources : IResources
           .Select(line => line.Split(","))
           .ToDictionary(
               x => x[0],
-              x => (T)_resourceLoader.Load<T>(x[1])
+              x => _resourceLoader.Load<T>(x[1])
           );
    }
 

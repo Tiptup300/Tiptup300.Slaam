@@ -1,13 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Gameplay.Powerups;
-using SlaamMono.Library;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.x_;
 using Tiptup300.Slaam.Library.Rendering;
-using Timer = SlaamMono.SubClasses.Timer;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Timing;
+using Tiptup300.Slaam.States.Match.Powerups;
+using Tiptup300.Slaam.x_;
 
-namespace SlaamMono.Gameplay.Boards;
+namespace Tiptup300.Slaam.States.Match.Boards;
 
 public class Tile
 {
@@ -42,7 +41,7 @@ public class Tile
       output.ParentTileTileset = tiletex;
       output.TileCoors = TileLoc;
       output.AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
-      output.FadeThrottle = new Timer(fadeOutTime);
+      output.FadeThrottle = new Library.Widgets.Timer(fadeOutTime);
 
       return output;
    }

@@ -1,18 +1,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library;
-using SlaamMono.Library.Graphics;
-using SlaamMono.Library.Input;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Metrics;
-using SlaamMono.PlayerProfiles;
+using System.Tiptup300.Primitives;
+using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.Library.Graphics;
+using Tiptup300.Slaam.Library.Input;
+using Tiptup300.Slaam.Library.Logging;
 using Tiptup300.Slaam.Library.Rendering;
-using ZzziveGameEngine;
-using ZzziveGameEngine.StateManagement;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Timing;
+using Tiptup300.Slaam.Metrics;
+using Tiptup300.Slaam.PlayerProfiles;
+using Tiptup300.Slaam.States.ZibithLogo;
 
-namespace SlaamMono;
+namespace Tiptup300.Slaam;
 
 /// <summary>
 /// This is the main type for your game
@@ -31,6 +32,7 @@ public class SlaamGame : Game
    private readonly FrameTimeService _frameTimeService;
    private readonly InputService _inputService;
    private readonly IResolver<GameStartRequest, IState> _gameStartRequestResolver;
+   private readonly ZibithLogoPerformer _performer;
 
    public SlaamGame(
        ILogger logger,
@@ -40,7 +42,8 @@ public class SlaamGame : Game
        FpsRenderer fpsRenderer,
        FrameTimeService frameTimeService,
        InputService inputService,
-       IResolver<GameStartRequest, IState> gameStartRequestResolver)
+       IResolver<GameStartRequest, IState> gameStartRequestResolver
+   )
    {
       _logger = logger;
       _resources = resources;
@@ -53,11 +56,12 @@ public class SlaamGame : Game
 
       Content = new ContentManager(Services);
       _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
+                                                           //   _performer = new ZibithLogoPerformer(resources, frameTimeService, renderService);
    }
 
    private void configureGame()
    {
-      this.IsFixedTimeStep = false;
+      IsFixedTimeStep = false;
    }
 
    protected override void Initialize()

@@ -1,5 +1,5 @@
-﻿namespace ZzziveGameEngine;
+﻿namespace System.Tiptup300.Primitives;
 
- public interface IRequest
- {
- }
+public interface IRequest
+{
+}

@@ -1,16 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.ResourceManagement;
+using Tiptup300.Slaam;
+using Tiptup300.Slaam.Library.ResourceManagement;
 
-namespace SlaamMono.ResourceManagement.Loading;
+namespace Tiptup300.Slaam.ResourceManagement.Loading;
 
- public class FontLoader : IFileLoader<SpriteFont>
- {
-     public object Load(string filePath)
-     {
-         SpriteFont output;
+public class FontLoader : IFileLoader<SpriteFont>
+{
+   public object Load(string filePath)
+   {
+      SpriteFont output;
 
-         output = SlaamGame.Content.Load<SpriteFont>(filePath);
+      output = SlaamGame.Content.Load<SpriteFont>(filePath);
 
-         return output;
-     }
- }
+      return output;
+   }
+}

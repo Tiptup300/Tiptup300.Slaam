@@ -1,7 +1,7 @@
-﻿using ZzziveGameEngine;
+﻿using System.Tiptup300.Primitives;
 
-namespace SlaamMono.Menus.ZibithLogo;
+namespace Tiptup300.Slaam.States.ZibithLogo;
 
- public class ZibithLogoRequest : IRequest
- {
- }
+public class ZibithLogoRequest : IRequest
+{
+}

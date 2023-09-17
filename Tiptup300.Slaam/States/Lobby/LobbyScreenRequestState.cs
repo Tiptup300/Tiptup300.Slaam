@@ -1,15 +1,15 @@
-﻿using SlaamMono.PlayerProfiles;
-using System.Collections.Generic;
-using ZzziveGameEngine.StateManagement;
+﻿using System.Collections.Generic;
+using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.PlayerProfiles;
 
-namespace SlaamMono.MatchCreation;
+namespace Tiptup300.Slaam.States.Lobby;
 
- public class LobbyScreenRequestState : IState
- {
-     public List<CharacterShell> CharacterShells { get; private set; }
+public class LobbyScreenRequestState : IState
+{
+   public List<CharacterShell> CharacterShells { get; private set; }
 
-     public LobbyScreenRequestState(List<CharacterShell> chars)
-     {
-         CharacterShells = chars;
-     }
- }
+   public LobbyScreenRequestState(List<CharacterShell> chars)
+   {
+      CharacterShells = chars;
+   }
+}

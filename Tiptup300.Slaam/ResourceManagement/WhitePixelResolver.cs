@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Graphics;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.ResourceManagement;
-using ZzziveGameEngine;
+using System.Tiptup300.Primitives;
+using Tiptup300.Slaam.Library.Graphics;
+using Tiptup300.Slaam.Library.Logging;
+using Tiptup300.Slaam.Library.ResourceManagement;
 
-namespace SlaamMono.ResourceManagement;
+namespace Tiptup300.Slaam.ResourceManagement;
 
 public class WhitePixelResolver : IResolver<WhitePixelRequest, Texture2D>
 {

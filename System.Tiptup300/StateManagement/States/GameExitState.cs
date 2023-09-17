@@ -1,5 +1,5 @@
-﻿namespace ZzziveGameEngine.StateManagement.States;
+﻿namespace System.Tiptup300.StateManagement.States;
 
- public struct GameExitState : IState
- {
- }
+public struct GameExitState : IState
+{
+}

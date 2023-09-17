@@ -1,5 +1,5 @@
-﻿namespace ZzziveGameEngine.StateManagement;
+﻿namespace System.Tiptup300.StateManagement;
 
- public interface IState
- {
- }
+public interface IState
+{
+}

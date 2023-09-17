@@ -1,11 +1,12 @@
-using SlaamMono.MatchCreation;
-using SlaamMono.Menus.Credits;
-using SlaamMono.PlayerProfiles;
-using ZzziveGameEngine;
-using ZzziveGameEngine.StateManagement;
-using ZzziveGameEngine.StateManagement.States;
+using System.Tiptup300.Primitives;
+using System.Tiptup300.StateManagement;
+using System.Tiptup300.StateManagement.States;
+using Tiptup300.Slaam.PlayerProfiles;
+using Tiptup300.Slaam.States.CharacterSelect;
+using Tiptup300.Slaam.States.Credits;
+using Tiptup300.Slaam.States.HighScoreScreen;
 
-namespace SlaamMono.Menus;
+namespace Tiptup300.Slaam.States.MainMenu;
 
 public class MainMenuScreenPerformer : IPerformer<MainMenuScreenState>, IRenderer<MainMenuScreenState>
 {

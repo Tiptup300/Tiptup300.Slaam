@@ -1,10 +1,10 @@
-﻿namespace SlaamMono.Gameplay;
+﻿namespace Tiptup300.Slaam.States.Match.Misc;
 
- public enum GameStatus
- {
-     MovingBoard,
-     Respawning,
-     Waiting,
-     Playing,
-     Over,
- }
+public enum GameStatus
+{
+   MovingBoard,
+   Respawning,
+   Waiting,
+   Playing,
+   Over,
+}

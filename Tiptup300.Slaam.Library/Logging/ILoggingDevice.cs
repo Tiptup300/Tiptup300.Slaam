@@ -1,8 +1,8 @@
-﻿namespace SlaamMono.Library.Logging;
+﻿namespace Tiptup300.Slaam.Library.Logging;
 
- public interface ILoggingDevice
- {
-     void Begin();
-     void Log(string line);
-     void End();
- }
+public interface ILoggingDevice
+{
+   void Begin();
+   void Log(string line);
+   void End();
+}

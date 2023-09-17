@@ -1,7 +1,7 @@
-﻿using ZzziveGameEngine;
+﻿using System.Tiptup300.Primitives;
 
-namespace SlaamMono;
+namespace Tiptup300.Slaam;
 
- public struct GameStartRequest : IRequest
- {
- }
+public struct GameStartRequest : IRequest
+{
+}

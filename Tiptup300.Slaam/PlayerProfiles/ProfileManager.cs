@@ -1,16 +1,19 @@
-using SlaamMono.Composition.x_;
-using SlaamMono.Library;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.x_;
+using Tiptup300.Slaam.Composition.x_;
+using Tiptup300.Slaam.Library.Logging;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Widgets;
+using Tiptup300.Slaam.x_;
 
-namespace SlaamMono.PlayerProfiles;
+namespace Tiptup300.Slaam.PlayerProfiles;
 
 /// <summary>
 /// This is a game component that implements IUpdateable.
 /// </summary>
 public static class ProfileManager
 {
+   // TODO: This class is currently a singleton, it needs changed to a injected service.
+   // TODO: This class needs cleaned up in a way that it's state is seperate. 
+   // 
    public static bool Initialized { get; private set; }
    public static List<PlayerProfile> AllProfiles;
    public static RedirectionList<PlayerProfile> PlayableProfiles;
@@ -22,10 +25,7 @@ public static class ProfileManager
    private static ILogger _logger;
    private static IResources _resources;
 
-   /// <summary>
-   /// Allows the game component to perform any initialization it needs to before starting
-   /// to run.  This is where it can query for any required services and load content.
-   /// </summary>
+
    public static void Initialize(ILogger logger, IResources resources)
    {
       _logger = logger;
@@ -70,14 +70,6 @@ public static class ProfileManager
                PlayableProfiles.Add(AllProfiles.Count - 1);
             }
          }
-
-#if ZUNE
-             if (PlayableProfiles.Count == 1)
-             {
-                 AllProfiles.Add(new PlayerProfile(0, 0, 0, "", "tommy", false, 0, 0));
-                 PlayableProfiles.Add(AllProfiles.Count - 1);
-             }
-#endif
       }
 
       reader.Close();

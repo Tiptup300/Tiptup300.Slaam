@@ -1,11 +1,11 @@
-﻿namespace SlaamMono.Library.Configurations;
+﻿namespace Tiptup300.Slaam.Library.Configurations;
 
- public class GameConfig
- {
-     public GameConfig(bool showFPS)
-     {
-         ShowFPS = showFPS;
-     }
+public class GameConfig
+{
+   public GameConfig(bool showFPS)
+   {
+      ShowFPS = showFPS;
+   }
 
-     public bool ShowFPS { get; private set; }
- }
+   public bool ShowFPS { get; private set; }
+}

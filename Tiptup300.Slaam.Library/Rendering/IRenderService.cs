@@ -1,2 +1,2 @@
-﻿namespace SlaamMono.Library.Rendering;
+﻿namespace Tiptup300.Slaam.Library.Rendering;
 

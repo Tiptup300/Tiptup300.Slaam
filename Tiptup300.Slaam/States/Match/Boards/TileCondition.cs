@@ -1,10 +1,10 @@
-﻿namespace SlaamMono.Gameplay.Boards;
+﻿namespace Tiptup300.Slaam.States.Match.Boards;
 
- public enum TileCondition
- {
-     Normal,
-     RespawnPoint,
-     Marked,
-     Clearing,
-     Clear
- }
+public enum TileCondition
+{
+   Normal,
+   RespawnPoint,
+   Marked,
+   Clearing,
+   Clear
+}

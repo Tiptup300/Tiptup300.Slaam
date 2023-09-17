@@ -1,24 +1,26 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Gameplay.Boards;
-using SlaamMono.Gameplay.Powerups;
-using SlaamMono.Library;
-using SlaamMono.Library.Input;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.x_;
+using Tiptup300.Slaam.Library.Input;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Timing;
+using Tiptup300.Slaam.Library.Widgets;
+using Tiptup300.Slaam.States.Match.Boards;
+using Tiptup300.Slaam.States.Match.Misc;
+using Tiptup300.Slaam.States.Match.Powerups;
+using Tiptup300.Slaam.x_;
 
-namespace SlaamMono.Gameplay.Actors;
+namespace Tiptup300.Slaam.States.Match.Actors;
 
 public class BotActor : CharacterActor
 {
    MatchPerformer ParentGameScreen;
    private readonly IFrameTimeService _frameTimeService;
    InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
-   SubClasses.Timer DiagonalMovementSwitch = new SubClasses.Timer(new TimeSpan(0, 0, 0, 0, 500));
-   SubClasses.Timer LogicUpdateThreshold = new SubClasses.Timer(new TimeSpan(0, 0, 0, 0, 500));
+   Library.Widgets.Timer DiagonalMovementSwitch = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 500));
+   Library.Widgets.Timer LogicUpdateThreshold = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 500));
    Random rand = new Random();
    Direction CurrentDirection = Direction.None;
-   SubClasses.Timer TargetTime = new SubClasses.Timer(new TimeSpan(0, 0, 5));
+   Library.Widgets.Timer TargetTime = new Library.Widgets.Timer(new TimeSpan(0, 0, 5));
 
    private RandomList<int[]> PlacesToGo = new RandomList<int[]>();
 

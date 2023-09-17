@@ -1,8 +1,8 @@
-﻿namespace SlaamMono.Library.Logging;
+﻿namespace Tiptup300.Slaam.Library.Logging;
 
- public interface ILogger
- {
-     void Initialize();
-     void End();
-     void Log(string str);
- }
+public interface ILogger
+{
+   void Initialize();
+   void End();
+   void Log(string str);
+}

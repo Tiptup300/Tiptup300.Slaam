@@ -1,7 +1,7 @@
-﻿namespace SlaamMono.Gameplay;
+﻿namespace Tiptup300.Slaam.States.Match.Misc;
 
- public enum PlayerType
- {
-     Player,
-     Computer
- }
+public enum PlayerType
+{
+   Player,
+   Computer
+}

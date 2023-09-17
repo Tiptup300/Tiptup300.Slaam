@@ -1,6 +1,6 @@
-using SlaamMono.Composition.x_;
+using Tiptup300.Slaam.Composition.x_;
 
-namespace SlaamMono.Composition;
+namespace Tiptup300.Slaam.Composition;
 
 static class Program
 {

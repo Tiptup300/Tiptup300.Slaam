@@ -1,15 +1,16 @@
 using Microsoft.Xna.Framework;
-using SlaamMono.Library;
-using SlaamMono.Library.Input;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Menus;
-using SlaamMono.States.PostGameStats.StatsBoards;
-using SlaamMono.x_;
+using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.Library.Input;
+using Tiptup300.Slaam.Library.Logging;
 using Tiptup300.Slaam.Library.Rendering;
-using ZzziveGameEngine.StateManagement;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Widgets;
+using Tiptup300.Slaam.States.MainMenu;
+using Tiptup300.Slaam.States.Match.Misc;
+using Tiptup300.Slaam.States.PostGameStats.StatsBoards;
+using Tiptup300.Slaam.x_;
 
-namespace SlaamMono.Gameplay.Statistics;
+namespace Tiptup300.Slaam.States.PostGameStats;
 
 public class StatsScreenPerformer : IPerformer<StatsScreenState>, IRenderer<StatsScreenState>
 {

@@ -1,6 +1,6 @@
-﻿using ZzziveGameEngine;
+﻿using System.Tiptup300.Primitives;
 
-namespace SlaamMono.PlayerProfiles;
+namespace Tiptup300.Slaam.PlayerProfiles;
 
 public class ProfileEditScreenRequest : IRequest
 {

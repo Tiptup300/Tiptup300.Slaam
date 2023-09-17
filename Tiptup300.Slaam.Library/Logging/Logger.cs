@@ -1,4 +1,4 @@
-namespace SlaamMono.Library.Logging;
+namespace Tiptup300.Slaam.Library.Logging;
 
 
 /// <summary>

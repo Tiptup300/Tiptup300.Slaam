@@ -1,14 +1,15 @@
 using Microsoft.Xna.Framework;
-using SlaamMono.Library.Input;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.States.PostGameStats.StatsBoards;
-using SlaamMono.x_;
+using System.Tiptup300.Primitives;
+using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.Library.Input;
+using Tiptup300.Slaam.Library.Logging;
 using Tiptup300.Slaam.Library.Rendering;
-using ZzziveGameEngine;
-using ZzziveGameEngine.StateManagement;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.States.MainMenu;
+using Tiptup300.Slaam.States.PostGameStats.StatsBoards;
+using Tiptup300.Slaam.x_;
 
-namespace SlaamMono.Menus;
+namespace Tiptup300.Slaam.States.HighScoreScreen;
 
 public class HighScoreScreenPerformer : IPerformer<HighScoreScreenState>, IRenderer<HighScoreScreenState>
 {

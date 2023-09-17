@@ -1,6 +1,6 @@
-﻿using SlaamMono.Subclasses;
+﻿using Tiptup300.Slaam.Library.Widgets;
 
-namespace SlaamMono.Testing;
+namespace Tiptup300.Slaam.Tests;
 
 public class TransistionTests
 {

@@ -1,6 +1,7 @@
-﻿using SlaamMono.Composition.x_;
+﻿
+using Tiptup300.Slaam.Composition.x_;
 
-namespace SlaamMono.Testing;
+namespace Tiptup300.Slaam.Tests;
 
 public class CompositionTests
 {

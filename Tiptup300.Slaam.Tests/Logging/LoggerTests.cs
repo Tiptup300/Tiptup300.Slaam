@@ -1,6 +1,6 @@
-﻿using SlaamMono.Library.Logging;
+﻿using Tiptup300.Slaam.Library.Logging;
 
-namespace SlaamMono.Testing.Logging;
+namespace Tiptup300.Slaam.Tests.Logging;
 
 public class LoggerTests
 {

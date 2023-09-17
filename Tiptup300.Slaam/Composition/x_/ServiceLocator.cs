@@ -1,6 +1,6 @@
 ﻿using SimpleInjector;
 
-namespace SlaamMono.Composition.x_;
+namespace Tiptup300.Slaam.Composition.x_;
 
 
 public class ServiceLocator

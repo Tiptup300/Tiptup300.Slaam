@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
-using SlaamMono.Library;
-using SlaamMono.Library.Graphing;
-using SlaamMono.Library.ResourceManagement;
+using System.Tiptup300.Primitives;
+using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.Library.Graphing;
 using Tiptup300.Slaam.Library.Rendering;
-using ZzziveGameEngine;
-using ZzziveGameEngine.StateManagement;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Widgets;
 
-namespace SlaamMono.PlayerProfiles;
+namespace Tiptup300.Slaam.PlayerProfiles;
 
 public class ProfileEditScreenRequestResolver : IResolver<ProfileEditScreenRequest, IState>
 {

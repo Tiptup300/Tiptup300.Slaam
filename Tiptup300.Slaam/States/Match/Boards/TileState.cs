@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Gameplay.Powerups;
-using ZzziveGameEngine.StateManagement;
+using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.States.Match.Powerups;
 
-namespace SlaamMono.Gameplay.Boards;
+namespace Tiptup300.Slaam.States.Match.Boards;
 
 public class TileState : IState
 {
@@ -19,8 +19,8 @@ public class TileState : IState
    public Vector2 AbsTileloc;
    public Vector2 TileCoors;
    public Texture2D ParentTileTileset;
-   public SubClasses.Timer FadeThrottle;
-   public SubClasses.Timer FallSpeed = new SubClasses.Timer(new TimeSpan(0, 0, 0, 0, 400));
-   public SubClasses.Timer ReappearSpeed = new SubClasses.Timer(new TimeSpan(0, 0, 5));
+   public Library.Widgets.Timer FadeThrottle;
+   public Library.Widgets.Timer FallSpeed = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 400));
+   public Library.Widgets.Timer ReappearSpeed = new Library.Widgets.Timer(new TimeSpan(0, 0, 5));
    public float Alpha = 255;
 }

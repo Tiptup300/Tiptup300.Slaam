@@ -1,15 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Gameplay;
-using SlaamMono.Library;
-using SlaamMono.Library.Input;
-using SlaamMono.Library.Rendering;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.PlayerProfiles;
-using SlaamMono.States.PostGameStats.StatsBoards;
+using Tiptup300.Slaam.Library.Input;
 using Tiptup300.Slaam.Library.Rendering;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Timing;
+using Tiptup300.Slaam.Library.Widgets;
+using Tiptup300.Slaam.PlayerProfiles;
+using Tiptup300.Slaam.States.Match.Misc;
+using Tiptup300.Slaam.States.PostGameStats.StatsBoards;
 
-namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes;
+namespace Tiptup300.Slaam.States.CharacterSelect.CharacterSelectBoxes;
 
 
 public class PlayerCharacterSelectBoxPerformer

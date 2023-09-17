@@ -1,15 +1,17 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Composition.x_;
-using SlaamMono.Gameplay.Boards;
-using SlaamMono.Gameplay.Powerups;
-using SlaamMono.Library;
-using SlaamMono.Library.Input;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.PlayerProfiles;
-using SlaamMono.x_;
+using Tiptup300.Slaam.Composition.x_;
+using Tiptup300.Slaam.Library.Input;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Timing;
+using Tiptup300.Slaam.Library.Widgets;
+using Tiptup300.Slaam.PlayerProfiles;
+using Tiptup300.Slaam.States.Match.Boards;
+using Tiptup300.Slaam.States.Match.Misc;
+using Tiptup300.Slaam.States.Match.Powerups;
+using Tiptup300.Slaam.x_;
 
-namespace SlaamMono.Gameplay.Actors;
+namespace Tiptup300.Slaam.States.Match.Actors;
 
 public class CharacterActor
 {
@@ -32,16 +34,16 @@ public class CharacterActor
    private int Deaths = 0;
    private readonly float SpeedOfMovement;
    private Texture2D CharacterSkin;
-   private SubClasses.Timer WalkingAnimationChange = new SubClasses.Timer(new TimeSpan(0, 0, 0, 0, 60));
-   private SubClasses.Timer AttackingAnimationChange = new SubClasses.Timer(new TimeSpan(0, 0, 0, 0, (int)(GameGlobals.TILE_SIZE / 50f * 300)));
+   private Library.Widgets.Timer WalkingAnimationChange = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 60));
+   private Library.Widgets.Timer AttackingAnimationChange = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, (int)(GameGlobals.TILE_SIZE / 50f * 300)));
    private int Row;
    private SpriteEffects fx = SpriteEffects.None;
    private IntRange currAni = new IntRange(0, 0, 2);
    private bool currentlymoving;
    private Color SpriteColor = Color.White;
 
-   private SubClasses.Timer ReappearTime;
-   private SubClasses.Timer FadeThrottle = new SubClasses.Timer(new TimeSpan(0, 0, 0, 0, 25));
+   private Library.Widgets.Timer ReappearTime;
+   private Library.Widgets.Timer FadeThrottle = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 25));
    private float Alpha = 255;
 
    private const float _characterDrawScale = GameGlobals.TILE_SIZE / 45f;
@@ -70,7 +72,7 @@ public class CharacterActor
       }
       Lives = matchSettings.LivesAmt;
       SpeedOfMovement = GameGlobals.TILE_SIZE / 50f * (5f / 30f) * matchSettings.SpeedMultiplyer;
-      ReappearTime = new SubClasses.Timer(matchSettings.RespawnTime);
+      ReappearTime = new Library.Widgets.Timer(matchSettings.RespawnTime);
 
    }
 

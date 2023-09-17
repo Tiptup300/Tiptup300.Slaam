@@ -1,7 +1,7 @@
-﻿using ZzziveGameEngine.StateManagement;
+﻿using System.Tiptup300.StateManagement;
 
-namespace SlaamMono.Menus;
+namespace Tiptup300.Slaam.States.HighScoreScreen;
 
- public class HighScoreScreenRequestState : IState
- {
- }
+public class HighScoreScreenRequestState : IState
+{
+}

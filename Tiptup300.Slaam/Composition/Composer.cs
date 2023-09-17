@@ -1,22 +1,22 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SimpleInjector;
-using SlaamMono.Composition.x_;
-using SlaamMono.Gameplay;
-using SlaamMono.Library;
-using SlaamMono.Library.Configurations;
-using SlaamMono.Library.Graphics;
-using SlaamMono.Library.Input;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes;
-using SlaamMono.Metrics;
-using SlaamMono.PlayerProfiles;
-using SlaamMono.ResourceManagement;
-using SlaamMono.ResourceManagement.Loading;
+using System.Tiptup300.Primitives;
+using Tiptup300.Slaam.Composition.x_;
+using Tiptup300.Slaam.Library.Configurations;
+using Tiptup300.Slaam.Library.Graphics;
+using Tiptup300.Slaam.Library.Input;
+using Tiptup300.Slaam.Library.Logging;
 using Tiptup300.Slaam.Library.Rendering;
-using ZzziveGameEngine;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Timing;
+using Tiptup300.Slaam.Metrics;
+using Tiptup300.Slaam.PlayerProfiles;
+using Tiptup300.Slaam.ResourceManagement;
+using Tiptup300.Slaam.ResourceManagement.Loading;
+using Tiptup300.Slaam.States.CharacterSelect.CharacterSelectBoxes;
+using Tiptup300.Slaam.States.Match.Misc;
 
-namespace SlaamMono.Composition;
+namespace Tiptup300.Slaam.Composition;
 
 public class Composer
 {

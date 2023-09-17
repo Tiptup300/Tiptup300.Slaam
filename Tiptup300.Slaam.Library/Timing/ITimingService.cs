@@ -1,8 +1,6 @@
-﻿using SlaamMono.Library.Timing;
+﻿namespace Tiptup300.Slaam.Library.Timing;
 
-namespace SlaamMono.Library;
-
- public interface IFrameTimeService
- {
-     Frame GetLatestFrame();
- }
+public interface IFrameTimeService
+{
+   Frame GetLatestFrame();
+}

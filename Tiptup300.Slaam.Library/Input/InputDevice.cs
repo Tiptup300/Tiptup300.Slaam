@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace SlaamMono.Library.Input;
+namespace Tiptup300.Slaam.Library.Input;
 
 public class InputDevice
 {
@@ -51,15 +51,15 @@ public class InputDevice
       {
          GamePad.Update();
 
-         PressedUp = (GamePad.PressedPadUp || GamePad.PressedLeftStickUp);
-         PressedDown = (GamePad.PressedPadDown || GamePad.PressedLeftStickDown);
-         PressedLeft = (GamePad.PressedPadLeft || GamePad.PressedLeftStickLeft);
-         PressedRight = (GamePad.PressedPadRight || GamePad.PressedLeftStickRight);
+         PressedUp = GamePad.PressedPadUp || GamePad.PressedLeftStickUp;
+         PressedDown = GamePad.PressedPadDown || GamePad.PressedLeftStickDown;
+         PressedLeft = GamePad.PressedPadLeft || GamePad.PressedLeftStickLeft;
+         PressedRight = GamePad.PressedPadRight || GamePad.PressedLeftStickRight;
 
-         PressingLeft = (GamePad.PressingPadLeft || GamePad.PressingLeftStickLeft);
-         PressingRight = (GamePad.PressingPadRight || GamePad.PressingLeftStickRight);
-         PressingUp = (GamePad.PressingPadUp || GamePad.PressingLeftStickUp);
-         PressingDown = (GamePad.PressingPadDown || GamePad.PressingLeftStickDown);
+         PressingLeft = GamePad.PressingPadLeft || GamePad.PressingLeftStickLeft;
+         PressingRight = GamePad.PressingPadRight || GamePad.PressingLeftStickRight;
+         PressingUp = GamePad.PressingPadUp || GamePad.PressingLeftStickUp;
+         PressingDown = GamePad.PressingPadDown || GamePad.PressingLeftStickDown;
 
          PressedAction2 = GamePad.PressedB;
          PressedAction = GamePad.PressedA;
@@ -67,15 +67,15 @@ public class InputDevice
          PressedStart = GamePad.PressedStart;
       }
 
-      PressedUp = (GamePad.PressedPadUp || GamePad.PressedLeftStickUp);
-      PressedDown = (GamePad.PressedPadDown || GamePad.PressedLeftStickDown);
-      PressedLeft = (GamePad.PressedPadLeft || GamePad.PressedLeftStickLeft);
-      PressedRight = (GamePad.PressedPadRight || GamePad.PressedLeftStickRight);
+      PressedUp = GamePad.PressedPadUp || GamePad.PressedLeftStickUp;
+      PressedDown = GamePad.PressedPadDown || GamePad.PressedLeftStickDown;
+      PressedLeft = GamePad.PressedPadLeft || GamePad.PressedLeftStickLeft;
+      PressedRight = GamePad.PressedPadRight || GamePad.PressedLeftStickRight;
 
-      PressingLeft = (GamePad.PressingPadLeft || GamePad.PressingLeftStickLeft);
-      PressingRight = (GamePad.PressingPadRight || GamePad.PressingLeftStickRight);
-      PressingUp = (GamePad.PressingPadUp || GamePad.PressingLeftStickUp);
-      PressingDown = (GamePad.PressingPadDown || GamePad.PressingLeftStickDown);
+      PressingLeft = GamePad.PressingPadLeft || GamePad.PressingLeftStickLeft;
+      PressingRight = GamePad.PressingPadRight || GamePad.PressingLeftStickRight;
+      PressingUp = GamePad.PressingPadUp || GamePad.PressingLeftStickUp;
+      PressingDown = GamePad.PressingPadDown || GamePad.PressingLeftStickDown;
 
       PressedAction2 = GamePad.PressedBack;
       PressedAction = GamePad.PressedA;

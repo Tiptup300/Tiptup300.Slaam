@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
-using SlaamMono.Library;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.Subclasses;
-using SlaamMono.x_;
+using System.Tiptup300.StateManagement;
 using Tiptup300.Slaam.Library.Rendering;
-using ZzziveGameEngine.StateManagement;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Timing;
+using Tiptup300.Slaam.Library.Widgets;
+using Tiptup300.Slaam.States.MainMenu;
+using Tiptup300.Slaam.x_;
 
-namespace SlaamMono.Menus.ZibithLogo;
+namespace Tiptup300.Slaam.States.ZibithLogo;
 
 public class ZibithLogoPerformer : IPerformer<ZibithLogoState>, IRenderer<ZibithLogoState>
 {
@@ -56,7 +57,7 @@ public class ZibithLogoPerformer : IPerformer<ZibithLogoState>, IRenderer<Zibith
    private IState fadeInState(ZibithLogoState state)
    {
       state.StateTransition.AddProgress(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-      state.LogoColor = new Color(Color.White, Microsoft.Xna.Framework.MathHelper.SmoothStep(0f, 1f, state.StateTransition.Position));
+      state.LogoColor = new Color(Color.White, MathHelper.SmoothStep(0f, 1f, state.StateTransition.Position));
       if (state.StateTransition.IsFinished)
       {
          return initHoldState(state);

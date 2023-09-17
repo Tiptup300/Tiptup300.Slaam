@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Composition.x_;
-using SlaamMono.Library.ResourceManagement;
+using Tiptup300.Slaam.Composition.x_;
+using Tiptup300.Slaam.Library.ResourceManagement;
 
-namespace SlaamMono.Gameplay.Powerups;
+namespace Tiptup300.Slaam.States.Match.Powerups;
 
 public class PowerupManager
 {

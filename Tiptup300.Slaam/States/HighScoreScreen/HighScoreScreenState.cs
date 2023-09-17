@@ -1,9 +1,9 @@
-﻿using SlaamMono.States.PostGameStats.StatsBoards;
-using ZzziveGameEngine.StateManagement;
+﻿using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.States.PostGameStats.StatsBoards;
 
-namespace SlaamMono.Menus;
+namespace Tiptup300.Slaam.States.HighScoreScreen;
 
- public class HighScoreScreenState : IState
- {
-     public SurvivalStatsBoard _statsboard { get; set; }
- }
+public class HighScoreScreenState : IState
+{
+   public SurvivalStatsBoard _statsboard { get; set; }
+}

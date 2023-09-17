@@ -1,8 +1,8 @@
-﻿namespace SlaamMono.MatchCreation.CharacterSelection.CharacterSelectBoxes;
+﻿namespace Tiptup300.Slaam.States.CharacterSelect.CharacterSelectBoxes;
 
- public enum PlayerCharacterSelectBoxMovementStatus
- {
-     Lowering,
-     Stationary,
-     Raising,
- }
+public enum PlayerCharacterSelectBoxMovementStatus
+{
+   Lowering,
+   Stationary,
+   Raising,
+}

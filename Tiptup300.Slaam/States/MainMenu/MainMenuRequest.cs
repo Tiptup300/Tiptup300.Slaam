@@ -1,7 +1,7 @@
-﻿using ZzziveGameEngine;
+﻿using System.Tiptup300.Primitives;
 
-namespace SlaamMono.Menus;
+namespace Tiptup300.Slaam.States.MainMenu;
 
- public class MainMenuRequest : IRequest
- {
- }
+public class MainMenuRequest : IRequest
+{
+}

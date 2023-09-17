@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ZzziveGameEngine;
+using System.Tiptup300.Primitives;
 
-namespace SlaamMono.Library.ResourceManagement;
+namespace Tiptup300.Slaam.Library.ResourceManagement;
 
- public class WhitePixelRequest : IRequest
- {
- }
+public class WhitePixelRequest : IRequest
+{
+}

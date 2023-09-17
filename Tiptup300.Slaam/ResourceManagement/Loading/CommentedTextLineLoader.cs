@@ -1,6 +1,6 @@
-﻿using SlaamMono.Library.ResourceManagement;
+﻿using Tiptup300.Slaam.Library.ResourceManagement;
 
-namespace SlaamMono.ResourceManagement.Loading;
+namespace Tiptup300.Slaam.ResourceManagement.Loading;
 
 public class CommentedTextLineLoader : IFileLoader<string[]>
 {

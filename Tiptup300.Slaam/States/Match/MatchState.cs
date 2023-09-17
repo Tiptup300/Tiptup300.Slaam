@@ -1,19 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Gameplay.Actors;
-using SlaamMono.Gameplay.Boards;
-using SlaamMono.PlayerProfiles;
-using SlaamMono.Survival;
-using ZzziveGameEngine.StateManagement;
+using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.PlayerProfiles;
+using Tiptup300.Slaam.States.Match.Actors;
+using Tiptup300.Slaam.States.Match.Boards;
+using Tiptup300.Slaam.States.Match.Misc;
+using Tiptup300.Slaam.States.Match.Scoreboard;
+using Tiptup300.Slaam.States.Match.Timer;
 
-namespace SlaamMono.Gameplay;
+namespace Tiptup300.Slaam.States.Match;
 
 public class MatchState : IState
 {
    public bool IsTiming { get; set; } = false;
    public bool IsPaused { get; set; } = false;
    public int KillsToWin { get; set; } = 0;
-   public SubClasses.Timer PowerupTime { get; set; }
+   public Library.Widgets.Timer PowerupTime { get; set; }
    public float SpreeStepSize { get; set; }
    public float SpreeCurrentStep { get; set; }
    public int SpreeHighestKillCount { get; set; }
@@ -29,7 +31,7 @@ public class MatchState : IState
    public Random Rand { get; set; } = new Random();
    public GameStatus CurrentGameStatus { get; set; }
    public int ReadySetGoPart { get; set; } = 0;
-   public SubClasses.Timer ReadySetGoThrottle { get; set; }
+   public Library.Widgets.Timer ReadySetGoThrottle { get; set; }
    public MatchScoreCollection ScoreKeeper { get; set; }
 
    public Tile[,] Tiles { get; set; }

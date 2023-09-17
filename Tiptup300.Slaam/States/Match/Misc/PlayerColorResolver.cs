@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace SlaamMono.Gameplay;
+namespace Tiptup300.Slaam.States.Match.Misc;
 
- public class PlayerColorResolver
- {
-     private readonly Color[] _playerColors = new Color[] {
+public class PlayerColorResolver
+{
+   private readonly Color[] _playerColors = new Color[] {
          Color.Red,
          Color.Blue,
          Color.Green,
@@ -15,5 +15,5 @@ namespace SlaamMono.Gameplay;
          Color.Pink
      };
 
-     public Color GetColorByIndex(int playerIndex) => _playerColors[playerIndex];
- }
+   public Color GetColorByIndex(int playerIndex) => _playerColors[playerIndex];
+}

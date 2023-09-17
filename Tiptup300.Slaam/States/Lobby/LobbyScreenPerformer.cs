@@ -1,19 +1,21 @@
 using Microsoft.Xna.Framework;
-using SlaamMono.Composition.x_;
-using SlaamMono.Gameplay;
-using SlaamMono.Library;
-using SlaamMono.Library.Graphing;
-using SlaamMono.Library.Input;
-using SlaamMono.Library.Logging;
-using SlaamMono.Library.Rendering;
-using SlaamMono.Library.ResourceManagement;
-using SlaamMono.PlayerProfiles;
-using SlaamMono.x_;
+using System.Tiptup300.Primitives;
+using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.Composition.x_;
+using Tiptup300.Slaam.Library.Graphing;
+using Tiptup300.Slaam.Library.Input;
+using Tiptup300.Slaam.Library.Logging;
 using Tiptup300.Slaam.Library.Rendering;
-using ZzziveGameEngine;
-using ZzziveGameEngine.StateManagement;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Widgets;
+using Tiptup300.Slaam.PlayerProfiles;
+using Tiptup300.Slaam.States.BoardSelect;
+using Tiptup300.Slaam.States.CharacterSelect;
+using Tiptup300.Slaam.States.Match;
+using Tiptup300.Slaam.States.Match.Misc;
+using Tiptup300.Slaam.x_;
 
-namespace SlaamMono.MatchCreation;
+namespace Tiptup300.Slaam.States.Lobby;
 
 public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<LobbyScreenState>
 {

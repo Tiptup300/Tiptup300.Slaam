@@ -1,9 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.Library.Graphics;
-using SlaamMono.Library.Rendering;
-using SlaamMono.Library.ResourceManagement;
-using ZzziveGameEngine;
+using System.Tiptup300.Primitives;
+using Tiptup300.Slaam.Library.Graphics;
+using Tiptup300.Slaam.Library.ResourceManagement;
 
 namespace Tiptup300.Slaam.Library.Rendering;
 

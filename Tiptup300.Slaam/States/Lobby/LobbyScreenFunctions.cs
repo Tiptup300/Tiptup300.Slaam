@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using SlaamMono.x_;
+using Tiptup300.Slaam.x_;
 
-namespace SlaamMono.MatchCreation;
+namespace Tiptup300.Slaam.States.Lobby;
 
 public static class LobbyScreenFunctions
 {

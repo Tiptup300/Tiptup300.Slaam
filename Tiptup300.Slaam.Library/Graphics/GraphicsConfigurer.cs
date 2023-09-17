@@ -1,8 +1,11 @@
-﻿using SlaamMono.Library.Configurations;
-using SlaamMono.Library.Graphics;
+﻿namespace Tiptup300.Slaam.Library.Graphics;
 
-namespace SlaamMono;
+using Tiptup300.Slaam.Library.Configurations;
 
+public interface IGraphicsConfigurer
+{
+   void ConfigureGraphics();
+}
 public class GraphicsConfigurer : IGraphicsConfigurer
 {
    private readonly IGraphicsStateService _state;

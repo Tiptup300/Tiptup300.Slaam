@@ -1,7 +1,7 @@
-﻿using ZzziveGameEngine;
+﻿using System.Tiptup300.Primitives;
 
-namespace SlaamMono.Menus.Credits;
+namespace Tiptup300.Slaam.States.Credits;
 
- public class CreditsRequest : IRequest
- {
- }
+public class CreditsRequest : IRequest
+{
+}
