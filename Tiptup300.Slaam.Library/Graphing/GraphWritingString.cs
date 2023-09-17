@@ -1,18 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace SlaamMono.Library.Graphing
-{
-    public struct GraphWritingString
-    {
-        public string Str;
-        public Vector2 Pos;
+namespace SlaamMono.Library.Graphing;
 
-        public GraphWritingString(string str, Vector2 pos)
-        {
-            Str = str;
-            Pos = pos;
-            Pos.Y += 3;
-        }
-    }
+ public struct GraphWritingString
+ {
+     public string Str;
+     public Vector2 Pos;
 
-}
+     public GraphWritingString(string str, Vector2 pos)
+     {
+         Str = str;
+         Pos = pos;
+         Pos.Y += 3;
+     }
+ }

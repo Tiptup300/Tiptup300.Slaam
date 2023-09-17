@@ -1,42 +1,41 @@
 using System;
 using System.Collections.Generic;
 
-namespace SlaamMono.Library
-{
-    public class RandomList<T> : List<T>
-    {
-        private Random rand = new Random();
+namespace SlaamMono.Library;
 
-        public void RandomizeList()
-        {
-            List<T> temp = new List<T>();
-            List<int> intsused = new List<int>();
+ public class RandomList<T> : List<T>
+ {
+     private Random rand = new Random();
 
-            while (temp.Count != Count)
-            {
-                int x = rand.Next(0, Count);
-                bool used = false;
+     public void RandomizeList()
+     {
+         List<T> temp = new List<T>();
+         List<int> intsused = new List<int>();
 
-                for (int y = 0; y < intsused.Count; y++)
-                {
-                    if (x == intsused[y])
-                    {
-                        used = true;
-                        break;
-                    }
-                }
+         while (temp.Count != Count)
+         {
+             int x = rand.Next(0, Count);
+             bool used = false;
 
-                if (!used)
-                {
-                    intsused.Add(x);
-                    temp.Add(this[x]);
-                }
-            }
+             for (int y = 0; y < intsused.Count; y++)
+             {
+                 if (x == intsused[y])
+                 {
+                     used = true;
+                     break;
+                 }
+             }
 
-            Clear();
+             if (!used)
+             {
+                 intsused.Add(x);
+                 temp.Add(this[x]);
+             }
+         }
 
-            for (int x = 0; x < temp.Count; x++)
-                Add(temp[x]);
-        }
-    }
-}
+         Clear();
+
+         for (int x = 0; x < temp.Count; x++)
+             Add(temp[x]);
+     }
+ }

@@ -1,7 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 
-namespace SlaamMono.Library
-{
-
-}
+namespace SlaamMono.Library;

@@ -4,170 +4,169 @@ using SlaamMono.Library.Logging;
 using SlaamMono.Library.ResourceManagement;
 using SlaamMono.x_;
 
-namespace SlaamMono.PlayerProfiles
+namespace SlaamMono.PlayerProfiles;
+
+/// <summary>
+/// This is a game component that implements IUpdateable.
+/// </summary>
+public static class ProfileManager
 {
+   public static bool Initialized { get; private set; }
+   public static List<PlayerProfile> AllProfiles;
+   public static RedirectionList<PlayerProfile> PlayableProfiles;
+   public static RedirectionList<PlayerProfile> BotProfiles;
+   private static Random rand = new Random();
+   private static bool filefound = false;
+   public static bool FirstTime = false;
+
+   private static ILogger _logger;
+   private static IResources _resources;
+
    /// <summary>
-   /// This is a game component that implements IUpdateable.
+   /// Allows the game component to perform any initialization it needs to before starting
+   /// to run.  This is where it can query for any required services and load content.
    /// </summary>
-   public static class ProfileManager
+   public static void Initialize(ILogger logger, IResources resources)
    {
-      public static bool Initialized { get; private set; }
-      public static List<PlayerProfile> AllProfiles;
-      public static RedirectionList<PlayerProfile> PlayableProfiles;
-      public static RedirectionList<PlayerProfile> BotProfiles;
-      private static Random rand = new Random();
-      private static bool filefound = false;
-      public static bool FirstTime = false;
+      _logger = logger;
+      _resources = resources;
 
-      private static ILogger _logger;
-      private static IResources _resources;
+      Initialized = true;
 
-      /// <summary>
-      /// Allows the game component to perform any initialization it needs to before starting
-      /// to run.  This is where it can query for any required services and load content.
-      /// </summary>
-      public static void Initialize(ILogger logger, IResources resources)
+      LoadProfiles();
+      FirstTime = !filefound;
+   }
+
+   public static void LoadProfiles()
+   {
+      XnaContentReader reader = new XnaContentReader(_logger, ServiceLocator.Instance.GetService<ProfileFileVersion>());
+      reader.Initialize(DialogStrings.ProfileFilename);
+
+      filefound = !reader.WasNotFound;
+
+      AllProfiles = new List<PlayerProfile>();
+      PlayableProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
+      BotProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
+      AllProfiles.Add(new PlayerProfile(0, 0, 0, "", GameGlobals.DEFAULT_PLAYER_NAME, false, 0, 0));
+
+      PlayableProfiles.Add(0);
+
+      if (reader.IsWrongVersion())
       {
-         _logger = logger;
-         _resources = resources;
-
-         Initialized = true;
-
-         LoadProfiles();
-         FirstTime = !filefound;
+         // Wrong Version, do nothing...
       }
-
-      public static void LoadProfiles()
+      else
       {
-         XnaContentReader reader = new XnaContentReader(_logger, ServiceLocator.Instance.GetService<ProfileFileVersion>());
-         reader.Initialize(DialogStrings.ProfileFilename);
-
-         filefound = !reader.WasNotFound;
-
-         AllProfiles = new List<PlayerProfile>();
-         PlayableProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
-         BotProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
-         AllProfiles.Add(new PlayerProfile(0, 0, 0, "", GameGlobals.DEFAULT_PLAYER_NAME, false, 0, 0));
-
-         PlayableProfiles.Add(0);
-
-         if (reader.IsWrongVersion())
+         int ProfileAmt = reader.ReadInt32();
+         for (int x = 0; x < ProfileAmt; x++)
          {
-            // Wrong Version, do nothing...
-         }
-         else
-         {
-            int ProfileAmt = reader.ReadInt32();
-            for (int x = 0; x < ProfileAmt; x++)
+            AllProfiles.Add(new PlayerProfile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadString(), reader.ReadString(), reader.ReadBool(), reader.ReadInt32(), reader.ReadInt32()));
+            if (AllProfiles[AllProfiles.Count - 1].IsBot)
             {
-               AllProfiles.Add(new PlayerProfile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadString(), reader.ReadString(), reader.ReadBool(), reader.ReadInt32(), reader.ReadInt32()));
-               if (AllProfiles[AllProfiles.Count - 1].IsBot)
-               {
-                  BotProfiles.Add(AllProfiles.Count - 1);
-               }
-               else
-               {
-                  PlayableProfiles.Add(AllProfiles.Count - 1);
-               }
-            }
-
-#if ZUNE
-                if (PlayableProfiles.Count == 1)
-                {
-                    AllProfiles.Add(new PlayerProfile(0, 0, 0, "", "tommy", false, 0, 0));
-                    PlayableProfiles.Add(AllProfiles.Count - 1);
-                }
-#endif
-         }
-
-         reader.Close();
-         if (BotProfiles.Count != _resources.GetTextList("botnames").Count)
-         {
-            for (int x = 0; x < AllProfiles.Count; x++)
-            {
-               if (AllProfiles[x].IsBot)
-               {
-                  AllProfiles.RemoveAt(x);
-                  x--;
-               }
-            }
-            BotProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
-            for (int x = 0; x < _resources.GetTextList("botnames").Count; x++)
-            {
-               AllProfiles.Add(new PlayerProfile(_resources.GetTextList("botnames")[x].Replace("\r", ""), true));
                BotProfiles.Add(AllProfiles.Count - 1);
             }
+            else
+            {
+               PlayableProfiles.Add(AllProfiles.Count - 1);
+            }
          }
 
-         SaveProfiles();
+#if ZUNE
+             if (PlayableProfiles.Count == 1)
+             {
+                 AllProfiles.Add(new PlayerProfile(0, 0, 0, "", "tommy", false, 0, 0));
+                 PlayableProfiles.Add(AllProfiles.Count - 1);
+             }
+#endif
       }
 
-      public static void SaveProfiles()
+      reader.Close();
+      if (BotProfiles.Count != _resources.GetTextList("botnames").Count)
       {
-         XnaContentWriter writer = new XnaContentWriter(ServiceLocator.Instance.GetService<ProfileFileVersion>());
-         writer.Initialize(DialogStrings.ProfileFilename);
-
-         writer.Write(AllProfiles.Count - 1);
-
-         for (int x = 1; x < AllProfiles.Count; x++)
+         for (int x = 0; x < AllProfiles.Count; x++)
          {
-            writer.Write(AllProfiles[x].TotalKills);
-            writer.Write(AllProfiles[x].TotalGames);
-            writer.Write(AllProfiles[x].TotalDeaths);
-            writer.Write(AllProfiles[x].Skin);
-            writer.Write(AllProfiles[x].Name);
-            writer.Write(AllProfiles[x].IsBot);
-            writer.Write(AllProfiles[x].TotalPowerups);
-            writer.Write((int)AllProfiles[x].BestGame.TotalMilliseconds);
+            if (AllProfiles[x].IsBot)
+            {
+               AllProfiles.RemoveAt(x);
+               x--;
+            }
          }
-
-         writer.Close();
-      }
-
-      public static void AddNewProfile(PlayerProfile prof)
-      {
-         AllProfiles.Add(prof);
-         if (prof.IsBot)
+         BotProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
+         for (int x = 0; x < _resources.GetTextList("botnames").Count; x++)
+         {
+            AllProfiles.Add(new PlayerProfile(_resources.GetTextList("botnames")[x].Replace("\r", ""), true));
             BotProfiles.Add(AllProfiles.Count - 1);
-         else
-            PlayableProfiles.Add(AllProfiles.Count - 1);
-      }
-
-      public static int GetBotProfile()
-      {
-         int index = rand.Next(0, BotProfiles.Count);
-         int ct = 0;
-         do
-         {
-            index = rand.Next(0, BotProfiles.Count);
-            ct++;
-
-            if (ct > 100000)
-               throw new Exception("Infinite Loop detected...");
          }
-         while (BotProfiles[index].Used);
-
-         BotProfiles[index].Used = true;
-
-         return BotProfiles.GetRealIndex(index);
       }
 
-      public static void ResetAllBots()
+      SaveProfiles();
+   }
+
+   public static void SaveProfiles()
+   {
+      XnaContentWriter writer = new XnaContentWriter(ServiceLocator.Instance.GetService<ProfileFileVersion>());
+      writer.Initialize(DialogStrings.ProfileFilename);
+
+      writer.Write(AllProfiles.Count - 1);
+
+      for (int x = 1; x < AllProfiles.Count; x++)
       {
-         for (int x = 0; x < BotProfiles.Count; x++)
-            BotProfiles[x].Used = false;
+         writer.Write(AllProfiles[x].TotalKills);
+         writer.Write(AllProfiles[x].TotalGames);
+         writer.Write(AllProfiles[x].TotalDeaths);
+         writer.Write(AllProfiles[x].Skin);
+         writer.Write(AllProfiles[x].Name);
+         writer.Write(AllProfiles[x].IsBot);
+         writer.Write(AllProfiles[x].TotalPowerups);
+         writer.Write((int)AllProfiles[x].BestGame.TotalMilliseconds);
       }
 
-      public static void ResetBot(int index)
-      {
-         AllProfiles[index].Used = false;
-      }
+      writer.Close();
+   }
 
-      public static void RemovePlayer(int index)
+   public static void AddNewProfile(PlayerProfile prof)
+   {
+      AllProfiles.Add(prof);
+      if (prof.IsBot)
+         BotProfiles.Add(AllProfiles.Count - 1);
+      else
+         PlayableProfiles.Add(AllProfiles.Count - 1);
+   }
+
+   public static int GetBotProfile()
+   {
+      int index = rand.Next(0, BotProfiles.Count);
+      int ct = 0;
+      do
       {
-         AllProfiles.RemoveAt(index);
-         SaveProfiles();
-         LoadProfiles();
+         index = rand.Next(0, BotProfiles.Count);
+         ct++;
+
+         if (ct > 100000)
+            throw new Exception("Infinite Loop detected...");
       }
+      while (BotProfiles[index].Used);
+
+      BotProfiles[index].Used = true;
+
+      return BotProfiles.GetRealIndex(index);
+   }
+
+   public static void ResetAllBots()
+   {
+      for (int x = 0; x < BotProfiles.Count; x++)
+         BotProfiles[x].Used = false;
+   }
+
+   public static void ResetBot(int index)
+   {
+      AllProfiles[index].Used = false;
+   }
+
+   public static void RemovePlayer(int index)
+   {
+      AllProfiles.RemoveAt(index);
+      SaveProfiles();
+      LoadProfiles();
    }
 }

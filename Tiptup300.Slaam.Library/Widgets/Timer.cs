@@ -1,80 +1,79 @@
 using System;
 
-namespace SlaamMono.SubClasses
-{
-    public class Timer
-    {
-        public bool Active = false;
-        public bool MakeUpTime = false;
+namespace SlaamMono.SubClasses;
 
-        /// <summary>
-        /// The amount of time the input has been held
-        /// </summary>
-        private TimeSpan HoldCount;
-        public TimeSpan TimeLeft
-        {
-            get
-            {
-                return threshold - HoldCount;
-            }
-        }
+ public class Timer
+ {
+     public bool Active = false;
+     public bool MakeUpTime = false;
 
-        /// <summary>
-        /// The maximum amount of time the input can be held before it is again 
-        /// considered "Active"
-        /// </summary>
-        public TimeSpan Threshold
-        {
-            get
-            {
-                return threshold;
-            }
-            set
-            {
-                threshold = value;
-                Reset();
-            }
-        }
+     /// <summary>
+     /// The amount of time the input has been held
+     /// </summary>
+     private TimeSpan HoldCount;
+     public TimeSpan TimeLeft
+     {
+         get
+         {
+             return threshold - HoldCount;
+         }
+     }
 
-        /// <summary>
-        /// The maximum amount of time the input can be held before it is again 
-        /// considered "Active"
-        /// </summary>
-        private TimeSpan threshold;
+     /// <summary>
+     /// The maximum amount of time the input can be held before it is again 
+     /// considered "Active"
+     /// </summary>
+     public TimeSpan Threshold
+     {
+         get
+         {
+             return threshold;
+         }
+         set
+         {
+             threshold = value;
+             Reset();
+         }
+     }
 
-        public Timer(TimeSpan threshold)
-        {
-            this.threshold = threshold;
-        }
+     /// <summary>
+     /// The maximum amount of time the input can be held before it is again 
+     /// considered "Active"
+     /// </summary>
+     private TimeSpan threshold;
 
-        public void Update(TimeSpan TimeElapsed)
-        {
-            HoldCount += TimeElapsed;
+     public Timer(TimeSpan threshold)
+     {
+         this.threshold = threshold;
+     }
 
-            if (MakeUpTime)
-            {
-                if (HoldCount.TotalMilliseconds > Threshold.TotalMilliseconds * 3)
-                {
-                    HoldCount = Threshold;
-                }
-            }
+     public void Update(TimeSpan TimeElapsed)
+     {
+         HoldCount += TimeElapsed;
 
-            if (HoldCount >= threshold)
-            {
-                Active = true;
-                HoldCount -= threshold;
-            }
-            else
-            {
-                Active = false;
-            }
+         if (MakeUpTime)
+         {
+             if (HoldCount.TotalMilliseconds > Threshold.TotalMilliseconds * 3)
+             {
+                 HoldCount = Threshold;
+             }
+         }
 
-        }
+         if (HoldCount >= threshold)
+         {
+             Active = true;
+             HoldCount -= threshold;
+         }
+         else
+         {
+             Active = false;
+         }
 
-        public void Reset()
-        {
-            HoldCount = TimeSpan.Zero;
-            Active = false;
-        }
-    }
-}
+     }
+
+     public void Reset()
+     {
+         HoldCount = TimeSpan.Zero;
+         Active = false;
+     }
+ }

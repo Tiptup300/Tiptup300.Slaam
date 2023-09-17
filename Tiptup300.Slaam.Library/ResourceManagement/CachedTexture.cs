@@ -1,66 +1,65 @@
 using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.Logging;
 
-namespace SlaamMono.Library.ResourceManagement
-{
-    public class CachedTexture
-    {
-        public Texture2D Texture
-        {
-            get
-            {
-                if (_isUnloaded)
-                {
-                    _logger.Log($"Texture was accessed without preloading. Possible performance issue. (Filepath: {_filePath})");
-                    loadTexture();
-                }
-                return _texture;
-            }
-            set
-            {
-                _texture = value;
-            }
-        }
-        public int Height { get { return Texture.Height; } }
-        public int Width { get { return Texture.Width; } }
+namespace SlaamMono.Library.ResourceManagement;
 
-        private string _filePath;
-        private Texture2D _texture;
+ public class CachedTexture
+ {
+     public Texture2D Texture
+     {
+         get
+         {
+             if (_isUnloaded)
+             {
+                 _logger.Log($"Texture was accessed without preloading. Possible performance issue. (Filepath: {_filePath})");
+                 loadTexture();
+             }
+             return _texture;
+         }
+         set
+         {
+             _texture = value;
+         }
+     }
+     public int Height { get { return Texture.Height; } }
+     public int Width { get { return Texture.Width; } }
 
-        private readonly IFileLoader<Texture2D> _textureLoader;
-        private readonly ILogger _logger;
+     private string _filePath;
+     private Texture2D _texture;
 
-
-        public CachedTexture(string filePath, IFileLoader<Texture2D> textureLoader, ILogger logger)
-        {
-            _filePath = filePath;
-            _textureLoader = textureLoader;
-            _logger = logger;
-        }
-
-        private bool _isUnloaded => _texture == null;
+     private readonly IFileLoader<Texture2D> _textureLoader;
+     private readonly ILogger _logger;
 
 
-        public void Unload()
-        {
-            if (_isUnloaded)
-            {
-                return;
-            }
+     public CachedTexture(string filePath, IFileLoader<Texture2D> textureLoader, ILogger logger)
+     {
+         _filePath = filePath;
+         _textureLoader = textureLoader;
+         _logger = logger;
+     }
 
-            _texture.Dispose();
-            _texture = null;
-        }
+     private bool _isUnloaded => _texture == null;
 
-        public void Load()
-        {
-            loadTexture();
-        }
 
-        private void loadTexture()
-        {
-            _texture = (Texture2D)_textureLoader.Load(_filePath);
-        }
+     public void Unload()
+     {
+         if (_isUnloaded)
+         {
+             return;
+         }
 
-    }
-}
+         _texture.Dispose();
+         _texture = null;
+     }
+
+     public void Load()
+     {
+         loadTexture();
+     }
+
+     private void loadTexture()
+     {
+         _texture = (Texture2D)_textureLoader.Load(_filePath);
+     }
+
+ }

@@ -1,8 +1,7 @@
 ﻿using ZzziveGameEngine;
 
-namespace SlaamMono.Menus.ZibithLogo
-{
-    public class ZibithLogoRequest : IRequest
-    {
-    }
-}
+namespace SlaamMono.Menus.ZibithLogo;
+
+ public class ZibithLogoRequest : IRequest
+ {
+ }

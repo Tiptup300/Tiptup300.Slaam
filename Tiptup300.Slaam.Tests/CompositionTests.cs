@@ -1,13 +1,12 @@
 ﻿using SlaamMono.Composition.x_;
 
-namespace SlaamMono.Testing
+namespace SlaamMono.Testing;
+
+public class CompositionTests
 {
-   public class CompositionTests
+   [Fact]
+   public void CompositionWorks()
    {
-      [Fact]
-      public void CompositionWorks()
-      {
-         ServiceLocator.Instance.GetService<SlamGameConfigurer>();
-      }
+      ServiceLocator.Instance.GetService<SlamGameConfigurer>();
    }
 }

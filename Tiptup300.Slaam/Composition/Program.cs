@@ -1,20 +1,19 @@
 using SlaamMono.Composition.x_;
 
-namespace SlaamMono.Composition
+namespace SlaamMono.Composition;
+
+static class Program
 {
-   static class Program
+
+   /// <summary>
+   /// The main entry point for the application.
+   /// </summary>
+   static void Main(string[] args)
    {
-
-      /// <summary>
-      /// The main entry point for the application.
-      /// </summary>
-      static void Main(string[] args)
-      {
-         var graphicsConfigurer =
-         ServiceLocator.Instance.GetService<SlamGameConfigurer>();
-         graphicsConfigurer.Run();
-      }
-
+      var graphicsConfigurer =
+      ServiceLocator.Instance.GetService<SlamGameConfigurer>();
+      graphicsConfigurer.Run();
    }
+
 }
 

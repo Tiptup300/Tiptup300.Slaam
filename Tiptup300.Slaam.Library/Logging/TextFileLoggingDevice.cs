@@ -1,24 +1,23 @@
 ﻿using System.IO;
 
-namespace SlaamMono.Library.Logging
-{
-    public class TextFileLoggingDevice : ILoggingDevice
-    {
-        private const string DefaultFileName = "log.log";
+namespace SlaamMono.Library.Logging;
 
-        private TextWriter _textWriter;
-        public void Begin()
-        {
-            _textWriter = File.CreateText(DefaultFileName);
-        }
-        public void Log(string line)
-        {
-            _textWriter.WriteLine(line);
-        }
+ public class TextFileLoggingDevice : ILoggingDevice
+ {
+     private const string DefaultFileName = "log.log";
 
-        public void End()
-        {
-            _textWriter.Close();
-        }
-    }
-}
+     private TextWriter _textWriter;
+     public void Begin()
+     {
+         _textWriter = File.CreateText(DefaultFileName);
+     }
+     public void Log(string line)
+     {
+         _textWriter.WriteLine(line);
+     }
+
+     public void End()
+     {
+         _textWriter.Close();
+     }
+ }

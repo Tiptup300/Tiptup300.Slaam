@@ -1,24 +1,23 @@
 ﻿using ZzziveGameEngine;
 
-namespace SlaamMono.Library.ResourceManagement
-{
-    public class CachedTextureRequestHandler : IResolver<TextureRequest, CachedTexture>
-    {
-        private readonly Mut<ResourcesState> _resourcesState;
+namespace SlaamMono.Library.ResourceManagement;
 
-        public CachedTextureRequestHandler(Mut<ResourcesState> resourcesState)
-        {
-            _resourcesState = resourcesState;
-        }
+ public class CachedTextureRequestHandler : IResolver<TextureRequest, CachedTexture>
+ {
+     private readonly Mut<ResourcesState> _resourcesState;
 
-        public CachedTexture Resolve(TextureRequest request)
-        {
-            CachedTexture output;
+     public CachedTextureRequestHandler(Mut<ResourcesState> resourcesState)
+     {
+         _resourcesState = resourcesState;
+     }
 
-            output = _resourcesState.Get().Textures[request.TextureName];
-            output.Load();
+     public CachedTexture Resolve(TextureRequest request)
+     {
+         CachedTexture output;
 
-            return output;
-        }
-    }
-}
+         output = _resourcesState.Get().Textures[request.TextureName];
+         output.Load();
+
+         return output;
+     }
+ }

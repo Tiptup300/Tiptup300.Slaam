@@ -1,6 +1,5 @@
-﻿namespace ZzziveGameEngine.StateManagement.States
-{
-    public struct GameExitState : IState
-    {
-    }
-}
+﻿namespace ZzziveGameEngine.StateManagement.States;
+
+ public struct GameExitState : IState
+ {
+ }

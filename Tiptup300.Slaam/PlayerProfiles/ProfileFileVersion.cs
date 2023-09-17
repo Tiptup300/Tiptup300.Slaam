@@ -1,12 +1,11 @@
-﻿namespace SlaamMono.PlayerProfiles
-{
-    public class ProfileFileVersion
-    {
-        public byte[] Version;
+﻿namespace SlaamMono.PlayerProfiles;
 
-        public ProfileFileVersion(byte[] version)
-        {
-            Version = version;
-        }
-    }
-}
+ public class ProfileFileVersion
+ {
+     public byte[] Version;
+
+     public ProfileFileVersion(byte[] version)
+     {
+         Version = version;
+     }
+ }

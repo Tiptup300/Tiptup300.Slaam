@@ -6,67 +6,66 @@ using SlaamMono.Library;
 using SlaamMono.Library.ResourceManagement;
 using System;
 
-namespace SlaamMono.Gameplay.Powerups
-{
-    public class SpeedDown : Powerup
-    {
-        private int CharacterIndex;
-        private readonly IFrameTimeService _frameTimeService;
-        private int PowerupIndex = 2;
-        private const float Multiplier = .50f;
-        private readonly TimeSpan TimeLasting = new TimeSpan(0, 0, 10);
-        private TimeSpan CurrentTime;
+namespace SlaamMono.Gameplay.Powerups;
 
-        public SpeedDown(int charindex, IResources resources,
-            IFrameTimeService frameTimeService)
-            : base(DialogStrings.SpeedDoownName, new CachedTexture[] { resources.GetTexture("SpeedDown"), resources.GetTexture("SpeedDown0") }, PowerupUse.Strategy)
-        {
-            CharacterIndex = charindex;
-            _frameTimeService = frameTimeService;
-        }
+ public class SpeedDown : Powerup
+ {
+     private int CharacterIndex;
+     private readonly IFrameTimeService _frameTimeService;
+     private int PowerupIndex = 2;
+     private const float Multiplier = .50f;
+     private readonly TimeSpan TimeLasting = new TimeSpan(0, 0, 10);
+     private TimeSpan CurrentTime;
 
-        public override void BeginAttack(Vector2 charposition, Direction chardirection, MatchState gameScreenState)
-        {
-            Active = true;
-            CurrentTime = TimeLasting;
-            for (int x = 0; x < gameScreenState.Characters.Count; x++)
-            {
-                if (x != CharacterIndex && gameScreenState.Characters[x] != null)
-                    gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
-            }
-        }
+     public SpeedDown(int charindex, IResources resources,
+         IFrameTimeService frameTimeService)
+         : base(DialogStrings.SpeedDoownName, new CachedTexture[] { resources.GetTexture("SpeedDown"), resources.GetTexture("SpeedDown0") }, PowerupUse.Strategy)
+     {
+         CharacterIndex = charindex;
+         _frameTimeService = frameTimeService;
+     }
 
-        public override void UpdateAttack(MatchState gameScreenState)
-        {
+     public override void BeginAttack(Vector2 charposition, Direction chardirection, MatchState gameScreenState)
+     {
+         Active = true;
+         CurrentTime = TimeLasting;
+         for (int x = 0; x < gameScreenState.Characters.Count; x++)
+         {
+             if (x != CharacterIndex && gameScreenState.Characters[x] != null)
+                 gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
+         }
+     }
 
-            for (int x = 0; x < gameScreenState.Characters.Count; x++)
-            {
-                if (x != CharacterIndex && gameScreenState.Characters[x] != null)
-                    gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
-            }
+     public override void UpdateAttack(MatchState gameScreenState)
+     {
 
-            CurrentTime -= _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
+         for (int x = 0; x < gameScreenState.Characters.Count; x++)
+         {
+             if (x != CharacterIndex && gameScreenState.Characters[x] != null)
+                 gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = Multiplier;
+         }
 
-            if (CurrentTime <= TimeSpan.Zero)
-            {
-                EndAttack(gameScreenState);
-            }
-        }
+         CurrentTime -= _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
 
-        public override void EndAttack(MatchState gameScreenState)
-        {
-            Active = false;
-            for (int x = 0; x < gameScreenState.Characters.Count; x++)
-            {
-                if (x != CharacterIndex && gameScreenState.Characters[x] != null)
-                    gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = 1f;
-            }
-            Used = true;
-        }
+         if (CurrentTime <= TimeSpan.Zero)
+         {
+             EndAttack(gameScreenState);
+         }
+     }
 
-        public override void Draw(SpriteBatch batch)
-        {
+     public override void EndAttack(MatchState gameScreenState)
+     {
+         Active = false;
+         for (int x = 0; x < gameScreenState.Characters.Count; x++)
+         {
+             if (x != CharacterIndex && gameScreenState.Characters[x] != null)
+                 gameScreenState.Characters[x].SpeedMultiplyer[PowerupIndex] = 1f;
+         }
+         Used = true;
+     }
 
-        }
-    }
-}
+     public override void Draw(SpriteBatch batch)
+     {
+
+     }
+ }

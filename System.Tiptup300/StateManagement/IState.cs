@@ -1,6 +1,5 @@
-﻿namespace ZzziveGameEngine.StateManagement
-{
-    public interface IState
-    {
-    }
-}
+﻿namespace ZzziveGameEngine.StateManagement;
+
+ public interface IState
+ {
+ }

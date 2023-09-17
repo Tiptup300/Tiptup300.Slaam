@@ -1,9 +1,8 @@
-namespace ZzziveGameEngine.StateManagement
-{
-    public interface IPerformer<TState> where TState : IState
-    {
-        void InitializeState();
+namespace ZzziveGameEngine.StateManagement;
 
-        IState Perform(TState state);
-    }
-}
+ public interface IPerformer<TState> where TState : IState
+ {
+     void InitializeState();
+
+     IState Perform(TState state);
+ }

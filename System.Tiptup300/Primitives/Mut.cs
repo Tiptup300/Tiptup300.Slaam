@@ -1,35 +1,34 @@
 ﻿using System;
 
-namespace ZzziveGameEngine
-{
-    public class Mut<TStateType>
-    {
-        public event EventHandler Mutated;
+namespace ZzziveGameEngine;
 
-        private TStateType _state;
+ public class Mut<TStateType>
+ {
+     public event EventHandler Mutated;
 
-        public Mut(TStateType state = default)
-        {
-            _state = state;
-        }
+     private TStateType _state;
 
-        public void Mutate(TStateType newState)
-        {
-            _state = newState;
-            MarkAsMutated();
-        }
+     public Mut(TStateType state = default)
+     {
+         _state = state;
+     }
 
-        public static implicit operator TStateType(Mut<TStateType> value)
-        {
-            return value._state;
-        }
+     public void Mutate(TStateType newState)
+     {
+         _state = newState;
+         MarkAsMutated();
+     }
 
-        public void MarkAsMutated()
-        {
-            Mutated?.Invoke(this, null);
-        }
+     public static implicit operator TStateType(Mut<TStateType> value)
+     {
+         return value._state;
+     }
 
-        public TStateType Get()
-            => _state;
-    }
-}
+     public void MarkAsMutated()
+     {
+         Mutated?.Invoke(this, null);
+     }
+
+     public TStateType Get()
+         => _state;
+ }

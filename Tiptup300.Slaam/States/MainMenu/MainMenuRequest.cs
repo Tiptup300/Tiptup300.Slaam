@@ -1,8 +1,7 @@
 ﻿using ZzziveGameEngine;
 
-namespace SlaamMono.Menus
-{
-    public class MainMenuRequest : IRequest
-    {
-    }
-}
+namespace SlaamMono.Menus;
+
+ public class MainMenuRequest : IRequest
+ {
+ }

@@ -1,62 +1,61 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.x_;
 
-namespace SlaamMono.MatchCreation
+namespace SlaamMono.MatchCreation;
+
+public static class LobbyScreenFunctions
 {
-   public static class LobbyScreenFunctions
+   private static Texture2D _defaultBoard;
+
+
+
+   public static Texture2D LoadQuickBoard()
    {
-      private static Texture2D _defaultBoard;
-
-
-
-      public static Texture2D LoadQuickBoard()
+      if (_defaultBoard == null)
       {
-         if (_defaultBoard == null)
-         {
-            // . @State/Logic This needs to be rethought out to deal with the new state/logic 
+         // . @State/Logic This needs to be rethought out to deal with the new state/logic 
 
-            //BoardSelectionScreenPerformer viewer = null;//= new BoardSelectionScreen(null, null);
-            //new BoardSelectionScreenRequestState(null);
-            //viewer.InitializeState();
-            //while (!viewer.x_HasFoundBoard)
-            //{
-            //    viewer.Perform();
-            //}
-            //_defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.x_IsValidBoard);
-            //viewer.Close();
-         }
-
-         return _defaultBoard;
+         //BoardSelectionScreenPerformer viewer = null;//= new BoardSelectionScreen(null, null);
+         //new BoardSelectionScreenRequestState(null);
+         //viewer.InitializeState();
+         //while (!viewer.x_HasFoundBoard)
+         //{
+         //    viewer.Perform();
+         //}
+         //_defaultBoard = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + viewer.x_IsValidBoard);
+         //viewer.Close();
       }
 
-      public static void LoadBoard(string boardLocation, LobbyScreenState lobbyScreenState)
+      return _defaultBoard;
+   }
+
+   public static void LoadBoard(string boardLocation, LobbyScreenState lobbyScreenState)
+   {
+      if (lobbyScreenState.CurrentBoardTexture != null && lobbyScreenState.BoardLocation == boardLocation)
       {
-         if (lobbyScreenState.CurrentBoardTexture != null && lobbyScreenState.BoardLocation == boardLocation)
-         {
-            return;
-         }
+         return;
+      }
 
-         try
-         {
-            lobbyScreenState.CurrentBoardTexture = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + boardLocation);
-            lobbyScreenState.BoardLocation = boardLocation;
-         }
-         catch (FileNotFoundException)
-         {
-
-         }
-         lobbyScreenState.Dialogs[0] = DialogStrings.CurrentBoard + lobbyScreenState.BoardLocation.Substring(lobbyScreenState.BoardLocation.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\", "");
-         if (lobbyScreenState.BoardLocation.IndexOf('_') >= 0)
-         {
-            lobbyScreenState.Dialogs[1] = DialogStrings.CreatedBy + lobbyScreenState.BoardLocation.Substring(0, lobbyScreenState.BoardLocation.IndexOf('_')).Replace(".png", "").Replace("boards\\", "");
-         }
-         else
-         {
-            lobbyScreenState.Dialogs[1] = "";
-         }
-
-         _defaultBoard = lobbyScreenState.CurrentBoardTexture;
+      try
+      {
+         lobbyScreenState.CurrentBoardTexture = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + boardLocation);
+         lobbyScreenState.BoardLocation = boardLocation;
+      }
+      catch (FileNotFoundException)
+      {
 
       }
+      lobbyScreenState.Dialogs[0] = DialogStrings.CurrentBoard + lobbyScreenState.BoardLocation.Substring(lobbyScreenState.BoardLocation.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\", "");
+      if (lobbyScreenState.BoardLocation.IndexOf('_') >= 0)
+      {
+         lobbyScreenState.Dialogs[1] = DialogStrings.CreatedBy + lobbyScreenState.BoardLocation.Substring(0, lobbyScreenState.BoardLocation.IndexOf('_')).Replace(".png", "").Replace("boards\\", "");
+      }
+      else
+      {
+         lobbyScreenState.Dialogs[1] = "";
+      }
+
+      _defaultBoard = lobbyScreenState.CurrentBoardTexture;
+
    }
 }

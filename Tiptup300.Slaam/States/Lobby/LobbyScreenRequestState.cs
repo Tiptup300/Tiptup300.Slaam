@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using ZzziveGameEngine.StateManagement;
 
-namespace SlaamMono.MatchCreation
-{
-    public class LobbyScreenRequestState : IState
-    {
-        public List<CharacterShell> CharacterShells { get; private set; }
+namespace SlaamMono.MatchCreation;
 
-        public LobbyScreenRequestState(List<CharacterShell> chars)
-        {
-            CharacterShells = chars;
-        }
-    }
-}
+ public class LobbyScreenRequestState : IState
+ {
+     public List<CharacterShell> CharacterShells { get; private set; }
+
+     public LobbyScreenRequestState(List<CharacterShell> chars)
+     {
+         CharacterShells = chars;
+     }
+ }

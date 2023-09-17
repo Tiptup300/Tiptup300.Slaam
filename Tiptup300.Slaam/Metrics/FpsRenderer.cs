@@ -4,76 +4,76 @@ using SlaamMono.Library;
 using SlaamMono.Library.Configurations;
 using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
+using Tiptup300.Slaam.Library.Rendering;
 
-namespace SlaamMono.Metrics
-{
-    public class FpsRenderer
-    {
-        private bool _loaded = false;
-        private string _fpsText;
-        private Rectangle _boxDestination;
-        private Vector2 _textPosition;
-        private SpriteFont _font;
+namespace SlaamMono.Metrics;
 
-        private readonly Color _backBoxColor = new Color(0, 0, 0, 100);
-        private readonly IResources _resources;
-        private readonly IRenderService _renderGraph;
-        private readonly GameConfig _gameConfig;
-        private readonly FrameTimeService _frameTimeService;
+public class FpsRenderer
+ {
+     private bool _loaded = false;
+     private string _fpsText;
+     private Rectangle _boxDestination;
+     private Vector2 _textPosition;
+     private SpriteFont _font;
 
-        public FpsRenderer(
-            IResources resources,
-            IRenderService renderGraph,
-            GameConfig gameConfiguration,
-            FrameTimeService frameTimeService
-            )
-        {
-            _resources = resources;
-            _renderGraph = renderGraph;
-            _gameConfig = gameConfiguration;
-            _frameTimeService = frameTimeService;
-        }
+     private readonly Color _backBoxColor = new Color(0, 0, 0, 100);
+     private readonly IResources _resources;
+     private readonly IRenderService _renderGraph;
+     private readonly GameConfig _gameConfig;
+     private readonly FrameTimeService _frameTimeService;
 
-        public void Initialize()
-        {
-            _fpsText = "";
-        }
+     public FpsRenderer(
+         IResources resources,
+         IRenderService renderGraph,
+         GameConfig gameConfiguration,
+         FrameTimeService frameTimeService
+         )
+     {
+         _resources = resources;
+         _renderGraph = renderGraph;
+         _gameConfig = gameConfiguration;
+         _frameTimeService = frameTimeService;
+     }
 
-        public void LoadContent()
-        {
-            if (_loaded)
-            {
-                return;
-            }
-            _font = _resources.GetFont("SegoeUIx14pt");
-        }
+     public void Initialize()
+     {
+         _fpsText = "";
+     }
 
-        public void UnloadContent()
-        {
-        }
+     public void LoadContent()
+     {
+         if (_loaded)
+         {
+             return;
+         }
+         _font = _resources.GetFont("SegoeUIx14pt");
+     }
 
-        public void Update()
-        {
-            _fpsText = _frameTimeService.GetLatestFrame().FUPS.ToString();
-            Vector2 textSize = _font.MeasureString(_fpsText);
-            _boxDestination = new Rectangle(0, 0, (int)textSize.X + 2, (int)textSize.Y);
-            _textPosition = new Vector2(0, 0);
-        }
-        public void Draw()
-        {
-            if (_gameConfig.ShowFPS && _fpsText != null)
-            {
-                _renderGraph.RenderRectangle(
-                    destinationRectangle: _boxDestination,
-                    color: _backBoxColor);
+     public void UnloadContent()
+     {
+     }
 
-                _renderGraph.RenderText(
-                    text: _fpsText,
-                    position: _textPosition,
-                    alignment: Alignment.TopLeft,
-                    font: _font,
-                    addShadow: true);
-            }
-        }
-    }
-}
+     public void Update()
+     {
+         _fpsText = _frameTimeService.GetLatestFrame().FUPS.ToString();
+         Vector2 textSize = _font.MeasureString(_fpsText);
+         _boxDestination = new Rectangle(0, 0, (int)textSize.X + 2, (int)textSize.Y);
+         _textPosition = new Vector2(0, 0);
+     }
+     public void Draw()
+     {
+         if (_gameConfig.ShowFPS && _fpsText != null)
+         {
+             _renderGraph.RenderRectangle(
+                 destinationRectangle: _boxDestination,
+                 color: _backBoxColor);
+
+             _renderGraph.RenderText(
+                 text: _fpsText,
+                 position: _textPosition,
+                 alignment: Alignment.TopLeft,
+                 font: _font,
+                 addShadow: true);
+         }
+     }
+ }

@@ -1,50 +1,49 @@
 using Microsoft.Xna.Framework;
 
-namespace SlaamMono.Library.Input
-{
-    public class InputService : IInputService
-    {
-        private InputDevice[] _players;
+namespace SlaamMono.Library.Input;
 
-        public void Initialize()
-        {
-            _players = new InputDevice[1];
-            for (int i = 0; i < _players.Length; i++)
-            {
-                _players[i] = new InputDevice(InputDeviceType.Controller, (ExtendedPlayerIndex)i, -1);
-            }
-        }
+ public class InputService : IInputService
+ {
+     private InputDevice[] _players;
 
-        public void Update()
-        {
-            for (int i = 0; i < _players.Length; i++)
-            {
-                _players[i].Update();
-            }
-        }
+     public void Initialize()
+     {
+         _players = new InputDevice[1];
+         for (int i = 0; i < _players.Length; i++)
+         {
+             _players[i] = new InputDevice(InputDeviceType.Controller, (ExtendedPlayerIndex)i, -1);
+         }
+     }
 
-        public InputDevice[] GetPlayers()
-        {
-            return _players;
-        }
+     public void Update()
+     {
+         for (int i = 0; i < _players.Length; i++)
+         {
+             _players[i].Update();
+         }
+     }
 
-        /// <summary>
-        /// Gets Input Index from the inputted ExtendedPlayerIndex
-        /// </summary>
-        /// <param name="playerIndex"></param>
-        /// <returns></returns>
-        public int GetIndex(ExtendedPlayerIndex playerIndex)
-        {
-            for (int i = 0; i < _players.Length; i++)
-            {
-                if (_players[i].PlayerIndex == playerIndex)
-                {
-                    return i;
-                }
-            }
+     public InputDevice[] GetPlayers()
+     {
+         return _players;
+     }
 
-            return -1;
-        }
+     /// <summary>
+     /// Gets Input Index from the inputted ExtendedPlayerIndex
+     /// </summary>
+     /// <param name="playerIndex"></param>
+     /// <returns></returns>
+     public int GetIndex(ExtendedPlayerIndex playerIndex)
+     {
+         for (int i = 0; i < _players.Length; i++)
+         {
+             if (_players[i].PlayerIndex == playerIndex)
+             {
+                 return i;
+             }
+         }
 
-    }
-}
+         return -1;
+     }
+
+ }

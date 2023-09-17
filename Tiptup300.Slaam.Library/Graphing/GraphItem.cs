@@ -1,33 +1,31 @@
 ﻿using System.Collections.Generic;
 
-namespace SlaamMono.Library.Graphing
-{
-    public class GraphItem
-    {
-        public List<string> Details = new List<string>();
-        public bool Highlight = false;
+namespace SlaamMono.Library.Graphing;
 
-        public GraphItem()
-        {
+ public class GraphItem
+ {
+     public List<string> Details = new List<string>();
+     public bool Highlight = false;
 
-        }
+     public GraphItem()
+     {
 
-        public GraphItem(params string[] str)
-        {
-            for (int x = 0; x < str.Length; x++)
-                Details.Add(str[x]);
-        }
+     }
 
-        public void Add(bool s, params string[] str)
-        {
-            for (int x = 0; x < str.Length; x++)
-                Details.Add(str[x]);
-        }
+     public GraphItem(params string[] str)
+     {
+         for (int x = 0; x < str.Length; x++)
+             Details.Add(str[x]);
+     }
 
-        public GraphItemSetting ToSetting()
-        {
-            return (GraphItemSetting)this;
-        }
-    }
+     public void Add(bool s, params string[] str)
+     {
+         for (int x = 0; x < str.Length; x++)
+             Details.Add(str[x]);
+     }
 
-}
+     public GraphItemSetting ToSetting()
+     {
+         return (GraphItemSetting)this;
+     }
+ }

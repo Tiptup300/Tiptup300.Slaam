@@ -2,147 +2,146 @@ using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
 using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library.Graphing;
-using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using System;
 using System.Collections.Generic;
+using Tiptup300.Slaam.Library.Rendering;
 
-namespace SlaamMono.States.PostGameStats.StatsBoards
-{
-    class NormalStatsBoard : StatsBoard
-    {
-        public NormalPlayerStatsPageListing[] NormalStatsPage;
+namespace SlaamMono.States.PostGameStats.StatsBoards;
 
-        public NormalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderService renderGraph, StatsScreenState statsScreenState)
-            : base(scorekeeper, statsScreenState)
-        {
-            NormalStatsPage = new NormalPlayerStatsPageListing[statsScreenState.Characters.Count];
-            MainBoard = new Graph(rect, 2, col, resources, renderGraph);
-        }
+class NormalStatsBoard : StatsBoard
+ {
+     public NormalPlayerStatsPageListing[] NormalStatsPage;
 
-        public override void CalculateStats()
-        {
+     public NormalStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderService renderGraph, StatsScreenState statsScreenState)
+         : base(scorekeeper, statsScreenState)
+     {
+         NormalStatsPage = new NormalPlayerStatsPageListing[statsScreenState.Characters.Count];
+         MainBoard = new Graph(rect, 2, col, resources, renderGraph);
+     }
 
-            TimeSpan[] TotalTime = new TimeSpan[_statsScreenState.Characters.Count];
-            for (int x = 0; x < _statsScreenState.Characters.Count; x++)
-            {
-                if (_statsScreenState.Characters[x].Lives > 0)
-                    TotalTime[x] = _statsScreenState.Characters[x].TimeAlive + new TimeSpan(0, 5, 0);
-                else
-                    TotalTime[x] = _statsScreenState.Characters[x].TimeAlive;
-            }
+     public override void CalculateStats()
+     {
 
-            int AmtSelected = 0, CurrentPlace = 1;
-            bool[] SelectedAlready = new bool[TotalTime.Length];
+         TimeSpan[] TotalTime = new TimeSpan[_statsScreenState.Characters.Count];
+         for (int x = 0; x < _statsScreenState.Characters.Count; x++)
+         {
+             if (_statsScreenState.Characters[x].Lives > 0)
+                 TotalTime[x] = _statsScreenState.Characters[x].TimeAlive + new TimeSpan(0, 5, 0);
+             else
+                 TotalTime[x] = _statsScreenState.Characters[x].TimeAlive;
+         }
 
-            while (AmtSelected < TotalTime.Length)
-            {
-                TimeSpan highest = TimeSpan.Zero;
-                List<int> IndexsSelected = new List<int>();
+         int AmtSelected = 0, CurrentPlace = 1;
+         bool[] SelectedAlready = new bool[TotalTime.Length];
 
-                for (int x = 0; x < TotalTime.Length; x++)
-                {
-                    if (!SelectedAlready[x])
-                    {
-                        if (TotalTime[x] > highest)
-                        {
-                            IndexsSelected.Clear();
-                            IndexsSelected.Add(x);
-                            highest = TotalTime[x];
-                        }
-                        else if (TotalTime[x] == highest)
-                        {
-                            IndexsSelected.Add(x);
-                        }
-                    }
-                }
-                for (int x = 0; x < IndexsSelected.Count; x++)
-                {
-                    NormalStatsPage[IndexsSelected[x]] = new NormalPlayerStatsPageListing(((Places)CurrentPlace).ToString(), ParentScoreCollector.BestSprees[IndexsSelected[x]], TotalTime[IndexsSelected[x]]);
-                    AmtSelected++;
-                    SelectedAlready[IndexsSelected[x]] = true;
-                }
-                CurrentPlace++;
-            }
-        }
+         while (AmtSelected < TotalTime.Length)
+         {
+             TimeSpan highest = TimeSpan.Zero;
+             List<int> IndexsSelected = new List<int>();
 
-        public override Graph ConstructGraph(int index)
-        {
-            MainBoard.Items.Columns.Add("");
-            MainBoard.Items.Columns.Add("Place");
-            MainBoard.Items.Columns.Add("Best Spree");
-            MainBoard.Items.Columns.Add("Time Survived");
+             for (int x = 0; x < TotalTime.Length; x++)
+             {
+                 if (!SelectedAlready[x])
+                 {
+                     if (TotalTime[x] > highest)
+                     {
+                         IndexsSelected.Clear();
+                         IndexsSelected.Add(x);
+                         highest = TotalTime[x];
+                     }
+                     else if (TotalTime[x] == highest)
+                     {
+                         IndexsSelected.Add(x);
+                     }
+                 }
+             }
+             for (int x = 0; x < IndexsSelected.Count; x++)
+             {
+                 NormalStatsPage[IndexsSelected[x]] = new NormalPlayerStatsPageListing(((Places)CurrentPlace).ToString(), ParentScoreCollector.BestSprees[IndexsSelected[x]], TotalTime[IndexsSelected[x]]);
+                 AmtSelected++;
+                 SelectedAlready[IndexsSelected[x]] = true;
+             }
+             CurrentPlace++;
+         }
+     }
 
-            for (int x = 0; x < NormalStatsPage.Length; x++)
-            {
+     public override Graph ConstructGraph(int index)
+     {
+         MainBoard.Items.Columns.Add("");
+         MainBoard.Items.Columns.Add("Place");
+         MainBoard.Items.Columns.Add("Best Spree");
+         MainBoard.Items.Columns.Add("Time Survived");
 
-                GraphItem itm = new GraphItem();
-                {
+         for (int x = 0; x < NormalStatsPage.Length; x++)
+         {
 
-                    if (_statsScreenState.Characters[x].IsBot)
-                        itm.Details.Add("*" + _statsScreenState.Characters[x].GetProfile().Name + "*");
-                    else
-                        itm.Details.Add(_statsScreenState.Characters[x].GetProfile().Name);
+             GraphItem itm = new GraphItem();
+             {
 
-                    itm.Details.Add(NormalStatsPage[x].Place.ToString());
-                    itm.Details.Add(NormalStatsPage[x].BestSpree.ToString());
+                 if (_statsScreenState.Characters[x].IsBot)
+                     itm.Details.Add("*" + _statsScreenState.Characters[x].GetProfile().Name + "*");
+                 else
+                     itm.Details.Add(_statsScreenState.Characters[x].GetProfile().Name);
 
-                    if (NormalStatsPage[x].Place.ToString() == "First")
-                        itm.Details.Add("---");
-                    else
-                        itm.Details.Add(TimeSpanToString(NormalStatsPage[x].Score));
+                 itm.Details.Add(NormalStatsPage[x].Place.ToString());
+                 itm.Details.Add(NormalStatsPage[x].BestSpree.ToString());
 
-                    MainBoard.Items.Add(itm);
-                }
-            }
-            MainBoard.CalculateBlocks();
-            return MainBoard;
-        }
+                 if (NormalStatsPage[x].Place.ToString() == "First")
+                     itm.Details.Add("---");
+                 else
+                     itm.Details.Add(TimeSpanToString(NormalStatsPage[x].Score));
 
-        public static string TimeSpanToString(TimeSpan timespan)
-        {
-            string hour, min, sec;
+                 MainBoard.Items.Add(itm);
+             }
+         }
+         MainBoard.CalculateBlocks();
+         return MainBoard;
+     }
 
-            if (timespan.Hours > 1)
-                hour = timespan.Hours + " Hours ";
-            else if (timespan.Hours == 1)
-                hour = timespan.Hours + " Hour";
-            else
-                hour = "";
+     public static string TimeSpanToString(TimeSpan timespan)
+     {
+         string hour, min, sec;
 
-            if (timespan.Minutes > 1)
-                min = timespan.Minutes + " Mins ";
-            else if (timespan.Minutes == 1)
-                min = timespan.Minutes + " Min ";
-            else
-                min = "";
+         if (timespan.Hours > 1)
+             hour = timespan.Hours + " Hours ";
+         else if (timespan.Hours == 1)
+             hour = timespan.Hours + " Hour";
+         else
+             hour = "";
 
-            if (timespan.Seconds > 1)
-                sec = timespan.Seconds + " Secs";
-            else if (timespan.Seconds == 1)
-                sec = timespan.Seconds + " Sec";
-            else
-                sec = "";
+         if (timespan.Minutes > 1)
+             min = timespan.Minutes + " Mins ";
+         else if (timespan.Minutes == 1)
+             min = timespan.Minutes + " Min ";
+         else
+             min = "";
 
-            if ((hour + min + sec).Trim() == "")
-                return "0 Secs";
+         if (timespan.Seconds > 1)
+             sec = timespan.Seconds + " Secs";
+         else if (timespan.Seconds == 1)
+             sec = timespan.Seconds + " Sec";
+         else
+             sec = "";
 
-            return hour + min + sec;
-        }
+         if ((hour + min + sec).Trim() == "")
+             return "0 Secs";
 
-        public struct NormalPlayerStatsPageListing
-        {
-            public string Place;
-            public int BestSpree;
-            public TimeSpan Score;
+         return hour + min + sec;
+     }
 
-            public NormalPlayerStatsPageListing(string place, int bestspree, TimeSpan score)
-            {
-                Place = place;
-                BestSpree = bestspree;
-                Score = score;
-            }
+     public struct NormalPlayerStatsPageListing
+     {
+         public string Place;
+         public int BestSpree;
+         public TimeSpan Score;
 
-        }
-    }
-}
+         public NormalPlayerStatsPageListing(string place, int bestspree, TimeSpan score)
+         {
+             Place = place;
+             BestSpree = bestspree;
+             Score = score;
+         }
+
+     }
+ }

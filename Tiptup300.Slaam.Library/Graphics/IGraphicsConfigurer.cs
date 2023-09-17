@@ -1,7 +1,6 @@
-﻿namespace SlaamMono
-{
-    public interface IGraphicsConfigurer
-    {
-        void ConfigureGraphics();
-    }
-}
+﻿namespace SlaamMono;
+
+ public interface IGraphicsConfigurer
+ {
+     void ConfigureGraphics();
+ }

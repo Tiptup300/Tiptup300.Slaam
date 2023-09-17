@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\System.Tiptup300\System.Tiptup300.csproj" />
-    <ProjectReference Include="..\Tiptup300.MonoGame\Tiptup300.MonoGame.csproj" />
   </ItemGroup>
 
 </Project>

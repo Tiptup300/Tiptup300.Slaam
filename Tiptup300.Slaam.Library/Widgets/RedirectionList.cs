@@ -1,36 +1,35 @@
 using System.Collections.Generic;
 
-namespace SlaamMono.Library
-{
-    public class RedirectionList<T>
-    {
-        public List<T> ParentList;
-        public List<int> Indexs = new List<int>();
+namespace SlaamMono.Library;
 
-        public RedirectionList(List<T> parentlist)
-        {
-            ParentList = parentlist;
-        }
+ public class RedirectionList<T>
+ {
+     public List<T> ParentList;
+     public List<int> Indexs = new List<int>();
 
-        public void Add(int index)
-        {
-            Indexs.Add(index);
-        }
+     public RedirectionList(List<T> parentlist)
+     {
+         ParentList = parentlist;
+     }
 
-        public T this[int index]
-        {
-            get { return ParentList[Indexs[index]]; }
-            set { ParentList[Indexs[index]] = value; }
-        }
+     public void Add(int index)
+     {
+         Indexs.Add(index);
+     }
 
-        public int Count
-        {
-            get { return Indexs.Count; }
-        }
+     public T this[int index]
+     {
+         get { return ParentList[Indexs[index]]; }
+         set { ParentList[Indexs[index]] = value; }
+     }
 
-        public int GetRealIndex(int index)
-        {
-            return Indexs[index];
-        }
-    }
-}
+     public int Count
+     {
+         get { return Indexs.Count; }
+     }
+
+     public int GetRealIndex(int index)
+     {
+         return Indexs[index];
+     }
+ }

@@ -2,20 +2,19 @@
 using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
-namespace SlaamMono
-{
-    public class GameStartStateResolver : IResolver<GameStartRequest, IState>
-    {
-        private readonly IResolver<ZibithLogoRequest, IState> _stateResolver;
+namespace SlaamMono;
 
-        public GameStartStateResolver(IResolver<ZibithLogoRequest, IState> logoScreenResolver)
-        {
-            _stateResolver = logoScreenResolver;
-        }
+ public class GameStartStateResolver : IResolver<GameStartRequest, IState>
+ {
+     private readonly IResolver<ZibithLogoRequest, IState> _stateResolver;
 
-        public IState Resolve(GameStartRequest request)
-        {
-            return _stateResolver.Resolve(new ZibithLogoRequest());
-        }
-    }
-}
+     public GameStartStateResolver(IResolver<ZibithLogoRequest, IState> logoScreenResolver)
+     {
+         _stateResolver = logoScreenResolver;
+     }
+
+     public IState Resolve(GameStartRequest request)
+     {
+         return _stateResolver.Resolve(new ZibithLogoRequest());
+     }
+ }

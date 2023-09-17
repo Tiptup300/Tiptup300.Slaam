@@ -1,48 +1,47 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SlaamMono.Library.ResourceManagement;
 
-namespace SlaamMono.ResourceManagement.Loading
+namespace SlaamMono.ResourceManagement.Loading;
+
+public class ResourceLoader : IResourceLoader
 {
-   public class ResourceLoader : IResourceLoader
+   private readonly string _directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "assets");
+
+   private readonly Dictionary<Type, IFileLoader> _fileLoaders;
+
+   public ResourceLoader(
+       IFileLoader<SpriteFont> fontLoader,
+       IFileLoader<string[]> textLineLoader,
+       IFileLoader<CachedTexture> cachedTextureFactory)
    {
-      private readonly string _directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "assets");
+      _fileLoaders = buildFileLoaders(fontLoader, textLineLoader, cachedTextureFactory);
+   }
 
-      private readonly Dictionary<Type, IFileLoader> _fileLoaders;
+   public Dictionary<Type, IFileLoader> buildFileLoaders(
+       IFileLoader<SpriteFont> fontLoader,
+       IFileLoader<string[]> textLineLoader,
+       IFileLoader<CachedTexture> cachedTextureFactory)
+   {
+      Dictionary<Type, IFileLoader> output;
 
-      public ResourceLoader(
-          IFileLoader<SpriteFont> fontLoader,
-          IFileLoader<string[]> textLineLoader,
-          IFileLoader<CachedTexture> cachedTextureFactory)
+      output = new Dictionary<Type, IFileLoader>
       {
-         _fileLoaders = buildFileLoaders(fontLoader, textLineLoader, cachedTextureFactory);
-      }
+         { typeof(SpriteFont), fontLoader },
+         { typeof(string[]), textLineLoader },
+         { typeof(CachedTexture), cachedTextureFactory }
+      };
 
-      public Dictionary<Type, IFileLoader> buildFileLoaders(
-          IFileLoader<SpriteFont> fontLoader,
-          IFileLoader<string[]> textLineLoader,
-          IFileLoader<CachedTexture> cachedTextureFactory)
-      {
-         Dictionary<Type, IFileLoader> output;
+      return output;
+   }
 
-         output = new Dictionary<Type, IFileLoader>
-         {
-            { typeof(SpriteFont), fontLoader },
-            { typeof(string[]), textLineLoader },
-            { typeof(CachedTexture), cachedTextureFactory }
-         };
+   public T Load<T>(string resourceName) where T : class
+   {
+      object output;
+      string filePath;
 
-         return output;
-      }
+      filePath = Path.Combine(_directoryPath, resourceName);
+      output = _fileLoaders[typeof(T)].Load(filePath);
 
-      public T Load<T>(string resourceName) where T : class
-      {
-         object output;
-         string filePath;
-
-         filePath = Path.Combine(_directoryPath, resourceName);
-         output = _fileLoaders[typeof(T)].Load(filePath);
-
-         return (T)output;
-      }
+      return (T)output;
    }
 }

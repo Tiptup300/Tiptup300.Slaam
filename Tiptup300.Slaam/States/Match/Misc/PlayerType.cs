@@ -1,8 +1,7 @@
-﻿namespace SlaamMono.Gameplay
-{
-    public enum PlayerType
-    {
-        Player,
-        Computer
-    }
-}
+﻿namespace SlaamMono.Gameplay;
+
+ public enum PlayerType
+ {
+     Player,
+     Computer
+ }

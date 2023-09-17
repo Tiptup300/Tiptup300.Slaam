@@ -2,29 +2,28 @@
 using ZzziveGameEngine;
 using ZzziveGameEngine.StateManagement;
 
-namespace SlaamMono.Menus.ZibithLogo
-{
-    public class ZibithLogoRequestResolver : IResolver<ZibithLogoRequest, IState>
-    {
-        private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
+namespace SlaamMono.Menus.ZibithLogo;
 
-        public ZibithLogoRequestResolver(IResolver<TextureRequest, CachedTexture> textureRequest)
-        {
-            _textureRequest = textureRequest;
-        }
+ public class ZibithLogoRequestResolver : IResolver<ZibithLogoRequest, IState>
+ {
+     private readonly IResolver<TextureRequest, CachedTexture> _textureRequest;
 
-        public IState Resolve(ZibithLogoRequest request)
-        {
-            ZibithLogoState output;
+     public ZibithLogoRequestResolver(IResolver<TextureRequest, CachedTexture> textureRequest)
+     {
+         _textureRequest = textureRequest;
+     }
 
-            output = new ZibithLogoState()
-            {
-                StateIndex = 0,
-                BackgroundTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogoBG")),
-                LogoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"))
-            };
+     public IState Resolve(ZibithLogoRequest request)
+     {
+         ZibithLogoState output;
 
-            return output;
-        }
-    }
-}
+         output = new ZibithLogoState()
+         {
+             StateIndex = 0,
+             BackgroundTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogoBG")),
+             LogoTexture = _textureRequest.Resolve(new TextureRequest("ZibithLogo"))
+         };
+
+         return output;
+     }
+ }

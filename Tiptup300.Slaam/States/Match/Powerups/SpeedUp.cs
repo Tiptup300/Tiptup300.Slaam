@@ -7,53 +7,52 @@ using SlaamMono.Library.ResourceManagement;
 using SlaamMono.ResourceManagement;
 using System;
 
-namespace SlaamMono.Gameplay.Powerups
-{
-    public class SpeedUp : Powerup
-    {
-        private int PowerupIndex = 1;
-        private CharacterActor ParentCharacter;
-        private readonly IFrameTimeService _frameTimeService;
-        private TimeSpan CurrentTime;
+namespace SlaamMono.Gameplay.Powerups;
 
-        private const float Multiplyer = 1.5f;
-        private readonly TimeSpan TimeLasting = new TimeSpan(0, 0, 10);
+ public class SpeedUp : Powerup
+ {
+     private int PowerupIndex = 1;
+     private CharacterActor ParentCharacter;
+     private readonly IFrameTimeService _frameTimeService;
+     private TimeSpan CurrentTime;
 
-        public SpeedUp(CharacterActor parent, IResources resources,
-            IFrameTimeService frameTimeService)
-            : base(DialogStrings.SpeedUpName, new CachedTexture[] { resources.GetTexture("SpeedUp"), resources.GetTexture("SpeedUp0") }, PowerupUse.Evasion)
-        {
-            ParentCharacter = parent;
-            _frameTimeService = frameTimeService;
-        }
+     private const float Multiplyer = 1.5f;
+     private readonly TimeSpan TimeLasting = new TimeSpan(0, 0, 10);
 
-        public override void BeginAttack(Vector2 charposition, Direction chardirection, MatchState gameScreenState)
-        {
-            Active = true;
-            CurrentTime = TimeLasting;
-            ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
-        }
+     public SpeedUp(CharacterActor parent, IResources resources,
+         IFrameTimeService frameTimeService)
+         : base(DialogStrings.SpeedUpName, new CachedTexture[] { resources.GetTexture("SpeedUp"), resources.GetTexture("SpeedUp0") }, PowerupUse.Evasion)
+     {
+         ParentCharacter = parent;
+         _frameTimeService = frameTimeService;
+     }
 
-        public override void UpdateAttack(MatchState gameScreenState)
-        {
-            CurrentTime -= _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
+     public override void BeginAttack(Vector2 charposition, Direction chardirection, MatchState gameScreenState)
+     {
+         Active = true;
+         CurrentTime = TimeLasting;
+         ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
+     }
 
-            ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
+     public override void UpdateAttack(MatchState gameScreenState)
+     {
+         CurrentTime -= _frameTimeService.GetLatestFrame().MovementFactorTimeSpan;
 
-            if (CurrentTime <= TimeSpan.Zero)
-                EndAttack(gameScreenState);
-        }
+         ParentCharacter.SpeedMultiplyer[PowerupIndex] = Multiplyer;
 
-        public override void EndAttack(MatchState gameScreenState)
-        {
-            Active = false;
-            ParentCharacter.SpeedMultiplyer[PowerupIndex] = 1f;
-            Used = true;
-        }
+         if (CurrentTime <= TimeSpan.Zero)
+             EndAttack(gameScreenState);
+     }
 
-        public override void Draw(SpriteBatch batch)
-        {
+     public override void EndAttack(MatchState gameScreenState)
+     {
+         Active = false;
+         ParentCharacter.SpeedMultiplyer[PowerupIndex] = 1f;
+         Used = true;
+     }
 
-        }
-    }
-}
+     public override void Draw(SpriteBatch batch)
+     {
+
+     }
+ }

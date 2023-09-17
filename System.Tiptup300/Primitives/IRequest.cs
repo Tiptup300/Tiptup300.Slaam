@@ -1,6 +1,5 @@
-﻿namespace ZzziveGameEngine
-{
-    public interface IRequest
-    {
-    }
-}
+﻿namespace ZzziveGameEngine;
+
+ public interface IRequest
+ {
+ }

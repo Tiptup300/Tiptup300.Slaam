@@ -2,22 +2,21 @@ using SlaamMono.Gameplay;
 using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library.Graphing;
 
-namespace SlaamMono.States.PostGameStats.StatsBoards
-{
-    public abstract class StatsBoard
-    {
-        public Graph MainBoard;
-        public MatchScoreCollection ParentScoreCollector;
-        protected readonly StatsScreenState _statsScreenState;
+namespace SlaamMono.States.PostGameStats.StatsBoards;
 
-        public StatsBoard(MatchScoreCollection parentscorecollector, StatsScreenState statsScreenState)
-        {
-            ParentScoreCollector = parentscorecollector;
-            _statsScreenState = statsScreenState;
-        }
+ public abstract class StatsBoard
+ {
+     public Graph MainBoard;
+     public MatchScoreCollection ParentScoreCollector;
+     protected readonly StatsScreenState _statsScreenState;
 
-        public abstract void CalculateStats();
+     public StatsBoard(MatchScoreCollection parentscorecollector, StatsScreenState statsScreenState)
+     {
+         ParentScoreCollector = parentscorecollector;
+         _statsScreenState = statsScreenState;
+     }
 
-        public abstract Graph ConstructGraph(int index);
-    }
-}
+     public abstract void CalculateStats();
+
+     public abstract Graph ConstructGraph(int index);
+ }

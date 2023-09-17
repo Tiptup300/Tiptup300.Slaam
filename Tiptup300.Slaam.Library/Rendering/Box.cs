@@ -1,18 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace SlaamMono.Library.Rendering
-{
-    internal class Box
-    {
-        public Alignment Alignment { get; private set; }
-        public Rectangle Destination { get; private set; }
-        public Color Color { get; private set; }
+namespace SlaamMono.Library.Rendering;
 
-        public Box(Rectangle destination, Color color, Alignment alignment)
-        {
-            Destination = destination;
-            Color = color;
-            Alignment = alignment;
-        }
-    }
-}
+ internal class Box
+ {
+     public Alignment Alignment { get; private set; }
+     public Rectangle Destination { get; private set; }
+     public Color Color { get; private set; }
+
+     public Box(Rectangle destination, Color color, Alignment alignment)
+     {
+         Destination = destination;
+         Color = color;
+         Alignment = alignment;
+     }
+ }

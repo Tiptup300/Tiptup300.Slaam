@@ -1,12 +1,11 @@
-﻿namespace SlaamMono.ResourceManagement
-{
-    public class ResourcesListsToLoad
-    {
-        public string[] TextLists { get; private set; }
+﻿namespace SlaamMono.ResourceManagement;
 
-        public ResourcesListsToLoad(string[] textLists)
-        {
-            TextLists = textLists;
-        }
-    }
-}
+ public class ResourcesListsToLoad
+ {
+     public string[] TextLists { get; private set; }
+
+     public ResourcesListsToLoad(string[] textLists)
+     {
+         TextLists = textLists;
+     }
+ }

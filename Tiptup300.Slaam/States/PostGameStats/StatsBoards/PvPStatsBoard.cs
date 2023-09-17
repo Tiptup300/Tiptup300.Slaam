@@ -2,90 +2,89 @@ using Microsoft.Xna.Framework;
 using SlaamMono.Gameplay;
 using SlaamMono.Gameplay.Statistics;
 using SlaamMono.Library.Graphing;
-using SlaamMono.Library.Rendering;
 using SlaamMono.Library.ResourceManagement;
 using System.Collections.Generic;
+using Tiptup300.Slaam.Library.Rendering;
 
-namespace SlaamMono.States.PostGameStats.StatsBoards
-{
-    class PvPStatsBoard : StatsBoard
-    {
-        public List<PvPPageListing> PvPPage = new List<PvPPageListing>();
+namespace SlaamMono.States.PostGameStats.StatsBoards;
 
-        public PvPStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderService renderGraph, StatsScreenState statsScreenState)
-            : base(scorekeeper, statsScreenState)
-        {
-            MainBoard = new Graph(rect, 2, col, resources, renderGraph);
-        }
+class PvPStatsBoard : StatsBoard
+ {
+     public List<PvPPageListing> PvPPage = new List<PvPPageListing>();
 
-        public override void CalculateStats()
-        {
-            for (int z = 0; z < _statsScreenState.Characters.Count; z++)
-            {
-                List<SubPvPPageListing> templist = new List<SubPvPPageListing>();
+     public PvPStatsBoard(MatchScoreCollection scorekeeper, Rectangle rect, Color col, IResources resources, IRenderService renderGraph, StatsScreenState statsScreenState)
+         : base(scorekeeper, statsScreenState)
+     {
+         MainBoard = new Graph(rect, 2, col, resources, renderGraph);
+     }
 
-                for (int y = 0; y < _statsScreenState.Characters.Count; y++)
-                {
-                    templist.Add(new SubPvPPageListing(ParentScoreCollector.Kills[z][y], ParentScoreCollector.Kills[y][z]));
-                }
+     public override void CalculateStats()
+     {
+         for (int z = 0; z < _statsScreenState.Characters.Count; z++)
+         {
+             List<SubPvPPageListing> templist = new List<SubPvPPageListing>();
 
-                PvPPage.Add(new PvPPageListing(templist));
-            }
-        }
+             for (int y = 0; y < _statsScreenState.Characters.Count; y++)
+             {
+                 templist.Add(new SubPvPPageListing(ParentScoreCollector.Kills[z][y], ParentScoreCollector.Kills[y][z]));
+             }
 
-        public override Graph ConstructGraph(int index)
-        {
-            MainBoard.Items.Columns.Clear();
-            MainBoard.Items.Columns.Add("");
-            MainBoard.Items.Columns.Add("Killed");
-            MainBoard.Items.Columns.Add("Killed By");
+             PvPPage.Add(new PvPPageListing(templist));
+         }
+     }
 
-            MainBoard.Items.Clear();
-            for (int x = 0; x < PvPPage[index].Lists.Count; x++)
-            {
-                GraphItem itm = new GraphItem();
-                {
+     public override Graph ConstructGraph(int index)
+     {
+         MainBoard.Items.Columns.Clear();
+         MainBoard.Items.Columns.Add("");
+         MainBoard.Items.Columns.Add("Killed");
+         MainBoard.Items.Columns.Add("Killed By");
 
-                    if (_statsScreenState.Characters[x].IsBot)
-                        itm.Details.Add("*" + _statsScreenState.Characters[x].GetProfile().Name + "*");
-                    else
-                        itm.Details.Add(_statsScreenState.Characters[x].GetProfile().Name);
+         MainBoard.Items.Clear();
+         for (int x = 0; x < PvPPage[index].Lists.Count; x++)
+         {
+             GraphItem itm = new GraphItem();
+             {
 
-                    itm.Details.Add(PvPPage[index].Lists[x].Killed.ToString());
-                    itm.Details.Add(PvPPage[index].Lists[x].KilledBy.ToString());
+                 if (_statsScreenState.Characters[x].IsBot)
+                     itm.Details.Add("*" + _statsScreenState.Characters[x].GetProfile().Name + "*");
+                 else
+                     itm.Details.Add(_statsScreenState.Characters[x].GetProfile().Name);
 
-                    if (index == x)
-                        itm.Highlight = true;
+                 itm.Details.Add(PvPPage[index].Lists[x].Killed.ToString());
+                 itm.Details.Add(PvPPage[index].Lists[x].KilledBy.ToString());
 
-                    MainBoard.Items.Add(itm);
-                }
-            }
-            MainBoard.CalculateBlocks();
-            return MainBoard;
-        }
+                 if (index == x)
+                     itm.Highlight = true;
 
-        public struct PvPPageListing
-        {
-            public List<SubPvPPageListing> Lists;
+                 MainBoard.Items.Add(itm);
+             }
+         }
+         MainBoard.CalculateBlocks();
+         return MainBoard;
+     }
 
-            public PvPPageListing(List<SubPvPPageListing> lists)
-            {
-                Lists = lists;
-            }
+     public struct PvPPageListing
+     {
+         public List<SubPvPPageListing> Lists;
 
-        }
+         public PvPPageListing(List<SubPvPPageListing> lists)
+         {
+             Lists = lists;
+         }
 
-        public struct SubPvPPageListing
-        {
-            public int Killed;
-            public int KilledBy;
+     }
 
-            public SubPvPPageListing(int killed, int killedby)
-            {
-                Killed = killed;
-                KilledBy = killedby;
-            }
+     public struct SubPvPPageListing
+     {
+         public int Killed;
+         public int KilledBy;
 
-        }
-    }
-}
+         public SubPvPPageListing(int killed, int killedby)
+         {
+             Killed = killed;
+             KilledBy = killedby;
+         }
+
+     }
+ }
