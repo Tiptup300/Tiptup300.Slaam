@@ -13,22 +13,25 @@ namespace Tiptup300.Slaam.States.Match.Actors;
 
 public class BotActor : CharacterActor
 {
-   MatchPerformer ParentGameScreen;
-   private readonly IFrameTimeService _frameTimeService;
-   InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
-   Library.Widgets.Timer DiagonalMovementSwitch = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 500));
-   Library.Widgets.Timer LogicUpdateThreshold = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 500));
-   Random rand = new Random();
-   Direction CurrentDirection = Direction.None;
-   Library.Widgets.Timer TargetTime = new Library.Widgets.Timer(new TimeSpan(0, 0, 5));
+   private InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
+   private Library.Widgets.Timer DiagonalMovementSwitch = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 500));
+   private Library.Widgets.Timer LogicUpdateThreshold = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 500));
+   private Random rand = new Random();
+   private Direction CurrentDirection = Direction.None;
+   private Library.Widgets.Timer TargetTime = new Library.Widgets.Timer(new TimeSpan(0, 0, 5));
 
    private RandomList<int[]> PlacesToGo = new RandomList<int[]>();
 
    // New
    private bool GoingTowardsSafety = false;
-   private readonly Vector2 NullVector2 = new Vector2(-2, -2);
    private BotTarget CurrentTarget;
    private bool SwitchMovements = false;
+
+   private readonly Vector2 NullVector2 = new Vector2(-2, -2);
+   private readonly IFrameTimeService _frameTimeService;
+   /* todo */
+   private MatchPerformer ParentGameScreen;
+
    public BotActor(Texture2D skin, int profile, Vector2 pos, MatchPerformer parentgamescreen, Color markingcolor, int plyeridx, IResources resources,
        IFrameTimeService frameTimeService, MatchSettings matchSettings) :
        base(skin, profile, pos, null, markingcolor, plyeridx, resources, frameTimeService, matchSettings)

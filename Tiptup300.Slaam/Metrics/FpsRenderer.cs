@@ -24,12 +24,14 @@ public class FpsRenderer
    public FpsRenderer(
        IResources resources,
        IRenderService renderGraph,
-       FrameTimeService frameTimeService
+       FrameTimeService frameTimeService,
+       GameConfiguration gameConfiguration
        )
    {
       _resources = resources;
       _renderGraph = renderGraph;
       _frameTimeService = frameTimeService;
+      _gameConfiguration = gameConfiguration;
    }
 
    public void Initialize()
