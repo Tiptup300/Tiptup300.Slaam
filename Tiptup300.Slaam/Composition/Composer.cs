@@ -15,6 +15,7 @@ using Tiptup300.Slaam.ResourceManagement;
 using Tiptup300.Slaam.ResourceManagement.Loading;
 using Tiptup300.Slaam.States.CharacterSelect.CharacterSelectBoxes;
 using Tiptup300.Slaam.States.Match.Misc;
+using Tiptup300.Slaam.x_;
 
 namespace Tiptup300.Slaam.Composition;
 
@@ -42,6 +43,7 @@ public class Composer
    {
       _container.RegisterInstance(new ProfileFileVersion(new byte[] { 000, 000, 000, 002, }));
       _container.RegisterInstance(new GameConfig(true));
+      _container.RegisterInstance(new GameConfiguration());
       _container.Register<SlamGameConfigurer>(Lifestyle.Singleton);
       _container.Register<SlaamGame>(Lifestyle.Singleton);
       _container.Register<IGraphicsStateService, GraphicsStateService>(Lifestyle.Singleton);

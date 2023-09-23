@@ -22,20 +22,9 @@ public static class ProfileManager
    private static bool filefound = false;
    public static bool FirstTime = false;
 
-   private static ILogger _logger;
-   private static IResources _resources;
-
-
-   public static void Initialize(ILogger logger, IResources resources)
-   {
-      _logger = logger;
-      _resources = resources;
-
-      Initialized = true;
-
-      LoadProfiles();
-      FirstTime = !filefound;
-   }
+   private static ILogger _logger => ServiceLocator.Instance.GetService<ILogger>();
+   private static IResources _resources => ServiceLocator.Instance.GetService<IResources>();
+   private static GameConfiguration _gameConfiguration => ServiceLocator.Instance.GetService<GameConfiguration>();
 
    public static void LoadProfiles()
    {
@@ -47,7 +36,7 @@ public static class ProfileManager
       AllProfiles = new List<PlayerProfile>();
       PlayableProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
       BotProfiles = new RedirectionList<PlayerProfile>(AllProfiles);
-      AllProfiles.Add(new PlayerProfile(0, 0, 0, "", GameGlobals.DEFAULT_PLAYER_NAME, false, 0, 0));
+      AllProfiles.Add(new PlayerProfile(0, 0, 0, "", _gameConfiguration.DEFAULT_PLAYER_NAME, false, 0, 0));
 
       PlayableProfiles.Add(0);
 
@@ -92,6 +81,8 @@ public static class ProfileManager
       }
 
       SaveProfiles();
+
+      FirstTime = !filefound;
    }
 
    public static void SaveProfiles()

@@ -1,3 +1,4 @@
+using Tiptup300.Slaam.Composition.x_;
 using Tiptup300.Slaam.States.Match.Misc;
 using Tiptup300.Slaam.x_;
 
@@ -8,6 +9,7 @@ namespace Tiptup300.Slaam;
 /// </summary>
 static class DialogStrings
 {
+   public static GameConfiguration _gameConfiguration => ServiceLocator.Instance.GetService<GameConfiguration>();
 
    public const string ContinueSelected = "> Continue <";
    public const string Continue = "Continue";

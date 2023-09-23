@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Tiptup300.Primitives;
 using System.Tiptup300.StateManagement;
-using Tiptup300.Slaam.Library.Graphics;
 using Tiptup300.Slaam.Library.Input;
 using Tiptup300.Slaam.Library.Logging;
 using Tiptup300.Slaam.Library.Rendering;
@@ -26,7 +25,6 @@ public class SlaamGame : Game
 
    private readonly ILogger _logger;
    private readonly IResources _resources;
-   private readonly IGraphicsStateService _graphicsState;
    private readonly RenderService _renderService;
    private readonly FpsRenderer _fpsRenderer;
    private readonly FrameTimeService _frameTimeService;
@@ -37,7 +35,6 @@ public class SlaamGame : Game
    public SlaamGame(
        ILogger logger,
        IResources resources,
-       IGraphicsStateService graphicsState,
        RenderService renderService,
        FpsRenderer fpsRenderer,
        FrameTimeService frameTimeService,
@@ -47,26 +44,23 @@ public class SlaamGame : Game
    {
       _logger = logger;
       _resources = resources;
-      _graphicsState = graphicsState;
       _renderService = renderService;
       _fpsRenderer = fpsRenderer;
       _frameTimeService = frameTimeService;
       _inputService = inputService;
       _gameStartRequestResolver = gameStartRequestResolver;
-
-      Content = new ContentManager(Services);
-      _graphicsState.Set(new GraphicsDeviceManager(this)); // I'm not sure if I can move this line out to Initialize
-                                                           //   _performer = new ZibithLogoPerformer(resources, frameTimeService, renderService);
    }
 
-   private void configureGame()
-   {
-      IsFixedTimeStep = false;
-   }
 
    protected override void Initialize()
    {
-      configureGame();
+      // configuring MonoGame specific variable.
+      IsFixedTimeStep = false;
+
+
+      // this needs to be moved out of initialization.
+      // Not sure what Content Manager is actully doing or if it is needed?
+      Content = new ContentManager(Services);
 
       _logger.Initialize();
       _inputService.Initialize();
@@ -81,6 +75,7 @@ public class SlaamGame : Game
       _resources.LoadAll();
       _renderService.LoadContent();
       _fpsRenderer.LoadContent();
+      ProfileManager.LoadProfiles();
 
       base.LoadContent();
    }
@@ -93,19 +88,14 @@ public class SlaamGame : Game
       }
       _frameTimeService.AddUpdate(gameTime);
       _inputService.Update();
-      if (ProfileManager.Initialized == false)
-      {
-         ProfileManager.Initialize(_logger, _resources);
-      }
-      else
-      {
-         _renderService.Update();
-         _fpsRenderer.Update();
 
-         // update the state using the state performer.
-         //   _state = _statePerformer.Resolve(_state;// update state
+      _renderService.Update();
+      _fpsRenderer.Update();
 
-      }
+      // update the state using the state performer.
+      //   _state = _statePerformer.Resolve(_state;// update state
+
+
 
       base.Update(gameTime);
    }
