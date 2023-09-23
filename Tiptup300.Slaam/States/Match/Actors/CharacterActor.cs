@@ -34,16 +34,16 @@ public class CharacterActor
    private int Deaths = 0;
    private readonly float SpeedOfMovement;
    private Texture2D CharacterSkin;
-   private Library.Widgets.Timer WalkingAnimationChange = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 60));
-   private Library.Widgets.Timer AttackingAnimationChange = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, (int)(GameGlobals.TILE_SIZE / 50f * 300)));
+   private Library.Widgets.TimerWidget WalkingAnimationChange = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 0, 0, 60));
+   private Library.Widgets.TimerWidget AttackingAnimationChange = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 0, 0, (int)(GameGlobals.TILE_SIZE / 50f * 300)));
    private int Row;
    private SpriteEffects fx = SpriteEffects.None;
    private IntRange currAni = new IntRange(0, 0, 2);
    private bool currentlymoving;
    private Color SpriteColor = Color.White;
 
-   private Library.Widgets.Timer ReappearTime;
-   private Library.Widgets.Timer FadeThrottle = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 25));
+   private Library.Widgets.TimerWidget ReappearTime;
+   private Library.Widgets.TimerWidget FadeThrottle = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 0, 0, 25));
    private float Alpha = 255;
 
    private const float _characterDrawScale = GameGlobals.TILE_SIZE / 45f;
@@ -72,7 +72,7 @@ public class CharacterActor
       }
       Lives = matchSettings.LivesAmt;
       SpeedOfMovement = GameGlobals.TILE_SIZE / 50f * (5f / 30f) * matchSettings.SpeedMultiplyer;
-      ReappearTime = new Library.Widgets.Timer(matchSettings.RespawnTime);
+      ReappearTime = new Library.Widgets.TimerWidget(matchSettings.RespawnTime);
 
    }
 

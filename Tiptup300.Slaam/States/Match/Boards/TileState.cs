@@ -19,8 +19,8 @@ public class TileState : IState
    public Vector2 AbsTileloc;
    public Vector2 TileCoors;
    public Texture2D ParentTileTileset;
-   public Library.Widgets.Timer FadeThrottle;
-   public Library.Widgets.Timer FallSpeed = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 400));
-   public Library.Widgets.Timer ReappearSpeed = new Library.Widgets.Timer(new TimeSpan(0, 0, 5));
+   public Library.Widgets.TimerWidget FadeThrottle;
+   public Library.Widgets.TimerWidget FallSpeed = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 0, 0, 400));
+   public Library.Widgets.TimerWidget ReappearSpeed = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 5));
    public float Alpha = 255;
 }

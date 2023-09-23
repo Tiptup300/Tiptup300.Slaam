@@ -41,7 +41,7 @@ public class Tile
       output.ParentTileTileset = tiletex;
       output.TileCoors = TileLoc;
       output.AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
-      output.FadeThrottle = new Library.Widgets.Timer(fadeOutTime);
+      output.FadeThrottle = new Library.Widgets.TimerWidget(fadeOutTime);
 
       return output;
    }

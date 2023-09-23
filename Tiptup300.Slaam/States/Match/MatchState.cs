@@ -15,7 +15,7 @@ public class MatchState : IState
    public bool IsTiming { get; set; } = false;
    public bool IsPaused { get; set; } = false;
    public int KillsToWin { get; set; } = 0;
-   public Library.Widgets.Timer PowerupTime { get; set; }
+   public Library.Widgets.TimerWidget PowerupTime { get; set; }
    public float SpreeStepSize { get; set; }
    public float SpreeCurrentStep { get; set; }
    public int SpreeHighestKillCount { get; set; }
@@ -31,7 +31,7 @@ public class MatchState : IState
    public Random Rand { get; set; } = new Random();
    public GameStatus CurrentGameStatus { get; set; }
    public int ReadySetGoPart { get; set; } = 0;
-   public Library.Widgets.Timer ReadySetGoThrottle { get; set; }
+   public Library.Widgets.TimerWidget ReadySetGoThrottle { get; set; }
    public MatchScoreCollection ScoreKeeper { get; set; }
 
    public Tile[,] Tiles { get; set; }

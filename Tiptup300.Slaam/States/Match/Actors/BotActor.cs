@@ -13,54 +13,52 @@ namespace Tiptup300.Slaam.States.Match.Actors;
 
 public class BotActor : CharacterActor
 {
-   private InputDevice AIInput = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
-   private Library.Widgets.Timer DiagonalMovementSwitch = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 500));
-   private Library.Widgets.Timer LogicUpdateThreshold = new Library.Widgets.Timer(new TimeSpan(0, 0, 0, 0, 500));
-   private Random rand = new Random();
-   private Direction CurrentDirection = Direction.None;
-   private Library.Widgets.Timer TargetTime = new Library.Widgets.Timer(new TimeSpan(0, 0, 5));
+   private readonly Vector2 NULL_VECTOR_NEGATIVE_TWO = new Vector2(-2, -2);
 
-   private RandomList<int[]> PlacesToGo = new RandomList<int[]>();
 
-   // New
-   private bool GoingTowardsSafety = false;
-   private BotTarget CurrentTarget;
-   private bool SwitchMovements = false;
+   private InputDevice artificialInputDevice = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
+   private Direction currentDirection = Direction.None;
 
-   private readonly Vector2 NullVector2 = new Vector2(-2, -2);
+   private RandomList<int[]> placesToGo = new RandomList<int[]>();
+   private bool goingTowardsSafety = false;
+   private BotTarget currentTarget;
+   private bool switchMovements = false;
+
+   private readonly TimerWidget diagonalMovementSwitchTimer = new TimerWidget(new TimeSpan(0, 0, 0, 0, 500));
+   private readonly TimerWidget logicUpdateThresholdTimer = new TimerWidget(new TimeSpan(0, 0, 0, 0, 500));
+   private readonly TimerWidget targetTimer = new TimerWidget(new TimeSpan(0, 0, 5));
+
    private readonly IFrameTimeService _frameTimeService;
-   /* todo */
-   private MatchPerformer ParentGameScreen;
+   private readonly Random random = new Random();
 
    public BotActor(Texture2D skin, int profile, Vector2 pos, MatchPerformer parentgamescreen, Color markingcolor, int plyeridx, IResources resources,
        IFrameTimeService frameTimeService, MatchSettings matchSettings) :
        base(skin, profile, pos, null, markingcolor, plyeridx, resources, frameTimeService, matchSettings)
    {
-      Gamepad = AIInput;
-      ParentGameScreen = parentgamescreen;
+      Gamepad = artificialInputDevice;
       _frameTimeService = frameTimeService;
       IsBot = true;
 
-      PlacesToGo.Add(new int[] { 0, 1 });
-      PlacesToGo.Add(new int[] { 0, -1 });
-      PlacesToGo.Add(new int[] { 1, 0 });
-      PlacesToGo.Add(new int[] { -1, 0 });
+      placesToGo.Add(new int[] { 0, 1 });
+      placesToGo.Add(new int[] { 0, -1 });
+      placesToGo.Add(new int[] { 1, 0 });
+      placesToGo.Add(new int[] { -1, 0 });
    }
    public override void Update(Vector2 CurrentCoordinates, Vector2 TilePos, MatchState gameScreenState)
    {
-      AIInput.PressedAction2 = false;
+      artificialInputDevice.PressedAction2 = false;
 
-      DiagonalMovementSwitch.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-      if (DiagonalMovementSwitch.Active)
+      diagonalMovementSwitchTimer.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+      if (diagonalMovementSwitchTimer.Active)
       {
-         SwitchMovements = rand.Next(0, 2) == 1;
+         switchMovements = random.Next(0, 2) == 1;
       }
 
-      LogicUpdateThreshold.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-      if (LogicUpdateThreshold.Active)
+      logicUpdateThresholdTimer.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+      if (logicUpdateThresholdTimer.Active)
       {
          LogicUpdate(CurrentCoordinates, TilePos, gameScreenState);
-         LogicUpdateThreshold.Reset();
+         logicUpdateThresholdTimer.Reset();
       }
 
       CreateInput();
@@ -82,38 +80,38 @@ public class BotActor : CharacterActor
       else if (InDanger)
       {
          if (HasPowerup(PowerupUse.Evasion))
-            AIInput.PressedAction2 = true;
+            artificialInputDevice.PressedAction2 = true;
 
          // Not Safe need to do something
-         if (GoingTowardsSafety)
+         if (goingTowardsSafety)
          {
             // Just needs to move
-            if (CurrentTarget == null || CurrentCoordinates == CurrentTarget.Position)
-               GoingTowardsSafety = false;
+            if (currentTarget == null || CurrentCoordinates == currentTarget.Position)
+               goingTowardsSafety = false;
          }
 
-         if (!GoingTowardsSafety)
+         if (!goingTowardsSafety)
          {
-            GoingTowardsSafety = true;
+            goingTowardsSafety = true;
 
             Vector2 PlaceToGo = FindSafePlace(CurrentCoordinates, gameScreenState);
 
-            if (PlaceToGo == NullVector2)
+            if (PlaceToGo == NULL_VECTOR_NEGATIVE_TWO)
             {
-               CurrentTarget = null;
+               currentTarget = null;
             }
             else
             {
-               CurrentTarget = new BotTarget(PlaceToGo);
+               currentTarget = new BotTarget(PlaceToGo);
             }
          }
          Attacking = false;
       }
       else
       {
-         if (GoingTowardsSafety)
+         if (goingTowardsSafety)
          {
-            GoingTowardsSafety = false;
+            goingTowardsSafety = false;
          }
          List<BotTarget> Targets = new List<BotTarget>();
 
@@ -159,21 +157,21 @@ public class BotActor : CharacterActor
          if (SavedTarget == -2)
          {
             Moving = false;
-            CurrentTarget = null;
+            currentTarget = null;
          }
          else
          {
-            CurrentTarget = Targets[SavedTarget];
+            currentTarget = Targets[SavedTarget];
 
             if (HasPowerup(PowerupUse.Strategy))
-               AIInput.PressedAction2 = true;
+               artificialInputDevice.PressedAction2 = true;
          }
       }
 
-      Attacking = CurrentTarget != null &&
-          CurrentTarget.ThisTargetType == BotTarget.TargetType.Character &&
-          gameScreenState.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
-          gameScreenState.Characters[CurrentTarget.PlayerIndex].CurrentState != CharacterState.Dieing;
+      Attacking = currentTarget != null &&
+          currentTarget.ThisTargetType == BotTarget.TargetType.Character &&
+          gameScreenState.Characters[currentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
+          gameScreenState.Characters[currentTarget.PlayerIndex].CurrentState != CharacterState.Dieing;
 
       if (Moving)
       {
@@ -181,36 +179,36 @@ public class BotActor : CharacterActor
       }
       else
       {
-         CurrentDirection = Direction.None;
+         currentDirection = Direction.None;
       }
    }
 
    private void ClearInput()
    {
-      AIInput.PressedAction = false;
-      AIInput.PressedAction2 = false;
-      AIInput.PressedBack = false;
-      AIInput.PressedDown = false;
-      AIInput.PressedLeft = false;
-      AIInput.PressedRight = false;
-      AIInput.PressedStart = false;
-      AIInput.PressedUp = false;
-      AIInput.PressingDown = false;
-      AIInput.PressingLeft = false;
-      AIInput.PressingRight = false;
-      AIInput.PressingUp = false;
+      artificialInputDevice.PressedAction = false;
+      artificialInputDevice.PressedAction2 = false;
+      artificialInputDevice.PressedBack = false;
+      artificialInputDevice.PressedDown = false;
+      artificialInputDevice.PressedLeft = false;
+      artificialInputDevice.PressedRight = false;
+      artificialInputDevice.PressedStart = false;
+      artificialInputDevice.PressedUp = false;
+      artificialInputDevice.PressingDown = false;
+      artificialInputDevice.PressingLeft = false;
+      artificialInputDevice.PressingRight = false;
+      artificialInputDevice.PressingUp = false;
    }
 
    private bool CurrentTargetIsGood(List<CharacterActor> characterActors)
    {
-      if (CurrentTarget != null && CurrentTarget.ThisTargetType == BotTarget.TargetType.Character)
+      if (currentTarget != null && currentTarget.ThisTargetType == BotTarget.TargetType.Character)
       {
-         if (!(characterActors[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
-             !(characterActors[CurrentTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
+         if (!(characterActors[currentTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
+             !(characterActors[currentTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
          {
-            TargetTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-            if (TargetTime.Active)
-               TargetTime.Reset();
+            targetTimer.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+            if (targetTimer.Active)
+               targetTimer.Reset();
             else
                return true;
          }
@@ -221,60 +219,60 @@ public class BotActor : CharacterActor
    private void MakeMovements(Vector2 CurrentCoordinates, bool Attacking, Tile[,] tiles)
    {
 
-      if (CurrentTarget == null)
+      if (currentTarget == null)
       {
-         CurrentDirection = Direction.None;
+         currentDirection = Direction.None;
       }
       else
       {
          //CurrentDirection = Direction.None;
-         if (CurrentCoordinates.X != CurrentTarget.Position.X)
+         if (CurrentCoordinates.X != currentTarget.Position.X)
          {
-            if (CurrentCoordinates.X > CurrentTarget.Position.X && IsSafe(tiles, CurrentCoordinates, -1, 0))
+            if (CurrentCoordinates.X > currentTarget.Position.X && IsSafe(tiles, CurrentCoordinates, -1, 0))
             {
-               CurrentDirection = Direction.Left;
+               currentDirection = Direction.Left;
             }
-            else if (CurrentCoordinates.X < CurrentTarget.Position.X && IsSafe(tiles, CurrentCoordinates, 1, 0))
+            else if (CurrentCoordinates.X < currentTarget.Position.X && IsSafe(tiles, CurrentCoordinates, 1, 0))
             {
-               CurrentDirection = Direction.Right;
+               currentDirection = Direction.Right;
             }
          }
 
-         if (CurrentCoordinates.Y != CurrentTarget.Position.Y)
+         if (CurrentCoordinates.Y != currentTarget.Position.Y)
          {
-            if (CurrentCoordinates.Y > CurrentTarget.Position.Y - 1)
+            if (CurrentCoordinates.Y > currentTarget.Position.Y - 1)
             {
-               if (CurrentDirection == Direction.Left && IsSafe(tiles, CurrentCoordinates, -1, -1))
-                  CurrentDirection = Direction.UpperLeft;
-               else if (CurrentDirection == Direction.Right && IsSafe(tiles, CurrentCoordinates, 1, -1))
-                  CurrentDirection = Direction.UpperRight;
+               if (currentDirection == Direction.Left && IsSafe(tiles, CurrentCoordinates, -1, -1))
+                  currentDirection = Direction.UpperLeft;
+               else if (currentDirection == Direction.Right && IsSafe(tiles, CurrentCoordinates, 1, -1))
+                  currentDirection = Direction.UpperRight;
                else if (IsSafe(tiles, CurrentCoordinates, 0, -1))
-                  CurrentDirection = Direction.Up;
+                  currentDirection = Direction.Up;
             }
-            else if (CurrentCoordinates.Y < CurrentTarget.Position.Y + 1)
+            else if (CurrentCoordinates.Y < currentTarget.Position.Y + 1)
             {
-               if (CurrentDirection == Direction.Left && IsSafe(tiles, CurrentCoordinates, -1, 1))
-                  CurrentDirection = Direction.LowerLeft;
-               else if (CurrentDirection == Direction.Right && IsSafe(tiles, CurrentCoordinates, 1, 1))
-                  CurrentDirection = Direction.LowerRight;
+               if (currentDirection == Direction.Left && IsSafe(tiles, CurrentCoordinates, -1, 1))
+                  currentDirection = Direction.LowerLeft;
+               else if (currentDirection == Direction.Right && IsSafe(tiles, CurrentCoordinates, 1, 1))
+                  currentDirection = Direction.LowerRight;
                else if (IsSafe(tiles, CurrentCoordinates, 0, 1))
-                  CurrentDirection = Direction.Down;
+                  currentDirection = Direction.Down;
             }
          }
 
          if (Attacking)
          {
             if (HasAttackingPowerup(CurrentCoordinates))
-               AIInput.PressedAction2 = true;
+               artificialInputDevice.PressedAction2 = true;
          }
 
-         if (Attacking && GetDistance(CurrentCoordinates, CurrentTarget.Position) <= 8f)
+         if (Attacking && GetDistance(CurrentCoordinates, currentTarget.Position) <= 8f)
          { // Right Distance
-            if (CurrentCoordinates.X == CurrentTarget.Position.X ||
-                CurrentCoordinates.Y == CurrentTarget.Position.Y)
+            if (CurrentCoordinates.X == currentTarget.Position.X ||
+                CurrentCoordinates.Y == currentTarget.Position.Y)
             { // Right Position
 
-               AIInput.PressedAction = true;
+               artificialInputDevice.PressedAction = true;
             }
          }
       }
@@ -282,15 +280,15 @@ public class BotActor : CharacterActor
 
    private Vector2 FindSafePlace(Vector2 CurrentCoordinates, MatchState gameScreenState)
    {
-      PlacesToGo.RandomizeList();
+      placesToGo.RandomizeList();
 
       Vector2 SafePlace = Vector2.Zero;
 
       bool FoundSafePlace = false;
 
-      for (int x = 0; x < PlacesToGo.Count; x++)
+      for (int x = 0; x < placesToGo.Count; x++)
       {
-         Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + PlacesToGo[x][0], CurrentCoordinates.Y + PlacesToGo[x][1]);
+         Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + placesToGo[x][0], CurrentCoordinates.Y + placesToGo[x][1]);
          if (IsSafeAndClear(CurrentTileLocation, gameScreenState))
          {
             SafePlace = new Vector2(CurrentTileLocation.X, CurrentTileLocation.Y);
@@ -307,9 +305,9 @@ public class BotActor : CharacterActor
       {
          float Highest = gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
 
-         for (int x = 0; x < PlacesToGo.Count; x++)
+         for (int x = 0; x < placesToGo.Count; x++)
          {
-            Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + PlacesToGo[x][0], CurrentCoordinates.Y + PlacesToGo[x][1]);
+            Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + placesToGo[x][0], CurrentCoordinates.Y + placesToGo[x][1]);
             if (IsClear(CurrentTileLocation, gameScreenState))
             {
                float temp = gameScreenState.Tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
@@ -325,7 +323,7 @@ public class BotActor : CharacterActor
          if (FoundSafePlace)
             return SafePlace;
          else
-            return NullVector2;
+            return NULL_VECTOR_NEGATIVE_TWO;
       }
    }
 
@@ -340,12 +338,12 @@ public class BotActor : CharacterActor
    {
       if (CurrentPowerup != null && !CurrentPowerup.Used && CurrentPowerup.ThisPowerupsUse == PowerupUse.Attacking)
       {
-         if (GetDistance(CurrentCoordinates, CurrentTarget.Position) <= CurrentPowerup.AttackingRange)
+         if (GetDistance(CurrentCoordinates, currentTarget.Position) <= CurrentPowerup.AttackingRange)
          {
             if (CurrentPowerup.AttackingInLine)
             {
-               if (CurrentCoordinates.X == CurrentTarget.Position.X ||
-                   CurrentCoordinates.Y == CurrentTarget.Position.Y)
+               if (CurrentCoordinates.X == currentTarget.Position.X ||
+                   CurrentCoordinates.Y == currentTarget.Position.Y)
                {
                   return true;
                }
@@ -365,51 +363,51 @@ public class BotActor : CharacterActor
    /// </summary>
    public void CreateInput()
    {
-      AIInput.PressedLeft = false;
-      AIInput.PressedRight = false;
-      AIInput.PressedUp = false;
-      AIInput.PressedDown = false;
+      artificialInputDevice.PressedLeft = false;
+      artificialInputDevice.PressedRight = false;
+      artificialInputDevice.PressedUp = false;
+      artificialInputDevice.PressedDown = false;
 
-      AIInput.PressingLeft = false;
-      AIInput.PressingRight = false;
-      AIInput.PressingUp = false;
-      AIInput.PressingDown = false;
+      artificialInputDevice.PressingLeft = false;
+      artificialInputDevice.PressingRight = false;
+      artificialInputDevice.PressingUp = false;
+      artificialInputDevice.PressingDown = false;
 
-      if (CurrentDirection == Direction.Left)
-         AIInput.PressingLeft = true;
-      else if (CurrentDirection == Direction.Right)
-         AIInput.PressingRight = true;
-      else if (CurrentDirection == Direction.Up)
-         AIInput.PressingUp = true;
-      else if (CurrentDirection == Direction.Down)
-         AIInput.PressingDown = true;
-      else if (CurrentDirection == Direction.LowerLeft)
+      if (currentDirection == Direction.Left)
+         artificialInputDevice.PressingLeft = true;
+      else if (currentDirection == Direction.Right)
+         artificialInputDevice.PressingRight = true;
+      else if (currentDirection == Direction.Up)
+         artificialInputDevice.PressingUp = true;
+      else if (currentDirection == Direction.Down)
+         artificialInputDevice.PressingDown = true;
+      else if (currentDirection == Direction.LowerLeft)
       {
-         if (SwitchMovements)
-            AIInput.PressingDown = true;
+         if (switchMovements)
+            artificialInputDevice.PressingDown = true;
          else
-            AIInput.PressingLeft = true;
+            artificialInputDevice.PressingLeft = true;
       }
-      else if (CurrentDirection == Direction.LowerRight)
+      else if (currentDirection == Direction.LowerRight)
       {
-         if (SwitchMovements)
-            AIInput.PressingDown = true;
+         if (switchMovements)
+            artificialInputDevice.PressingDown = true;
          else
-            AIInput.PressingRight = true;
+            artificialInputDevice.PressingRight = true;
       }
-      else if (CurrentDirection == Direction.UpperLeft)
+      else if (currentDirection == Direction.UpperLeft)
       {
-         if (SwitchMovements)
-            AIInput.PressingUp = true;
+         if (switchMovements)
+            artificialInputDevice.PressingUp = true;
          else
-            AIInput.PressingLeft = true;
+            artificialInputDevice.PressingLeft = true;
       }
-      else if (CurrentDirection == Direction.UpperRight)
+      else if (currentDirection == Direction.UpperRight)
       {
-         if (SwitchMovements)
-            AIInput.PressingUp = true;
+         if (switchMovements)
+            artificialInputDevice.PressingUp = true;
          else
-            AIInput.PressingRight = true;
+            artificialInputDevice.PressingRight = true;
       }
 
 #if ZUNE

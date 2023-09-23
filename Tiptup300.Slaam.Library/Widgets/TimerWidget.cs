@@ -1,8 +1,6 @@
-using System;
-
 namespace Tiptup300.Slaam.Library.Widgets;
 
-public class Timer
+public class TimerWidget
 {
    public bool Active = false;
    public bool MakeUpTime = false;
@@ -42,7 +40,7 @@ public class Timer
    /// </summary>
    private TimeSpan threshold;
 
-   public Timer(TimeSpan threshold)
+   public TimerWidget(TimeSpan threshold)
    {
       this.threshold = threshold;
    }
