@@ -36,9 +36,9 @@ public class PlayerCharacterSelectBoxPerformer
 
    public void ResetState(PlayerCharacterSelectBoxState state)
    {
-      if (state.ChosenProfile == null || ProfileManager.PlayableProfiles.Count - 1 != state.ChosenProfile.Max)
+      if (state.ChosenProfile == null || ProfileManager.Instance.PlayableProfiles.Count - 1 != state.ChosenProfile.Max)
       {
-         state.ChosenProfile = new IntRange(0, 0, ProfileManager.PlayableProfiles.Count - 1);
+         state.ChosenProfile = new IntRange(0, 0, ProfileManager.Instance.PlayableProfiles.Count - 1);
       }
    }
 
@@ -52,7 +52,7 @@ public class PlayerCharacterSelectBoxPerformer
                {
                   state.Status = PlayerCharacterSelectBoxStatus.ProfileSelect;
                   state.MessageLines[1] = DialogStrings.SelectAProfile;
-                  state.MessageLines[0] = ProfileManager.PlayableProfiles[state.ChosenProfile.Value].Name;
+                  state.MessageLines[0] = ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].Name;
                   _resetStats(state);
                }
             }
@@ -74,21 +74,21 @@ public class PlayerCharacterSelectBoxPerformer
                if (_inputService.GetPlayers()[state.PlayerIndex].PressedUp)
                {
                   state.ChosenProfile.Add(1);
-                  state.MessageLines[0] = ProfileManager.PlayableProfiles[state.ChosenProfile.Value].Name;
+                  state.MessageLines[0] = ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].Name;
                   _resetStats(state);
                }
 
                if (_inputService.GetPlayers()[state.PlayerIndex].PressedDown)
                {
                   state.ChosenProfile.Sub(1);
-                  state.MessageLines[0] = ProfileManager.PlayableProfiles[state.ChosenProfile.Value].Name;
+                  state.MessageLines[0] = ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].Name;
                   _resetStats(state);
                }
 
                if (_inputService.GetPlayers()[state.PlayerIndex].PressedAction)
                {
                   state.Status = PlayerCharacterSelectBoxStatus.CharSelect;
-                  _findSkin(ProfileManager.PlayableProfiles[state.ChosenProfile.Value].Skin, state);
+                  _findSkin(ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].Skin, state);
                   state.MessageLines[1] = DialogStrings.PlayingAs + state.ParentSkinStrings[state.ChosenSkin.Value].Substring(state.ParentSkinStrings[state.ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
                }
             }
@@ -113,8 +113,8 @@ public class PlayerCharacterSelectBoxPerformer
 
                if (_inputService.GetPlayers()[state.PlayerIndex].PressedAction && state.Status == PlayerCharacterSelectBoxStatus.CharSelect)
                {
-                  ProfileManager.PlayableProfiles[state.ChosenProfile.Value].Skin = state.ParentSkinStrings[state.ChosenSkin.Value];
-                  ProfileManager.SaveProfiles();
+                  ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].Skin = state.ParentSkinStrings[state.ChosenSkin.Value];
+                  ProfileManager.Instance.SaveProfiles();
                   state.Status = PlayerCharacterSelectBoxStatus.Done;
                }
 
@@ -191,17 +191,17 @@ public class PlayerCharacterSelectBoxPerformer
    {
       if (state.IsSurvival)
       {
-         state.MessageLines[2] = DialogStrings.BestTime + NormalStatsBoard.TimeSpanToString(ProfileManager.PlayableProfiles[state.ChosenProfile.Value].BestGame);
+         state.MessageLines[2] = DialogStrings.BestTime + NormalStatsBoard.TimeSpanToString(ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].BestGame);
          state.MessageLines[3] = "";
          state.MessageLines[4] = "";
          state.MessageLines[5] = "";
       }
       else
       {
-         state.MessageLines[2] = "" + ProfileManager.PlayableProfiles[state.ChosenProfile.Value].TotalGames;
-         state.MessageLines[3] = "" + ProfileManager.PlayableProfiles[state.ChosenProfile.Value].TotalDeaths;
-         state.MessageLines[4] = "" + ProfileManager.PlayableProfiles[state.ChosenProfile.Value].TotalPowerups;
-         state.MessageLines[5] = "" + ProfileManager.PlayableProfiles[state.ChosenProfile.Value].TotalKills;
+         state.MessageLines[2] = "" + ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].TotalGames;
+         state.MessageLines[3] = "" + ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].TotalDeaths;
+         state.MessageLines[4] = "" + ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].TotalPowerups;
+         state.MessageLines[5] = "" + ProfileManager.Instance.PlayableProfiles[state.ChosenProfile.Value].TotalKills;
       }
    }
 
@@ -227,7 +227,7 @@ public class PlayerCharacterSelectBoxPerformer
       }
       return new CharacterShell(
           skinLocation: state.ParentSkinStrings[state.ChosenSkin.Value],
-          characterProfileIndex: ProfileManager.PlayableProfiles.GetRealIndex(state.ChosenProfile.Value),
+          characterProfileIndex: ProfileManager.Instance.PlayableProfiles.GetRealIndex(state.ChosenProfile.Value),
           playerIndex: (ExtendedPlayerIndex)state.PlayerIndex,
           playerType: type,
           playerColor: _playerColorResolver.GetColorByIndex(state.PlayerIndex));

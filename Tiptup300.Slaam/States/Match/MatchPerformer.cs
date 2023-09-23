@@ -95,7 +95,7 @@ public class MatchPerformer : IPerformer<MatchState>
             }
             else
             {
-               ProfileManager.AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Skin = state.SetupCharacters[x].SkinLocation;
+               ProfileManager.Instance.AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Skin = state.SetupCharacters[x].SkinLocation;
                state.Characters.Add(
                    new BotActor(
                        SlaamGame.Content.Load<Texture2D>("content\\skins\\" + state.SetupCharacters[x].SkinLocation),
@@ -217,7 +217,7 @@ public class MatchPerformer : IPerformer<MatchState>
       _state.Characters.Add(
           new BotActor(
               SlaamGame.Content.Load<Texture2D>("content\\skins\\" + SkinLoadingFunctions.ReturnRandSkin(_logger)),
-              ProfileManager.GetBotProfile(),
+              ProfileManager.Instance.GetBotProfile(),
               new Vector2(-200, -200),
               this,
               Color.Black,
@@ -226,7 +226,7 @@ public class MatchPerformer : IPerformer<MatchState>
               _frameTimeService,
               _state.CurrentMatchSettings));
 
-      ProfileManager.ResetAllBots();
+      ProfileManager.Instance.ResetAllBots();
       MatchFunctions.RespawnCharacter(_state, _state.Characters.Count - 1);
    }
 
@@ -429,17 +429,17 @@ public class MatchPerformer : IPerformer<MatchState>
          {
             _state.Characters[x].SaveProfileData();
          }
-         ProfileManager.SaveProfiles();
+         ProfileManager.Instance.SaveProfiles();
          return new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
       }
    }
    private IState survival_EndGame(MatchState _state)
    {
-      if (ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame < _state.Timer.CurrentGameTime)
+      if (ProfileManager.Instance.AllProfiles[_state.Characters[0].ProfileIndex].BestGame < _state.Timer.CurrentGameTime)
       {
-         ProfileManager.AllProfiles[_state.Characters[0].ProfileIndex].BestGame = _state.Timer.CurrentGameTime;
+         ProfileManager.Instance.AllProfiles[_state.Characters[0].ProfileIndex].BestGame = _state.Timer.CurrentGameTime;
       }
-      ProfileManager.SaveProfiles();
+      ProfileManager.Instance.SaveProfiles();
       return new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);
    }
 }

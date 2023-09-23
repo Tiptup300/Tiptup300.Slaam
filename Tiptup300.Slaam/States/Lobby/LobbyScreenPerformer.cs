@@ -106,7 +106,7 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
       _state.SetupCharacters.Add(
           new CharacterShell(
               skinLocation: SkinLoadingFunctions.ReturnRandSkin(_logger),
-              characterProfileIndex: ProfileManager.GetBotProfile(),
+              characterProfileIndex: ProfileManager.Instance.GetBotProfile(),
               playerIndex: (ExtendedPlayerIndex)_state.SetupCharacters.Count,
               playerType: PlayerType.Computer,
               playerColor: _playerColorResolver.GetColorByIndex(_state.SetupCharacters.Count)));
@@ -167,7 +167,7 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
       {
          if (_inputService.GetPlayers()[0].PressedAction2)
          {
-            ProfileManager.ResetAllBots();
+            ProfileManager.Instance.ResetAllBots();
             // @State/Logic - this will need to be changed to a Requaest -> State resolver.
             return _stateResolver.Resolve(new CharacterSelectionScreenRequest());
          }
@@ -178,7 +178,7 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
          }
          if (_inputService.GetPlayers()[0].PressedDown && state.SetupCharacters.Count > state.PlayerAmt)
          {
-            ProfileManager.ResetBot(state.SetupCharacters[state.SetupCharacters.Count - 1].CharacterProfileIndex);
+            ProfileManager.Instance.ResetBot(state.SetupCharacters[state.SetupCharacters.Count - 1].CharacterProfileIndex);
             state.SetupCharacters.RemoveAt(state.SetupCharacters.Count - 1);
          }
 
@@ -186,7 +186,7 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
          {
             MatchSettings matchSettings = buildMatchSettings();
             writeMatchSettingsToFile();
-            ProfileManager.ResetAllBots();
+            ProfileManager.Instance.ResetAllBots();
             // @State/Logic - this will need to be changed to a Request -> State resolver.
             return new MatchRequest(state.SetupCharacters, matchSettings);
          }
@@ -334,9 +334,9 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
                batch.Draw(_resources.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
                batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), state.SetupCharacters[x].PlayerColor);
                if (state.SetupCharacters[x].PlayerType == PlayerType.Player)
-                  _renderService.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+                  _renderService.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.Instance.AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
                else
-                  _renderService.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
+                  _renderService.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.Instance.AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
             }
             batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
          }

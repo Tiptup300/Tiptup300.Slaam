@@ -9,24 +9,26 @@ namespace Tiptup300.Slaam.PlayerProfiles;
 /// <summary>
 /// This is a game component that implements IUpdateable.
 /// </summary>
-public static class ProfileManager
+public class ProfileManager
 {
+   public static ProfileManager Instance { get; private set; } = new ProfileManager();
+
    // TODO: This class is currently a singleton, it needs changed to a injected service.
    // TODO: This class needs cleaned up in a way that it's state is seperate. 
    // 
-   public static bool Initialized { get; private set; }
-   public static List<PlayerProfile> AllProfiles;
-   public static RedirectionList<PlayerProfile> PlayableProfiles;
-   public static RedirectionList<PlayerProfile> BotProfiles;
-   private static Random rand = new Random();
-   private static bool filefound = false;
-   public static bool FirstTime = false;
+   public bool Initialized { get; private set; }
+   public List<PlayerProfile> AllProfiles;
+   public RedirectionList<PlayerProfile> PlayableProfiles;
+   public RedirectionList<PlayerProfile> BotProfiles;
+   private Random rand = new Random();
+   private bool filefound = false;
+   public bool FirstTime = false;
 
-   private static ILogger _logger => ServiceLocator.Instance.GetService<ILogger>();
-   private static IResources _resources => ServiceLocator.Instance.GetService<IResources>();
-   private static GameConfiguration _gameConfiguration => ServiceLocator.Instance.GetService<GameConfiguration>();
+   private ILogger _logger => ServiceLocator.Instance.GetService<ILogger>();
+   private IResources _resources => ServiceLocator.Instance.GetService<IResources>();
+   private GameConfiguration _gameConfiguration => ServiceLocator.Instance.GetService<GameConfiguration>();
 
-   public static void LoadProfiles()
+   public void LoadProfiles()
    {
       XnaContentReader reader = new XnaContentReader(_logger, ServiceLocator.Instance.GetService<ProfileFileVersion>());
       reader.Initialize(DialogStrings.ProfileFilename);
@@ -85,7 +87,7 @@ public static class ProfileManager
       FirstTime = !filefound;
    }
 
-   public static void SaveProfiles()
+   public void SaveProfiles()
    {
       XnaContentWriter writer = new XnaContentWriter(ServiceLocator.Instance.GetService<ProfileFileVersion>());
       writer.Initialize(DialogStrings.ProfileFilename);
@@ -107,7 +109,7 @@ public static class ProfileManager
       writer.Close();
    }
 
-   public static void AddNewProfile(PlayerProfile prof)
+   public void AddNewProfile(PlayerProfile prof)
    {
       AllProfiles.Add(prof);
       if (prof.IsBot)
@@ -116,7 +118,7 @@ public static class ProfileManager
          PlayableProfiles.Add(AllProfiles.Count - 1);
    }
 
-   public static int GetBotProfile()
+   public int GetBotProfile()
    {
       int index = rand.Next(0, BotProfiles.Count);
       int ct = 0;
@@ -135,18 +137,18 @@ public static class ProfileManager
       return BotProfiles.GetRealIndex(index);
    }
 
-   public static void ResetAllBots()
+   public void ResetAllBots()
    {
       for (int x = 0; x < BotProfiles.Count; x++)
          BotProfiles[x].Used = false;
    }
 
-   public static void ResetBot(int index)
+   public void ResetBot(int index)
    {
       AllProfiles[index].Used = false;
    }
 
-   public static void RemovePlayer(int index)
+   public void RemovePlayer(int index)
    {
       AllProfiles.RemoveAt(index);
       SaveProfiles();

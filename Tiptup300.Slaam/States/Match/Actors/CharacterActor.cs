@@ -396,7 +396,7 @@ public class CharacterActor
    /// <returns></returns>
    public PlayerProfile GetProfile()
    {
-      return ProfileManager.AllProfiles[ProfileIndex];
+      return ProfileManager.Instance.AllProfiles[ProfileIndex];
    }
 
    /// <summary>
@@ -404,10 +404,10 @@ public class CharacterActor
    /// </summary>
    public void SaveProfileData()
    {
-      ProfileManager.AllProfiles[ProfileIndex].TotalKills += Kills;
-      ProfileManager.AllProfiles[ProfileIndex].TotalPowerups += PowerupsUsed;
-      ProfileManager.AllProfiles[ProfileIndex].TotalGames += 1;
-      ProfileManager.AllProfiles[ProfileIndex].TotalDeaths += Deaths;
+      ProfileManager.Instance.AllProfiles[ProfileIndex].TotalKills += Kills;
+      ProfileManager.Instance.AllProfiles[ProfileIndex].TotalPowerups += PowerupsUsed;
+      ProfileManager.Instance.AllProfiles[ProfileIndex].TotalGames += 1;
+      ProfileManager.Instance.AllProfiles[ProfileIndex].TotalDeaths += Deaths;
    }
 
    /// <summary>

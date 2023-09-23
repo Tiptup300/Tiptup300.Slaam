@@ -75,7 +75,7 @@ public class SlaamGame : Game
       _resources.LoadAll();
       _renderService.LoadContent();
       _fpsRenderer.LoadContent();
-      ProfileManager.LoadProfiles();
+      ProfileManager.Instance.LoadProfiles();
 
       base.LoadContent();
    }

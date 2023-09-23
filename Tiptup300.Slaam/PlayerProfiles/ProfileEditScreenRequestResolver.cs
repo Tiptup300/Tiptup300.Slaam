@@ -47,9 +47,9 @@ public class ProfileEditScreenRequestResolver : IResolver<ProfileEditScreenReque
       _state.MainMenu.Items.Columns.Clear();
       _state.MainMenu.Items.Columns.Add("PROFILES");
       _state.MainMenu.Items.Clear();
-      for (int x = 1; x < ProfileManager.PlayableProfiles.Count; x++)
+      for (int x = 1; x < ProfileManager.Instance.PlayableProfiles.Count; x++)
       {
-         _state.MainMenu.Items.Add(true, new GraphItem(ProfileManager.PlayableProfiles[x].Name, x.ToString()));
+         _state.MainMenu.Items.Add(true, new GraphItem(ProfileManager.Instance.PlayableProfiles[x].Name, x.ToString()));
       }
       _state.MainMenu.Items.Add(true, new GraphItem("Create New Profile...", "new"));
       _state.MainMenu.SetHighlight(0);
