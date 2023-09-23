@@ -34,16 +34,16 @@ public class CharacterActor
    private int Deaths = 0;
    private readonly float SpeedOfMovement;
    private Texture2D CharacterSkin;
-   private Library.Widgets.TimerWidget WalkingAnimationChange = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 0, 0, 60));
-   private Library.Widgets.TimerWidget AttackingAnimationChange = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 0, 0, (int)(GameGlobals.TILE_SIZE / 50f * 300)));
+   private TimerWidget WalkingAnimationChange = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 0, 0, 60));
+   private TimerWidget AttackingAnimationChange = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 0, 0, (int)(GameGlobals.TILE_SIZE / 50f * 300)));
    private int Row;
    private SpriteEffects fx = SpriteEffects.None;
    private IntRange currAni = new IntRange(0, 0, 2);
    private bool currentlymoving;
-   private Color SpriteColor = Color.White;
+   private Color _spriteColor = Color.White;
 
-   private Library.Widgets.TimerWidget ReappearTime;
-   private Library.Widgets.TimerWidget FadeThrottle = new Library.Widgets.TimerWidget(new TimeSpan(0, 0, 0, 0, 25));
+   private readonly TimerWidget _reappearTime = new TimerWidget();
+   private readonly TimerWidget _fadeThrottle = new TimerWidget(new TimeSpan(0, 0, 0, 0, 25));
    private float Alpha = 255;
 
    private const float _characterDrawScale = GameGlobals.TILE_SIZE / 45f;
@@ -57,7 +57,6 @@ public class CharacterActor
    {
       WalkingAnimationChange.MakeUpTime = false;
       AttackingAnimationChange.MakeUpTime = false;
-      ReappearTime.MakeUpTime = false;
       CharacterSkin = skin;
       ProfileIndex = profileidx;
       Position = pos;
@@ -72,7 +71,8 @@ public class CharacterActor
       }
       Lives = matchSettings.LivesAmt;
       SpeedOfMovement = GameGlobals.TILE_SIZE / 50f * (5f / 30f) * matchSettings.SpeedMultiplyer;
-      ReappearTime = new Library.Widgets.TimerWidget(matchSettings.RespawnTime);
+      _reappearTime.MakeUpTime = false;
+      _reappearTime.Threshold = matchSettings.RespawnTime;
 
    }
 
@@ -253,8 +253,8 @@ public class CharacterActor
       {
          currAni.Value = 3;
          Row = 0;
-         FadeThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-         if (FadeThrottle.Active)
+         _fadeThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+         if (_fadeThrottle.Active)
          {
             Alpha -= 10.625f;
          }
@@ -266,12 +266,12 @@ public class CharacterActor
                CurrentPowerup.EndAttack(gameScreenState);
             }
          }
-         SpriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
+         _spriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
       }
       else if (CurrentState == CharacterState.Dead && Lives > 0)
       {
-         ReappearTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-         if (ReappearTime.Active)
+         _reappearTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+         if (_reappearTime.Active)
          {
             CurrentState = CharacterState.Respawning;
          }
@@ -292,13 +292,13 @@ public class CharacterActor
       }
       else
       {
-         batch.Draw(CharacterSkin, pos, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), SpriteColor, 0f, new Vector2(25, 50), 1f, fx, 0f);
+         batch.Draw(CharacterSkin, pos, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), _spriteColor, 0f, new Vector2(25, 50), 1f, fx, 0f);
       }
    }
 
    public virtual void Draw(SpriteBatch batch)
    {
-      batch.Draw(CharacterSkin, Position, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), SpriteColor, 0f, new Vector2(25, 50), _characterDrawScale, fx, 0f);
+      batch.Draw(CharacterSkin, Position, new Rectangle(currAni.Value * 50, Row * 60, 50, 60), _spriteColor, 0f, new Vector2(25, 50), _characterDrawScale, fx, 0f);
    }
 
    /// <summary>
@@ -424,7 +424,7 @@ public class CharacterActor
              )
          {
             CurrentState = CharacterState.Dieing;
-            FadeThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+            _fadeThrottle.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
          }
    }
 
@@ -443,7 +443,7 @@ public class CharacterActor
       MatchFunctions.ReportKilling(tiles[(int)coors.X, (int)coors.Y].MarkedIndex, PlayerIndex, gameScreenState, _frameTimeService);
 
       CurrentState = CharacterState.Dead;
-      ReappearTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+      _reappearTime.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
    }
 
    /// <summary>
@@ -457,10 +457,10 @@ public class CharacterActor
       currAni = new IntRange(0, 0, 2);
       WalkingAnimationChange.Reset();
       AttackingAnimationChange.Reset();
-      ReappearTime.Reset();
+      _reappearTime.Reset();
       CurrentState = CharacterState.Normal;
       Alpha = 255;
-      SpriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
+      _spriteColor = new Color((byte)255, (byte)255, (byte)255, (byte)Alpha);
       tiles[(int)other.X, (int)other.Y].MarkTileForRespawn(MarkingColor, new TimeSpan(0, 0, 0, 8), PlayerIndex);
    }
 

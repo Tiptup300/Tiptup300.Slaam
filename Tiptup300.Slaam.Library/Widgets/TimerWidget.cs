@@ -40,9 +40,9 @@ public class TimerWidget
    /// </summary>
    private TimeSpan threshold;
 
-   public TimerWidget(TimeSpan threshold)
+   public TimerWidget(TimeSpan? threshold = null)
    {
-      this.threshold = threshold;
+      this.threshold = threshold is null ? TimeSpan.Zero : threshold.Value;
    }
 
    public void Update(TimeSpan TimeElapsed)

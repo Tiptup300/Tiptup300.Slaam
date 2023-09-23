@@ -15,105 +15,122 @@ public class BotActor : CharacterActor
 {
    private readonly Vector2 NULL_VECTOR_NEGATIVE_TWO = new Vector2(-2, -2);
 
+   private BotTarget? attackTarget;
+   private Direction direction = Direction.None;
+   private bool isMovingTowardsSafety = false;
+   private bool isSwitchingMovements = false;
 
-   private InputDevice artificialInputDevice = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
-   private Direction currentDirection = Direction.None;
+   private readonly InputDevice _inputDevice = new InputDevice(InputDeviceType.Other, ExtendedPlayerIndex.Eight, -1);
+   private readonly RandomList<int[]> _placesToGo = new RandomList<int[]>()
+   {
 
-   private RandomList<int[]> placesToGo = new RandomList<int[]>();
-   private bool goingTowardsSafety = false;
-   private BotTarget currentTarget;
-   private bool switchMovements = false;
-
-   private readonly TimerWidget diagonalMovementSwitchTimer = new TimerWidget(new TimeSpan(0, 0, 0, 0, 500));
-   private readonly TimerWidget logicUpdateThresholdTimer = new TimerWidget(new TimeSpan(0, 0, 0, 0, 500));
-   private readonly TimerWidget targetTimer = new TimerWidget(new TimeSpan(0, 0, 5));
-
+      new int[] { 0, 1 },
+      new int[] { 0, -1 },
+      new int[] { 1, 0 },
+      new int[] { -1, 0 }
+   };
+   private readonly TimerWidget _diagonalMovementSwitchTimer = new TimerWidget(new TimeSpan(0, 0, 0, 0, 500));
+   private readonly TimerWidget _logicUpdateThresholdTimer = new TimerWidget(new TimeSpan(0, 0, 0, 0, 500));
+   private readonly TimerWidget _targetTimer = new TimerWidget(new TimeSpan(0, 0, 5));
    private readonly IFrameTimeService _frameTimeService;
-   private readonly Random random = new Random();
+   private readonly Random _random = new Random();
+
+
 
    public BotActor(Texture2D skin, int profile, Vector2 pos, MatchPerformer parentgamescreen, Color markingcolor, int plyeridx, IResources resources,
        IFrameTimeService frameTimeService, MatchSettings matchSettings) :
        base(skin, profile, pos, null, markingcolor, plyeridx, resources, frameTimeService, matchSettings)
    {
-      Gamepad = artificialInputDevice;
+      Gamepad = _inputDevice;
       _frameTimeService = frameTimeService;
       IsBot = true;
 
-      placesToGo.Add(new int[] { 0, 1 });
-      placesToGo.Add(new int[] { 0, -1 });
-      placesToGo.Add(new int[] { 1, 0 });
-      placesToGo.Add(new int[] { -1, 0 });
    }
    public override void Update(Vector2 CurrentCoordinates, Vector2 TilePos, MatchState gameScreenState)
    {
-      artificialInputDevice.PressedAction2 = false;
+      _inputDevice.PressedAction2 = false;
 
-      diagonalMovementSwitchTimer.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-      if (diagonalMovementSwitchTimer.Active)
+      _diagonalMovementSwitchTimer.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+      if (_diagonalMovementSwitchTimer.Active)
       {
-         switchMovements = random.Next(0, 2) == 1;
+         isSwitchingMovements = _random.Next(0, 2) == 1;
       }
 
-      logicUpdateThresholdTimer.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-      if (logicUpdateThresholdTimer.Active)
+      _logicUpdateThresholdTimer.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+      if (_logicUpdateThresholdTimer.Active)
       {
          LogicUpdate(CurrentCoordinates, TilePos, gameScreenState);
-         logicUpdateThresholdTimer.Reset();
+         _logicUpdateThresholdTimer.Reset();
       }
 
-      CreateInput();
+      createInput();
 
       base.Update(CurrentCoordinates, TilePos, gameScreenState);
 
+      // 2023-09-23-- mad:
+      // 
+      // this should not be down here, but I believe this is a bit of a bug fix.
+      // where there's other parts of the system that read inputs on the input devices
+      // so the lower implementation of botplayer  just checks input and we're using that
+      // to actually steer the other character
+      //
+      // the original purpose of this was to make sure the ai didn't have any super powers
+      // over a normal user, but it's just sort of clunky
+      // 
+      // instead of driving a fake controller and having the logic run on that, we should
+      // be able to tell the player driver which actions we want to perform
+      // which would be very similar to input devices, but not as mismatched 
+      // of concerns.
       ClearInput();
    }
 
    private void LogicUpdate(Vector2 CurrentCoordinates, Vector2 TilePos, MatchState gameScreenState)
    {
-      Tile CurrentTile = gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
-      bool Moving = true, Attacking = false, InDanger = CurrentTile.CurrentTileCondition != TileCondition.Normal && CurrentTile.CurrentTileCondition != TileCondition.RespawnPoint;
+      var currentTile = gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y];
+      var isMoving = true;
+      var isInDanger = currentTile.CurrentTileCondition != TileCondition.Normal && currentTile.CurrentTileCondition != TileCondition.RespawnPoint;
+
       if (CurrentState == CharacterState.Dead || CurrentState == CharacterState.Dieing)
       {
          // Dont Do Anything...your dead!
-         Moving = false;
+         isMoving = false;
       }
-      else if (InDanger)
+      else if (isInDanger)
       {
          if (HasPowerup(PowerupUse.Evasion))
-            artificialInputDevice.PressedAction2 = true;
+            _inputDevice.PressedAction2 = true;
 
          // Not Safe need to do something
-         if (goingTowardsSafety)
+         if (isMovingTowardsSafety)
          {
             // Just needs to move
-            if (currentTarget == null || CurrentCoordinates == currentTarget.Position)
-               goingTowardsSafety = false;
+            if (attackTarget == null || CurrentCoordinates == attackTarget.Position)
+               isMovingTowardsSafety = false;
          }
 
-         if (!goingTowardsSafety)
+         if (!isMovingTowardsSafety)
          {
-            goingTowardsSafety = true;
+            isMovingTowardsSafety = true;
 
-            Vector2 PlaceToGo = FindSafePlace(CurrentCoordinates, gameScreenState);
+            var safePlaceToGo = findSafePlace(CurrentCoordinates, gameScreenState);
 
-            if (PlaceToGo == NULL_VECTOR_NEGATIVE_TWO)
+            if (safePlaceToGo == NULL_VECTOR_NEGATIVE_TWO)
             {
-               currentTarget = null;
+               attackTarget = null;
             }
             else
             {
-               currentTarget = new BotTarget(PlaceToGo);
+               attackTarget = new BotTarget(safePlaceToGo);
             }
          }
-         Attacking = false;
       }
       else
       {
-         if (goingTowardsSafety)
+         if (isMovingTowardsSafety)
          {
-            goingTowardsSafety = false;
+            isMovingTowardsSafety = false;
          }
-         List<BotTarget> Targets = new List<BotTarget>();
+         var targets = new List<BotTarget>();
 
          for (int x = 0; x < gameScreenState.Characters.Count; x++)
          {
@@ -123,9 +140,9 @@ public class BotActor : CharacterActor
                  gameScreenState.Characters[x].CurrentState != CharacterState.Dieing &&
                  gameScreenState.Characters[x].MarkingColor != MarkingColor)
             {
-               Vector2 pos = MatchFunctions.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true);
+               var pos = MatchFunctions.InterpretCoordinates(gameScreenState, gameScreenState.Characters[x].Position, true);
                if (pos != CurrentCoordinates)
-                  Targets.Add(new BotTarget(x, pos, GetDistance(CurrentCoordinates, pos)));
+                  targets.Add(new BotTarget(x, pos, GetDistance(CurrentCoordinates, pos)));
 
             }
          }
@@ -137,78 +154,78 @@ public class BotActor : CharacterActor
                if (gameScreenState.Tiles[x, y].CurrentPowerupType != PowerupType.None)
                {
                   float distance = GetDistance(new Vector2(x, y), CurrentCoordinates);
-                  Targets.Add(new BotTarget(new Vector2(x, y), distance));
+                  targets.Add(new BotTarget(new Vector2(x, y), distance));
                }
             }
          }
 
-         float LowestDistance = 1000;
-         int SavedTarget = -2;
+         var lowestDistance = 1000f;
+         var savedTarget = -2;
 
-         for (int x = 0; x < Targets.Count; x++)
+         for (int x = 0; x < targets.Count; x++)
          {
-            if (Targets[x].Distance < LowestDistance)
+            if (targets[x].Distance < lowestDistance)
             {
-               SavedTarget = x;
-               LowestDistance = Targets[x].Distance;
+               savedTarget = x;
+               lowestDistance = targets[x].Distance;
             }
          }
 
-         if (SavedTarget == -2)
+         if (savedTarget == -2)
          {
-            Moving = false;
-            currentTarget = null;
+            isMoving = false;
+            attackTarget = null;
          }
          else
          {
-            currentTarget = Targets[SavedTarget];
+            attackTarget = targets[savedTarget];
 
             if (HasPowerup(PowerupUse.Strategy))
-               artificialInputDevice.PressedAction2 = true;
+               _inputDevice.PressedAction2 = true;
          }
       }
 
-      Attacking = currentTarget != null &&
-          currentTarget.ThisTargetType == BotTarget.TargetType.Character &&
-          gameScreenState.Characters[currentTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
-          gameScreenState.Characters[currentTarget.PlayerIndex].CurrentState != CharacterState.Dieing;
+      var isAttacking = attackTarget != null &&
+          attackTarget.ThisTargetType == BotTarget.TargetType.Character &&
+          gameScreenState.Characters[attackTarget.PlayerIndex].CurrentState != CharacterState.Dead &&
+          gameScreenState.Characters[attackTarget.PlayerIndex].CurrentState != CharacterState.Dieing;
 
-      if (Moving)
+      if (isMoving)
       {
-         MakeMovements(CurrentCoordinates, Attacking, gameScreenState.Tiles);
+         MakeMovements(CurrentCoordinates, isAttacking, gameScreenState.Tiles);
       }
       else
       {
-         currentDirection = Direction.None;
+         direction = Direction.None;
       }
    }
 
    private void ClearInput()
    {
-      artificialInputDevice.PressedAction = false;
-      artificialInputDevice.PressedAction2 = false;
-      artificialInputDevice.PressedBack = false;
-      artificialInputDevice.PressedDown = false;
-      artificialInputDevice.PressedLeft = false;
-      artificialInputDevice.PressedRight = false;
-      artificialInputDevice.PressedStart = false;
-      artificialInputDevice.PressedUp = false;
-      artificialInputDevice.PressingDown = false;
-      artificialInputDevice.PressingLeft = false;
-      artificialInputDevice.PressingRight = false;
-      artificialInputDevice.PressingUp = false;
+      _inputDevice.PressedAction = false;
+      _inputDevice.PressedAction2 = false;
+      _inputDevice.PressedBack = false;
+      _inputDevice.PressedDown = false;
+      _inputDevice.PressedLeft = false;
+      _inputDevice.PressedRight = false;
+      _inputDevice.PressedStart = false;
+      _inputDevice.PressedUp = false;
+      _inputDevice.PressingDown = false;
+      _inputDevice.PressingLeft = false;
+      _inputDevice.PressingRight = false;
+      _inputDevice.PressingUp = false;
    }
 
    private bool CurrentTargetIsGood(List<CharacterActor> characterActors)
    {
-      if (currentTarget != null && currentTarget.ThisTargetType == BotTarget.TargetType.Character)
+      if (attackTarget != null && attackTarget.ThisTargetType == BotTarget.TargetType.Character)
       {
-         if (!(characterActors[currentTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
-             !(characterActors[currentTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
+         if (!(characterActors[attackTarget.PlayerIndex].CurrentState == CharacterState.Dead) &&
+             !(characterActors[attackTarget.PlayerIndex].CurrentState == CharacterState.Dieing))
          {
-            targetTimer.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
-            if (targetTimer.Active)
-               targetTimer.Reset();
+            _targetTimer.Update(_frameTimeService.GetLatestFrame().MovementFactorTimeSpan);
+            if (_targetTimer.Active)
+               _targetTimer.Reset();
             else
                return true;
          }
@@ -216,79 +233,77 @@ public class BotActor : CharacterActor
       return false;
    }
 
-   private void MakeMovements(Vector2 CurrentCoordinates, bool Attacking, Tile[,] tiles)
+   private void MakeMovements(Vector2 currentCoords, bool isAttacking, Tile[,] tiles)
    {
 
-      if (currentTarget == null)
+      if (attackTarget == null)
       {
-         currentDirection = Direction.None;
+         direction = Direction.None;
+         return;
       }
-      else
+      if (currentCoords.X != attackTarget.Position.X)
       {
-         //CurrentDirection = Direction.None;
-         if (CurrentCoordinates.X != currentTarget.Position.X)
+         if (currentCoords.X > attackTarget.Position.X && IsSafe(tiles, currentCoords, -1, 0))
          {
-            if (CurrentCoordinates.X > currentTarget.Position.X && IsSafe(tiles, CurrentCoordinates, -1, 0))
-            {
-               currentDirection = Direction.Left;
-            }
-            else if (CurrentCoordinates.X < currentTarget.Position.X && IsSafe(tiles, CurrentCoordinates, 1, 0))
-            {
-               currentDirection = Direction.Right;
-            }
+            direction = Direction.Left;
          }
-
-         if (CurrentCoordinates.Y != currentTarget.Position.Y)
+         else if (currentCoords.X < attackTarget.Position.X && IsSafe(tiles, currentCoords, 1, 0))
          {
-            if (CurrentCoordinates.Y > currentTarget.Position.Y - 1)
-            {
-               if (currentDirection == Direction.Left && IsSafe(tiles, CurrentCoordinates, -1, -1))
-                  currentDirection = Direction.UpperLeft;
-               else if (currentDirection == Direction.Right && IsSafe(tiles, CurrentCoordinates, 1, -1))
-                  currentDirection = Direction.UpperRight;
-               else if (IsSafe(tiles, CurrentCoordinates, 0, -1))
-                  currentDirection = Direction.Up;
-            }
-            else if (CurrentCoordinates.Y < currentTarget.Position.Y + 1)
-            {
-               if (currentDirection == Direction.Left && IsSafe(tiles, CurrentCoordinates, -1, 1))
-                  currentDirection = Direction.LowerLeft;
-               else if (currentDirection == Direction.Right && IsSafe(tiles, CurrentCoordinates, 1, 1))
-                  currentDirection = Direction.LowerRight;
-               else if (IsSafe(tiles, CurrentCoordinates, 0, 1))
-                  currentDirection = Direction.Down;
-            }
-         }
-
-         if (Attacking)
-         {
-            if (HasAttackingPowerup(CurrentCoordinates))
-               artificialInputDevice.PressedAction2 = true;
-         }
-
-         if (Attacking && GetDistance(CurrentCoordinates, currentTarget.Position) <= 8f)
-         { // Right Distance
-            if (CurrentCoordinates.X == currentTarget.Position.X ||
-                CurrentCoordinates.Y == currentTarget.Position.Y)
-            { // Right Position
-
-               artificialInputDevice.PressedAction = true;
-            }
+            direction = Direction.Right;
          }
       }
+
+      if (currentCoords.Y != attackTarget.Position.Y)
+      {
+         if (currentCoords.Y > attackTarget.Position.Y - 1)
+         {
+            if (direction == Direction.Left && IsSafe(tiles, currentCoords, -1, -1))
+               direction = Direction.UpperLeft;
+            else if (direction == Direction.Right && IsSafe(tiles, currentCoords, 1, -1))
+               direction = Direction.UpperRight;
+            else if (IsSafe(tiles, currentCoords, 0, -1))
+               direction = Direction.Up;
+         }
+         else if (currentCoords.Y < attackTarget.Position.Y + 1)
+         {
+            if (direction == Direction.Left && IsSafe(tiles, currentCoords, -1, 1))
+               direction = Direction.LowerLeft;
+            else if (direction == Direction.Right && IsSafe(tiles, currentCoords, 1, 1))
+               direction = Direction.LowerRight;
+            else if (IsSafe(tiles, currentCoords, 0, 1))
+               direction = Direction.Down;
+         }
+      }
+
+      if (isAttacking)
+      {
+         if (HasAttackingPowerup(currentCoords))
+            _inputDevice.PressedAction2 = true;
+      }
+
+      if (isAttacking && GetDistance(currentCoords, attackTarget.Position) <= 8f)
+      { // Right Distance
+         if (currentCoords.X == attackTarget.Position.X ||
+             currentCoords.Y == attackTarget.Position.Y)
+         { // Right Position
+
+            _inputDevice.PressedAction = true;
+         }
+      }
+
    }
 
-   private Vector2 FindSafePlace(Vector2 CurrentCoordinates, MatchState gameScreenState)
+   private Vector2 findSafePlace(Vector2 CurrentCoordinates, MatchState gameScreenState)
    {
-      placesToGo.RandomizeList();
+      _placesToGo.RandomizeList();
 
       Vector2 SafePlace = Vector2.Zero;
 
       bool FoundSafePlace = false;
 
-      for (int x = 0; x < placesToGo.Count; x++)
+      for (int x = 0; x < _placesToGo.Count; x++)
       {
-         Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + placesToGo[x][0], CurrentCoordinates.Y + placesToGo[x][1]);
+         Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + _placesToGo[x][0], CurrentCoordinates.Y + _placesToGo[x][1]);
          if (IsSafeAndClear(CurrentTileLocation, gameScreenState))
          {
             SafePlace = new Vector2(CurrentTileLocation.X, CurrentTileLocation.Y);
@@ -305,9 +320,9 @@ public class BotActor : CharacterActor
       {
          float Highest = gameScreenState.Tiles[(int)CurrentCoordinates.X, (int)CurrentCoordinates.Y].TimeTillClearing;
 
-         for (int x = 0; x < placesToGo.Count; x++)
+         for (int x = 0; x < _placesToGo.Count; x++)
          {
-            Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + placesToGo[x][0], CurrentCoordinates.Y + placesToGo[x][1]);
+            Vector2 CurrentTileLocation = new Vector2(CurrentCoordinates.X + _placesToGo[x][0], CurrentCoordinates.Y + _placesToGo[x][1]);
             if (IsClear(CurrentTileLocation, gameScreenState))
             {
                float temp = gameScreenState.Tiles[(int)CurrentTileLocation.X, (int)CurrentTileLocation.Y].TimeTillClearing;
@@ -338,12 +353,12 @@ public class BotActor : CharacterActor
    {
       if (CurrentPowerup != null && !CurrentPowerup.Used && CurrentPowerup.ThisPowerupsUse == PowerupUse.Attacking)
       {
-         if (GetDistance(CurrentCoordinates, currentTarget.Position) <= CurrentPowerup.AttackingRange)
+         if (GetDistance(CurrentCoordinates, attackTarget.Position) <= CurrentPowerup.AttackingRange)
          {
             if (CurrentPowerup.AttackingInLine)
             {
-               if (CurrentCoordinates.X == currentTarget.Position.X ||
-                   CurrentCoordinates.Y == currentTarget.Position.Y)
+               if (CurrentCoordinates.X == attackTarget.Position.X ||
+                   CurrentCoordinates.Y == attackTarget.Position.Y)
                {
                   return true;
                }
@@ -358,63 +373,55 @@ public class BotActor : CharacterActor
 
    }
 
-   /// <summary>
-   /// Takes in the current Directions and converts them into actual input.
-   /// </summary>
-   public void CreateInput()
+   // likely should be moved into seperate BotInputDevice or AiInputDevice
+   private void createInput()
    {
-      artificialInputDevice.PressedLeft = false;
-      artificialInputDevice.PressedRight = false;
-      artificialInputDevice.PressedUp = false;
-      artificialInputDevice.PressedDown = false;
+      _inputDevice.PressedLeft = false;
+      _inputDevice.PressedRight = false;
+      _inputDevice.PressedUp = false;
+      _inputDevice.PressedDown = false;
 
-      artificialInputDevice.PressingLeft = false;
-      artificialInputDevice.PressingRight = false;
-      artificialInputDevice.PressingUp = false;
-      artificialInputDevice.PressingDown = false;
+      _inputDevice.PressingLeft = false;
+      _inputDevice.PressingRight = false;
+      _inputDevice.PressingUp = false;
+      _inputDevice.PressingDown = false;
 
-      if (currentDirection == Direction.Left)
-         artificialInputDevice.PressingLeft = true;
-      else if (currentDirection == Direction.Right)
-         artificialInputDevice.PressingRight = true;
-      else if (currentDirection == Direction.Up)
-         artificialInputDevice.PressingUp = true;
-      else if (currentDirection == Direction.Down)
-         artificialInputDevice.PressingDown = true;
-      else if (currentDirection == Direction.LowerLeft)
+      if (direction == Direction.Left)
+         _inputDevice.PressingLeft = true;
+      else if (direction == Direction.Right)
+         _inputDevice.PressingRight = true;
+      else if (direction == Direction.Up)
+         _inputDevice.PressingUp = true;
+      else if (direction == Direction.Down)
+         _inputDevice.PressingDown = true;
+      else if (direction == Direction.LowerLeft)
       {
-         if (switchMovements)
-            artificialInputDevice.PressingDown = true;
+         if (isSwitchingMovements)
+            _inputDevice.PressingDown = true;
          else
-            artificialInputDevice.PressingLeft = true;
+            _inputDevice.PressingLeft = true;
       }
-      else if (currentDirection == Direction.LowerRight)
+      else if (direction == Direction.LowerRight)
       {
-         if (switchMovements)
-            artificialInputDevice.PressingDown = true;
+         if (isSwitchingMovements)
+            _inputDevice.PressingDown = true;
          else
-            artificialInputDevice.PressingRight = true;
+            _inputDevice.PressingRight = true;
       }
-      else if (currentDirection == Direction.UpperLeft)
+      else if (direction == Direction.UpperLeft)
       {
-         if (switchMovements)
-            artificialInputDevice.PressingUp = true;
+         if (isSwitchingMovements)
+            _inputDevice.PressingUp = true;
          else
-            artificialInputDevice.PressingLeft = true;
+            _inputDevice.PressingLeft = true;
       }
-      else if (currentDirection == Direction.UpperRight)
+      else if (direction == Direction.UpperRight)
       {
-         if (switchMovements)
-            artificialInputDevice.PressingUp = true;
+         if (isSwitchingMovements)
+            _inputDevice.PressingUp = true;
          else
-            artificialInputDevice.PressingRight = true;
+            _inputDevice.PressingRight = true;
       }
-
-#if ZUNE
-         AIInput.PressedStart = AIInput.PressedAction;
-         AIInput.PressedAction = AIInput.PressedAction2;
-         AIInput.PressedAction2 = false;
-#endif
    }
 
    /// <summary>

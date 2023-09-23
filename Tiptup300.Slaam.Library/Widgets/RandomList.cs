@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-
 namespace Tiptup300.Slaam.Library.Widgets;
 
 public class RandomList<T> : List<T>
 {
-   private Random rand = new Random();
+   private readonly Random _random = new Random();
 
    public void RandomizeList()
    {
@@ -14,7 +11,7 @@ public class RandomList<T> : List<T>
 
       while (temp.Count != Count)
       {
-         int x = rand.Next(0, Count);
+         int x = _random.Next(0, Count);
          bool used = false;
 
          for (int y = 0; y < intsused.Count; y++)
