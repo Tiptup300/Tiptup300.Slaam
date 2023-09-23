@@ -11,7 +11,7 @@ static class Program
    static void Main(string[] args)
    {
       var graphicsConfigurer =
-      ServiceLocator.Instance.GetService<SlamGameConfigurer>();
+      ServiceLocator.Instance.GetService<SlaamGameRunner>();
       graphicsConfigurer.Run();
    }
 

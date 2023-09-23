@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Tiptup300.Slaam.Library.Configurations;
 using Tiptup300.Slaam.Library.Rendering;
 using Tiptup300.Slaam.Library.ResourceManagement;
 using Tiptup300.Slaam.Library.Timing;
+using Tiptup300.Slaam.x_;
 
 namespace Tiptup300.Slaam.Metrics;
 
@@ -18,19 +18,17 @@ public class FpsRenderer
    private readonly Color _backBoxColor = new Color(0, 0, 0, 100);
    private readonly IResources _resources;
    private readonly IRenderService _renderGraph;
-   private readonly GameConfig _gameConfig;
    private readonly FrameTimeService _frameTimeService;
+   private readonly GameConfiguration _gameConfiguration;
 
    public FpsRenderer(
        IResources resources,
        IRenderService renderGraph,
-       GameConfig gameConfiguration,
        FrameTimeService frameTimeService
        )
    {
       _resources = resources;
       _renderGraph = renderGraph;
-      _gameConfig = gameConfiguration;
       _frameTimeService = frameTimeService;
    }
 
@@ -61,7 +59,7 @@ public class FpsRenderer
    }
    public void Draw()
    {
-      if (_gameConfig.ShowFPS && _fpsText != null)
+      if (_gameConfiguration.ShowFPS && _fpsText != null)
       {
          _renderGraph.RenderRectangle(
              destinationRectangle: _boxDestination,

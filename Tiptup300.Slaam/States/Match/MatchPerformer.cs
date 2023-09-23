@@ -95,7 +95,7 @@ public class MatchPerformer : IPerformer<MatchState>
             }
             else
             {
-               ProfileManager.Instance.state_AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Skin = state.SetupCharacters[x].SkinLocation;
+               ProfileManager.Instance.State_AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Skin = state.SetupCharacters[x].SkinLocation;
                state.Characters.Add(
                    new BotActor(
                        SlaamGame.Content.Load<Texture2D>("content\\skins\\" + state.SetupCharacters[x].SkinLocation),
@@ -435,9 +435,9 @@ public class MatchPerformer : IPerformer<MatchState>
    }
    private IState survival_EndGame(MatchState _state)
    {
-      if (ProfileManager.Instance.state_AllProfiles[_state.Characters[0].ProfileIndex].BestGame < _state.Timer.CurrentGameTime)
+      if (ProfileManager.Instance.State_AllProfiles[_state.Characters[0].ProfileIndex].BestGame < _state.Timer.CurrentGameTime)
       {
-         ProfileManager.Instance.state_AllProfiles[_state.Characters[0].ProfileIndex].BestGame = _state.Timer.CurrentGameTime;
+         ProfileManager.Instance.State_AllProfiles[_state.Characters[0].ProfileIndex].BestGame = _state.Timer.CurrentGameTime;
       }
       ProfileManager.Instance.SaveProfiles();
       return new StatsScreenRequestState(_state.ScoreKeeper, _state.GameType);

@@ -42,9 +42,8 @@ public class Composer
    private void register(int width, int height)
    {
       _container.RegisterInstance(new ProfileFileVersion(new byte[] { 000, 000, 000, 002, }));
-      _container.RegisterInstance(new GameConfig(true));
       _container.RegisterInstance(new GameConfiguration());
-      _container.Register<SlamGameConfigurer>(Lifestyle.Singleton);
+      _container.Register<SlaamGameRunner>(Lifestyle.Singleton);
       _container.Register<SlaamGame>(Lifestyle.Singleton);
       _container.Register<IGraphicsStateService, GraphicsStateService>(Lifestyle.Singleton);
       _container.RegisterInstance(new GraphicsConfig(width, height, false, false));
@@ -70,8 +69,8 @@ public class Composer
    private void registerScreens()
    {
       // Register all IRequests
-      _container.RegisterSingleton(typeof(IResolver<>), typeof(SlamGameConfigurer).Assembly);
-      _container.RegisterSingleton(typeof(IResolver<,>), typeof(SlamGameConfigurer).Assembly);
+      _container.RegisterSingleton(typeof(IResolver<>), typeof(SlaamGameRunner).Assembly);
+      _container.RegisterSingleton(typeof(IResolver<,>), typeof(SlaamGameRunner).Assembly);
    }
 
    private void registerResources()

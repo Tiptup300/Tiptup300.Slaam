@@ -90,7 +90,7 @@ public class ProfileEditScreenPerformer : IPerformer<ProfileEditScreenState>, IR
             string qwertyStringBack = "";
             if (qwertyStringBack != "")
             {
-               ProfileManager.Instance.state_PlayableProfiles[state.EditingProfile].Name = qwertyStringBack;
+               ProfileManager.Instance.State_PlayableProfiles[state.EditingProfile].Name = qwertyStringBack;
                ProfileManager.Instance.SaveProfiles();
             }
             state.WaitingForQwerty = false;
@@ -114,24 +114,24 @@ public class ProfileEditScreenPerformer : IPerformer<ProfileEditScreenState>, IR
             {
                if (state.SubMenu.Items[state.CurrentMenuChoice.Value].Details[1] == "del")
                {
-                  ProfileManager.Instance.RemovePlayer(ProfileManager.Instance.state_PlayableProfiles.GetRealIndex(state.EditingProfile));
+                  ProfileManager.Instance.RemovePlayer(ProfileManager.Instance.State_PlayableProfiles.GetRealIndex(state.EditingProfile));
                   state.EditingProfile = -1;
                   state.CurrentMenu.Value = 0;
                   setupMainMenu(state);
                }
                else if (state.SubMenu.Items[state.CurrentMenuChoice.Value].Details[1] == "ren")
                {
-                  string qwertyString = ProfileManager.Instance.state_PlayableProfiles[state.EditingProfile].Name;
+                  string qwertyString = ProfileManager.Instance.State_PlayableProfiles[state.EditingProfile].Name;
 
                   state.WaitingForQwerty = true;
                }
                else if (state.SubMenu.Items[state.CurrentMenuChoice.Value].Details[1] == "clr")
                {
-                  ProfileManager.Instance.state_PlayableProfiles[state.EditingProfile].TotalDeaths = 0;
-                  ProfileManager.Instance.state_PlayableProfiles[state.EditingProfile].TotalGames = 0;
-                  ProfileManager.Instance.state_PlayableProfiles[state.EditingProfile].TotalKills = 0;
-                  ProfileManager.Instance.state_PlayableProfiles[state.EditingProfile].TotalPowerups = 0;
-                  ProfileManager.Instance.state_PlayableProfiles[state.EditingProfile].BestGame = TimeSpan.Zero;
+                  ProfileManager.Instance.State_PlayableProfiles[state.EditingProfile].TotalDeaths = 0;
+                  ProfileManager.Instance.State_PlayableProfiles[state.EditingProfile].TotalGames = 0;
+                  ProfileManager.Instance.State_PlayableProfiles[state.EditingProfile].TotalKills = 0;
+                  ProfileManager.Instance.State_PlayableProfiles[state.EditingProfile].TotalPowerups = 0;
+                  ProfileManager.Instance.State_PlayableProfiles[state.EditingProfile].BestGame = TimeSpan.Zero;
                   ProfileManager.Instance.SaveProfiles();
                   state.EditingProfile = -1;
                   state.CurrentMenu.Value = 0;
@@ -153,9 +153,9 @@ public class ProfileEditScreenPerformer : IPerformer<ProfileEditScreenState>, IR
       _state.MainMenu.Items.Columns.Clear();
       _state.MainMenu.Items.Columns.Add("PROFILES");
       _state.MainMenu.Items.Clear();
-      for (int x = 1; x < ProfileManager.Instance.state_PlayableProfiles.Count; x++)
+      for (int x = 1; x < ProfileManager.Instance.State_PlayableProfiles.Count; x++)
       {
-         _state.MainMenu.Items.Add(true, new GraphItem(ProfileManager.Instance.state_PlayableProfiles[x].Name, x.ToString()));
+         _state.MainMenu.Items.Add(true, new GraphItem(ProfileManager.Instance.State_PlayableProfiles[x].Name, x.ToString()));
       }
       _state.MainMenu.Items.Add(true, new GraphItem("Create New Profile...", "new"));
       _state.MainMenu.SetHighlight(0);
