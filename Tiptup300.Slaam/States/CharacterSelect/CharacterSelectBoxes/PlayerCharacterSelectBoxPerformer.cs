@@ -51,7 +51,7 @@ public class PlayerCharacterSelectBoxPerformer
                if (_inputService.GetPlayers()[state.PlayerIndex].PressedStart)
                {
                   state.Status = PlayerCharacterSelectBoxStatus.ProfileSelect;
-                  state.MessageLines[1] = DialogStrings.SelectAProfile;
+                  state.MessageLines[1] = DialogStrings._["SelectAProfile"];
                   state.MessageLines[0] = ProfileManager.Instance.State_PlayableProfiles[state.ChosenProfile.Value].Name;
                   _resetStats(state);
                }
@@ -62,8 +62,8 @@ public class PlayerCharacterSelectBoxPerformer
             {
                if (_inputService.GetPlayers()[state.PlayerIndex].PressedAction2)
                {
-                  state.MessageLines[0] = DialogStrings.Player + (ExtendedPlayerIndex)state.PlayerIndex;
-                  state.MessageLines[1] = DialogStrings.PressStartToJoin;
+                  state.MessageLines[0] = DialogStrings._["Player"] + (ExtendedPlayerIndex)state.PlayerIndex;
+                  state.MessageLines[1] = DialogStrings._["PressStartToJoin"];
                   state.MessageLines[2] = "";
                   state.MessageLines[3] = "";
                   state.MessageLines[4] = "";
@@ -89,7 +89,7 @@ public class PlayerCharacterSelectBoxPerformer
                {
                   state.Status = PlayerCharacterSelectBoxStatus.CharSelect;
                   _findSkin(ProfileManager.Instance.State_PlayableProfiles[state.ChosenProfile.Value].Skin, state);
-                  state.MessageLines[1] = DialogStrings.PlayingAs + state.ParentSkinStrings[state.ChosenSkin.Value].Substring(state.ParentSkinStrings[state.ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
+                  state.MessageLines[1] = DialogStrings._["PlayingAs"] + state.ParentSkinStrings[state.ChosenSkin.Value].Substring(state.ParentSkinStrings[state.ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
                }
             }
             break;
@@ -98,7 +98,7 @@ public class PlayerCharacterSelectBoxPerformer
             {
                if (_inputService.GetPlayers()[state.PlayerIndex].PressedAction2)
                {
-                  state.MessageLines[1] = DialogStrings.SelectAProfile;
+                  state.MessageLines[1] = DialogStrings._["SelectAProfile"];
                   state.Status = PlayerCharacterSelectBoxStatus.ProfileSelect;
                }
 
@@ -141,7 +141,7 @@ public class PlayerCharacterSelectBoxPerformer
                   _refreshSkins(state);
                   state.Offset = 0;
                   state.MovementStatus = PlayerCharacterSelectBoxMovementStatus.Stationary;
-                  state.MessageLines[1] = DialogStrings.PlayingAs + state.ParentSkinStrings[state.ChosenSkin.Value].Substring(state.ParentSkinStrings[state.ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
+                  state.MessageLines[1] = DialogStrings._["PlayingAs"] + state.ParentSkinStrings[state.ChosenSkin.Value].Substring(state.ParentSkinStrings[state.ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
                   state.Positions[1] = new Vector2(state.Positions[0].X + 75, state.Positions[0].Y + 125 - 30 + state.Offset - 70);
                   state.Positions[2] = new Vector2(state.Positions[0].X + 75, state.Positions[0].Y + 125 - 30 + state.Offset);
                   state.Positions[3] = new Vector2(state.Positions[0].X + 75, state.Positions[0].Y + 125 - 30 + state.Offset + 70);
@@ -153,7 +153,7 @@ public class PlayerCharacterSelectBoxPerformer
                   _refreshSkins(state);
                   state.Offset = 0;
                   state.MovementStatus = PlayerCharacterSelectBoxMovementStatus.Stationary;
-                  state.MessageLines[1] = DialogStrings.PlayingAs + state.ParentSkinStrings[state.ChosenSkin.Value].Substring(state.ParentSkinStrings[state.ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
+                  state.MessageLines[1] = DialogStrings._["PlayingAs"] + state.ParentSkinStrings[state.ChosenSkin.Value].Substring(state.ParentSkinStrings[state.ChosenSkin.Value].IndexOf('_') + 1).Replace(".png", "").Replace("skins\\", "");
                   state.Positions[1] = new Vector2(state.Positions[0].X + 75, state.Positions[0].Y + 125 - 30 + state.Offset - 70);
                   state.Positions[2] = new Vector2(state.Positions[0].X + 75, state.Positions[0].Y + 125 - 30 + state.Offset);
                   state.Positions[3] = new Vector2(state.Positions[0].X + 75, state.Positions[0].Y + 125 - 30 + state.Offset + 70);
@@ -173,7 +173,7 @@ public class PlayerCharacterSelectBoxPerformer
       if (state.Status == PlayerCharacterSelectBoxStatus.CharSelect)
       {
          batch.Draw(state.DisplayResources[1], new Vector2(152, 239), new Rectangle(0, 0, 50, 60), Color.White);
-         temp = temp.Substring(DialogStrings.PlayingAs.Length);
+         temp = temp.Substring(DialogStrings._["PlayingAs"].Length);
       }
 
       _renderService.RenderText(temp, new Vector2(31, 141), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
@@ -191,7 +191,7 @@ public class PlayerCharacterSelectBoxPerformer
    {
       if (state.IsSurvival)
       {
-         state.MessageLines[2] = DialogStrings.BestTime + NormalStatsBoard.TimeSpanToString(ProfileManager.Instance.State_PlayableProfiles[state.ChosenProfile.Value].BestGame);
+         state.MessageLines[2] = DialogStrings._["BestTime"] + NormalStatsBoard.TimeSpanToString(ProfileManager.Instance.State_PlayableProfiles[state.ChosenProfile.Value].BestGame);
          state.MessageLines[3] = "";
          state.MessageLines[4] = "";
          state.MessageLines[5] = "";

@@ -275,7 +275,7 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
    private void writeMatchSettingsToFile()
    {
       XnaContentWriter writer = new XnaContentWriter(ServiceLocator.Instance.GetService<ProfileFileVersion>());
-      writer.Initialize(DialogStrings.MatchSettingsFilename);
+      writer.Initialize(DialogStrings._["MatchSettingsFilename"]);
 
       for (int x = 0; x < 6; x++)
       {
@@ -294,7 +294,7 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
       try
       {
 
-         reader.Initialize(DialogStrings.MatchSettingsFilename);
+         reader.Initialize(DialogStrings._["MatchSettingsFilename"]);
 
          if (reader.IsWrongVersion())
          {
@@ -336,9 +336,9 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
                batch.Draw(_resources.GetTexture("LobbyCharBar").Texture, new Vector2(0, YOffset + 30 * x), Color.White);
                batch.Draw(_resources.GetTexture("LobbyColorPreview").Texture, new Vector2(0, YOffset + 30 * x), state.SetupCharacters[x].PlayerColor);
                if (state.SetupCharacters[x].PlayerType == PlayerType.Player)
-                  _renderService.RenderText(DialogStrings.Player + (x + 1) + ": " + ProfileManager.Instance.State_AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
+                  _renderService.RenderText(DialogStrings._["Player"] + (x + 1) + ": " + ProfileManager.Instance.State_AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name, new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Black, Alignment.TopLeft, false);
                else
-                  _renderService.RenderText(DialogStrings.Player + (x + 1) + ": *" + ProfileManager.Instance.State_AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
+                  _renderService.RenderText(DialogStrings._["Player"] + (x + 1) + ": *" + ProfileManager.Instance.State_AllProfiles[state.SetupCharacters[x].CharacterProfileIndex].Name + "*", new Vector2(36, YOffset + 18 + 30 * x), _resources.GetFont("SegoeUIx14pt"), Color.Red, Alignment.TopLeft, false);
             }
             batch.Draw(_resources.GetTexture("LobbyOverlay").Texture, Vector2.Zero, Color.White);
          }

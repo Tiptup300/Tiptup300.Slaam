@@ -35,8 +35,8 @@ public class PlayerCharacterSelectBoxStateResolver : IResolver<PlayerCharacterSe
       output.Positions[8] = new Vector2(request.Position.X + 209, request.Position.Y + 188);
       output.Positions[9] = new Vector2(request.Position.X + 412, request.Position.Y + 188);
 
-      output.MessageLines[0] = DialogStrings.Player + (ExtendedPlayerIndex)output.PlayerIndex;
-      output.MessageLines[1] = DialogStrings.PressStartToJoin;
+      output.MessageLines[0] = DialogStrings._["Player"] + (ExtendedPlayerIndex)output.PlayerIndex;
+      output.MessageLines[1] = DialogStrings._["PressStartToJoin"];
       output.MessageLines[2] = "";
       output.MessageLines[3] = "";
       output.MessageLines[4] = "";

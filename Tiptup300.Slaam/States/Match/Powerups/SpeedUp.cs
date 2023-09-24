@@ -18,7 +18,7 @@ public class SpeedUp : Powerup
 
    public SpeedUp(CharacterActor parent, IResources resources,
        IFrameTimeService frameTimeService)
-       : base(DialogStrings.SpeedUpName, new CachedTexture[] { resources.GetTexture("SpeedUp"), resources.GetTexture("SpeedUp0") }, PowerupUse.Evasion)
+       : base(DialogStrings._["SpeedUpName"], new CachedTexture[] { resources.GetTexture("SpeedUp"), resources.GetTexture("SpeedUp0") }, PowerupUse.Evasion)
    {
       ParentCharacter = parent;
       _frameTimeService = frameTimeService;

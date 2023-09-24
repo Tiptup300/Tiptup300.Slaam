@@ -46,10 +46,10 @@ public static class LobbyScreenFunctions
       {
 
       }
-      lobbyScreenState.Dialogs[0] = DialogStrings.CurrentBoard + lobbyScreenState.BoardLocation.Substring(lobbyScreenState.BoardLocation.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\", "");
+      lobbyScreenState.Dialogs[0] = DialogStrings._["CurrentBoard"] + lobbyScreenState.BoardLocation.Substring(lobbyScreenState.BoardLocation.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\", "");
       if (lobbyScreenState.BoardLocation.IndexOf('_') >= 0)
       {
-         lobbyScreenState.Dialogs[1] = DialogStrings.CreatedBy + lobbyScreenState.BoardLocation.Substring(0, lobbyScreenState.BoardLocation.IndexOf('_')).Replace(".png", "").Replace("boards\\", "");
+         lobbyScreenState.Dialogs[1] = DialogStrings._["CreatedBy"] + lobbyScreenState.BoardLocation.Substring(0, lobbyScreenState.BoardLocation.IndexOf('_')).Replace(".png", "").Replace("boards\\", "");
       }
       else
       {

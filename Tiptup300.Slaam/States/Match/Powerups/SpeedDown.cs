@@ -17,7 +17,7 @@ public class SpeedDown : Powerup
 
    public SpeedDown(int charindex, IResources resources,
        IFrameTimeService frameTimeService)
-       : base(DialogStrings.SpeedDoownName, new CachedTexture[] { resources.GetTexture("SpeedDown"), resources.GetTexture("SpeedDown0") }, PowerupUse.Strategy)
+       : base(DialogStrings._["SpeedDoownName"], new CachedTexture[] { resources.GetTexture("SpeedDown"), resources.GetTexture("SpeedDown0") }, PowerupUse.Strategy)
    {
       CharacterIndex = charindex;
       _frameTimeService = frameTimeService;

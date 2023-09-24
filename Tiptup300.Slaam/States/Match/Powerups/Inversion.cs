@@ -18,7 +18,7 @@ public class Inversion : Powerup
    public Inversion(int charindex, IResources resources,
        IFrameTimeService frameTimeService)
        : base(
-             DialogStrings.InversionName,
+             DialogStrings._["InversionName"],
              new CachedTexture[] {
                    resources.GetTexture("Inversion"),
                    resources.GetTexture("Inversion0") },

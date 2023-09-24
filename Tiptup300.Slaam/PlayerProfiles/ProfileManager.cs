@@ -44,7 +44,7 @@ public class ProfileManager
    public void LoadProfiles()
    {
       XnaContentReader reader = new XnaContentReader(_logger, ServiceLocator.Instance.GetService<ProfileFileVersion>());
-      reader.Initialize(DialogStrings.ProfileFilename);
+      reader.Initialize(DialogStrings._["ProfileFilename"]);
 
       var filefound = !reader.WasNotFound;
 
@@ -103,7 +103,7 @@ public class ProfileManager
    public void SaveProfiles()
    {
       XnaContentWriter writer = new XnaContentWriter(ServiceLocator.Instance.GetService<ProfileFileVersion>());
-      writer.Initialize(DialogStrings.ProfileFilename);
+      writer.Initialize(DialogStrings._["ProfileFilename"]);
 
       writer.Write(State_AllProfiles.Count - 1);
 

@@ -145,7 +145,7 @@ public class SurvivalStatsBoard : StatsBoard
    public void XNALoadHighScores()
    {
       XnaContentReader reader = new XnaContentReader(_logger, ServiceLocator.Instance.GetService<ProfileFileVersion>());
-      reader.Initialize(DialogStrings.SurvivalScoresFilename);
+      reader.Initialize(DialogStrings._["SurvivalScoresFilename"]);
       reader.IsWrongVersion();
 
       int ProfileAmt;
@@ -179,7 +179,7 @@ public class SurvivalStatsBoard : StatsBoard
    public void XNASaveHighScores()
    {
       XnaContentWriter writer = new XnaContentWriter(ServiceLocator.Instance.GetService<ProfileFileVersion>());
-      writer.Initialize(DialogStrings.SurvivalScoresFilename);
+      writer.Initialize(DialogStrings._["SurvivalScoresFilename"]);
       writer.Write(PeopleToCompare.Length);
 
       for (int x = 0; x < PeopleToCompare.Length; x++)
