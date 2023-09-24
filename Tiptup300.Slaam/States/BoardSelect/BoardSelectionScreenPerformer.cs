@@ -226,9 +226,23 @@ public class BoardSelectionScreenPerformer : IPerformer<BoardSelectionScreenStat
                batch.Draw(state.BoardTextures[state.Save], state.CenteredRectangle, Color.White);
             }
             batch.Draw(_resources.GetTexture("BoardSelect").Texture, state.CenteredRectangle, new Color((byte)255, (byte)255, (byte)255, (byte)state.Alpha));
-            _renderService.RenderText(DialogStrings.CleanMapName(state.ValidBoards[state.Save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
+            _renderService.RenderText(cleanMapName(state.ValidBoards[state.Save]), new Vector2(27, 225), _resources.GetFont("SegoeUIx32pt"), Color.White, Alignment.TopLeft, true);
          }
       });
+   }
+   private string cleanMapName(string str)
+   {
+      if (str == null)
+         return "";
+      string[] strs = new string[2];
+      strs[0] = str.Substring(str.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\" + _gameConfiguration.TEXTURE_FILE_PATH, "");
+      strs[1] = str.IndexOf('_') >= 0 ? str.Substring(0, str.IndexOf('_')).Replace(".png", "").Replace("boards\\" + _gameConfiguration.TEXTURE_FILE_PATH, "") : "";
+      if (strs[1] != "" && strs[1] != "0")
+      {
+         return strs[0] + " by " + strs[1];
+      }
+      else
+         return strs[0];
    }
    private Rectangle centerRectangle(Rectangle rect, Vector2 pos)
    {

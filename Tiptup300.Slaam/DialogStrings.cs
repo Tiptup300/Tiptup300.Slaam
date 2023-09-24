@@ -1,14 +1,11 @@
-using Tiptup300.Slaam.Composition.x_;
-using Tiptup300.Slaam.States.Match.Misc;
-
 namespace Tiptup300.Slaam;
 
-/// <summary>
-/// Collection of strings for nearly all dialog of Slaam!
-/// </summary>
+// TODO
+//
+// So this class has a mix of static strings, but also a collection of calls 
+// 
 static class DialogStrings
 {
-   public static GameConfiguration _gameConfiguration => ServiceLocator.Instance.GetService<GameConfiguration>();
 
    public const string ContinueSelected = "> Continue <";
    public const string Continue = "Continue";
@@ -43,48 +40,6 @@ static class DialogStrings
    public const string CurrentBoard = "Board: ";
    public const string CreatedBy = "Created by ";
    public const string Player = "Player ";
-
-   public static string GetDescMsg(MatchSettings matchSettings)
-   {
-      if (matchSettings.GameType == GameType.Classic)
-      {
-         return "Board: " + CleanMapName(matchSettings.BoardLocation) + "\n" +
-          matchSettings.LivesAmt + " Lives\n" +
-          matchSettings.SpeedMultiplyer + "x Speed\n" +
-          matchSettings.RespawnTime.TotalSeconds + " Second Respawn";
-      }
-      else if (matchSettings.GameType == GameType.TimedSpree)
-      {
-         return "Mode: Timed Spree\n" +
-         "Board: " + CleanMapName(matchSettings.BoardLocation) + "\n" +
-         matchSettings.TimeOfMatch.TotalMinutes + " Minutes Long\n" +
-         matchSettings.SpeedMultiplyer + "x Speed\n" +
-         matchSettings.RespawnTime.TotalSeconds + " Second Respawn";
-      }
-      else
-      {
-         return "Mode: Spree\n" +
-         "Board: " + CleanMapName(matchSettings.BoardLocation) + "\n" +
-         matchSettings.KillsToWin + " Kills To Win\n" +
-         matchSettings.SpeedMultiplyer + "x Speed\n" +
-         matchSettings.RespawnTime.TotalSeconds + " Second Respawn";
-      }
-   }
-
-   public static string CleanMapName(string str)
-   {
-      if (str == null)
-         return "";
-      string[] strs = new string[2];
-      strs[0] = str.Substring(str.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\" + _gameConfiguration.TEXTURE_FILE_PATH, "");
-      strs[1] = str.IndexOf('_') >= 0 ? str.Substring(0, str.IndexOf('_')).Replace(".png", "").Replace("boards\\" + _gameConfiguration.TEXTURE_FILE_PATH, "") : "";
-      if (strs[1] != "" && strs[1] != "0")
-      {
-         return strs[0] + " by " + strs[1];
-      }
-      else
-         return strs[0];
-   }
 
    // Char Select
    public const string PressStartToJoin = "Press start to join.";
