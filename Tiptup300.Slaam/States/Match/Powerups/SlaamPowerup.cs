@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Tiptup300.Slaam.Composition.x_;
 using Tiptup300.Slaam.Library.ResourceManagement;
 using Tiptup300.Slaam.States.Match.Actors;
-using Tiptup300.Slaam.x_;
 
 namespace Tiptup300.Slaam.States.Match.Powerups;
 

@@ -24,6 +24,4 @@ public class ServiceLocator
       }
       return (T)_instances[typeof(T)];
    }
-
-   public static T LocateService<T>() => Instance.GetService<T>();
 }

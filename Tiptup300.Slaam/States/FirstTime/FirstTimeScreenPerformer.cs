@@ -5,7 +5,6 @@ using Tiptup300.Slaam.Library.Input;
 using Tiptup300.Slaam.Library.Rendering;
 using Tiptup300.Slaam.Library.ResourceManagement;
 using Tiptup300.Slaam.PlayerProfiles;
-using Tiptup300.Slaam.x_;
 
 namespace Tiptup300.Slaam.States.FirstTime;
 

@@ -2,7 +2,6 @@
 using System.Tiptup300.Primitives;
 using System.Tiptup300.StateManagement;
 using Tiptup300.Slaam.Library.ResourceManagement;
-using Tiptup300.Slaam.x_;
 
 namespace Tiptup300.Slaam.States.Credits;
 

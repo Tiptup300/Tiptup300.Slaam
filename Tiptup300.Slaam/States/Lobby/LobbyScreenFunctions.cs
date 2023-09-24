@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Tiptup300.Slaam.Composition.x_;
-using Tiptup300.Slaam.x_;
 
 namespace Tiptup300.Slaam.States.Lobby;
 
