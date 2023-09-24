@@ -29,6 +29,7 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
    private readonly IRenderService _renderService;
    private readonly IInputService _inputService;
    private readonly IResolver<IRequest, IState> _stateResolver;
+   private readonly GameConfiguration _gameConfiguration;
 
    public LobbyScreenPerformer(
        ILogger logger,
@@ -36,7 +37,8 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
        IResources resources,
        IRenderService renderGraphManager,
        IInputService inputService,
-       IResolver<IRequest, IState> stateResolver)
+       IResolver<IRequest, IState> stateResolver,
+       GameConfiguration gameConfiguration)
    {
       _logger = logger;
       _playerColorResolver = playerColorResolver;
@@ -44,6 +46,7 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
       _renderService = renderGraphManager;
       _inputService = inputService;
       _stateResolver = stateResolver;
+      _gameConfiguration = gameConfiguration;
    }
 
 
@@ -57,7 +60,7 @@ public class LobbyScreenPerformer : IPerformer<LobbyScreenState>, IRenderer<Lobb
       _state.ViewingSettings = false;
 
       _state.PlayerAmt = _state.SetupCharacters.Count;
-      _state.MainMenu = new Graph(new Rectangle(10, 10, GameGlobals.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), _resources, _renderService);
+      _state.MainMenu = new Graph(new Rectangle(10, 10, _gameConfiguration.DRAWING_GAME_WIDTH - 20, 624), 2, new Color(0, 0, 0, 150), _resources, _renderService);
       _state.MainMenu.Items.Columns.Add("SETTING");
       _state.MainMenu.Items.Columns.Add("SETTING");
       _state.MainMenu.Items.Add(true,

@@ -14,6 +14,7 @@ namespace Tiptup300.Slaam.States.BoardSelect;
 
 public class BoardSelectionScreenPerformer : IPerformer<BoardSelectionScreenState>, IRenderer<BoardSelectionScreenState>
 {
+   private readonly GameConfiguration _gameConfiguration;
    private readonly IResources _resources;
    private readonly IInputService _inputService;
    private readonly IFrameTimeService _frameTimeService;
@@ -23,12 +24,14 @@ public class BoardSelectionScreenPerformer : IPerformer<BoardSelectionScreenStat
        IResources resources,
        IInputService inputService,
        IFrameTimeService frameTimeService,
-       IRenderService renderService)
+       IRenderService renderService,
+       GameConfiguration gameConfiguration)
    {
       _resources = resources;
       _inputService = inputService;
       _frameTimeService = frameTimeService;
       _renderService = renderService;
+      _gameConfiguration = gameConfiguration;
    }
 
    public void InitializeState()
@@ -160,7 +163,7 @@ public class BoardSelectionScreenPerformer : IPerformer<BoardSelectionScreenStat
    {
       try
       {
-         Texture2D temp = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + _state.BoardNames[_state.CurrentBoardLoading]);
+         Texture2D temp = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + _gameConfiguration.TEXTURE_FILE_PATH + _state.BoardNames[_state.CurrentBoardLoading]);
 
          _state.HasFoundBoard = true;
          _state.IsValidBoard = _state.BoardNames[_state.CurrentBoardLoading];
@@ -196,8 +199,8 @@ public class BoardSelectionScreenPerformer : IPerformer<BoardSelectionScreenStat
          {
             for (int y = 0; y < 11; y++)
             {
-               Vector2 Pos = new Vector2(width / 2 - state.DrawSizeWidth / 2 + x * state.DrawSizeWidth + state.HorizontalOffset - state.DrawSizeWidth * 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - state.DrawSizeHeight / 2 + y * state.DrawSizeHeight + state.VerticalOffset - state.DrawSizeHeight * 2);
-               if (!(Pos.X < -state.DrawSizeWidth || Pos.X > GameGlobals.DRAWING_GAME_WIDTH || Pos.Y < -state.DrawSizeHeight || Pos.Y > GameGlobals.DRAWING_GAME_HEIGHT))
+               Vector2 Pos = new Vector2(width / 2 - state.DrawSizeWidth / 2 + x * state.DrawSizeWidth + state.HorizontalOffset - state.DrawSizeWidth * 2, _gameConfiguration.DRAWING_GAME_HEIGHT / 2 - state.DrawSizeHeight / 2 + y * state.DrawSizeHeight + state.VerticalOffset - state.DrawSizeHeight * 2);
+               if (!(Pos.X < -state.DrawSizeWidth || Pos.X > _gameConfiguration.DRAWING_GAME_WIDTH || Pos.Y < -state.DrawSizeHeight || Pos.Y > _gameConfiguration.DRAWING_GAME_HEIGHT))
                {
                   if (state.DrawingBoardIndex.Value < state.BoardTextures.Count && state.BoardTextures[state.DrawingBoardIndex.Value] != null)
                   {
@@ -218,7 +221,7 @@ public class BoardSelectionScreenPerformer : IPerformer<BoardSelectionScreenStat
          batch.Draw(_resources.GetTexture("MenuTop").Texture, Vector2.Zero, Color.White);
          if (!state.IsStillLoadingBoards)
          {
-            state.CenteredRectangle = centerRectangle(new Rectangle(0, 0, (int)(state.Scale * state.DrawSizeWidth), (int)(state.Scale * state.DrawSizeHeight)), new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2));
+            state.CenteredRectangle = centerRectangle(new Rectangle(0, 0, (int)(state.Scale * state.DrawSizeWidth), (int)(state.Scale * state.DrawSizeHeight)), new Vector2(_gameConfiguration.DRAWING_GAME_WIDTH / 2, _gameConfiguration.DRAWING_GAME_HEIGHT / 2));
             if (state.WasChosen)
             {
                batch.Draw(state.BoardTextures[state.Save], state.CenteredRectangle, Color.White);

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Tiptup300.Slaam.Composition.x_;
 using Tiptup300.Slaam.Library.Rendering;
 using Tiptup300.Slaam.Library.ResourceManagement;
 using Tiptup300.Slaam.Library.Timing;
@@ -22,7 +23,8 @@ public class Tile
    private readonly IResources _resources;
    private readonly IRenderService _renderGraph;
    private readonly IFrameTimeService _frameTimeService;
-   private readonly static TimeSpan FadeOutTime = new TimeSpan(0, 0, 0, 0, 25);
+   private static GameConfiguration _gameConfiguration => ServiceLocator.Instance.GetService<GameConfiguration>();
+   private readonly static TimeSpan _fadeOutTime = new TimeSpan(0, 0, 0, 0, 25);
 
 
    public Tile(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, IResources resources, IRenderService renderGraph,
@@ -31,7 +33,7 @@ public class Tile
       _resources = resources;
       _renderGraph = renderGraph;
       _frameTimeService = frameTimeService;
-      _state = IntializeState(Boardpos, TileLoc, tiletex, FadeOutTime);
+      _state = IntializeState(Boardpos, TileLoc, tiletex, _fadeOutTime);
    }
    public static TileState IntializeState(Vector2 Boardpos, Vector2 TileLoc, Texture2D tiletex, TimeSpan fadeOutTime)
    {
@@ -40,7 +42,7 @@ public class Tile
       output = new TileState();
       output.ParentTileTileset = tiletex;
       output.TileCoors = TileLoc;
-      output.AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
+      output.AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * _gameConfiguration.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * _gameConfiguration.TILE_SIZE + 1);
       output.FadeThrottle = new Library.Widgets.TimerWidget(fadeOutTime);
 
       return output;
@@ -109,19 +111,19 @@ public class Tile
       if (tileState.CurrentTileCondition != TileCondition.Clear)
       {
 
-         batch.Draw(tileState.ParentTileTileset, tileState.AbsTileloc, new Rectangle((int)tileState.TileCoors.X * GameGlobals.TILE_SIZE, (int)tileState.TileCoors.Y * GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), tileState.TileColor);
+         batch.Draw(tileState.ParentTileTileset, tileState.AbsTileloc, new Rectangle((int)tileState.TileCoors.X * _gameConfiguration.TILE_SIZE, (int)tileState.TileCoors.Y * _gameConfiguration.TILE_SIZE, _gameConfiguration.TILE_SIZE, _gameConfiguration.TILE_SIZE), tileState.TileColor);
          if (tileState.CurrentTileCondition != TileCondition.Normal)
          {
-            batch.Draw(resources.GetTexture("TileOverlay").Texture, new Rectangle((int)tileState.AbsTileloc.X, (int)tileState.AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), tileState.TileOverlayColor);
+            batch.Draw(resources.GetTexture("TileOverlay").Texture, new Rectangle((int)tileState.AbsTileloc.X, (int)tileState.AbsTileloc.Y, _gameConfiguration.TILE_SIZE, _gameConfiguration.TILE_SIZE), tileState.TileOverlayColor);
          }
          if (tileState.CurrentTileCondition == TileCondition.RespawnPoint)
          {
-            batch.Draw(resources.GetTexture("RespawnTileOverlay").Texture, new Rectangle((int)tileState.AbsTileloc.X, (int)tileState.AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), tileState.MarkedColor);
+            batch.Draw(resources.GetTexture("RespawnTileOverlay").Texture, new Rectangle((int)tileState.AbsTileloc.X, (int)tileState.AbsTileloc.Y, _gameConfiguration.TILE_SIZE, _gameConfiguration.TILE_SIZE), tileState.MarkedColor);
          }
          if (tileState.CurrentPowerupType != PowerupType.None)
          {
             Texture2D tex = PowerupManager.Instance.GetPowerupTexture(tileState.CurrentPowerupType);
-            batch.Draw(tex, new Rectangle((int)tileState.AbsTileloc.X, (int)tileState.AbsTileloc.Y, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE), Color.White);
+            batch.Draw(tex, new Rectangle((int)tileState.AbsTileloc.X, (int)tileState.AbsTileloc.Y, _gameConfiguration.TILE_SIZE, _gameConfiguration.TILE_SIZE), Color.White);
          }
       }
    }
@@ -136,7 +138,7 @@ public class Tile
       if (tileState.CurrentTileCondition != TileCondition.Clear)
       {
          _renderGraph.RenderRectangle(
-             destinationRectangle: new Rectangle((int)tileState.AbsTileloc.X + 10, (int)tileState.AbsTileloc.Y + 10, GameGlobals.TILE_SIZE, GameGlobals.TILE_SIZE),
+             destinationRectangle: new Rectangle((int)tileState.AbsTileloc.X + 10, (int)tileState.AbsTileloc.Y + 10, _gameConfiguration.TILE_SIZE, _gameConfiguration.TILE_SIZE),
              color: new Color(0, 0, 0, 50));
       }
    }
@@ -198,7 +200,7 @@ public class Tile
    private static void resetTileLocation(TileState tileState, Vector2 Boardpos, Vector2 TileLoc)
    {
       tileState.TileCoors = TileLoc;
-      tileState.AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * GameGlobals.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * GameGlobals.TILE_SIZE + 1);
+      tileState.AbsTileloc = new Vector2(Boardpos.X + TileLoc.X * _gameConfiguration.TILE_SIZE + 1, Boardpos.Y + TileLoc.Y * _gameConfiguration.TILE_SIZE + 1);
    }
 
 

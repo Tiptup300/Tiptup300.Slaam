@@ -1,20 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using Tiptup300.Slaam.Library.ResourceManagement;
-using Tiptup300.Slaam.x_;
 using System.Tiptup300.Primitives;
 using System.Tiptup300.StateManagement;
+using Tiptup300.Slaam.Library.ResourceManagement;
+using Tiptup300.Slaam.x_;
 
 namespace Tiptup300.Slaam.States.Credits;
 
 public class CreditsRequestResolver : IResolver<CreditsRequest, IState>
 {
    private readonly IResources _resources;
+   private readonly GameConfiguration _gameConfiguration;
 
-   public CreditsRequestResolver(IResources resources)
+   public CreditsRequestResolver(IResources resources, GameConfiguration gameConfiguration)
    {
       _resources = resources;
+      _gameConfiguration = gameConfiguration;
    }
 
    public IState Resolve(CreditsRequest request)
@@ -26,7 +26,7 @@ public class CreditsRequestResolver : IResolver<CreditsRequest, IState>
          CreditsListings = new List<CreditsListing>(),
          MainCreditColor = Color.White,
          SubCreditColor = Color.White,
-         TextCoords = new Vector2(5, GameGlobals.DRAWING_GAME_HEIGHT),
+         TextCoords = new Vector2(5, _gameConfiguration.DRAWING_GAME_HEIGHT),
          Active = false,
          TextHeight = 0f
       };

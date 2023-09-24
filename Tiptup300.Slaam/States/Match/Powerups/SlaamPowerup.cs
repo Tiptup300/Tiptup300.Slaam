@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Tiptup300.Slaam.Composition.x_;
 using Tiptup300.Slaam.Library.ResourceManagement;
 using Tiptup300.Slaam.States.Match.Actors;
 using Tiptup300.Slaam.x_;
@@ -9,17 +9,19 @@ namespace Tiptup300.Slaam.States.Match.Powerups;
 
 public class SlaamPowerup : Powerup
 {
-   private CharacterActor ParentCharacter;
-   private int PlayerIndex;
-   private const int size = 4;
+   private const int SIZE = 4;
+
+   private readonly CharacterActor _parentCharacter;
+   private readonly int _playerIndex;
+   private GameConfiguration _gameConfiguration => ServiceLocator.Instance.GetService<GameConfiguration>();
 
    public SlaamPowerup(CharacterActor parentcharacter, int playerindex, IResources resources)
        : base("Slaam!",
              new CachedTexture[] { resources.GetTexture("Slaam"), resources.GetTexture("Slaam0") }, PowerupUse.Attacking)
    {
-      PlayerIndex = playerindex;
+      _playerIndex = playerindex;
       AttackingType = true;
-      ParentCharacter = parentcharacter;
+      _parentCharacter = parentcharacter;
       AttackingRange = 4;
       AttackingInLine = false;
    }
@@ -35,19 +37,19 @@ public class SlaamPowerup : Powerup
 
    public override void EndAttack(MatchState gameScreenState)
    {
-      Vector2 Charpos = MatchFunctions.InterpretCoordinates(gameScreenState, ParentCharacter.Position, true);
+      Vector2 Charpos = MatchFunctions.InterpretCoordinates(gameScreenState, _parentCharacter.Position, true);
 
-      for (int x = (int)Charpos.X - (size - 1); x < Charpos.X + size; x++)
+      for (int x = (int)Charpos.X - (SIZE - 1); x < Charpos.X + SIZE; x++)
       {
-         for (int y = (int)Charpos.Y - (size - 1); y < Charpos.Y + size; y++)
+         for (int y = (int)Charpos.Y - (SIZE - 1); y < Charpos.Y + SIZE; y++)
          {
             if (x == (int)Charpos.X && y == (int)Charpos.Y)
             {
 
             }
-            else if (x >= 0 && x < GameGlobals.BOARD_WIDTH && y >= 0 && y < GameGlobals.BOARD_HEIGHT)
+            else if (x >= 0 && x < _gameConfiguration.BOARD_WIDTH && y >= 0 && y < _gameConfiguration.BOARD_HEIGHT)
             {
-               gameScreenState.Tiles[x, y].MarkTile(ParentCharacter.MarkingColor, new TimeSpan(0, 0, 0, 0, (x + y) * 100), false, PlayerIndex);
+               gameScreenState.Tiles[x, y].MarkTile(_parentCharacter.MarkingColor, new TimeSpan(0, 0, 0, 0, (x + y) * 100), false, _playerIndex);
             }
          }
       }

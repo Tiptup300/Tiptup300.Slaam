@@ -77,8 +77,8 @@ static class DialogStrings
       if (str == null)
          return "";
       string[] strs = new string[2];
-      strs[0] = str.Substring(str.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\" + GameGlobals.TEXTURE_FILE_PATH, "");
-      strs[1] = str.IndexOf('_') >= 0 ? str.Substring(0, str.IndexOf('_')).Replace(".png", "").Replace("boards\\" + GameGlobals.TEXTURE_FILE_PATH, "") : "";
+      strs[0] = str.Substring(str.IndexOf('_') + 1).Replace(".png", "").Replace("boards\\" + _gameConfiguration.TEXTURE_FILE_PATH, "");
+      strs[1] = str.IndexOf('_') >= 0 ? str.Substring(0, str.IndexOf('_')).Replace(".png", "").Replace("boards\\" + _gameConfiguration.TEXTURE_FILE_PATH, "") : "";
       if (strs[1] != "" && strs[1] != "0")
       {
          return strs[0] + " by " + strs[1];

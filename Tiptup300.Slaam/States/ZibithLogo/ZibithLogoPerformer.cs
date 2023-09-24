@@ -18,15 +18,18 @@ public class ZibithLogoPerformer : IPerformer<ZibithLogoState>, IRenderer<Zibith
    private readonly IResources _resources;
    private readonly IFrameTimeService _frameTimeService;
    private readonly IRenderService _renderService;
+   private readonly GameConfiguration _gameConfiguration;
 
    public ZibithLogoPerformer(
        IResources resources,
        IFrameTimeService frameTimeService,
-       IRenderService renderService)
+       IRenderService renderService,
+       GameConfiguration gameConfiguration)
    {
       _resources = resources;
       _frameTimeService = frameTimeService;
       _renderService = renderService;
+      _gameConfiguration = gameConfiguration;
    }
 
    public void InitializeState()
@@ -109,8 +112,8 @@ public class ZibithLogoPerformer : IPerformer<ZibithLogoState>, IRenderer<Zibith
    {
       _renderService.Render(batch =>
       {
-         batch.Draw(state.BackgroundTexture.Texture, new Rectangle(0, 0, GameGlobals.DRAWING_GAME_WIDTH, GameGlobals.DRAWING_GAME_HEIGHT), Color.White);
-         batch.Draw(state.LogoTexture.Texture, new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), state.LogoColor);
+         batch.Draw(state.BackgroundTexture.Texture, new Rectangle(0, 0, _gameConfiguration.DRAWING_GAME_WIDTH, _gameConfiguration.DRAWING_GAME_HEIGHT), Color.White);
+         batch.Draw(state.LogoTexture.Texture, new Vector2(_gameConfiguration.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ZibithLogo").Width / 2, _gameConfiguration.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ZibithLogo").Height / 2), state.LogoColor);
       });
    }
 

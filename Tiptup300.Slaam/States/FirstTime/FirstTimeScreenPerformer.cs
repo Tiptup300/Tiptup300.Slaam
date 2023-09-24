@@ -16,15 +16,18 @@ public class FirstTimeScreenPerformer : IPerformer<FirstTimeScreenState>, IRende
    private readonly IResources _resources;
    private readonly IRenderService _renderService;
    private readonly IInputService _inputService;
+   private readonly GameConfiguration _gameConfiguration;
 
    public FirstTimeScreenPerformer(
        IResources resources,
        IRenderService renderGraphManager,
-       IInputService inputService)
+       IInputService inputService,
+       GameConfiguration gameConfiguration)
    {
       _resources = resources;
       _renderService = renderGraphManager;
       _inputService = inputService;
+      _gameConfiguration = gameConfiguration;
    }
 
    public void InitializeState()
@@ -37,7 +40,7 @@ public class FirstTimeScreenPerformer : IPerformer<FirstTimeScreenState>, IRende
       Graph output;
 
       output = new Graph(
-          new Rectangle(50, 350, GameGlobals.DRAWING_GAME_WIDTH - 100, 500), 2,
+          new Rectangle(50, 350, _gameConfiguration.DRAWING_GAME_WIDTH - 100, 500), 2,
           new Color(0, 0, 0, 150),
           _resources,
           _renderService);

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Tiptup300.Slaam.Composition.x_;
 using Tiptup300.Slaam.Library.Input;
 using Tiptup300.Slaam.Library.ResourceManagement;
 using Tiptup300.Slaam.Library.Timing;
@@ -34,6 +35,7 @@ public class BotActor : CharacterActor
    private readonly TimerWidget _targetTimer = new TimerWidget(new TimeSpan(0, 0, 5));
    private readonly IFrameTimeService _frameTimeService;
    private readonly Random _random = new Random();
+   private GameConfiguration _gameConfiguration => ServiceLocator.Instance.GetService<GameConfiguration>();
 
 
 
@@ -134,7 +136,7 @@ public class BotActor : CharacterActor
 
          for (int x = 0; x < gameScreenState.Characters.Count; x++)
          {
-            if (x != PlayerIndex &&
+            if (x != _playerIndex &&
                  gameScreenState.Characters[x] != null &&
                  gameScreenState.Characters[x].CurrentState != CharacterState.Dead &&
                  gameScreenState.Characters[x].CurrentState != CharacterState.Dieing &&
@@ -147,9 +149,9 @@ public class BotActor : CharacterActor
             }
          }
 
-         for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
+         for (int x = 0; x < _gameConfiguration.BOARD_WIDTH; x++)
          {
-            for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
+            for (int y = 0; y < _gameConfiguration.BOARD_HEIGHT; y++)
             {
                if (gameScreenState.Tiles[x, y].CurrentPowerupType != PowerupType.None)
                {

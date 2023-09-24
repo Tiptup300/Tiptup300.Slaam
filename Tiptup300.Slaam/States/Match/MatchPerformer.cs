@@ -32,6 +32,7 @@ public class MatchPerformer : IPerformer<MatchState>
    private readonly IInputService _inputService;
    private readonly IFrameTimeService _frameTimeService;
    private readonly IRenderService _renderService;
+   private readonly GameConfiguration _gameConfiguration;
 
    public MatchPerformer(
        IResources resources,
@@ -40,7 +41,8 @@ public class MatchPerformer : IPerformer<MatchState>
        ILogger logger,
        IInputService inputService,
        IFrameTimeService frameTimeService,
-       IRenderService renderService)
+       IRenderService renderService,
+       GameConfiguration gameConfiguration)
    {
       _resources = resources;
       _graphics = graphicsState;
@@ -49,6 +51,7 @@ public class MatchPerformer : IPerformer<MatchState>
       _inputService = inputService;
       _frameTimeService = frameTimeService;
       _renderService = renderService;
+      _gameConfiguration = gameConfiguration;
    }
 
    public void InitializeState() { }
@@ -57,8 +60,8 @@ public class MatchPerformer : IPerformer<MatchState>
    {
       int width = (int)(_graphics.Get().PreferredBackBufferWidth / 2f);
       int height = (int)(_graphics.Get().PreferredBackBufferHeight / 2f);
-      int boardWidth = GameGlobals.BOARD_WIDTH * GameGlobals.TILE_SIZE;
-      int boardHeight = GameGlobals.BOARD_HEIGHT * GameGlobals.TILE_SIZE;
+      int boardWidth = _gameConfiguration.BOARD_WIDTH * _gameConfiguration.TILE_SIZE;
+      int boardHeight = _gameConfiguration.BOARD_HEIGHT * _gameConfiguration.TILE_SIZE;
 
       return new Vector2(width - boardWidth / 2f, height - boardHeight / 2f);
    }
@@ -75,7 +78,7 @@ public class MatchPerformer : IPerformer<MatchState>
       }
       else
       {
-         state.Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + BoardLoc);
+         state.Tileset = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + _gameConfiguration.TEXTURE_FILE_PATH + BoardLoc);
 
          for (int x = 0; x < state.SetupCharacters.Count; x++)
          {
@@ -245,10 +248,10 @@ public class MatchPerformer : IPerformer<MatchState>
       {
          if (state.Characters[x] != null)
          {
-            int X1 = (int)((state.Characters[x].Position.X - state.Boardpos.X) % GameGlobals.TILE_SIZE);
-            int Y1 = (int)((state.Characters[x].Position.Y - state.Boardpos.Y) % GameGlobals.TILE_SIZE);
-            int X = (int)((state.Characters[x].Position.X - state.Boardpos.X - X1) / GameGlobals.TILE_SIZE);
-            int Y = (int)((state.Characters[x].Position.Y - state.Boardpos.Y - Y1) / GameGlobals.TILE_SIZE);
+            int X1 = (int)((state.Characters[x].Position.X - state.Boardpos.X) % _gameConfiguration.TILE_SIZE);
+            int Y1 = (int)((state.Characters[x].Position.Y - state.Boardpos.Y) % _gameConfiguration.TILE_SIZE);
+            int X = (int)((state.Characters[x].Position.X - state.Boardpos.X - X1) / _gameConfiguration.TILE_SIZE);
+            int Y = (int)((state.Characters[x].Position.Y - state.Boardpos.Y - Y1) / _gameConfiguration.TILE_SIZE);
             state.Characters[x].Update(new Vector2(X, Y), new Vector2(X1, Y1), state);
             if (state.Characters[x].CurrentState == CharacterActor.CharacterState.Respawning)
             {
@@ -256,9 +259,9 @@ public class MatchPerformer : IPerformer<MatchState>
             }
          }
       }
-      for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
+      for (int x = 0; x < _gameConfiguration.BOARD_WIDTH; x++)
       {
-         for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
+         for (int y = 0; y < _gameConfiguration.BOARD_HEIGHT; y++)
          {
             state.Tiles[x, y].Update(state);
          }
@@ -267,14 +270,14 @@ public class MatchPerformer : IPerformer<MatchState>
       if (state.PowerupTime.Active)
       {
          bool found = true;
-         int newx = state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
-         int newy = state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
+         int newx = state.Rand.Next(0, _gameConfiguration.BOARD_WIDTH);
+         int newy = state.Rand.Next(0, _gameConfiguration.BOARD_HEIGHT);
          int ct = 0;
 
          while (state.Tiles[newx, newy].CurrentTileCondition != TileCondition.Normal)
          {
-            newx = state.Rand.Next(0, GameGlobals.BOARD_WIDTH);
-            newy = state.Rand.Next(0, GameGlobals.BOARD_HEIGHT);
+            newx = state.Rand.Next(0, _gameConfiguration.BOARD_WIDTH);
+            newy = state.Rand.Next(0, _gameConfiguration.BOARD_HEIGHT);
             ct++;
             if (ct > 100)
             {
@@ -330,9 +333,9 @@ public class MatchPerformer : IPerformer<MatchState>
          state.Boardpos = calcFinalBoardPosition();
          state.CurrentGameStatus = GameStatus.Respawning;
       }
-      for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
+      for (int x = 0; x < _gameConfiguration.BOARD_WIDTH; x++)
       {
-         for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
+         for (int y = 0; y < _gameConfiguration.BOARD_HEIGHT; y++)
          {
             state.Tiles[x, y].ResetTileLocation(state.Boardpos, new Vector2(x, y));
          }
@@ -354,9 +357,9 @@ public class MatchPerformer : IPerformer<MatchState>
          {
             return;
          }
-         for (int x = 0; x < GameGlobals.BOARD_WIDTH; x++)
+         for (int x = 0; x < _gameConfiguration.BOARD_WIDTH; x++)
          {
-            for (int y = 0; y < GameGlobals.BOARD_HEIGHT; y++)
+            for (int y = 0; y < _gameConfiguration.BOARD_HEIGHT; y++)
             {
                state.Tiles[x, y].Draw(batch);
             }
@@ -394,7 +397,7 @@ public class MatchPerformer : IPerformer<MatchState>
          }
          if (state.CurrentGameStatus == GameStatus.Waiting || state.CurrentGameStatus == GameStatus.Over)
          {
-            batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)state.Rand.NextDouble() * (1 + state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)state.Rand.NextDouble() * (1 + state.ReadySetGoPart) + GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, state.ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
+            batch.Draw(_resources.GetTexture("ReadySetGo").Texture, new Vector2((float)state.Rand.NextDouble() * (1 + state.ReadySetGoPart) + _gameConfiguration.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("ReadySetGo").Width / 2, (float)state.Rand.NextDouble() * (1 + state.ReadySetGoPart) + _gameConfiguration.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("ReadySetGo").Width / 8), new Rectangle(0, state.ReadySetGoPart * (_resources.GetTexture("ReadySetGo").Height / 4), _resources.GetTexture("ReadySetGo").Width, _resources.GetTexture("ReadySetGo").Height / 4), Color.White);
          }
       });
    }

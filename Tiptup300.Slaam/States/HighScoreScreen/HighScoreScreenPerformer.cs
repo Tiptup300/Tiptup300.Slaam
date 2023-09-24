@@ -22,25 +22,28 @@ public class HighScoreScreenPerformer : IPerformer<HighScoreScreenState>, IRende
    private readonly IRenderService _renderService;
    private readonly IInputService _inputService;
    private readonly IResolver<IRequest, IState> _stateResolver;
+   private readonly GameConfiguration _gameConfiguration;
 
    public HighScoreScreenPerformer(
        ILogger logger,
        IResources resources,
        IRenderService renderGraph,
        IInputService inputService,
-       IResolver<IRequest, IState> stateResolver)
+       IResolver<IRequest, IState> stateResolver,
+       GameConfiguration gameConfiguration)
    {
       _logger = logger;
       _resources = resources;
       _renderService = renderGraph;
       _inputService = inputService;
       _stateResolver = stateResolver;
+      _gameConfiguration = gameConfiguration;
    }
 
    public void InitializeState()
    {
       _state._statsboard = new SurvivalStatsBoard(
-          null, new Rectangle(10, 68, GameGlobals.DRAWING_GAME_WIDTH - 20, GameGlobals.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderService,
+          null, new Rectangle(10, 68, _gameConfiguration.DRAWING_GAME_WIDTH - 20, _gameConfiguration.DRAWING_GAME_WIDTH - 20), new Color(0, 0, 0, 150), MAX_HIGHSCORES, _logger, _resources, _renderService,
           null // this will not cause problems, but it's still ugly.
           );
 

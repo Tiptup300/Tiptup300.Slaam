@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Tiptup300.Slaam.Composition.x_;
 using Tiptup300.Slaam.x_;
 
 namespace Tiptup300.Slaam.States.Lobby;
 
 public static class LobbyScreenFunctions
 {
+   public static GameConfiguration _gameConfiguration => ServiceLocator.Instance.GetService<GameConfiguration>();
    private static Texture2D _defaultBoard;
 
 
@@ -38,7 +40,7 @@ public static class LobbyScreenFunctions
 
       try
       {
-         lobbyScreenState.CurrentBoardTexture = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + GameGlobals.TEXTURE_FILE_PATH + boardLocation);
+         lobbyScreenState.CurrentBoardTexture = SlaamGame.Content.Load<Texture2D>("content\\Boards\\" + _gameConfiguration.TEXTURE_FILE_PATH + boardLocation);
          lobbyScreenState.BoardLocation = boardLocation;
       }
       catch (FileNotFoundException)

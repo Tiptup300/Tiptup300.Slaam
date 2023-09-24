@@ -15,7 +15,6 @@ namespace Tiptup300.Slaam.States.PostGameStats;
 public class StatsScreenPerformer : IPerformer<StatsScreenState>, IRenderer<StatsScreenState>
 {
    public const int MAX_HIGHSCORES = 5;
-   private readonly Rectangle _statsRectangle = new Rectangle(20, 110, GameGlobals.DRAWING_GAME_WIDTH - 40, GameGlobals.DRAWING_GAME_HEIGHT);
    private readonly Color _statsColor = new Color(0, 0, 0, 125);
 
    private StatsScreenState _state = new StatsScreenState();
@@ -24,13 +23,18 @@ public class StatsScreenPerformer : IPerformer<StatsScreenState>, IRenderer<Stat
    private readonly IResources _resources;
    private readonly IRenderService _renderService;
    private readonly IInputService _inputService;
+   private readonly Rectangle _statsRectangle;
+   private readonly GameConfiguration _gameConfiguration;
 
-   public StatsScreenPerformer(ILogger logger, IResources resources, IRenderService renderGraph, IInputService inputService)
+   public StatsScreenPerformer(ILogger logger, IResources resources, IRenderService renderGraph, IInputService inputService, GameConfiguration gameConfiguration)
    {
       _logger = logger;
       _resources = resources;
       _renderService = renderGraph;
       _inputService = inputService;
+      _gameConfiguration = gameConfiguration;
+
+      _statsRectangle = new Rectangle(20, 110, _gameConfiguration.DRAWING_GAME_WIDTH - 40, _gameConfiguration.DRAWING_GAME_HEIGHT);
    }
 
    public void Initialize(StatsScreenRequestState request)
@@ -170,7 +174,7 @@ public class StatsScreenPerformer : IPerformer<StatsScreenState>, IRenderer<Stat
    {
       _renderService.Render(batch =>
       {
-         Vector2 Statsboard = new Vector2(GameGlobals.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("StatsBoard").Width / 2, GameGlobals.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("StatsBoard").Height / 2);
+         Vector2 Statsboard = new Vector2(_gameConfiguration.DRAWING_GAME_WIDTH / 2 - _resources.GetTexture("StatsBoard").Width / 2, _gameConfiguration.DRAWING_GAME_HEIGHT / 2 - _resources.GetTexture("StatsBoard").Height / 2);
 
          for (int x = 0; x < 3; x++)
          {
